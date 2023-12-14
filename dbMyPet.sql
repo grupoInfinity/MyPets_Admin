@@ -3,7 +3,7 @@ use dbMyPet;
 
 --------------------TABLAS CATALOGO------------------------------
 CREATE TABLE IF NOT EXISTS ctg_tipovacunas(
-    id_tipovacuna INT PRIMARY KEY AUTO_INCREMENT,
+    id_tipovacuna INT PRIMARY KEY ,
     nombrevacuna VARCHAR(255),
     estado VARCHAR(1),
     usuario_creacion VARCHAR(255),
@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS ctg_tipovacunas(
     fecha_update datetime 
 );
 CREATE TABLE IF NOT EXISTS ctg_tipomascotas(
-    id_tipomascota INT PRIMARY KEY AUTO_INCREMENT,
+    id_tipomascota INT PRIMARY KEY ,
     tipomascota VARCHAR(255),
     estado VARCHAR(1),
     usuario_creacion VARCHAR(255),
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS ctg_tipomascotas(
     fecha_update datetime 
 );
 CREATE TABLE IF NOT EXISTS ctg_departamentos(
-    id_departamento INT PRIMARY KEY AUTO_INCREMENT,
+    id_departamento INT PRIMARY KEY ,
     departamento VARCHAR(255),
     estado VARCHAR(1),
     usuario_creacion VARCHAR(255),
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS ctg_departamentos(
     fecha_update datetime  
 );
 CREATE TABLE IF NOT EXISTS ctg_municipios(
-    id_municipio INT PRIMARY KEY AUTO_INCREMENT,
+    id_municipio INT PRIMARY KEY ,
     id_departamento INT,
     municipio VARCHAR(255),
     estado VARCHAR(1),
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS ctg_municipios(
 
 --------------------TABLAS DINAMICAS-----------------------------
 CREATE TABLE IF NOT EXISTS prc_mascota(
-    id_mascota INT PRIMARY KEY AUTOINCREMENT,
+    id_mascota INT PRIMARY KEY ,
     id_tipomascota INT,
     id_municipio INT,---ESTE TRAE EL ID DEL DEPARTAMENTO
     id_usuario INT,--IDENTIFICADOR DEL ENCARGADO
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS prc_mascota(
     fecha_update datetime 
 );
 CREATE TABLE IF NOT EXISTS prc_vacunas(
-    id_vacunas INT PRIMARY KEY AUTOINCREMENT,
+    id_vacunas INT PRIMARY KEY ,
     id_mascota INT,
     id_tipovacuna INT,
     estado VARCHAR(1),
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS prc_vacunas(
 
 --------------------TABLAS SEGURIDAD-----------------------------
 CREATE TABLE IF NOT EXISTS sec_menu(
-    id_menu INT PRIMARY KEY AUTO_INCREMENT,
+    id_menu INT PRIMARY KEY ,
     nombremenu VARCHAR(255),
     estado VARCHAR(1),
     usuario_creacion VARCHAR(255),
@@ -81,7 +81,7 @@ CREATE TABLE IF NOT EXISTS sec_menu(
     fecha_update datetime 
 );
 CREATE TABLE IF NOT EXISTS sec_opciones(
-    id_opc INT PRIMARY KEY AUTOINCREMENT,
+    id_opc INT PRIMARY KEY ,
     desc_opc VARCHAR(255),---Descripcion
     estado VARCHAR(1),
     usuario_creacion VARCHAR(255),
@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS sec_opciones(
     fecha_update datetime 
 );
 CREATE TABLE IF NOT EXISTS sec_usuarios(
-    id_usuario INT PRIMARY KEY AUTOINCREMENT,
+    id_usuario INT PRIMARY KEY ,
     mail varchar(255),
     telefono varchar(255),
     clave varchar(255),
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS sec_usuarios(
     fecha_update datetime 
 );
 CREATE TABLE IF NOT EXISTS sec_roles(
-    id_rol INT PRIMARY KEY AUTOINCREMENT,
+    id_rol INT PRIMARY KEY ,
     desc_rol VARCHAR(255),--Descripcion
     estado VARCHAR(1),
     usuario_creacion VARCHAR(255),
@@ -111,7 +111,7 @@ CREATE TABLE IF NOT EXISTS sec_roles(
     fecha_update datetime 
 );
 CREATE TABLE IF NOT EXISTS sec_opciones_roles(
-    id_opc_rol INT PRIMARY KEY AUTOINCREMENT,
+    id_opc_rol INT PRIMARY KEY ,
     id_opc INT,
     id_rol INT,
     estado VARCHAR(1),
@@ -121,7 +121,7 @@ CREATE TABLE IF NOT EXISTS sec_opciones_roles(
     fecha_update datetime 
 );
 CREATE TABLE IF NOT EXISTS sec_roles_usuarios(
-    id_rol_us INT PRIMARY KEY AUTOINCREMENT,
+    id_rol_us INT PRIMARY KEY ,
     id_rol INT,
     id_usuario INT,
     estado VARCHAR(1),
