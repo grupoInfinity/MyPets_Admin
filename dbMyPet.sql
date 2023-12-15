@@ -31,8 +31,8 @@ CREATE TABLE IF NOT EXISTS dbMyPet.ctg_departamentos(
     usuario_update VARCHAR(255),
     fecha_update datetime  
 );
-insert into ctg_departamentos (id_departamento,departamento,estado)
- VALUES (1,'San Salvador','A'),(2,'San Miguel','A');
+/*insert into ctg_departamentos (id_departamento,departamento,estado)
+ VALUES (1,'San Salvador','A'),(2,'San Miguel','A');*/
 
 select * from ctg_municipios
 CREATE TABLE IF NOT EXISTS dbMyPet.ctg_municipios(
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS dbMyPet.ctg_municipios(
     usuario_update VARCHAR(255),
     fecha_update datetime 
 );
-insert into ctg_municipios(id_municipio,id_departamento,municipio,estado) 
+/*insert into ctg_municipios(id_municipio,id_departamento,municipio,estado) 
 VALUES (1,1,'San Salvador Centro','A'),(2,2,'San Miguel Centro','A');
 
 select * from ctg_municipios where municipio like '%M%'
@@ -53,7 +53,7 @@ select * from ctg_municipios where municipio like '%M%'
 select id_municipio,departamento,municipio,M.estado
 from ctg_municipios M,ctg_departamentos D 
 where M.id_departamento=D.id_departamento AND
-id_municipio=2
+id_municipio=2*/
 
 
 
@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS dbMyPet.sec_opciones(
 );
 CREATE TABLE IF NOT EXISTS dbMyPet.sec_usuarios(
     id_usuario INT PRIMARY KEY ,
-    mail varchar(255),
+    mail varchar(255) UNIQUE,
     telefono varchar(255),
     clave varchar(255),
     pin varchar(255),
