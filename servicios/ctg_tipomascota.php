@@ -72,7 +72,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         }
     } else if (strtoupper($accion) == 'CU') { // VERIFICACION SI LA ACCION ES UNA CONSULTA DE UN REGISTRO PARA CARGARLO A UN FORMULARIO
 
-        if (!empty($id)) $id = "A.id_departamento='$id'";
+        if (!empty($id)) $id = "A.id_tipomascota='$id'";
         else $id = "1=1";
         
         $sql = "
@@ -86,8 +86,8 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     $results[] = array(
-                        "id" => $row["id_departamento"],
-                        'departamento' => utf8_decode($row["departamento"]),
+                        "id" => $row["id_tipomascota"],
+                        'tipomascota' => utf8_decode($row["tipomascota"]),
                         'estado' => $row["estado"]
                     );
                     $json = array("status" => 1, "info" => $results);
@@ -99,7 +99,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 
     } else if (strtoupper($accion) == 'U') { // VERIFICACION SI LA ACCION ES MODIFICACION
 
-        $depto = "departamento='" . strtoupper($depto) . "'";
+        $tipomascota = "tipomascota='" . strtoupper($tipomascota) . "'";
         $estado = ", estado='" . strtoupper($estado) . "'";
         $user = ", usuario_update='" . $user . "'";
         $date = ", fecha_update='" . (new DateTime())->format('Y-m-d') . "'";
@@ -116,6 +116,18 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         $date = ", fecha_update='" . (new DateTime())->format('Y-m-d') . "'";
 
         $sql = "UPDATE $bd.$tabla set estado='I' $user $date WHERE id = $id";
+
+        if ($conn->query($sql) === TRUE) {
+            $json = array("status" => 1, "info" => "Registro eliminado exitosamente.");
+        } else {
+            $json = array("status" => 0, "error" => $conn->error);
+        }
+    }
+    else if (strtoupper($accion) == 'A') { // VERIFICACION SI LA ACCION ES ELIMINACION
+        $user = ", usuario_update='" . $user . "'";
+        $date = ", fecha_update='" . (new DateTime())->format('Y-m-d') . "'";
+
+        $sql = "UPDATE $bd.$tabla set estado='A' $user $date WHERE id = $id";
 
         if ($conn->query($sql) === TRUE) {
             $json = array("status" => 1, "info" => "Registro eliminado exitosamente.");

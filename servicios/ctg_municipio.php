@@ -106,6 +106,18 @@ else{
 			$json = array("status"=>0, "error"=>$conn->error);
 		}
 	}
+	else if(strtoupper($accion) =='A'){// VERIFICACION SI LA ACCION ES ACTIVAR EL REGISTRO
+		$user = ", usuario_update='".$user."'";
+		$date = ", fecha_update='".(new DateTime())->format('Y-m-d')."'";
+		
+		$sql = "UPDATE $bd.$tabla SET estado='A' WHERE id_municipio = $id_municipio ";
+		
+		if ($conn->query($sql) === TRUE) {
+			$json = array("status"=>1, "info"=>"Registro eliminado exitosamente.");
+		} else {
+			$json = array("status"=>0, "error"=>$conn->error);
+		}
+	}
 	else if(strtoupper($accion) =='DM'){// VERIFICACION SI LA ACCION ES CON RELACION CON LOS DEPARTAMENTOS
 
 		$sql = "select * from ctg_municipios where id_departamento=$id_depto";

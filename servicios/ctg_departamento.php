@@ -122,6 +122,18 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
             $json = array("status" => 0, "error" => $conn->error);
         }
     }
+    else if (strtoupper($accion) == 'A') { // VERIFICACION SI LA ACCION ES ACTIVAR REGISTRO
+        $user = ", usuario_update='" . $user . "'";
+        $date = ", fecha_update='" . (new DateTime())->format('Y-m-d') . "'";
+
+        $sql = "UPDATE $bd.$tabla set estado='A' $user $date WHERE id = $id";
+
+        if ($conn->query($sql) === TRUE) {
+            $json = array("status" => 1, "info" => "Registro eliminado exitosamente.");
+        } else {
+            $json = array("status" => 0, "error" => $conn->error);
+        }
+    }
 }
 $conn->close();
 
