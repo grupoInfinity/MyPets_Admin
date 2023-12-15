@@ -48,7 +48,25 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
 }
 else{
 	if(strtoupper($accion) =='I'){// VERIFICACION SI LA ACCION ES INSERCION
-		
+		//AGREGAR ORDEN DE ID
+        $sql = "
+		SELECT MAX(a.id_municipio) + 1 as id
+		FROM $bd.$tabla a";
+
+        $result = $conn->query($sql);
+
+        if (!empty($result) || !is_null($result)) {
+            if ($result->num_rows > 0) {
+
+                while ($row = $result->fetch_assoc()) {
+                    if (!is_null($row["id_municipio"])) $id_mun = $row["id_municipio"];
+                    else $id_mun = 1;
+                }
+            } else {
+                $id_mun = 1;
+            }
+        } else $id_mun = 1;
+
 		$date = (new DateTime())->format('Y-m-d');
 	
 		$sql = "INSERT INTO 
@@ -88,7 +106,7 @@ else{
 			$json = array("status"=>0, "error"=>$conn->error);
 		}
 	}
-	else if(strtoupper($accion) =='DM'){// VERIFICACION SI LA ACCION DE LA RELACION CON LOS DEPARTAMENTOS
+	else if(strtoupper($accion) =='DM'){// VERIFICACION SI LA ACCION ES CON RELACION CON LOS DEPARTAMENTOS
 
 		$sql = "select * from ctg_municipios where id_departamento=$id_depto";
 		
