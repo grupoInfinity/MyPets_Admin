@@ -31,8 +31,8 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 $results[] = array(
-                    "id" => $row["id_tipomascota"],
-                    'tipomascota' => utf8_decode($row["tipomascota"]),
+                    "id" => $row["id_tipovacuna"],
+                    'nombrevacuna' => utf8_decode($row["nombrevacuna"]),
                     'estado' => $row["estado"]
                 );
                 $json = array("status" => 1, "info" => $results);
@@ -44,7 +44,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 } else {
     if (strtoupper($accion) == 'I') { // VERIFICACION SI LA ACCION ES INSERCION
         $sql = "
-		SELECT MAX(a.id_tipomascota) + 1 as id
+		SELECT MAX(a.id_tipovacuna) + 1 as id
 		FROM $bd.$tabla a";
 
         $result = $conn->query($sql);
@@ -53,7 +53,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
             if ($result->num_rows > 0) {
 
                 while ($row = $result->fetch_assoc()) {
-                    if (!is_null($row["id_tipomascota"])) $id = $row["id_tipomascota"];
+                    if (!is_null($row["id_tipovacuna"])) $id = $row["id_tipovacuna"];
                     else $id = 1;
                 }
             } else {
@@ -62,8 +62,8 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         } else $id = 1;
         $date = (new DateTime())->format('Y-m-d');
 
-        $sql = "INSERT INTO $bd.$tabla(id_tipomascota, tipomascota, estado, usuario_creacion, fecha_creacion) 
-        VALUE($id,'$tipomascota', 'A', '$user', '$date')";
+        $sql = "INSERT INTO $bd.$tabla(id_tipovacuna, nombrevacuna, estado, usuario_creacion, fecha_creacion) 
+        VALUE($id,'$nombrevac', 'A', '$user', '$date')";
 
         if ($conn->query($sql) === TRUE) {
             $json = array("status" => 1, "info" => "Registro almacenado exitosamente.");
@@ -72,7 +72,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         }
     } else if (strtoupper($accion) == 'CU') { // VERIFICACION SI LA ACCION ES UNA CONSULTA DE UN REGISTRO PARA CARGARLO A UN FORMULARIO
 
-        if (!empty($id)) $id = "A.id_tipomascota='$id'";
+        if (!empty($id)) $id = "A.id_tipovacuna='$id'";
         else $id = "1=1";
         
         $sql = "
@@ -86,8 +86,8 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     $results[] = array(
-                        "id" => $row["id_tipomascota"],
-                        'tipomascota' => utf8_decode($row["tipomascota"]),
+                        "id" => $row["id_tipovacuna"],
+                        'nombrevacuna' => utf8_decode($row["nombrevacuna"]),
                         'estado' => $row["estado"]
                     );
                     $json = array("status" => 1, "info" => $results);
@@ -99,12 +99,12 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 
     } else if (strtoupper($accion) == 'U') { // VERIFICACION SI LA ACCION ES MODIFICACION
 
-        $tipomascota = "tipomascota='" . strtoupper($tipomascota) . "'";
+        $nombrevac = "nombrevacuna='" . strtoupper($nombrevac) . "'";
         $estado = ", estado='" . strtoupper($estado) . "'";
         $user = ", usuario_update='" . $user . "'";
         $date = ", fecha_update='" . (new DateTime())->format('Y-m-d') . "'";
 
-        $sql = "UPDATE $bd.$tabla SET $depto $estado $user $date WHERE id = $id";
+        $sql = "UPDATE $bd.$tabla SET $nombrevac $estado $user $date WHERE id = $id";
 
         if ($conn->query($sql) === TRUE) {
             $json = array("status" => 1, "info" => "Registro actualizado exitosamente.");

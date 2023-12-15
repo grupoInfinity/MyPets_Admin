@@ -77,8 +77,16 @@ CREATE TABLE IF NOT EXISTS dbMyPet.prc_mascotas(
     usuario_update VARCHAR(255),
     fecha_update datetime 
 );
+/*
+SELECT m.id_mascota, u.id_usuario, u.mail,u.telefono,m.nombremascota,
+d.departamento,mu.municipio,m.residencia,m.estado_residencia,m.codigo
+FROM prc_mascotas m,sec_usuarios u, ctg_tipomascotas t, ctg_municipios mu, ctg_departamentos d 
+WHERE m.id_tipomascota=t.id_tipomascota AND m.id_usuario=u.id_usuario 
+AND mu.id_departamento=d.id_departamento AND m.id_mascota=1;
+*/
+
 CREATE TABLE IF NOT EXISTS dbMyPet.prc_vacunas(
-    id_vacunas INT PRIMARY KEY ,
+    id_vacuna INT PRIMARY KEY ,
     id_mascota INT,
     id_tipovacuna INT,
     estado VARCHAR(1),
@@ -87,7 +95,12 @@ CREATE TABLE IF NOT EXISTS dbMyPet.prc_vacunas(
     usuario_update VARCHAR(255),
     fecha_update datetime 
 );
-
+/*
+SELECT v.id_vacunas,t.nombrevacuna,v.fecha_creacion,v.estado
+FROM prc_vacunas v, prc_mascotas m, ctg_tipovacunas t 
+WHERE v.id_mascota=m.id_mascota AND v.id_tipovacuna=t.id_tipovacuna
+AND v.id_mascota=1 
+*/
 --------------------TABLAS SEGURIDAD-----------------------------
 CREATE TABLE IF NOT EXISTS dbMyPet.sec_menu(
     id_menu INT PRIMARY KEY ,

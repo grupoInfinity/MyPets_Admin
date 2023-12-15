@@ -104,7 +104,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         $user = ", usuario_update='" . $user . "'";
         $date = ", fecha_update='" . (new DateTime())->format('Y-m-d') . "'";
 
-        $sql = "UPDATE $bd.$tabla SET $depto $estado $user $date WHERE id = $id";
+        $sql = "UPDATE $bd.$tabla SET $tipomascota $estado $user $date WHERE id = $id";
 
         if ($conn->query($sql) === TRUE) {
             $json = array("status" => 1, "info" => "Registro actualizado exitosamente.");
