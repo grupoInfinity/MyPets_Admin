@@ -8,7 +8,7 @@ $accion = isset($_GET['accion']) ? $_GET['accion'] : '';
 $id = isset($_GET['id']) ? $_GET['id'] : '';
 $depto = utf8_decode(isset($_GET['depto']) ? $_GET['depto'] : '');
 $estado = isset($_GET['estado']) ? $_GET['estado'] : '';
-$user = utf8_decode(isset($_GET['usercr']) ? $_GET['usercr'] : '');
+$user = utf8_decode(isset($_GET['user']) ? $_GET['user'] : '');
 
 $json = "no has seteado nada.";
 
@@ -21,16 +21,20 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
     else $estado = "";
 
     $sql = "
-	SELECT A.id_departamento, A.departamento, A.estado
-	FROM $bd.$tabla A
-	WHERE $id $depto $estado ";
+	SELECT *
+	FROM $bd.$tabla A";
+    //WHERE $id $depto $estado ";
 
     $result = $conn->query($sql);
 
     if (!empty($result))
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                $results[] = array("id" => $row["id_departamento"], 'departamento' => utf8_decode($row["id_departamento"]), 'estado' => $row["estado"]);
+                $results[] = array(
+                    "id" => $row["id_departamento"],
+                    'departamento' => utf8_decode($row["departamento"]),
+                    'estado' => $row["estado"]
+                );
                 $json = array("status" => 1, "info" => $results);
             }
         } else {
@@ -65,13 +69,39 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         } else {
             $json = array("status" => 0, "info" => $conn->error);
         }
+    } else if (strtoupper($accion) == 'CU') { // VERIFICACION SI LA ACCION ES UNA CONSULTA DE UN REGISTRO PARA CARGARLO A UN FORMULARIO
+
+        if (!empty($id)) $id = "A.id_departamento='$id'";
+        else $id = "1=1";
+        
+        $sql = "
+        SELECT *
+        FROM $bd.$tabla A 
+        where $id";
+
+        $result = $conn->query($sql);
+
+        if (!empty($result))
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $results[] = array(
+                        "id" => $row["id_departamento"],
+                        'departamento' => utf8_decode($row["departamento"]),
+                        'estado' => $row["estado"]
+                    );
+                    $json = array("status" => 1, "info" => $results);
+                }
+            } else {
+                $json = array("status" => 0, "info" => "No existe información con ese criterio.");
+            }
+        else $json = array("status" => 0, "info" => "No existe información.");
+
     } else if (strtoupper($accion) == 'U') { // VERIFICACION SI LA ACCION ES MODIFICACION
 
         $depto = "departamento='" . strtoupper($depto) . "'";
         $estado = ", estado='" . strtoupper($estado) . "'";
         $user = ", usuario_update='" . $user . "'";
         $date = ", fecha_update='" . (new DateTime())->format('Y-m-d') . "'";
-
 
         $sql = "UPDATE $bd.$tabla SET $depto $estado $user $date WHERE id = $id";
 

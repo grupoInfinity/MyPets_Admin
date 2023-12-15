@@ -45,8 +45,16 @@ CREATE TABLE IF NOT EXISTS dbMyPet.ctg_municipios(
     usuario_update VARCHAR(255),
     fecha_update datetime 
 );
-insert into ctg_municipios(id_municipio,id_departamentos,municipio,estado) 
+insert into ctg_municipios(id_municipio,id_departamento,municipio,estado) 
 VALUES (1,1,'San Salvador Centro','A'),(2,2,'San Miguel Centro','A');
+
+select * from ctg_municipios where municipio like '%M%'
+
+select id_municipio,departamento,municipio,M.estado
+from ctg_municipios M,ctg_departamentos D 
+where M.id_departamento=D.id_departamento AND
+id_municipio=2
+
 
 
 --------------------TABLAS DINAMICAS-----------------------------
