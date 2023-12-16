@@ -64,10 +64,11 @@ CREATE TABLE IF NOT EXISTS dbMyPet.prc_mascotas(
     id_tipomascota INT,
     id_municipio INT,#---ESTE TRAE EL ID DEL DEPARTAMENTO
     id_usuario INT,#--IDENTIFICADOR DEL ENCARGADO
-    residencia VARCHAR(255), 
-    estado_residencia VARCHAR(1),
+    direccion VARCHAR(255), 
+    estado_direc VARCHAR(1),
     nombremascota VARCHAR(255),
     codigo INT,
+    edad date,
     foto LONGTEXT,
     /*mailcontacto VARCHAR(255),
     telcontacto VARCHAR(255),*/
@@ -79,7 +80,7 @@ CREATE TABLE IF NOT EXISTS dbMyPet.prc_mascotas(
 );
 /*
 SELECT m.id_mascota, u.id_usuario, u.mail,u.telefono,m.nombremascota,
-d.departamento,mu.municipio,m.residencia,m.estado_residencia,m.codigo
+d.departamento,mu.municipio,m.direccion,m.estado_direc,m.codigo
 FROM prc_mascotas m,sec_usuarios u, ctg_tipomascotas t, ctg_municipios mu, ctg_departamentos d 
 WHERE m.id_tipomascota=t.id_tipomascota AND m.id_usuario=u.id_usuario 
 AND mu.id_departamento=d.id_departamento AND m.id_mascota=1;
