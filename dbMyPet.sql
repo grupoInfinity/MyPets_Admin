@@ -164,15 +164,15 @@ CREATE TABLE IF NOT EXISTS dbMyPet.sec_roles_usuarios(
     fecha_update datetime 
 );
 
--------------LAVES FORANEAS-------------------
+#-------------LAVES FORANEAS-------------------
 
 
--------------MUNICIPIO -------------------
+#-------------MUNICIPIO -------------------
 ALTER TABLE ctg_municipios
 ADD CONSTRAINT fk_municipios_dep-- DEPARTAMENTO A MUNICIPIO
 FOREIGN KEY (id_departamento) REFERENCES ctg_departamentos(id_departamento);
 
--------------MASCOTAS -------------------
+#-------------MASCOTAS -------------------
 ALTER TABLE prc_mascotas
 ADD CONSTRAINT fk_mascotas_us#--USUARIO A MASCOTA
 FOREIGN KEY (id_usuario) REFERENCES sec_usuarios(id_usuario),
@@ -181,21 +181,21 @@ FOREIGN KEY (id_municipio) REFERENCES ctg_municipios(id_municipio),
 ADD CONSTRAINT fk_mascotas_tpm#--TIPO MASCOTA A MASCOTA
 FOREIGN KEY (id_tipomascota) REFERENCES ctg_tipomascotas(id_tipomascota);
 
-------------- VACUNAS -------------------
+#------------- VACUNAS -------------------
 ALTER TABLE prc_vacunas
 ADD CONSTRAINT fk_mascota_vac#--TRAER MASCOTA
 FOREIGN KEY (id_mascota) REFERENCES prc_mascotas(id_mascota),
 ADD CONSTRAINT fk_tipovac_vac#--TRAER TIPO VACUNA
 FOREIGN KEY (id_tipovacuna) REFERENCES ctg_tipovacunas(id_tipovacuna);
 
--------------OPCIONES ROLES-------------------
+#-------------OPCIONES ROLES-------------------
 ALTER TABLE sec_opciones_roles
 ADD CONSTRAINT fk_opc_opc#--TRAER OPCION
 FOREIGN KEY (id_opc) REFERENCES sec_opciones(id_opc),
 ADD CONSTRAINT fk_rol_rol#--TRAER ROL
 FOREIGN KEY (id_rol) REFERENCES sec_roles(id_rol);
 
--------------ROLES USUARIOS-------------------
+#-------------ROLES USUARIOS-------------------
 ALTER TABLE sec_roles_usuarios
 ADD CONSTRAINT fk_rol_usuario_rol#--TRAER ROL
 FOREIGN KEY (id_rol) REFERENCES sec_roles(id_rol),

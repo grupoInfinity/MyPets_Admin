@@ -3,13 +3,18 @@ include_once('../config.php');
 
 $bd = "dbMyPet";
 $tabla = "prc_mascotas";
+$tabla2 = "ctg_vacunas";
+$tabla3 = "ctg_tipovacunas";
+$tabla4 = "ctg_tipomascotas";
+$tabla5 = "ctg_municpios";
+$tabla6 = "sec_usuarios";
 
 $accion = isset($_GET['accion']) ? $_GET['accion'] : '';
 $id_mascota = isset($_GET['id_mascota']) ? $_GET['id_mascota'] : '';
 $id_tipomascota = isset($_GET['id_tipomascota']) ? $_GET['id_tipomascota'] : '';
 $id_mun = isset($_GET['id_mun']) ? $_GET['id_mun'] : '';
 $id_usuario = isset($_GET['id_usuario']) ? $_GET['id_usuario'] : '';
-$direccion= utf8_decode(isset($_GET['direccion']) ? $_GET['direccion'] : '');
+$direccion = utf8_decode(isset($_GET['direccion']) ? $_GET['direccion'] : '');
 $estado_direc = isset($_GET['estado_direc']) ? $_GET['estado_direc'] : '';
 $nombremasc = utf8_decode(isset($_GET['nombremasc']) ? $_GET['nombremasc'] : '');
 $codigo = utf8_decode(($_GET['codigo']) ? $_GET['codigo'] : '');
@@ -29,12 +34,14 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
     else $municipio = "";
     if (!empty($estado)) $estado = "AND A.estado='$estado'";
     else $estado = "";*/
+    if (!empty($nombremasc)) $nombremasc = "AND m.nombremascota LIKE '%'$nombremasc%'";
+    else $nombremasc = "";
 
     $sql = "SELECT m.id_mascota, u.id_usuario, u.mail,u.telefono,m.nombremascota,
     d.departamento,mu.municipio,m.direccion,m.estado_direc,m.codigo,m.edad 
     FROM prc_mascotas m,sec_usuarios u, ctg_tipomascotas t, ctg_municipios mu, ctg_departamentos d 
     WHERE m.id_tipomascota=t.id_tipomascota AND m.id_usuario=u.id_usuario 
-    AND mu.id_departamento=d.id_departamento";
+    AND mu.id_departamento=d.id_departamento $nombremasc";
     //WHERE $id_opc $id_opc_ppal $id_rol ";
 
     $result = $conn->query($sql);
@@ -43,7 +50,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 $results[] = array(
-                    "id_mascota" => $row["id_mascota"], 
+                    "id_mascota" => $row["id_mascota"],
                     'id_usuario'  => $row["id_usuario"],
                     'mail' => utf8_decode($row["mail"]),
                     'telefono' => utf8_decode($row["telefono"]),
@@ -84,7 +91,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         } else $id_mun = 1;
 
         $date = (new DateTime())->format('Y-m-d');
-        $edad=date_create_from_format('Y-m-d', $edad);
+        $edad = date_create_from_format('Y-m-d', $edad);
 
         $sql = "INSERT INTO 
         $bd.$tabla(id_mascota, id_usuario,id_tipomascota,id_municipio,direccion,estado_direc,
@@ -103,8 +110,8 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         $id_tipomascota = " ,id_departamento=" . $id_depto;
         $id_mun = " ,id_departamento=" . $id_depto;
         $direccion = ",direccion='" . $direccion . "'";
-        $estado_direc= ",estado_direc='" . $estado_direc . "'";
-        $nombremasc= ",nombremascota='" . $nombremasc . "'";
+        $estado_direc = ",estado_direc='" . $estado_direc . "'";
+        $nombremasc = ",nombremascota='" . $nombremasc . "'";
         $codigo = ",codigo='" . $codigo . "'";
         $edad = ",edad='" . $edad . "'";
         $foto = ",foto='" . $foto . "'";
@@ -144,30 +151,15 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         } else {
             $json = array("status" => 0, "error" => $conn->error);
         }
-    } else if (strtoupper($accion) == 'DM') { // VERIFICACION SI LA ACCION ES CON RELACION CON LOS DEPARTAMENTOS
+    } else if (strtoupper($accion) == 'CU') { // CONSULTA DE UNA MASCOTA
 
-        $sql = "select * from ctg_municipios where id_departamento=$id_depto";
+        $date = (new DateTime())->format('Y-m-d');
 
-        $result = $conn->query($sql);
-
-        if (!empty($result))
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    $results[] = array(
-                        "id" => $row["id_municipio"], 'municipio' => utf8_decode($row["municipio"])
-                    );
-                    $json = array("status" => 1, "info" => $results);
-                }
-            } else {
-                $json = array("status" => 0, "info" => "No existe información con ese criterio.");
-            }
-        else $json = array("status" => 0, "info" => "No existe información.");
-    } else if (strtoupper($accion) == 'CU') { // VERIFICACION SI LA ACCION ES UNA CONSULTA DE UN REGISTRO PARA CARGARLO A UN FORMULARIO
-
-        $sql = "select id_municipio,departamento,municipio,M.estado
-        from ctg_municipios M,ctg_departamentos D 
-        where M.id_departamento=D.id_departamento AND 
-        id_municipio=$id_mun";
+        $sql = "SELECT m.id_mascota, u.id_usuario, u.mail,u.telefono,m.nombremascota,
+        d.departamento,mu.municipio,m.direccion,m.estado_direc,m.codigo,m.edad,m.foto 
+        FROM prc_mascotas m,sec_usuarios u, ctg_tipomascotas t, ctg_municipios mu, ctg_departamentos d 
+        WHERE m.id_tipomascota=t.id_tipomascota AND m.id_usuario=u.id_usuario AND mu.id_departamento=d.id_departamento 
+        AND m.id_mascota=$id_mascota";
 
         $result = $conn->query($sql);
 
@@ -175,7 +167,10 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     $results[] = array(
-                        "id" => $row["id_municipio"], 'departamento' => utf8_decode($row["departamento"]), 'municipio' => utf8_decode($row["municipio"]), 'estado' => utf8_decode($row["estado"])
+                        "id" => $row["id_municipio"], 
+                        'departamento' => utf8_decode($row["departamento"]), 
+                        'municipio' => utf8_decode($row["municipio"]), 
+                        'estado' => utf8_decode($row["estado"])
                     );
                     $json = array("status" => 1, "info" => $results);
                 }

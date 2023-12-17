@@ -126,6 +126,34 @@ else{
 			$json = array("status"=>0, "error"=>$conn->error);
 		}
 	}
+	else if (strtoupper($accion) == 'HV') { // ACCION DE HISTORIAL DE VACUNAS
+
+
+        $sql = "
+        SELECT v.id_vacuna,m.nombremascota,t.nombrevacuna,
+        v.usuario_creacion,v.fecha_creacion,v.usuario_update,v.fecha_update,v.estado
+        FROM $bd.$tabla m, $bd.$tabla2 v, $bd.$tabla3 t 
+        WHERE v.id_mascota=m.id_mascota AND v.id_tipovacuna=t.id_tipovacuna
+        AND v.id_mascota=$id_mascota AND v.estado='A'";
+
+        $result = $conn->query($sql);
+
+        if (!empty($result))
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $results[] = array(
+                        "id" => $row["id_municipio"], 
+						'departamento' => utf8_decode($row["departamento"]),
+						'municipio' => utf8_decode($row["municipio"]), 
+						'estado' => utf8_decode($row["estado"])
+                    );
+                    $json = array("status" => 1, "info" => $results);
+                }
+            } else {
+                $json = array("status" => 0, "info" => "No existe información con ese criterio.");
+            }
+        else $json = array("status" => 0, "info" => "No existe información.");
+    }
 	
 }
 $conn->close();
