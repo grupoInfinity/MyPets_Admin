@@ -142,9 +142,13 @@ else{
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     $results[] = array(
-                        "id" => $row["id_municipio"], 
-						'departamento' => utf8_decode($row["departamento"]),
-						'municipio' => utf8_decode($row["municipio"]), 
+                        "id_vacuna" => $row["id_vacuna"], 
+						'nombremascota' => utf8_decode($row["nombremascota"]),
+						'nombrevacuna' => utf8_decode($row["nombrevacuna"]),
+						'usuario_creacion' => utf8_decode($row["usuario_creacion"]), 
+						'fecha_creacion' => utf8_decode($row["fecha_creacion"]), 
+						'usuario_update' => utf8_decode($row["usuario_update"]), 
+						'fecha_update' => utf8_decode($row["fecha_update"]),  
 						'estado' => utf8_decode($row["estado"])
                     );
                     $json = array("status" => 1, "info" => $results);
