@@ -102,7 +102,7 @@ WHERE v.id_mascota=m.id_mascota AND v.id_tipovacuna=t.id_tipovacuna
 AND v.id_mascota=1 AND v.estado='A'
 */
 --------------------TABLAS SEGURIDAD-----------------------------
-CREATE TABLE IF NOT EXISTS dbMyPet.sec_menu(
+CREATE TABLE IF NOT EXISTS dbMyPet.sec_menus(
     id_menu INT PRIMARY KEY ,
     nombremenu VARCHAR(255),
     estado VARCHAR(1),
