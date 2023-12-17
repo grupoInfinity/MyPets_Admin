@@ -24,6 +24,11 @@ $estado = isset($_GET['estado']) ? $_GET['estado'] : '';
 $user = utf8_decode(isset($_GET['user']) ? $_GET['user'] : '');
 
 $json = "no has seteado nada.";
+function imageToBase64($imagePath) {
+    $imageData = file_get_contents($imagePath);
+    $base64 = base64_encode($imageData);
+    return $base64;
+}
 
 if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
     /*if (!empty($id_mun)) $id_mun = "A.id_municipio='$id_mun'";
@@ -60,7 +65,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
                     'direccion' => utf8_decode($row["direccion"]),
                     'estado_direc' => utf8_decode($row["estado_direc"]),
                     'edad' => utf8_decode($row["edad"]),
-                    'foto' => utf8_decode($row["foto"]),
+                    'foto' =>  imageToBase64(utf8_decode($row["foto"])),
                     'codigo' => utf8_decode($row["codigo"])
                 );
                 $json = array("status" => 1, "info" => $results);
@@ -92,6 +97,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 
         $date = (new DateTime())->format('Y-m-d');
         $edad = date_create_from_format('Y-m-d', $edad);
+        
 
         $sql = "INSERT INTO 
         $bd.$tabla(id_mascota, id_usuario,id_tipomascota,id_municipio,direccion,estado_direc,
@@ -156,7 +162,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         $date = (new DateTime())->format('Y-m-d');
 
         $sql = "SELECT m.id_mascota, u.id_usuario, u.mail,u.telefono,m.nombremascota,
-        d.departamento,mu.municipio,m.direccion,m.estado_direc,m.codigo,m.edad,m.foto 
+        d.departamento,mu.municipio,m.direccion,m.estado_direc,m.codigo,m.edad,m.foto,m.estado 
         FROM prc_mascotas m,sec_usuarios u, ctg_tipomascotas t, ctg_municipios mu, ctg_departamentos d 
         WHERE m.id_tipomascota=t.id_tipomascota AND m.id_usuario=u.id_usuario AND mu.id_departamento=d.id_departamento 
         AND m.id_mascota=$id_mascota";
@@ -167,9 +173,17 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     $results[] = array(
-                        "id" => $row["id_municipio"], 
+                        "id_mascota" => $row["id_mascota"], 
+                        "id_usuario" => $row["id_usuario"], 
+                        'mail' => utf8_decode($row["mail"]), 
+                        'telefono' => utf8_decode($row["telefono"]), 
+                        'nombremascota' => utf8_decode($row["nombremascota"]), 
                         'departamento' => utf8_decode($row["departamento"]), 
                         'municipio' => utf8_decode($row["municipio"]), 
+                        'direccion' => utf8_decode($row["direccion"]), 
+                        'estado_direc' => utf8_decode($row["estado_direc"]), 
+                        'codigo' => utf8_decode($row["codigo"]),
+                        'foto' => imageToBase64(utf8_decode($row["foto"])),
                         'estado' => utf8_decode($row["estado"])
                     );
                     $json = array("status" => 1, "info" => $results);
