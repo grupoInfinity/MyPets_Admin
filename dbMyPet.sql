@@ -23,7 +23,7 @@ CREATE TABLE `sec_menu` (   #SEC MENU
 LOCK TABLES `sec_menu` WRITE;
 
 insert  into `sec_menu`(`id_menu`,`descripcion`,`menu_icon`,`orden`,`acceso_directo`,`estado`,
-`usuario_creacion`,`fecha_creacion`,`usuario_modificacion`,`fecha_modificacion`)
+`usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`)
  values (1,'Administración','glyphicon-th',1,1,'A','admin','2018-11-09 15:28:56','nguerrero','2021-08-12 00:56:20'),
  (2,1,'Seguridad','glyphicon-cog',13,1,'A','admin','2018-11-09 15:28:56','nguerrero','2021-08-12 00:56:31'),
  (4,1,'Seguimiento','glyphicon-calendar',2,1,'A','admin','2018-11-09 15:28:56','admin','2019-02-18 21:49:07'),
@@ -56,7 +56,7 @@ ALTER TABLE `sec_opcion`
 LOCK TABLES `sec_opcion` WRITE;
 
 
-insert  into `sec_opcion`(`id_opc`,`id_menu`,`id_opc_padre`,`padre`,`descripcion`,`url`,`estado`,`usuario_creacion`,`fecha_creacion`,`usuario_modificacion`,`fecha_modificacion`,`orden`) 
+insert  into `sec_opcion`(`id_opc`,`id_menu`,`id_opc_padre`,`padre`,`descripcion`,`url`,`estado`,`usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`,`orden`) 
     values (27,2,NULL,NULL,'Empleado','menuMaster.listEmpleado()','A','admin','2018-11-09 15:29:05','admin','2019-02-11 00:00:00',4),
     (28,1,61,NULL,'Cargo','menuMaster.listCargo()','A','admin','2018-11-09 15:29:05','system','2023-12-03 00:00:00',2),
     (30,4,NULL,NULL,'Seguimiento Tareas','menuMaster.listTarea()','A','admin','2018-11-09 15:29:05',NULL,NULL,2),
@@ -95,7 +95,7 @@ CREATE TABLE `sec_rol` (
 
 LOCK TABLES `sec_rol` WRITE;
 
-insert  into `sec_rol`(`id_rol`,`descripcion`,`estado`,`usuario_creacion`,`fecha_creacion`,`usuario_modificacion`,`fecha_modificacion`)
+insert  into `sec_rol`(`id_rol`,`descripcion`,`estado`,`usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`)
  values (1,'Administrador','A','admin','2021-08-11 16:15:48','admin','2019-02-11 00:00:00'),
  (2,'Presidente','A','admin','2021-08-11 16:15:48',NULL,NULL),
  (3,'Gerente','A','admin','2021-08-11 16:15:48',NULL,NULL),
@@ -124,7 +124,7 @@ CREATE TABLE `sec_usuario` (
 
 LOCK TABLES `sec_usuario` WRITE;
 
-insert  into `sec_usuario`(`usuario`,`clave`,`nombre`,`apellido`,`email`,`estado`,`tipo_usuario`,`usuario_creacion`,`fecha_creacion`,`usuario_modificacion`,`fecha_modificacion`) 
+insert  into `sec_usuario`(`usuario`,`clave`,`nombre`,`apellido`,`email`,`estado`,`tipo_usuario`,`usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`) 
     values ('dbarrientos','123','Dennis','Barrientos','gustavo.moreno@gi-sv.com','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
     ('dnery','123','Daniel','Nery','gustavo.moreno@gi-sv.com','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
     ('esantos','123','Eneas','Santos','gustavo.moreno@gi-sv.com','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
@@ -160,7 +160,7 @@ CREATE TABLE `sec_opc_rol` (
 
 LOCK TABLES `sec_opc_rol` WRITE;
 
-insert  into `sec_opc_rol`(`id_menu`,`id_opc`,`id_rol`,`usuario_creacion`,`fecha_creacion`,`usuario_modificacion`,`fecha_modificacion`) 
+insert  into `sec_opc_rol`(`id_menu`,`id_opc`,`id_rol`,`usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`) 
     values (1,1,27,1,'admin','2018-11-09 15:29:01',NULL,NULL),
     (1,27,3,'admin','2018-11-09 15:29:01',NULL,NULL),
     (1,28,1,'admin','2018-11-09 15:29:01',NULL,NULL),
