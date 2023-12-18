@@ -34,7 +34,6 @@ CREATE TABLE IF NOT EXISTS dbMyPet.ctg_departamentos(
 /*insert into ctg_departamentos (id_departamento,departamento,estado)
  VALUES (1,'San Salvador','A'),(2,'San Miguel','A');*/
 
-select * from ctg_municipios
 CREATE TABLE IF NOT EXISTS dbMyPet.ctg_municipios(
     id_municipio INT PRIMARY KEY ,
     id_departamento INT,
@@ -67,7 +66,7 @@ CREATE TABLE IF NOT EXISTS dbMyPet.prc_mascotas(
     estado_direc VARCHAR(1),
     nombremascota VARCHAR(255),
     codigo INT,
-    edad date,
+    fechanacimiento date,
     foto LONGTEXT,
     /*mailcontacto VARCHAR(255),
     telcontacto VARCHAR(255),*/
@@ -111,6 +110,7 @@ CREATE TABLE IF NOT EXISTS dbMyPet.sec_menus(
     usuario_update VARCHAR(255),
     fecha_update datetime 
 );
+
 CREATE TABLE IF NOT EXISTS dbMyPet.sec_opciones(
     id_opc INT PRIMARY KEY ,
     desc_opc VARCHAR(255),#---Descripcion
@@ -120,6 +120,7 @@ CREATE TABLE IF NOT EXISTS dbMyPet.sec_opciones(
     usuario_update VARCHAR(255),
     fecha_update datetime 
 );
+
 CREATE TABLE IF NOT EXISTS dbMyPet.sec_usuarios(
     id_usuario INT PRIMARY KEY ,
     mail varchar(255) UNIQUE,

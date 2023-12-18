@@ -22,8 +22,8 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 
     $sql = "
 	SELECT *
-	FROM $bd.$tabla A";
-    //WHERE $id $depto $estado ";
+	FROM $bd.$tabla A 
+    WHERE $id $depto $estado ";
 
     $result = $conn->query($sql);
 
