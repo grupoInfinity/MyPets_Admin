@@ -7,7 +7,7 @@ $tabla = "ctg_tipomascotas";
 $accion = isset($_GET['accion']) ? $_GET['accion'] : '';
 $id = isset($_GET['id']) ? $_GET['id'] : '';
 $tipomascota= utf8_decode(isset($_GET['tipomascota']) ? $_GET['tipomascota'] : '');
-$estado = isset($_GET['estado']) ? $_GET['estado'] : '';
+$estado = utf8_decode(isset($_GET['estado']) ? $_GET['estado'] : '');
 $user = utf8_decode(isset($_GET['user']) ? $_GET['user'] : '');
 
 $json = "no has seteado nada.";
@@ -21,9 +21,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
     else $estado = "";
 
     $sql = "
-	SELECT *
-	FROM $bd.$tabla A";
-    //WHERE $id $depto $estado ";
+	SELECT * FROM $bd.$tabla A  WHERE $id $tipomascota $estado ";
 
     $result = $conn->query($sql);
 
@@ -70,34 +68,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         } else {
             $json = array("status" => 0, "info" => $conn->error);
         }
-    } else if (strtoupper($accion) == 'CU') { // VERIFICACION SI LA ACCION ES UNA CONSULTA DE UN REGISTRO PARA CARGARLO A UN FORMULARIO
-
-        if (!empty($id)) $id = "A.id_tipomascota='$id'";
-        else $id = "1=1";
-        
-        $sql = "
-        SELECT *
-        FROM $bd.$tabla A 
-        where $id";
-
-        $result = $conn->query($sql);
-
-        if (!empty($result))
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    $results[] = array(
-                        "id" => $row["id_tipomascota"],
-                        'tipomascota' => utf8_decode($row["tipomascota"]),
-                        'estado' => $row["estado"]
-                    );
-                    $json = array("status" => 1, "info" => $results);
-                }
-            } else {
-                $json = array("status" => 0, "info" => "No existe información con ese criterio.");
-            }
-        else $json = array("status" => 0, "info" => "No existe información.");
-
-    } else if (strtoupper($accion) == 'U') { // VERIFICACION SI LA ACCION ES MODIFICACION
+    }else if (strtoupper($accion) == 'U') { // VERIFICACION SI LA ACCION ES MODIFICACION
 
         $tipomascota = "tipomascota='" . strtoupper($tipomascota) . "'";
         $estado = ", estado='" . strtoupper($estado) . "'";

@@ -31,14 +31,14 @@ function imageToBase64($imagePath) {
 }
 
 if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
-    /*if (!empty($id_mun)) $id_mun = "A.id_municipio='$id_mun'";
+    if (!empty($id_mun)) $id_mun = "A.id_municipio='$id_mun'";
     else $id_mun = "1=1";
     if (!empty($id_depto)) $id_depto = "AND A.id_departamento='$id_depto'";
     else $id_depto = "AND 1=1";
     if (!empty($municipio)) $municipio = "AND A.municipio LIKE '%'$municipio%'";
     else $municipio = "";
     if (!empty($estado)) $estado = "AND A.estado='$estado'";
-    else $estado = "";*/
+    else $estado = "";
     if (!empty($nombremasc)) $nombremasc = "AND m.nombremascota LIKE '%'$nombremasc%'";
     else $nombremasc = "";
 
@@ -46,8 +46,8 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
     d.departamento,mu.municipio,m.direccion,m.estado_direc,m.codigo,m.edad 
     FROM prc_mascotas m,sec_usuarios u, ctg_tipomascotas t, ctg_municipios mu, ctg_departamentos d 
     WHERE m.id_tipomascota=t.id_tipomascota AND m.id_usuario=u.id_usuario 
-    AND mu.id_departamento=d.id_departamento $nombremasc";
-    //WHERE $id_opc $id_opc_ppal $id_rol ";
+    AND mu.id_departamento=d.id_departamento $nombremasc 
+    WHERE $id_opc $id_opc_ppal $id_rol ";
 
     $result = $conn->query($sql);
 
