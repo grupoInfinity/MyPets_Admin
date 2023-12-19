@@ -20,10 +20,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
     if (!empty($estado)) $estado = "AND A.estado='$estado'";
     else $estado = "";
 
-    $sql = "
-	SELECT *
-	FROM $bd.$tabla A 
-    WHERE $id $depto $estado ";
+    $sql = "SELECT * FROM $bd.$tabla A WHERE $id $depto $estado ";
 
     $result = $conn->query($sql);
 
@@ -60,50 +57,24 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
                 $id = 1;
             }
         } else $id = 1;
-        $date = (new DateTime())->format('Y-m-d');
+        //$date = (new DateTime())->format('Y-m-d');
 
-        $sql = "INSERT INTO $bd.$tabla(id_departamento, departamento, estado, usuario_creacion, fecha_creacion) VALUE($id,'$depto', 'A', '$user', '$date')";
+        $sql = "INSERT INTO $bd.$tabla(id_departamento, departamento, estado, usuario_creacion/*, fecha_creacion*/)
+         VALUE($id,'$depto', 'A', '$user'/*, '$date'*/)";
 
         if ($conn->query($sql) === TRUE) {
             $json = array("status" => 1, "info" => "Registro almacenado exitosamente.");
         } else {
             $json = array("status" => 0, "info" => $conn->error);
         }
-    } else if (strtoupper($accion) == 'CU') { // VERIFICACION SI LA ACCION ES UNA CONSULTA DE UN REGISTRO PARA CARGARLO A UN FORMULARIO
-
-        if (!empty($id)) $id = "A.id_departamento='$id'";
-        else $id = "1=1";
-        
-        $sql = "
-        SELECT *
-        FROM $bd.$tabla A 
-        where $id";
-
-        $result = $conn->query($sql);
-
-        if (!empty($result))
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    $results[] = array(
-                        "id" => $row["id_departamento"],
-                        'departamento' => utf8_decode($row["departamento"]),
-                        'estado' => $row["estado"]
-                    );
-                    $json = array("status" => 1, "info" => $results);
-                }
-            } else {
-                $json = array("status" => 0, "info" => "No existe información con ese criterio.");
-            }
-        else $json = array("status" => 0, "info" => "No existe información.");
-
     } else if (strtoupper($accion) == 'U') { // VERIFICACION SI LA ACCION ES MODIFICACION
 
         $depto = "departamento='" . strtoupper($depto) . "'";
         $estado = ", estado='" . strtoupper($estado) . "'";
         $user = ", usuario_update='" . $user . "'";
-        $date = ", fecha_update='" . (new DateTime())->format('Y-m-d') . "'";
+        //$date = ", fecha_update='" . (new DateTime())->format('Y-m-d') . "'";
 
-        $sql = "UPDATE $bd.$tabla SET $depto $estado $user $date WHERE id_departamento = $id";
+        $sql = "UPDATE $bd.$tabla SET $depto $estado $user /*$date*/ WHERE id_departamento = $id";
 
         if ($conn->query($sql) === TRUE) {
             $json = array("status" => 1, "info" => "Registro actualizado exitosamente.");
@@ -112,9 +83,9 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         }
     } else if (strtoupper($accion) == 'D') { // VERIFICACION SI LA ACCION ES ELIMINACION
         $user = ", usuario_update='" . $user . "'";
-        $date = ", fecha_update='" . (new DateTime())->format('Y-m-d') . "'";
+        //$date = ", fecha_update='" . (new DateTime())->format('Y-m-d') . "'";
 
-        $sql = "UPDATE $bd.$tabla set estado='I' $user $date WHERE id_departamento = $id";
+        $sql = "UPDATE $bd.$tabla set estado='I' $user /*$date*/ WHERE id_departamento = $id";
 
         if ($conn->query($sql) === TRUE) {
             $json = array("status" => 1, "info" => "Registro eliminado exitosamente.");
@@ -124,9 +95,9 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
     }
     else if (strtoupper($accion) == 'A') { // VERIFICACION SI LA ACCION ES ACTIVAR REGISTRO
         $user = ", usuario_update='" . $user . "'";
-        $date = ", fecha_update='" . (new DateTime())->format('Y-m-d') . "'";
+        //$date = ", fecha_update='" . (new DateTime())->format('Y-m-d') . "'";
 
-        $sql = "UPDATE $bd.$tabla set estado='A' $user $date WHERE id_departamento = $id";
+        $sql = "UPDATE $bd.$tabla set estado='A' $user /*$date*/ WHERE id_departamento = $id";
 
         if ($conn->query($sql) === TRUE) {
             $json = array("status" => 1, "info" => "Registro eliminado exitosamente.");

@@ -4,9 +4,10 @@ CREATE DATABASE IF NOT EXISTS `dbMyPet`;
 
 USE `dbMyPet`;
 
+
 DROP TABLE IF EXISTS `sec_menu`;
 
-CREATE TABLE `sec_menu` (   #SEC MENU
+CREATE TABLE IF NOT EXISTS dbMyPet.sec_menu (   #SEC MENU
   `id_menu` INT NOT NULL COMMENT 'id opcion principal',
   `descripcion` varchar(125) DEFAULT NULL COMMENT 'descripcion de la opcion principal',
   `menu_icon` varchar(500) DEFAULT NULL COMMENT 'icono del menu',
@@ -33,8 +34,8 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `sec_opcion`;
 
-CREATE TABLE `sec_opcion` (
-  `id_opc` int PRIMARY KEY NOT NULL COMMENT 'id de la opcion',
+CREATE TABLE IF NOT EXISTS dbMyPet.sec_opcion (
+  `id_opc` int NOT NULL COMMENT 'id de la opcion',
   `id_menu` int NOT NULL DEFAULT 0 COMMENT 'id de la opcion principal',
   `id_opc_padre` int DEFAULT NULL COMMENT 'id de la opcion padre',
   `padre` tinyint(1) DEFAULT NULL COMMENT 'si la opcion es padre',
@@ -82,7 +83,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `sec_rol`;
 
-CREATE TABLE `sec_rol` (
+CREATE TABLE IF NOT EXISTS dbMyPet.sec_rol (
   `id_rol` int NOT NULL COMMENT 'id del rol',
   `descripcion` varchar(50) DEFAULT NULL COMMENT 'descripcion del rol',
   `estado` varchar(1) DEFAULT 'A' COMMENT 'estado del rol',
@@ -106,12 +107,12 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `sec_usuario`;
 
-CREATE TABLE `sec_usuario` (
-  `usuario` varchar(255) NOT NULL COMMENT 'id del usuario'
-  `clave` varchar(25) DEFAULT NULL COMMENT 'clave del usuario',
-  `nombre` varchar(50) DEFAULT NULL COMMENT 'nombre del usuario',
-  `apellido` varchar(50) DEFAULT NULL COMMENT 'apellido del usuario',
-  `email` varchar(150) DEFAULT NULL COMMENT 'email del usuario',
+CREATE TABLE IF NOT EXISTS dbMyPet.sec_usuario (
+  `usuario` varchar(255) NOT NULL COMMENT 'id del usuario',
+  `clave` varchar(255) DEFAULT NULL COMMENT 'clave del usuario',
+  `nombre` varchar(255) DEFAULT NULL COMMENT 'nombre del usuario',
+  `apellido` varchar(255) DEFAULT NULL COMMENT 'apellido del usuario',
+  `email` varchar(255) DEFAULT NULL COMMENT 'email del usuario',
   `estado` varchar(1) DEFAULT 'A' COMMENT 'estado del usuario',
   `tipo_usuario` int(1) DEFAULT NULL COMMENT 'tipo de usuario',
   `usuario_creacion` varchar(255) DEFAULT NULL COMMENT 'usuario creacion',
@@ -141,7 +142,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `sec_opc_rol`;
 
-CREATE TABLE `sec_opc_rol` (
+CREATE TABLE IF NOT EXISTS dbMyPet.sec_opc_rol (
   `id_menu` int NOT NULL DEFAULT 0 COMMENT 'id opcion principal',
   `id_opc` int NOT NULL COMMENT 'id opcion',
   `id_rol` int NOT NULL COMMENT 'id rol',
@@ -155,7 +156,7 @@ CREATE TABLE `sec_opc_rol` (
   KEY `FK_OPC1` (`id_opc`),
   CONSTRAINT `FK_OPC1` FOREIGN KEY (`id_opc`) REFERENCES `sec_opcion` (`id_opc`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_OPC_PPAL1` FOREIGN KEY (`id_menu`) REFERENCES `sec_menu` (`id_menu`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_ROL2` FOREIGN KEY (`id_rol`) REFERENCES `sec_rol` (`id_rol`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_ROL2` FOREIGN KEY (`id_rol`) REFERENCES `sec_rol` (`id_rol`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de las opciones por rol';
 
 LOCK TABLES `sec_opc_rol` WRITE;
@@ -195,7 +196,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `sec_rol_usuario`;
 
-CREATE TABLE `sec_rol_usuario` (
+CREATE TABLE IF NOT EXISTS dbMyPet.sec_rol_usuario (
   `id_sec_rol` INT NOT NULL DEFAULT 1 COMMENT 'id empresa',
   `usuario` varchar(30) NOT NULL COMMENT 'id de usuario',
   `id_rol` INT NOT NULL COMMENT 'id del rol',
@@ -251,7 +252,8 @@ CREATE TABLE IF NOT EXISTS dbMyPet.ctg_tipovacunas(
     `fecha_creacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'fecha creacion',
     `usuario_update` varchar(255) DEFAULT NULL COMMENT 'usuario modificacion',
     `fecha_update` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'fecha modificacion'
-);
+)ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de los roles por usuario';
+
 LOCK TABLES `ctg_tipovacunas` WRITE;
 
 DROP TABLE IF EXISTS `ctg_tipomascotas`;
@@ -263,7 +265,8 @@ CREATE TABLE IF NOT EXISTS dbMyPet.ctg_tipomascotas(
     `fecha_creacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'fecha creacion',
     `usuario_update` varchar(255) DEFAULT NULL COMMENT 'usuario modificacion',
     `fecha_update` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'fecha modificacion'
-);
+)ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de los roles por usuario';
+
 LOCK TABLES `ctg_tipomascotas` WRITE;
 
 DROP TABLE IF EXISTS `ctg_departamentos`;
@@ -275,7 +278,8 @@ CREATE TABLE IF NOT EXISTS dbMyPet.ctg_departamentos(
     `fecha_creacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'fecha creacion',
     `usuario_update` varchar(255) DEFAULT NULL COMMENT 'usuario modificacion',
     `fecha_update` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'fecha modificacion'
-);
+)ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de los roles por usuario';
+
 LOCK TABLES `ctg_departamentos` WRITE;
 
 /*insert into ctg_departamentos (id_departamento,departamento,estado)
@@ -294,7 +298,8 @@ CREATE TABLE IF NOT EXISTS dbMyPet.ctg_municipios(
     KEY `fk_municipios_dep` (`id_departamento`),
     -- DEPARTAMENTO A MUNICIPIO
     CONSTRAINT `fk_municipios_dep` FOREIGN KEY(`id_departamento`) REFERENCES `ctg_departamentos`(`id_departamento`)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de los roles por usuario';
+
 LOCK TABLES `ctg_municipios` WRITE;
 
 /*insert into ctg_municipios(id_municipio,id_departamento,municipio,estado) 
@@ -331,7 +336,8 @@ CREATE TABLE IF NOT EXISTS dbMyPet.prc_mascotas(
     CONSTRAINT `fk_mascotas_tpm` FOREIGN KEY(`id_tipomascota`) REFERENCES `ctg_tipomascotas`(`id_tipomascota`),
     CONSTRAINT `fk_mascotas_munic` FOREIGN KEY(`id_municipio`) REFERENCES `ctg_municipios`(`id_municipio`),
     CONSTRAINT `fk_mascotas_us` FOREIGN KEY(`usuario`) REFERENCES `sec_usuario`(`usuario`)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de los roles por usuario';
+
 LOCK TABLES `prc_mascotas` WRITE;
 /*
  SELECT m.id_mascota, u.id_usuario, u.mail,u.telefono,m.nombremascota,
@@ -355,7 +361,8 @@ CREATE TABLE IF NOT EXISTS dbMyPet.prc_vacunas(
     KEY `fk_tipovac_vac` (`id_tipovacuna`),
     CONSTRAINT `fk_mascota_vac` FOREIGN KEY(`id_mascota`) REFERENCES `ctg_tipomascotas`(`id_mascota`),
     CONSTRAINT `fk_tipovac_vac` FOREIGN KEY(`id_tipovacuna`) REFERENCES `ctg_tipovacunas`(`id_tipovacuna`)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de los roles por usuario';
+
 LOCK TABLES `prc_vacunas` WRITE;
 /*
  SELECT v.id_vacuna,t.nombrevacuna,v.fecha_creacion,v.estado
