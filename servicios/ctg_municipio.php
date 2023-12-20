@@ -99,7 +99,7 @@ else{
 		$user = ", usuario_update='".$user."'";
 		//$date = ", fecha_update='".(new DateTime())->format('Y-m-d')."'";
 		
-		$sql = "UPDATE $bd.$tabla SET estado='I' WHERE id_municipio = $id_municipio ";
+		$sql = "UPDATE $bd.$tabla SET estado='I' $user WHERE id_municipio = $id_municipio ";
 		
 		if ($conn->query($sql) === TRUE) {
 			$json = array("status"=>1, "info"=>"Registro eliminado exitosamente.");
@@ -111,7 +111,7 @@ else{
 		$user = ", usuario_update='".$user."'";
 		//$date = ", fecha_update='".(new DateTime())->format('Y-m-d')."'";
 		
-		$sql = "UPDATE $bd.$tabla SET estado='A' WHERE id_municipio = $id_municipio ";
+		$sql = "UPDATE $bd.$tabla SET estado='A' $user WHERE id_municipio = $id_municipio ";
 		
 		if ($conn->query($sql) === TRUE) {
 			$json = array("status"=>1, "info"=>"Registro eliminado exitosamente.");

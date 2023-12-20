@@ -338,6 +338,7 @@ CREATE TABLE IF NOT EXISTS dbMyPet.prc_mascotas(
     CONSTRAINT `fk_mascotas_us` FOREIGN KEY(`usuario`) REFERENCES `sec_usuario`(`usuario`)
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de los roles por usuario';
 
+SELECT * FROM prc_mascotas
 LOCK TABLES `prc_mascotas` WRITE;
 /*
  SELECT m.id_mascota, u.id_usuario, u.mail,u.telefono,m.nombremascota,
@@ -348,7 +349,7 @@ LOCK TABLES `prc_mascotas` WRITE;
  */
  DROP TABLE IF EXISTS `prc_vacunas`;
 CREATE TABLE IF NOT EXISTS dbMyPet.prc_vacunas(
-    `id_vacuna` INT PRIMARY KEY,
+    `id_vacuna` INT,
     `id_mascota` INT,
     `id_tipovacuna` INT,
     `estado` VARCHAR(1),
@@ -359,9 +360,10 @@ CREATE TABLE IF NOT EXISTS dbMyPet.prc_vacunas(
     PRIMARY KEY(`id_vacuna`,`id_mascota`,`id_tipovacuna`),
     KEY `fk_mascota_vac` (`id_mascota`),
     KEY `fk_tipovac_vac` (`id_tipovacuna`),
-    CONSTRAINT `fk_mascota_vac` FOREIGN KEY(`id_mascota`) REFERENCES `ctg_tipomascotas`(`id_mascota`),
+    CONSTRAINT `fk_mascota_vac` FOREIGN KEY(`id_mascota`) REFERENCES `prc_mascotas`(`id_mascota`),
     CONSTRAINT `fk_tipovac_vac` FOREIGN KEY(`id_tipovacuna`) REFERENCES `ctg_tipovacunas`(`id_tipovacuna`)
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de los roles por usuario';
+
 
 LOCK TABLES `prc_vacunas` WRITE;
 /*
