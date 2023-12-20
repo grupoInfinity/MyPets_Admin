@@ -83,16 +83,15 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         }
     }else if (strtoupper($accion) == 'U') { // VERIFICACION SI LA ACCION ES MODIFICACION
 
-        $nombremenu = "nombremenu='" . strtoupper($nombremenu) . "'";
-        $nombremenu = "nombremenu='" . strtoupper($nombremenu) . "'";
-        $nombremenu = "nombremenu='" . strtoupper($nombremenu) . "'";
-        $nombremenu = "nombremenu='" . strtoupper($nombremenu) . "'";
-        $nombremenu = "nombremenu='" . strtoupper($nombremenu) . "'";
-        $estado = ", estado='" . strtoupper($estado) . "'";
-        $user = ", usuario_update='" . $user . "'";
+        $descripcion = "descripcion='".$descripcion."'";
+        $menu_icon = ", menu_icon='".$menu_icon."'";
+        $orden = "orden='".$orden."'";
+        $acceso_directo = "acceso_directo='".$acceso_directo."'";
+		$estado = ", estado='".strtoupper($estado)."'";
+		$user = ", usuario_modificacion='".$user."'";
         //$date = ", fecha_update='" . (new DateTime())->format('Y-m-d') . "'";
 
-        $sql = "UPDATE $bd.$tabla SET $nombremenu $estado $user /*$date*/ WHERE id_menu = $id";
+        $sql = "UPDATE $bd.$tabla SET $descripcion $menu_icon $orden $acceso_directo $estado $user /*$date*/ WHERE id_menu = $id_menu";
 
         if ($conn->query($sql) === TRUE) {
             $json = array("status" => 1, "info" => "Registro actualizado exitosamente.");
