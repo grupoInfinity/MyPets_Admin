@@ -3,7 +3,21 @@ DROP DATABASE IF EXISTS `dbMyPet`;
 CREATE DATABASE IF NOT EXISTS `dbMyPet`;
 
 USE `dbMyPet`;
-
+/*
+SELECT DISTINCT opc.*  
+		FROM sec_rol_usuario rs
+		INNER JOIN sec_opc_rol opcr ON opcr.id_rol = rs.id_rol
+		INNER JOIN sec_opcion opc ON opc.id_opc = opcr.id_opc 
+		AND COALESCE(opc.id_menu, -1) = COALESCE(opcr.id_menu, -1)
+		AND opc.estado = 'A'
+		INNER JOIN sec_usuario us ON us.usuario = rs.usuario*/
+		
+	
+		SELECT DISTINCT mn.*  
+		FROM sec_menu mn
+		INNER JOIN sec_opc_rol opcr ON opcr.id_menu = mn.id_menu
+		INNER JOIN sec_rol_usuario rs ON rs.usuario = '' AND rs.id_rol = opcr.id_rol
+		WHERE mn.estado = 'A'
 
 DROP TABLE IF EXISTS `sec_menu`;
 
@@ -113,6 +127,7 @@ CREATE TABLE IF NOT EXISTS dbMyPet.sec_usuario (
   `nombre` varchar(255) DEFAULT NULL COMMENT 'nombre del usuario',
   `apellido` varchar(255) DEFAULT NULL COMMENT 'apellido del usuario',
   `email` varchar(255) DEFAULT NULL COMMENT 'email del usuario',
+  `pin` varchar(255) DEFAULT NULL COMMENT 'pin para recuperar clave',
   `estado` varchar(1) DEFAULT 'A' COMMENT 'estado del usuario',
   `tipo_usuario` int(1) DEFAULT NULL COMMENT 'tipo de usuario',
   `usuario_creacion` varchar(255) DEFAULT NULL COMMENT 'usuario creacion',
@@ -366,10 +381,12 @@ CREATE TABLE IF NOT EXISTS dbMyPet.prc_vacunas(
 
 
 LOCK TABLES `prc_vacunas` WRITE;
-/*
- SELECT v.id_vacuna,t.nombrevacuna,v.fecha_creacion,v.estado
+USE dbmypet
+
+ SELECT v.id_vacuna,v.id_mascota,v.id_tipovacuna,m.nombremascota,
+ t.nombrevacuna,DATE(v.fecha_creacion) AS fecha_creacion,v.estado
  FROM prc_vacunas v, prc_mascotas m, ctg_tipovacunas t 
  WHERE v.id_mascota=m.id_mascota AND v.id_tipovacuna=t.id_tipovacuna
  AND v.id_mascota=1 AND v.estado='A'
- */
+ 
 /*--------------------TABLAS SEGURIDAD-----------------------------*/

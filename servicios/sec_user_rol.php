@@ -7,7 +7,7 @@ $tabla = "sec_rol_usuario";
 $accion = isset($_GET['accion']) ? $_GET['accion'] : '';
 $user = isset($_GET['user']) ? $_GET['user'] : '';
 $id_rol = utf8_decode(isset($_GET['id_rol']) ? $_GET['id_rol'] : '');
-$user = utf8_decode(isset($_GET['user']) ? $_GET['user'] : '');
+$usercr = utf8_decode(isset($_GET['usercr']) ? $_GET['usercr'] : '');
 
 $json = "no has seteado nada.";
 
@@ -45,7 +45,7 @@ else{
 		//$date = date('Y-m-d');
 	
 		$sql = "INSERT INTO $bd.$tabla(usuario, id_rol, USUARIO_CREACION/*, FECHA_CREACION*/) 
-		VALUE($usuario,$id_rol, '$user'/*, '$date'*/)";
+		VALUE($usuario,$id_rol, '$usercr'/*, '$date'*/)";
 		
 		if ($conn->query($sql) === TRUE) {
 			$json = array("status"=>1, "info"=>"Registro almacenado exitosamente.");
@@ -54,10 +54,10 @@ else{
 		}
 	}
 	else if(strtoupper($accion) =='D'){// VERIFICACION SI LA ACCION ES ELIMINACION
-		$user = ", usuario_update='".$user."'";
+		$usercr = ", usuario_update='".$usercr."'";
 		//$date = ", fecha_modificacion='".date('Y-m-d')."'";
 		
-		$sql = "UPDATE $bd.$tabla SET estado='I' WHERE usuario = $user AND id_rol = $id_rol";
+		$sql = "UPDATE $bd.$tabla SET estado='I' $usercr WHERE usuario = $user AND id_rol = $id_rol";
 		
 		if ($conn->query($sql) === TRUE) {
 			$json = array("status"=>1, "info"=>"Registro eliminado exitosamente.");
@@ -66,10 +66,11 @@ else{
 		}
 	}	
     else if(strtoupper($accion) =='A'){// VERIFICACION SI LA ACCION ES ELIMINACION
-		$user = ", usuario_update='".$user."'";
+		$usercr = ", usuario_update='".$usercr."'";
+
 		//$date = ", fecha_modificacion='".date('Y-m-d')."'";
 		
-		$sql = "UPDATE $bd.$tabla SET estado='A' WHERE usuario = $user AND id_rol = $id_rol";
+		$sql = "UPDATE $bd.$tabla SET estado='A' $usercr WHERE usuario = $user AND id_rol = $id_rol";
 		
 		if ($conn->query($sql) === TRUE) {
 			$json = array("status"=>1, "info"=>"Registro eliminado exitosamente.");
