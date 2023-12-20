@@ -74,7 +74,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         //$date = (new DateTime())->format('Y-m-d');
 
         $sql = "INSERT INTO $bd.$tabla(id_menu, descripcion,menu_icon,orden,acceso_directo,estado, usuario_creacion/*, fecha_creacion*/) 
-        VALUE($id,'$desc','$menu_icon','$acceso_directo', 'A', '$user'/*, '$date'*/)";
+        VALUE($id,'$desc','$menu_icon','$acceso_directo', '$estado', '$user'/*, '$date'*/)";
 
         if ($conn->query($sql) === TRUE) {
             $json = array("status" => 1, "info" => "Registro almacenado exitosamente.");

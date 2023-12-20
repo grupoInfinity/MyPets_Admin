@@ -81,7 +81,7 @@ else{
 	
 		$sql = "INSERT INTO 
         $bd.$tabla(id_vacuna, id_mascota,id_tipovacuna,estado, usuario_creacion, fecha_creacion) 
-		VALUE($id_vacuna, $id_mascota,  $id_tipovac, 'A','$user'/*, '$date'*/)";
+		VALUE($id_vacuna, $id_mascota,  $id_tipovac, '$estado','$user'/*, '$date'*/)";
 		
 		if ($conn->query($sql) === TRUE) {
 			$json = array("status"=>1, "info"=>"Registro almacenado exitosamente.");

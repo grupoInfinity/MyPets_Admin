@@ -54,30 +54,17 @@ else{
 		}
 	}
 	else if(strtoupper($accion) =='D'){// VERIFICACION SI LA ACCION ES ELIMINACION
-		$usercr = ", usuario_update='".$usercr."'";
+		//$usercr = ", usuario_update='".$usercr."'";
 		//$date = ", fecha_modificacion='".date('Y-m-d')."'";
 		
-		$sql = "UPDATE $bd.$tabla SET estado='I' $usercr WHERE usuario = $user AND id_rol = $id_rol";
+		$sql = "DELETE FROM $bd.$tabla WHERE usuario = $user AND id_rol = $id_rol";
 		
 		if ($conn->query($sql) === TRUE) {
 			$json = array("status"=>1, "info"=>"Registro eliminado exitosamente.");
 		} else {
 			$json = array("status"=>0, "error"=>$conn->error);
 		}
-	}	
-    else if(strtoupper($accion) =='A'){// VERIFICACION SI LA ACCION ES ELIMINACION
-		$usercr = ", usuario_update='".$usercr."'";
-
-		//$date = ", fecha_modificacion='".date('Y-m-d')."'";
-		
-		$sql = "UPDATE $bd.$tabla SET estado='A' $usercr WHERE usuario = $user AND id_rol = $id_rol";
-		
-		if ($conn->query($sql) === TRUE) {
-			$json = array("status"=>1, "info"=>"Registro eliminado exitosamente.");
-		} else {
-			$json = array("status"=>0, "error"=>$conn->error);
-		}
-	}	
+	}
 }
 $conn->close();
 
