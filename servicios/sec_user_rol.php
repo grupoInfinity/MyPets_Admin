@@ -1,27 +1,26 @@
 <?php
 include_once('../config.php'); 
 
-$bd = "jeo";
+$bd = "dbmypet";
 $tabla = "sec_rol_usuario";
 
 $accion = isset($_GET['accion']) ? $_GET['accion'] : '';
-$usr = isset($_GET['usr']) ? $_GET['usr'] : '';
-$rol = utf8_decode(isset($_GET['rol']) ? $_GET['rol'] : '');
-
+$user = isset($_GET['user']) ? $_GET['user'] : '';
+$id_rol = utf8_decode(isset($_GET['id_rol']) ? $_GET['id_rol'] : '');
 $user = utf8_decode(isset($_GET['user']) ? $_GET['user'] : '');
 
 $json = "no has seteado nada.";
 
 if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
-	if(!empty($usr)) $usr="A.usr='$usr'";
-	else $usr="1=1";
-	if(!empty($rol)) $rol="AND A.rol = '$rol'";
-	else $rol="";
+	if(!empty($user)) $user="A.usuario='$user'";
+	else $user="1=1";
+	if(!empty($id_rol)) $id_rol="AND A.id_rol = '$id_rol'";
+	else $id_rol="";
 		
 	$sql = "
-	SELECT A.usr, A.rol
+	SELECT A.user, A.id_rol
 	FROM $bd.$tabla A
-	WHERE $usr $rol ";
+	WHERE $user $id_rol ";
 	
 	//echo $sql;
 	$result = $conn->query($sql);
@@ -30,8 +29,8 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
 		if($result->num_rows > 0) {
 			while($row = $result->fetch_assoc()) {
 				$results[] = array(
-				"usr" => $row["usr"]
-				, 'rol' => utf8_decode($row["rol"])
+				"usuario" => $row["usuario"]
+				, 'id_rol' => utf8_decode($row["id_rol"])
 				);
 				$json = array("status"=>1, "info"=>$results);
 			}
@@ -43,10 +42,10 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
 else{
 	if(strtoupper($accion) =='I'){// VERIFICACION SI LA ACCION ES INSERCION
 		
-		$date = date('Y-m-d');
+		//$date = date('Y-m-d');
 	
-		$sql = "INSERT INTO $bd.$tabla(usr, rol, USUARIO_CREACION, FECHA_CREACION) 
-		VALUE($usr,$rol, '$user', '$date')";
+		$sql = "INSERT INTO $bd.$tabla(usuario, id_rol, USUARIO_CREACION/*, FECHA_CREACION*/) 
+		VALUE($usuario,$id_rol, '$user'/*, '$date'*/)";
 		
 		if ($conn->query($sql) === TRUE) {
 			$json = array("status"=>1, "info"=>"Registro almacenado exitosamente.");
@@ -55,10 +54,22 @@ else{
 		}
 	}
 	else if(strtoupper($accion) =='D'){// VERIFICACION SI LA ACCION ES ELIMINACION
-		$user = ", usuario_modificacion='".$user."'";
-		$date = ", fecha_modificacion='".date('Y-m-d')."'";
+		$user = ", usuario_update='".$user."'";
+		//$date = ", fecha_modificacion='".date('Y-m-d')."'";
 		
-		$sql = "DELETE FROM $bd.$tabla WHERE usr = $usr AND rol = $rol";
+		$sql = "UPDATE $bd.$tabla SET estado='I' WHERE usuario = $user AND id_rol = $id_rol";
+		
+		if ($conn->query($sql) === TRUE) {
+			$json = array("status"=>1, "info"=>"Registro eliminado exitosamente.");
+		} else {
+			$json = array("status"=>0, "error"=>$conn->error);
+		}
+	}	
+    else if(strtoupper($accion) =='A'){// VERIFICACION SI LA ACCION ES ELIMINACION
+		$user = ", usuario_update='".$user."'";
+		//$date = ", fecha_modificacion='".date('Y-m-d')."'";
+		
+		$sql = "UPDATE $bd.$tabla SET estado='A' WHERE usuario = $user AND id_rol = $id_rol";
 		
 		if ($conn->query($sql) === TRUE) {
 			$json = array("status"=>1, "info"=>"Registro eliminado exitosamente.");

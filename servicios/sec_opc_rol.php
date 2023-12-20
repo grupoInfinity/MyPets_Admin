@@ -5,7 +5,7 @@ $bd = "jeo";
 $tabla = "sec_opc_rol";
 
 $accion = isset($_GET['accion']) ? $_GET['accion'] : '';
-$id_opc_ppal = isset($_GET['id_opc_ppal']) ? $_GET['id_opc_ppal'] : '';
+$id_menu = isset($_GET['id_menu']) ? $_GET['id_menu'] : '';
 $id_opc = utf8_decode(isset($_GET['id_opc']) ? $_GET['id_opc'] : '');
 $id_rol = utf8_decode(isset($_GET['id_rol']) ? $_GET['id_rol'] : '');
 
