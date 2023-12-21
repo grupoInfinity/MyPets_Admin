@@ -1,7 +1,7 @@
 <?php
 include_once('../config.php'); 
 
-$bd = "jeo";
+$bd = "dbmypet";
 $tabla = "sec_usuario";
 
 $accion = isset($_GET['accion']) ? $_GET['accion'] : '';
@@ -17,6 +17,11 @@ $estado = isset($_GET['estado']) ? $_GET['estado'] : '';
 $usercr = utf8_decode(isset($_GET['usercr']) ? $_GET['usercr'] : '');
 
 $json = "no has seteado nada.";
+function generarPin() {
+    // Generar un PIN de 6 dígitos
+    $pin = sprintf("%06d", mt_rand(0, 999999));
+    return $pin;
+}
 
 if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
 	if(!empty($user)) $user="A.usr='$user'";
@@ -27,11 +32,13 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
 	else $apellido="";
 	if(!empty($estado)) $estado="AND A.estado='$estado'";
 	else $estado="";
+	if(!empty($pin)) $pin="AND A.pin='$pin'";
+	else $pin="";
 	
 	$sql = "
-	SELECT A.usr, A.clave, A.nombre, A.apellido, A.email, A.estado
+	SELECT A.usr, A.clave, A.nombre, A.apellido, A.email, A.estado, A.pin
 	FROM $bd.$tabla A
-	WHERE $user $clave $estado ";
+	WHERE $user $clave $estado $pin";
 
 	$result = $conn->query($sql);
 	
@@ -57,9 +64,10 @@ else{
 	if(strtoupper($accion) =='I'){// VERIFICACION SI LA ACCION ES INSERCION
 		
 		//$date = date('Y-m-d');
+		$pin=generarPin();
 	
-		$sql = "INSERT INTO $bd.$tabla(usuario, clave, nombre, apellido, email, ESTADO, USUARIO_CREACION/*, FECHA_CREACION*/) 
-		VALUE('$user','$clave', '$nombre', '$apellido', '$email', '$estado', '$usercr'/*, '$date'*/)";
+		$sql = "INSERT INTO $bd.$tabla(usuario, clave, nombre, apellido, email,,pin ESTADO, USUARIO_CREACION/*, FECHA_CREACION*/) 
+		VALUE('$user','$clave', '$nombre', '$apellido', '$email', '$estado','$pin', '$usercr'/*, '$date'*/)";
 		
 		if ($conn->query($sql) === TRUE) {
 			$json = array("status"=>1, "info"=>"Registro almacenado exitosamente.");

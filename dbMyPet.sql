@@ -126,8 +126,8 @@ CREATE TABLE IF NOT EXISTS dbMyPet.sec_usuario (
   `clave` varchar(255) DEFAULT NULL COMMENT 'clave del usuario',
   `nombre` varchar(255) DEFAULT NULL COMMENT 'nombre del usuario',
   `apellido` varchar(255) DEFAULT NULL COMMENT 'apellido del usuario',
-  `email` varchar(255) DEFAULT NULL COMMENT 'email del usuario',
-  `pin` varchar(255) DEFAULT NULL COMMENT 'pin para recuperar clave',
+  `email` int DEFAULT NULL COMMENT 'email del usuario',
+  `pin` INT DEFAULT NULL COMMENT 'pin para recuperar clave',
   `estado` varchar(1) DEFAULT 'A' COMMENT 'estado del usuario',
   `tipo_usuario` int(1) DEFAULT NULL COMMENT 'tipo de usuario',
   `usuario_creacion` varchar(255) DEFAULT NULL COMMENT 'usuario creacion',
@@ -137,6 +137,8 @@ CREATE TABLE IF NOT EXISTS dbMyPet.sec_usuario (
   PRIMARY KEY (`usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de usuario';
 
+
+ALTER TABLE
 
 LOCK TABLES `sec_usuario` WRITE;
 
@@ -242,20 +244,6 @@ insert  into `sec_rol_usuario`(`usuario`,`id_rol`,`usuario_creacion`,`fecha_crea
 
 UNLOCK TABLES;
 
-DROP TABLE IF EXISTS `sec_log_users`;
-
-CREATE TABLE `sec_log_users` (
-  `id_log` int NOT NULL AUTO_INCREMENT COMMENT 'id del registro',
-  `usuario` varchar(255) NOT NULL COMMENT 'id del usuario',
-  `log_in` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'fecha de ingreso',
-  `log_out` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'fecha de salida',
-  PRIMARY KEY (`id_log`,`usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
-
-LOCK TABLES `sec_log_users` WRITE;
-
-UNLOCK TABLES;
-
 
 DROP TABLE IF EXISTS `ctg_tipovacunas`;
 /*--------------------TABLAS CATALOGO------------------------------*/
@@ -294,6 +282,11 @@ CREATE TABLE IF NOT EXISTS dbMyPet.ctg_departamentos(
     `usuario_update` varchar(255) DEFAULT NULL COMMENT 'usuario modificacion',
     `fecha_update` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'fecha modificacion'
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de los roles por usuario';
+
+INSERT INTO ctg_departamentos (id_departamento, departamento,estado,usuario_creacion) 
+VALUE(1,'San Salvador','A','admin')
+
+SELECT * FROM ctg_departamentos
 
 LOCK TABLES `ctg_departamentos` WRITE;
 
