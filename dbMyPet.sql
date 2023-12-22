@@ -126,8 +126,8 @@ CREATE TABLE IF NOT EXISTS dbMyPet.sec_usuario (
   `clave` varchar(255) DEFAULT NULL COMMENT 'clave del usuario',
   `nombre` varchar(255) DEFAULT NULL COMMENT 'nombre del usuario',
   `apellido` varchar(255) DEFAULT NULL COMMENT 'apellido del usuario',
-  `email` int DEFAULT NULL COMMENT 'email del usuario',
-  `pin` INT DEFAULT NULL COMMENT 'pin para recuperar clave',
+  `email` varchar(255) DEFAULT NULL COMMENT 'email del usuario',
+  `pin` varchar(255) DEFAULT NULL COMMENT 'pin para recuperar clave',
   `estado` varchar(1) DEFAULT 'A' COMMENT 'estado del usuario',
   `tipo_usuario` int(1) DEFAULT NULL COMMENT 'tipo de usuario',
   `usuario_creacion` varchar(255) DEFAULT NULL COMMENT 'usuario creacion',
@@ -138,22 +138,21 @@ CREATE TABLE IF NOT EXISTS dbMyPet.sec_usuario (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de usuario';
 
 
-ALTER TABLE
 
 LOCK TABLES `sec_usuario` WRITE;
 
-insert  into `sec_usuario`(`usuario`,`clave`,`nombre`,`apellido`,`email`,`estado`,`tipo_usuario`,`usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`) 
-    values ('dbarrientos','123','Dennis','Barrientos','gustavo.moreno@gi-sv.com','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
-    ('dnery','123','Daniel','Nery','gustavo.moreno@gi-sv.com','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
-    ('esantos','123','Eneas','Santos','gustavo.moreno@gi-sv.com','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
-    ('gmoreno','456','Gustavo','Moreno','gustavo.moreno@gi-sv.com','A',1,'admin','2021-11-14 13:13:24','gmoreno','2021-11-14 16:01:38'),
-    ('iabrego','123','Iv?n','Abrego','gustavo.moreno@gi-sv.com','A',1,'admin','2021-11-14 13:13:24','system','2023-12-03 00:00:00'),
-    ('jcastaneda','123','Jorge','Castaneda','gustavo.moreno@gi-sv.com','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
-    ('kguardado','123','Karina','Guardado','gustavo.moreno@gi-sv.com','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
-    ('lcastillo','123','Luis','Castillo','gustavo.moreno@gi-sv.com','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
-    ('nmena','123','Nelson','Mena','gustavo.moreno@gi-sv.com','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
-    ('nmunoz','123','Nelson','Muñoz','gustavo.moreno@gi-sv.com','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
-    ('system','321','Administrador','Sistemas','gustavo.moreno@gi-sv.com','A',1,'admin','2021-11-14 13:13:24',NULL,NULL);
+insert  into `sec_usuario`(`usuario`,`clave`,`nombre`,`apellido`,`email`,`pin`,`estado`,`tipo_usuario`,`usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`) 
+    values ('dbarrientos','123','Dennis','Barrientos','gustavo.moreno@gi-sv.com','000100','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
+    ('dnery','123','Daniel','Nery','gustavo.moreno@gi-sv.com','000200','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
+    ('esantos','123','Eneas','Santos','gustavo.moreno@gi-sv.com','000300','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
+    ('gmoreno','456','Gustavo','Moreno','gustavo.moreno@gi-sv.com','000400','A',1,'admin','2021-11-14 13:13:24','gmoreno','2021-11-14 16:01:38'),
+    ('iabrego','123','Iv?n','Abrego','gustavo.moreno@gi-sv.com','000100','A',1,'admin','2021-11-14 13:13:24','system','2023-12-03 00:00:00'),
+    ('jcastaneda','123','Jorge','Castaneda','gustavo.moreno@gi-sv.com','000500','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
+    ('kguardado','123','Karina','Guardado','gustavo.moreno@gi-sv.com','000600','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
+    ('lcastillo','123','Luis','Castillo','gustavo.moreno@gi-sv.com','000700','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
+    ('nmena','123','Nelson','Mena','gustavo.moreno@gi-sv.com','000800','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
+    ('nmunoz','123','Nelson','Muñoz','gustavo.moreno@gi-sv.com','000900','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
+    ('system','321','Administrador','Sistemas','gustavo.moreno@gi-sv.com','000110','A',1,'admin','2021-11-14 13:13:24',NULL,NULL);
 
 UNLOCK TABLES;
 
@@ -229,18 +228,18 @@ CREATE TABLE IF NOT EXISTS dbMyPet.sec_rol_usuario (
 
 LOCK TABLES `sec_rol_usuario` WRITE;
 
-insert  into `sec_rol_usuario`(`usuario`,`id_rol`,`usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`) 
-    values ('dbarrientos',5,'admin','2020-07-08 00:00:00',NULL,NULL),
-    ('dnery',3,'admin','2021-07-27 00:00:00',NULL,NULL),
-    ('esantos',3,'admin','2021-08-05 00:00:00',NULL,NULL),
-    ('gmoreno',1,'admin','2021-07-29 21:32:33',NULL,NULL),
-    ('iabrego',1,'admin','2020-07-08 00:00:00',NULL,NULL),
-    ('jcastaneda',2,'admin','2020-07-08 00:00:00',NULL,NULL),
-    ('kguardado',5,'admin','2021-09-06 00:00:00',NULL,NULL),
-    ('lcastillo',5,'admin','2021-10-15 00:00:00',NULL,NULL),
-    ('nmena',5,'admin','2021-10-15 00:00:00',NULL,NULL),
-    ('nmunoz',3,'admin','2021-10-15 00:00:00',NULL,NULL),
-    ('system',1,'system','2023-12-03 16:38:03',NULL,NULL);
+insert  into `sec_rol_usuario`(`usuario`,`id_rol`,`usuario_creacion`) 
+    values ('dbarrientos',5,'admin'),
+    ('dnery',3,'admin'),
+    ('esantos',3,'admin'),
+    ('gmoreno',1,'admin'),
+    ('iabrego',1,'admin'),
+    ('jcastaneda',2,'admin'),
+    ('kguardado',5,'admin'),
+    ('lcastillo',5,'admin'),
+    ('nmena',5,'admin'),
+    ('nmunoz',3,'admin'),
+    ('system',1,'system');
 
 UNLOCK TABLES;
 
@@ -257,6 +256,15 @@ CREATE TABLE IF NOT EXISTS dbMyPet.ctg_tipovacunas(
     `fecha_update` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'fecha modificacion'
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de los roles por usuario';
 
+insert  into `ctg_tipovacunas`(`id_tipovacuna`,`nombrevacuna`,`estado`,`usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`) 
+    values (1,'distemper','A','admin'),
+    (2,'parvovirosis','A','admin'),
+    (3,'adenovirus canino','A','admin'),
+    (4,'leptospirosis','A','admin'),
+    (5,'rabia','A','admin'),
+    (6,'polivalente','A','admin'),
+    (7,'moquillo canino','A','admin')
+
 LOCK TABLES `ctg_tipovacunas` WRITE;
 
 DROP TABLE IF EXISTS `ctg_tipomascotas`;
@@ -269,6 +277,13 @@ CREATE TABLE IF NOT EXISTS dbMyPet.ctg_tipomascotas(
     `usuario_update` varchar(255) DEFAULT NULL COMMENT 'usuario modificacion',
     `fecha_update` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'fecha modificacion'
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de los roles por usuario';
+
+insert  into `ctg_tipomascotas`(`id_tipomascota`,`tipomascota`,`estado`,`usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`) 
+    values (1,'gato','A','admin'),
+    (2,'perro','A','admin'),
+    (3,'conejo','A','admin'),
+    (4,'tortuga','A','admin'),
+    (5,'hamster','A','admin')
 
 LOCK TABLES `ctg_tipomascotas` WRITE;
 
@@ -283,8 +298,22 @@ CREATE TABLE IF NOT EXISTS dbMyPet.ctg_departamentos(
     `fecha_update` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'fecha modificacion'
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de los roles por usuario';
 
+SELECT * from ctg_departamentos
 INSERT INTO ctg_departamentos (id_departamento, departamento,estado,usuario_creacion) 
-VALUE(1,'San Salvador','A','admin')
+VALUE(1,'San Salvador','A','admin'),
+(2,'San Vicente','A','admin'),
+(3,'Ahuachapan','A','admin'),
+(4,'San Miguel','A','admin'),
+(5,'Santa Ana','A','admin'),
+(6,'Morazan','A','admin'),
+(7,'La Libertad','A','admin'),
+(8,'Sonsonate','A','admin'),
+(9,'Chalatenango','A','admin'),
+(10,'La Union','A','admin'),
+(11,'La Paz','A','admin'),
+(12,'Usulutan','A','admin'),
+(13,'Cabañas','A','admin'),
+(14,'Cuscatlan','A','admin')
 
 SELECT * FROM ctg_departamentos
 
@@ -307,6 +336,64 @@ CREATE TABLE IF NOT EXISTS dbMyPet.ctg_municipios(
     -- DEPARTAMENTO A MUNICIPIO
     CONSTRAINT `fk_municipios_dep` FOREIGN KEY(`id_departamento`) REFERENCES `ctg_departamentos`(`id_departamento`)
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de los roles por usuario';
+
+INSERT INTO ctg_municipios (id_municipio,id_departamento, municipio,estado,usuario_creacion) 
+VALUE(1, 1, 'San Salvador Norte', 'A', 'admin'),
+(2, 1, 'San Salvador Sur', 'A', 'admin'),
+(3, 1, 'San Salvador Este', 'A', 'admin'),
+(4, 1, 'San Salvador Oeste', 'A', 'admin'),
+(5, 2, 'San Vicente Norte', 'A', 'admin'),
+(6, 2, 'San Vicente Sur', 'A', 'admin'),
+(7, 2, 'San Vicente Este', 'A', 'admin'),
+(8, 2, 'San Vicente Oeste', 'A', 'admin'),
+(9, 3, 'Ahuachapan Norte', 'A', 'admin'),
+(10, 3, 'Ahuachapan Sur', 'A', 'admin'),
+(11, 3, 'Ahuachapan Este', 'A', 'admin'),
+(12, 3, 'Ahuachapan Oeste', 'A', 'admin'),
+(13, 7, 'La Libertad Norte', 'A', 'admin'),
+(14, 7, 'La Libertad Sur', 'A', 'admin'),
+(15, 7, 'La Libertad Este', 'A', 'admin'),
+(16, 7, 'La Libertad Oeste', 'A', 'admin'),
+(17, 8, 'Sonsonate Norte', 'A', 'admin'),
+(18, 8, 'Sonsonate Sur', 'A', 'admin'),
+(19, 8, 'Sonsonate Este', 'A', 'admin'),
+(20, 8, 'Sonsonate Oeste', 'A', 'admin'),
+(21, 9, 'Chalatenango Norte', 'A', 'admin'),
+(22, 9, 'Chalatenango Sur', 'A', 'admin'),
+(23, 9, 'Chalatenango Este', 'A', 'admin'),
+(24, 9, 'Chalatenango Oeste', 'A', 'admin'),
+(25, 10, 'La Union Norte', 'A', 'admin'),
+(26, 10, 'La Union Sur', 'A', 'admin'),
+(27, 10, 'La Union Este', 'A', 'admin'),
+(28, 10, 'La Union Oeste', 'A', 'admin'),
+(29, 11, 'La Paz Norte', 'A', 'admin'),
+(30, 11, 'La Paz Sur', 'A', 'admin'),
+(31, 11, 'La Paz Este', 'A', 'admin'),
+(32, 11, 'La Paz Oeste', 'A', 'admin'),
+(33, 12, 'Usulutan Norte', 'A', 'admin'),
+(34, 12, 'Usulutan Sur', 'A', 'admin'),
+(35, 12, 'Usulutan Este', 'A', 'admin'),
+(36, 12, 'Usulutan Oeste', 'A', 'admin'),
+(37, 13, 'Cabañas Norte', 'A', 'admin'),
+(38, 13, 'Cabañas Sur', 'A', 'admin'),
+(39, 13, 'Cabañas Este', 'A', 'admin'),
+(40, 13, 'Cabañas Oeste', 'A', 'admin'),
+(41, 14, 'Cuscatlan Norte', 'A', 'admin'),
+(42, 14, 'Cuscatlan Sur', 'A', 'admin'),
+(43, 14, 'Cuscatlan Este', 'A', 'admin'),
+(44, 14, 'Cuscatlan Oeste', 'A', 'admin'),
+(45, 4, 'San Miguel Norte', 'A', 'admin'),
+(46, 4, 'San Miguel Sur', 'A', 'admin'),
+(47, 4, 'San Miguel Este', 'A', 'admin'),
+(48, 4, 'San Miguel Oeste', 'A', 'admin'),
+(49, 5, 'Santa Ana Norte', 'A', 'admin'),
+(50, 5, 'Santa Ana Sur', 'A', 'admin'),
+(51, 5, 'Santa Ana Este', 'A', 'admin'),
+(52, 5, 'Santa Ana Oeste', 'A', 'admin'),
+(53, 6, 'Morazan Norte', 'A', 'admin'),
+(54, 6, 'Morazan Sur', 'A', 'admin'),
+(55, 6, 'Morazan Este', 'A', 'admin'),
+(56, 6, 'Morazan Oeste', 'A', 'admin')
 
 LOCK TABLES `ctg_municipios` WRITE;
 

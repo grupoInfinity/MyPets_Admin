@@ -21,7 +21,7 @@ function generarPin()
 {
 	// Generar un PIN de 6 dígitos
 	$pin = sprintf("%06d", mt_rand(0, 999999));
-	return $pin;
+	return (string) $pin;
 }
 
 if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
@@ -86,7 +86,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 		if (!empty($email)) $email = ", email='" . strtoupper($email) . "'";
 		else $email = ", email=email";
 
-		$pin=", pin=". generarPin() ."";
+		$pin=", pin='". generarPin() ."'";
 		$estado = ", estado='" . strtoupper($estado) . "'";
 		$usercr = ", usuario_modificacion='" . $usercr . "'";
 		//$date = ", fecha_modificacion='".date('Y-m-d')."'";
