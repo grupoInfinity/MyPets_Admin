@@ -111,7 +111,19 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 		} else {
 			$json = array("status" => 0, "error" => $conn->error);
 		}
-	} else if (strtoupper($accion) == 'LU') { //VERIFICACION SI LA ACCION ES CONSULTA DEL LOGIN
+	} 
+	else if (strtoupper($accion) == 'A') { // VERIFICACION SI LA ACCION ES ELIMINACION
+		$usercr = ", usuario_modificacion='" . $usercr . "'";
+		//$date = ", fecha_modificacion='".date('Y-m-d')."'";
+
+		$sql = "UPDATE $bd.$tabla set estado='A' $usercr /*$date*/ WHERE usuario = $user";
+
+		if ($conn->query($sql) === TRUE) {
+			$json = array("status" => 1, "info" => "Registro eliminado exitosamente.");
+		} else {
+			$json = array("status" => 0, "error" => $conn->error);
+		}
+	}else if (strtoupper($accion) == 'LU') { //VERIFICACION SI LA ACCION ES CONSULTA DEL LOGIN
 		if (!empty($usr)) $usr = "A.usuario='$user'";
 		else $user = "A.usuario = null";
 		if (!empty($estado)) $estado = "AND A.estado='A'";
