@@ -159,6 +159,8 @@ insert  into `sec_usuario`(`usuario`,`clave`,`nombre`,`apellido`,`email`,`pin`,`
     ('nmunoz','123','Nelson','Muñoz','gustavo.moreno@gi-sv.com','000900','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
     ('system','321','Administrador','Sistemas','gustavo.moreno@gi-sv.com','000110','A',1,'admin','2021-11-14 13:13:24',NULL,NULL);
 
+
+
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `sec_opc_rol`;
@@ -180,15 +182,18 @@ CREATE TABLE IF NOT EXISTS dbMyPet.sec_opc_rol (
   CONSTRAINT `FK_ROL2` FOREIGN KEY (`id_rol`) REFERENCES `sec_rol` (`id_rol`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de las opciones por rol';
 
-	
-SELECT A.id_menu, A.id_opc, A.id_rol, C.orden, C.url, ifnull(CC.descripcion,'') as desc_padre
-		FROM sec_opc_rol A 
-		INNER JOIN sec_opcion C ON C.id_menu = A.id_menu AND C.id_opc = A.id_opc
-		LEFT JOIN sec_opcion CC ON CC.id_opc = C.id_opc_padre
-		#WHERE $id_opc_ppal $id_padre $id_rol 
-		ORDER BY C.orden ASC
-		
-
+SELECT DISTINCT opc.id_opc, opc.id_menu, IFNULL(opc.id_opc_padre,'NA') as id_opc_padre
+		, IFNULL(opc.padre,'') AS padre, opc.descripcion
+        , opc.url, opc.estado
+        , opc.usuario_creacion, opc.fecha_creacion, opc.usuario_update, opc.fecha_update
+        , opc.orden
+		FROM sec_rol_usuario rusr
+		INNER JOIN sec_opc_rol opcr ON opcr.id_rol = rusr.id_rol 
+		INNER JOIN sec_opcion opc ON opc.id_opc = opcr.id_opc AND COALESCE(opc.id_menu, -1) = COALESCE(opcr.id_menu, -1)
+		AND opc.estado = 'A'
+		INNER JOIN sec_usuario us ON us.usuario = rusr.usuario AND us.estado = 'A' AND us.usuario = 'dbarrientos'
+		WHERE 1=1 
+		ORDER BY opc.orden
 
 LOCK TABLES `sec_opc_rol` WRITE;
 

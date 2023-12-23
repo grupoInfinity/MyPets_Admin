@@ -1,8 +1,8 @@
 <?php
 	$servername = "localhost";
-	$username = "root";
-	$password = "";
-	$bd = "u395190840_super";
+	$username = "userSQL";
+	$password = "pasf2";
+	$bd="dbMyPet";
 	//*/
 	
 	/*
