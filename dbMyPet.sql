@@ -57,9 +57,9 @@ CREATE TABLE IF NOT EXISTS dbMyPet.sec_opcion (
   `url` varchar(125) DEFAULT NULL COMMENT 'url de la opcion',
   `estado` varchar(1) DEFAULT 'A' COMMENT 'estado de la opcion',
   `usuario_creacion` varchar(255) DEFAULT NULL COMMENT 'usuario creacion',
-  `fecha_creacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'fecha creacion',
+  `fecha_creacion` datetime DEFAULT NULL COMMENT 'fecha creacion',
   `usuario_update` varchar(255) DEFAULT NULL COMMENT 'usuario modificacion',
-  `fecha_update` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'fecha modificacion',
+  `fecha_update` datetime DEFAULT NULL  COMMENT 'fecha modificacion',
   `orden` int(5) DEFAULT NULL COMMENT 'orden de la opcion',
   PRIMARY KEY (`id_opc`),
   KEY `FK_OPC_PRINCIPAL` (`id_menu`),
@@ -102,9 +102,9 @@ CREATE TABLE IF NOT EXISTS dbMyPet.sec_rol (
   `descripcion` varchar(50) DEFAULT NULL COMMENT 'descripcion del rol',
   `estado` varchar(1) DEFAULT 'A' COMMENT 'estado del rol',
   `usuario_creacion` varchar(255) DEFAULT NULL COMMENT 'usuario creacion',
-  `fecha_creacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'fecha creacion',
+  `fecha_creacion` datetime DEFAULT NULL COMMENT 'fecha creacion',
   `usuario_update` varchar(255) DEFAULT NULL COMMENT 'usuario modificacion',
-  `fecha_update` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'fecha modificacion',
+  `fecha_update` datetime DEFAULT NULL  COMMENT 'fecha modificacion',
   PRIMARY KEY (`id_rol`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de los roles';
 
@@ -131,9 +131,9 @@ CREATE TABLE IF NOT EXISTS dbMyPet.sec_usuario (
   `estado` varchar(1) DEFAULT 'A' COMMENT 'estado del usuario',
   `tipo_usuario` int(1) DEFAULT NULL COMMENT 'tipo de usuario',
   `usuario_creacion` varchar(255) DEFAULT NULL COMMENT 'usuario creacion',
-  `fecha_creacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'fecha creacion',
+  `fecha_creacion` datetime DEFAULT NULL COMMENT 'fecha creacion',
   `usuario_update` varchar(255) DEFAULT NULL COMMENT 'usuario modificacion',
-  `fecha_update` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'fecha modificacion',
+  `fecha_update` datetime DEFAULT NULL  COMMENT 'fecha modificacion',
   PRIMARY KEY (`usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de usuario';
 
@@ -163,9 +163,9 @@ CREATE TABLE IF NOT EXISTS dbMyPet.sec_opc_rol (
   `id_opc` int NOT NULL COMMENT 'id opcion',
   `id_rol` int NOT NULL COMMENT 'id rol',
   `usuario_creacion` varchar(255) DEFAULT NULL COMMENT 'usuario creacion',
-  `fecha_creacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'fecha creacion',
+  `fecha_creacion` datetime DEFAULT NULL COMMENT 'fecha creacion',
   `usuario_update` varchar(255) DEFAULT NULL COMMENT 'usuario modificacion',
-  `fecha_update` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'fecha modificacion',
+  `fecha_update` datetime DEFAULT NULL  COMMENT 'fecha modificacion',
   PRIMARY KEY (`id_menu`,`id_opc`,`id_rol`),
   KEY `FK_OPC_PPAL1` (`id_menu`),
   KEY `FK_ROL2` (`id_rol`),
@@ -217,9 +217,9 @@ CREATE TABLE IF NOT EXISTS dbMyPet.sec_rol_usuario (
   `usuario` varchar(30) NOT NULL COMMENT 'id de usuario',
   `id_rol` INT NOT NULL COMMENT 'id del rol',
   `usuario_creacion` varchar(255) DEFAULT NULL COMMENT 'usuario creacion',
-  `fecha_creacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'fecha creacion',
+  `fecha_creacion` datetime DEFAULT NULL COMMENT 'fecha creacion',
   `usuario_update` varchar(255) DEFAULT NULL COMMENT 'usuario modificacion',
-  `fecha_update` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'fecha modificacion',
+  `fecha_update` datetime DEFAULT NULL  COMMENT 'fecha modificacion',
   PRIMARY KEY (`id_sec_rol`,`usuario`,`id_rol`),
   KEY `FK_ROL1` (`id_rol`),
   KEY `FK_USUARIO1` (`usuario`),
@@ -251,9 +251,9 @@ CREATE TABLE IF NOT EXISTS dbMyPet.ctg_tipovacunas(
     `nombrevacuna` VARCHAR(255),
     `estado` VARCHAR(1),
     `usuario_creacion` varchar(255) DEFAULT NULL COMMENT 'usuario creacion',
-    `fecha_creacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'fecha creacion',
+    `fecha_creacion` datetime DEFAULT NULL COMMENT 'fecha creacion',
     `usuario_update` varchar(255) DEFAULT NULL COMMENT 'usuario modificacion',
-    `fecha_update` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'fecha modificacion'
+    `fecha_update` datetime DEFAULT NULL  COMMENT 'fecha modificacion'
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de los roles por usuario';
 
 insert  into `ctg_tipovacunas`(`id_tipovacuna`,`nombrevacuna`,`estado`,`usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`) 
@@ -273,9 +273,9 @@ CREATE TABLE IF NOT EXISTS dbMyPet.ctg_tipomascotas(
     `tipomascota` VARCHAR(255),
     `estado` VARCHAR(1),
     `usuario_creacion` varchar(255) DEFAULT NULL COMMENT 'usuario creacion',
-    `fecha_creacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'fecha creacion',
+    `fecha_creacion` datetime DEFAULT NULL COMMENT 'fecha creacion',
     `usuario_update` varchar(255) DEFAULT NULL COMMENT 'usuario modificacion',
-    `fecha_update` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'fecha modificacion'
+    `fecha_update` datetime DEFAULT NULL  COMMENT 'fecha modificacion'
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de los roles por usuario';
 
 insert  into `ctg_tipomascotas`(`id_tipomascota`,`tipomascota`,`estado`,`usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`) 
@@ -293,9 +293,9 @@ CREATE TABLE IF NOT EXISTS dbMyPet.ctg_departamentos(
     `departamento` VARCHAR(255),
     `estado` VARCHAR(1),
     `usuario_creacion` varchar(255) DEFAULT NULL COMMENT 'usuario creacion',
-    `fecha_creacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'fecha creacion',
+    `fecha_creacion` datetime DEFAULT NULL COMMENT 'fecha creacion',
     `usuario_update` varchar(255) DEFAULT NULL COMMENT 'usuario modificacion',
-    `fecha_update` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'fecha modificacion'
+    `fecha_update` datetime DEFAULT NULL  COMMENT 'fecha modificacion'
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de los roles por usuario';
 
 SELECT * from ctg_departamentos
@@ -328,9 +328,9 @@ CREATE TABLE IF NOT EXISTS dbMyPet.ctg_municipios(
     `municipio` VARCHAR(255),
     `estado` VARCHAR(1),
     `usuario_creacion` varchar(255) DEFAULT NULL COMMENT 'usuario creacion',
-    `fecha_creacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'fecha creacion',
+    `fecha_creacion` datetime DEFAULT NULL COMMENT 'fecha creacion',
     `usuario_update` varchar(255) DEFAULT NULL COMMENT 'usuario modificacion',
-    `fecha_update` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'fecha modificacion',
+    `fecha_update` datetime DEFAULT NULL  COMMENT 'fecha modificacion'
     PRIMARY KEY (`id_municipio`),
     KEY `fk_municipios_dep` (`id_departamento`),
     -- DEPARTAMENTO A MUNICIPIO
@@ -421,9 +421,9 @@ CREATE TABLE IF NOT EXISTS dbMyPet.prc_mascotas(
     `foto` LONGTEXT,
     `estado` VARCHAR(1),
     `usuario_creacion` varchar(255) DEFAULT NULL COMMENT 'usuario creacion',
-    `fecha_creacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'fecha creacion',
+    `fecha_creacion` datetime DEFAULT NULL COMMENT 'fecha creacion',
     `usuario_update` varchar(255) DEFAULT NULL COMMENT 'usuario modificacion',
-    `fecha_update` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'fecha modificacion',
+    `fecha_update` datetime DEFAULT NULL  COMMENT 'fecha modificacion',
     PRIMARY KEY (`id_mascota`),
     KEY `fk_mascotas_tpm` (`id_tipomascota`),
     KEY `fk_mascotas_munic`(`id_municipio`),
@@ -449,9 +449,9 @@ CREATE TABLE IF NOT EXISTS dbMyPet.prc_vacunas(
     `id_tipovacuna` INT,
     `estado` VARCHAR(1),
     `usuario_creacion` varchar(255) DEFAULT NULL COMMENT 'usuario creacion',
-    `fecha_creacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'fecha creacion',
+    `fecha_creacion` datetime DEFAULT NULL COMMENT 'fecha creacion',
     `usuario_update` varchar(255) DEFAULT NULL COMMENT 'usuario modificacion',
-    `fecha_update` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'fecha modificacion',
+    `fecha_update` datetime DEFAULT NULL  COMMENT 'fecha modificacion',
     PRIMARY KEY(`id_vacuna`,`id_mascota`,`id_tipovacuna`),
     KEY `fk_mascota_vac` (`id_mascota`),
     KEY `fk_tipovac_vac` (`id_tipovacuna`),
