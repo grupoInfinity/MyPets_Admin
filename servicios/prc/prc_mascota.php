@@ -95,15 +95,15 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
             }
         } else $id_mun = 1;
 
-        //$date = (new DateTime())->format('Y-m-d');
+        $date = (new DateTime())->format('Y-m-d');
         $nacim = date_create_from_format('Y-m-d', $nacim);
         
 
         $sql = "INSERT INTO 
         $bd.$tabla(id_mascota, id_usuario,id_tipomascota,id_municipio,direccion,estado_direc,
-        nombremascota, codigo,nacimiento,foto,estado,usuario_creacion/*, fecha_creacion*/) 
-		VALUE($id_mascota, $id_usuario,$id_tipomascota,$id_mun,$direccion,
-        $estado_direc,$nombremasc,$codigo,$nacim,$foto,'$estado','$user'/*, '$date'*/)";
+        nombremascota, codigo,nacimiento,foto,estado,usuario_creacion, fecha_creacion) 
+		VALUE($id_mascota, $id_usuario,$id_tipomascota,$id_mun,'$direccion',
+        '$estado_direc','$nombremasc',$codigo,'$nacim','$foto','$estado','$user', '$date')";
 
         if ($conn->query($sql) === TRUE) {
             $json = array("status" => 1, "info" => "Registro almacenado exitosamente.");
