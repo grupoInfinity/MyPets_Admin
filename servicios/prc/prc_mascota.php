@@ -95,7 +95,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
             }
         } else $id_mun = 1;
 
-        $date = (new DateTime())->format('Y-m-d');
+        $date = date('Y-m-d H:i:s');
         $nacim = date_create_from_format('Y-m-d', $nacim);
         
 
@@ -122,7 +122,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         $foto = ",foto='" . $foto . "'";
         $estado = ",estado='" . $estado . "'";
         $user = ", usuario_update='" . $user . "'";
-        //$date = ", fecha_update='" . (new DateTime())->format('Y-m-d') . "'";
+        $date = ", fecha_update='" . date('Y-m-d H:i:s') . "'";
 
         $sql = "UPDATE $bd.$tabla SET $id_mascota $id_tipomascota $id_mun $direccion 
         $estado_direc $nombremasc $codigo $nacim $foto $estado $user /*$date */
@@ -136,7 +136,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         }
     } else if (strtoupper($accion) == 'D') { // VERIFICACION SI LA ACCION ES ELIMINACION
         $user = ", usuario_update='" . $user . "'";
-        //$date = ", fecha_update='" . (new DateTime())->format('Y-m-d') . "'";
+        $date = ", fecha_update='" . date('Y-m-d H:i:s') . "'";
 
         $sql = "UPDATE $bd.$tabla SET estado='I' $user WHERE id_mascota = $id_mascota ";
 
@@ -147,7 +147,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         }
     } else if (strtoupper($accion) == 'A') { // VERIFICACION SI LA ACCION ES ACTIVAR EL REGISTRO
         $user = ", usuario_update='" . $user . "'";
-        //$date = ", fecha_update='" . (new DateTime())->format('Y-m-d') . "'";
+        $date = ", fecha_update='" . date('Y-m-d H:i:s') . "'";
 
         $sql = "UPDATE $bd.$tabla SET estado='A' $user WHERE id_mascota = $id_mascota ";
 

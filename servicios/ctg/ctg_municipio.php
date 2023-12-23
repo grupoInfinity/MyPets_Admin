@@ -68,7 +68,7 @@ else{
             }
         } else $id_mun = 1;
 
-		$date = (new DateTime())->format('Y-m-d');
+		$date = date('Y-m-d H:i:s');
 	
 		$sql = "INSERT INTO 
         $bd.$tabla(id_municipio, id_departamento, municipio,estado, usuario_creacion, fecha_creacion) 
@@ -85,7 +85,7 @@ else{
         $municipio = ",municipio='".$municipio."'";
         $estado = ",estado='".$estado."'";
 		$user = ", usuario_update='".$user."'";
-		$date = ", fecha_update='".(new DateTime())->format('Y-m-d')."'";
+		$date = ", fecha_update='".date('Y-m-d H:i:s')."'";
 		
 		$sql = "UPDATE $bd.$tabla SET $id_depto $municipio $estado $user $date WHERE id_municipio = $id_mun ";
 		echo $sql;
@@ -97,7 +97,7 @@ else{
 	}
 	else if(strtoupper($accion) =='D'){// VERIFICACION SI LA ACCION ES ELIMINACION
 		$user = ", usuario_update='".$user."'";
-		$date = ", fecha_update='".(new DateTime())->format('Y-m-d')."'";
+		$date = ", fecha_update='".date('Y-m-d H:i:s')."'";
 		
 		$sql = "UPDATE $bd.$tabla SET estado='I' $user WHERE id_municipio = $id_municipio ";
 		
@@ -109,7 +109,7 @@ else{
 	}
 	else if(strtoupper($accion) =='A'){// VERIFICACION SI LA ACCION ES ACTIVAR EL REGISTRO
 		$user = ", usuario_update='".$user."'";
-		$date = ", fecha_update='".(new DateTime())->format('Y-m-d')."'";
+		$date = ", fecha_update='".date('Y-m-d H:i:s')."'";
 		
 		$sql = "UPDATE $bd.$tabla SET estado='A' $user WHERE id_municipio = $id_municipio ";
 		

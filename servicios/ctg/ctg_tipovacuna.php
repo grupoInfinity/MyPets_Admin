@@ -59,7 +59,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
                 $id = 1;
             }
         } else $id = 1;
-        $date = (new DateTime())->format('Y-m-d');
+        $date = date('Y-m-d H:i:s');
 
         $sql = "INSERT INTO $bd.$tabla(id_tipovacuna, nombrevacuna, estado, usuario_creacion, fecha_creacion) 
         VALUE($id,'$nombrevac', '$estado', '$user', '$date')";
@@ -74,7 +74,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         $nombrevac = "nombrevacuna='" . strtoupper($nombrevac) . "'";
         $estado = ", estado='" . strtoupper($estado) . "'";
         $user = ", usuario_update='" . $user . "'";
-        $date = ", fecha_update='" . (new DateTime())->format('Y-m-d') . "'";
+        $date = ", fecha_update='" . date('Y-m-d H:i:s') . "'";
 
         $sql = "UPDATE $bd.$tabla SET $nombrevac $estado $user $date WHERE id_tipovacuna = $id";
 
@@ -85,7 +85,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         }
     } else if (strtoupper($accion) == 'D') { // VERIFICACION SI LA ACCION ES ELIMINACION
         $user = ", usuario_update='" . $user . "'";
-        $date = ", fecha_update='" . (new DateTime())->format('Y-m-d') . "'";
+        $date = ", fecha_update='" . date('Y-m-d H:i:s') . "'";
 
         $sql = "UPDATE $bd.$tabla set estado='I' $user $date WHERE id_tipovacuna = $id";
 
@@ -97,7 +97,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
     }
     else if (strtoupper($accion) == 'A') { // VERIFICACION SI LA ACCION ES ELIMINACION
         $user = ", usuario_update='" . $user . "'";
-        $date = ", fecha_update='" . (new DateTime())->format('Y-m-d') . "'";
+        $date = ", fecha_update='" . date('Y-m-d H:i:s') . "'";
 
         $sql = "UPDATE $bd.$tabla set estado='A' $user $date WHERE id_tipovacuna = $id";
 
