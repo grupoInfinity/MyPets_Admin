@@ -1,0 +1,203 @@
+<div class="wrapper row-offcanvas row-offcanvas-left" style="min-height: 582px" ng-controller="HomeController">
+  <header class="main-header" ng-if="habilitarMenu()">
+    <!-- Logo -->
+    <a href="index.html" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><img src="img/kraken_blanco.png" class="user-image2" alt="My Pets" width="45px" height="45px"></span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg" align='left'>
+	  <!--b>My Pets</b -->
+	  <img src="img/kraken_erp_blanco.png" class="user-image2" alt="My Pets">
+	  </span>
+    </a>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top">
+      <!-- Sidebar toggle button-->
+      <a style="cursor: pointer;" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
+	
+      <div class="navbar-custom-menu" >
+		
+        <ul class="nav navbar-nav">
+			
+        <!-- @{{usuario.ctg_empresa[0].descripcion}} -->
+		<li class="dropdown notifications-menu ">
+			<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+				<!--i class="fa fa-bell-o"></i -->
+				<i class="fa fa-list"></i>
+				<span class="label label-warning" data-toggle="tooltip" title="Autorizaciones de Ordenes de Compra Pendiente">{{globals.currentUser.total_ordenes}}</span>
+			</a>
+			<ul class="dropdown-menu">
+				<li class="header">Notificaciones</li>
+				<li>
+					<ul class="menu">
+						<li>
+							<a ui-sref="menuMaster.listPO({id_tipo_inventario: 1})">
+								<!--i class="fa fa-users text-aqua"></i --> 
+								<i class="fa fa-list text-aqua"></i> <span data-toggle="tooltip" title="{{globals.currentUser.total_ordenes}} autorizaciones pendientes de ordenes de compra">{{globals.currentUser.total_ordenes}} autorizaciones pendientes de ordenes de compra</span>
+							</a>
+						</li>
+						<!--li>
+							<a href="#">
+								<i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the page and may cause design problems
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="fa fa-users text-red"></i> 5 new members joined
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="fa fa-shopping-cart text-green"></i> 25 sales made
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="fa fa-user text-red"></i> You changed your username
+							</a>
+						</li -->
+					</ul>
+				</li>
+				<!--li class="footer"><a href="#">View all</a></li -->
+			</ul>
+		</li>
+        <li class="dropdown user user-menu" data-toggle="tooltip" data-placement="left" data-html="true" title="Estas conectad@ en la sucursal <b>{{usuario.ctg_empleado[0].ctg_almacen[0].descripcion}}</b>">
+            <a style="cursor: pointer;" class="dropdown-toggle" data-toggle="dropdown">
+              <!--img src="img/plan.png" class="user-image" alt="User Image" -->
+			  <label style="cursor:pointer;">Hola <span class="hidden-xs">{{usuario.nombre}}</span>!</label>
+             
+            </a>
+            <ul class="dropdown-menu">
+              <!-- User image -->
+              <li class="user-header">
+                <img src="img/persona.png" class="img-circle" alt="User Image">
+                <br>
+                <p>
+					{{usuario.nombre}} {{usuario.apellido}}
+					<small>{{usuario.puesto}}</small>
+					<small>{{usuario.email}}</small>
+                </p>
+              </li>
+              <li class="user-footer">
+				<center>
+					<small><b>Versi&oacute;n:</b> 1.5.1</small>
+				</center>
+              </li>
+              <!-- Menu Body -->
+
+              <!-- Menu Footer-->
+              <li class="user-footer">
+                <div class="pull-right">
+                	<button class="btn btn-default btn-flat"  ng-click="logout()">Salir</button>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <aside class="main-sidebar" ng-if="habilitarMenu()">
+  <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+      <!-- Sidebar user panel -->
+      <div class="user-panel">
+        <div class="pull-left image">
+          <img src="img/persona.png" class="img-circle" alt="User Image">
+          &nbsp;
+        </div>
+        <div class="pull-left info">
+          <p>{{usuario.nombre}} {{usuario.apellido}}</p>
+          <a style="cursor: pointer;"><i class="fa fa-circle text-success"></i> Online</a>
+        </div>
+      </div>
+	  
+      <!-- search form -->
+      <!--form action="#" method="get" class="sidebar-form">
+        <div class="input-group">
+          <input type="text" name="q" class="form-control" placeholder="Search...">
+              <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+        </div>
+      </form-->
+      <!-- /.search form -->
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+	  <!-- style=" height:640px;  overflow: hidden; overflow-y: scroll;" -->
+      <ul class="sidebar-menu" >
+        <li class="header" style="text-align:center;">NAVEGACION PRINCIPAL</li>
+        <li class="treeview" ng-repeat="opcppal in opcionesPpal track by opcppal.id_menu">
+		  <a style="cursor: pointer;">
+            <i class="glyphicon {{opcppal.menu_icon}}"></i>
+            <span><label style="font-size:14px">{{opcppal.descripcion}}</label></span>
+            <!--span class="pull-right-container">
+              <span class="label label-primary pull-right">ok</span>
+            </span -->
+          </a>        	
+          <!--ul class="treeview-menu" style="padding-top:15px; overflow: hidden; overflow-y: auto; overflow-x: auto; height:{{opciones_padre}*50}px;  border-radius-none" -->
+          <ul class="treeview-menu">
+        	<li ng-show="opc.id_menu == opcppal.id_menu" ng-repeat="opc in opciones_padre">
+        		<a ui-sref="{{opc.url}}">
+        			<i ng-class="opc.padre? 'fa fa-share' : 'fa fa-circle-o'"></i><label style="font-size:14px">{{opc.descripcion}}</label>
+        			<span ng-show="opc.padre == 1" class="pull-right-container">
+              			<i class="fa fa-angle-left pull-right"></i>
+            		</span>
+        		</a>
+				<!-- los menu hijos del padre-->
+        		<ul class="treeview-menu">
+        		   
+	              <li ng-show="opchijo.id_opc_padre == opc.id" ng-repeat="opchijo in opciones_hijo" >
+	              	<a ui-sref="{{opchijo.url}}"><i class="fa fa-circle-o"></i> <label style="font-size:14px">{{opchijo.descripcion}}</label></a>
+	              </li>
+	            </ul>
+            </li>
+			<li ng-show="opch.id_menu == opcppal.id_menu && opch.id_opc_padre!=''" ng-repeat="opch in opciones_hijo">
+              <a ui-sref="{{opch.url}}">
+                <i ng-class="opch.padre? 'fa fa-share' : 'fa fa-circle-o'"></i><label style="font-size:14px">{{opch.descripcion}}</label>
+                <span ng-show="opch.padre == 1" class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+              </a>
+              </li>
+          </ul>
+        </li>
+      
+      </ul>
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+  
+  <div class="content-wrapper" ng-if="habilitarMenu()">
+    <section class="content">
+    	<div class="row">
+    		<div class="col-xs-12" ui-view>
+    				            [Template content will be inserted here]
+	    	</div>
+    	</div>
+        
+    </section>
+  </div>
+  
+  <div class="content-wrapper2" ng-if="!habilitarMenu()">
+    <section class="content">
+    	<div class="row">
+    		<div class="col-xs-12" ui-view>
+				[Template content will be inserted here]
+	    	</div>
+    	</div>
+        
+    </section>
+  </div>
+  
+  <footer class="main-footer">
+    <div class="pull-right hidden-xs">
+      <b>Version</b> <label id="version">1.5.1</label>
+    </div>
+    <strong>Powered by <a href="http://gi-sv.com">Grupo Infinity S.A. de C.V.</a></strong> 
+  </footer>
+  
+</div>

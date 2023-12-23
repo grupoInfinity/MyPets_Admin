@@ -1,0 +1,41 @@
+<div class="box">
+	<div class="box-header">
+    	<h3 class="box-title">Listado de Roles</h3>
+    	<!--<div class="box-body" ng-controller="ModeloTableCtrl as showCase">-->
+		
+    </div>	
+	
+	<div class="box-body" ng-controller="RolListCtrl as showCase">
+     	<em ng-show="showCase.roles.length == 0">No existen opciones</em>
+        <table datatable="ng" id="rolesTable" dt-options="showCase.dtOptions" dt-columns="showCase.dtColumnsDefs" ng-hide="showCase.roles.length == 0" class="table table-bordered table-striped">
+			<thead>
+                <tr>
+                    <th>ID</th>
+					<th>Rol</th>
+                    <th>Estado</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="rol in showCase.roles ">
+					<td>{{rol.id}}</td>
+					<td>{{rol.descripcion}}</td>
+					<td align="center">
+						<label ng-if=" rol.estado=='A'"><font color="green"><i class="fa fa-check"></i></font></label>
+						<label ng-if=" rol.estado=='I'"><font color="red"><i class="fa fa-close"></i></font></label>
+					</td>
+					<td>
+						<button class="btn btn-danger btn-xs"  ng-click="deleteRol(rol.id)"><i class="fa fa-trash-o"></i></button>
+						<button class="btn btn-warning btn-xs" ng-click="editRol(rol.id)"><i class="fa fa-edit"></i></button>
+						<button class="btn btn-primary btn-xs" ng-click="activateRol(rol.id)"><i class="fa fa-check"></i></button>
+					</td>
+				 </tr>
+            </tbody>
+		</table>
+           
+    </div>
+    <div class="box-footer">
+    	 <a class="btn btn-danger pull-left" ui-sref="menuMaster.home">Salir</a>
+    	<a ui-sref="menuMaster.addRol()" class="btn btn-info pull-right">Nuevo</a>
+    </div>
+</div>

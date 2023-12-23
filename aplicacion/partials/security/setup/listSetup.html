@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+</head>
+<form name="regForm" class="form-horizontal">
+	<div class="box">
+		<div class="box-header">
+			<h3 class="box-title">Setup</h3>
+		</div>	
+		<div class="form-group">
+			<label for="ip" class="control-label col-md-2">Asignar IP de la Caja:</label>
+			<div class="col-md-2">
+				<input type="text" class="form-control" name="ip" id="ip"  ng-model="newSetup.ip" placeholder="IP" ng-required="true" autofocus />
+				<span class="error help-block" ng-show="regForm.ip.$error.required">Requerido</span>
+				<span class="error help-block" ng-show="errors.ip">{{errors.ip}}</span>
+			</div>
+			<div class="col-md-2">
+				&nbsp
+			</div>
+			<div class="col-md-8">
+				
+			</div>
+
+		</div>
+		<div class="box-footer">
+			<a class="btn btn-danger" ui-sref="menuMaster.home">Salir</a>
+			<input type="button" ng-click="registerIp();" ng-disabled="regForm.$invalid" name="emitir" id="emitir" value="Registrar" class="btn btn-default pull-right"/>
+		</div>
+	</div>
+</form>
+</html>

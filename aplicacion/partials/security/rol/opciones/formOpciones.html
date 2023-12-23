@@ -1,0 +1,147 @@
+								
+						<input type="button" ng-click="resetOpcion()" name="resetOpcion" id="resetOpcion" value="Nueva Opci&oacute;n" class="btn btn-primary" data-toggle="modal" data-target="#myOpcionModal"/>
+							<!--<em ng-show="opcionesrol.length == 0">No existen datos de Opciones.</em>
+
+							<div class="box-body table-responsive no-padding">
+						        <table ng-hide="opcionesrol.length == 0" class="table table-hover">-->
+
+						<em ng-show="opcionesrol.length == 0">No existen datos de Opciones por Rol</em>
+							<div class="box-body table-responsive no-padding">
+								<table datatable="ng" id="opcionesrolTable" dt-options="dtOptions" dt-columns="dtColumnsDefs" ng-hide="opcionesrol.length == 0" class="table table-bordered table-striped">
+						            <thead>
+										<tr>
+											<th>Empresa</th>
+											<th>Opci&oacute;n Principal</th>
+											<!-- <th>Opci&oacute;n Padre</th>-->
+											<th>Opci&oacute;n</th>
+											
+											<th></th>
+										</tr>
+									</thead>
+						            <!-- The table is built using the AngularJS repeat function, iterating over the members variable, and ordering by the property specified in the orderBy variable -->
+						            <tbody>
+										<tr ng-repeat="opcrol in opcionesrol">
+											<td>{{opcrol.ctgEmpresa.descripcion}}</td>
+											<td>{{opcrol.secOpcPpal.descripcion}}</td>
+											<!--<td>{{opcrol.secOpcPadre.desc_opc_padre}}</td>-->
+											<td>{{opcrol.secOpc.descripcion}}</td>
+											<td>
+												<button class="btn btn-danger btn-xs" ng-click="deleteOpcion(opcrol.secRol.id, opcrol.secOpc.id)"><i class="fa fa-trash-o"></i></button>
+												<!--   <button class="btn btn-warning btn-xs" ng-click="modifyOpcion(opcrol.secRol.id, opcrol.secOpc.id)"><i class="fa fa-edit"></i></button>  -->
+											</td>
+										</tr>
+									</tbody>
+						        </table>
+						    </div>
+							
+							<div class="modal fade modal-primary" id="myOpcionModal" tabindex="-1" role="dialog">
+					          <div class="modal-dialog modal-lg" role="document">
+					            <div class="modal-content">
+					            <form name="opcionForm" class="form-horizontal" ng-submit="guardarOpcion(formTypeOpcion)">
+					              <div class="modal-header">
+					                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					                  <span aria-hidden="true">&times;</span></button>
+					                <h4 class="modal-title">Ingrese una nueva Opci&oacute;n</h4>
+					              </div>
+					              <div class="modal-body">
+					
+							        	<div class="form-group">
+							        		<input type="hidden" name="formTypeOpcion" id="formTypeOpcion"  ng-model="formTypeOpcion" />
+							        		<input type="hidden" name="id_rol" id="id_rol" ng-model="opcion.id_rol" />
+										</div>
+
+										<!--<div class="form-group" ng-class="{ 'has-error': opcionForm.id_empresa.$error.required }">
+											<label for="id_empresa" class="col-sm-2 control-label">Empresa:</label>
+											<div class="col-sm-4">
+										   <ui-select ng-model="opcion.id_empresa" name="ide_mpresa" id="id_empresa" ng-required="true"  ng-required="true" ng-change="updateOpcPpal()" autofocus>
+												   <ui-select-match allow-clear="true">
+													   <span ng-bind="$select.selected.descripcion"></span>
+												   </ui-select-match>
+												   <ui-select-choices repeat="empresa.id.id as empresa in (empresa | propsFilter: {descripcion: $select.search}) track by empresa.id.id">
+													   <div ng-bind-html="empresa.descripcion | highlight: $select.search"></div>
+												   </ui-select-choices>
+											   </ui-select>
+											   <span class="error help-block" ng-show="opcionForm.id_empresa.$error.required">Requerido</span>
+													<span class="error help-block" ng-show="errors.id_empresa">{{errors.id_opc_ppal}}</span>
+									   </div>									
+									   </div>	-->
+									   
+									   
+
+
+									   <div class="form-group" ng-class="{ 'has-error': opcionForm.id_empresa.$error.required }">
+							         
+										<label for="id_empresa" class="col-sm-2 control-label">Empresa:</label>
+									   <div class="col-sm-4">			                
+										   <ui-select id="id_empresa" name="id_empresa" ng-model="opcion.id_empresa" ng-change="updateOpcPpal()" ng-required="true" autofocus>
+											   <ui-select-match>
+												   <span ng-bind="$select.selected.descripcion"></span>
+											   </ui-select-match>
+											   <ui-select-choices repeat="empresa.id.id as empresa in (empresa | propsFilter: {descripcion: $select.search}) track by empresa.id.id">
+												   <div ng-bind-html="empresa.descripcion | highlight: $select.search"></div>
+											   </ui-select-choices>
+										   </ui-select>
+										   <span class="error help-block" ng-show="opcionForm.id_empresa.$error.required">Requerido</span>
+										   <span class="error help-block" ng-show="errors.id_empresa">{{errors.id_empresa}}</span>
+									   </div>
+								   </div> 
+								
+
+							            <div class="form-group" ng-class="{ 'has-error': opcionForm.id_opc_ppal.$error.required }">
+							         
+							             	<label for="id_opc_ppal" class="col-sm-2 control-label">Opci&oacute;n Principal:</label>
+											<div class="col-sm-4">			                
+												<ui-select id="id_opc_ppal" name="id_opc_ppal" ng-model="opcion.id_opc_ppal" ng-change="updateOpciones()" ng-required="true" autofocus>
+												    <ui-select-match>
+												        <span ng-bind="$select.selected.descripcion"></span>
+												    </ui-select-match>
+												    <ui-select-choices repeat="opcppal.id.id as opcppal in (opcppales | propsFilter: {descripcion: $select.search}) track by opcppal.id.id">
+												        <div ng-bind-html="opcppal.descripcion | highlight: $select.search"></div>
+												    </ui-select-choices>
+												</ui-select>
+							                    <span class="error help-block" ng-show="opcionForm.id_opc_ppal.$error.required">Requerido</span>
+						    	                <span class="error help-block" ng-show="errors.id_opc_ppal">{{errors.id_opc_ppal}}</span>
+										    </div>
+										</div> 
+										
+										
+							            <div class="form-group" ng-class="{ 'has-error': opcionForm.id_opc.$error.required }">
+							             	<label for="id_opc" class="col-sm-2 control-label">Opci&oacute;n:</label>
+											<div class="col-sm-4">	
+												                
+												<ui-select id="id_opc" name="id_opc" ng-model="opcion.id_opc" ng-required="true" autofocus>
+												    <ui-select-match>
+												        <span ng-bind="$select.selected.descripcion"></span>
+												    </ui-select-match>
+												    <ui-select-choices repeat="opc.id.id as opc in (opc | propsFilter: {descripcion: $select.search}) track by opc.id.id">
+												        <div ng-bind-html="opc.descripcion | highlight: $select.search"></div>
+												    </ui-select-choices>
+												</ui-select>
+							                    <span class="error help-block" ng-show="opcionForm.id_opc.$error.required">Requerido</span>
+						    	                <span class="error help-block" ng-show="errors.id_opc">{{errors.id_opc}}</span>
+											</div>
+										</div>
+							            
+
+										<!-- We output a list of success messages (appropriately styled!) for the form. -->
+							            <ul ng-hide="!successMessagesChild" class="success">
+							                <li ng-repeat="message in successMessagesChild">{{message}}</li>
+							            </ul>
+							
+							            <!-- Output the list of error messages if any. -->
+							            <ul ng-hide="!errorMessagesChild" class="error">
+							                <li ng-repeat="message in errorMessagesChild">{{message}}</li>
+							            </ul>					                
+
+					              </div>
+					              <div class="modal-footer">
+					                <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cerrar</button>
+					                <input type="submit" ng-disabled="opcionForm.$invalid" id="guardar" value="Guardar cambios" class="btn btn-primary pull-right" />
+					              </div>
+					            </form>
+					            </div>
+					            <!-- /.modal-content -->
+					          </div>
+					          <!-- /.modal-dialog -->
+					        </div>
+					        <!-- /.modal -->

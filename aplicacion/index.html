@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es" ng-app="aplicacion">
+<head>
+    <title>My Pets</title>
+  	<!-- Tell the browser to be responsive to screen width -->
+  	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  	
+  	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+  	
+    <!--  <link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="css/bootstrap-theme.css" type="text/css" />
+    -->
+    <!-- Theme style -->
+    <link rel="stylesheet" href="dist/css/AdminLTE.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="css/_all-skins.min.css">
+
+    <!-- Bootstrap 3.3.6 -->
+  	<link rel="stylesheet" href="bootstrap/css/bootstrap.css">  
+    <!-- Font Awesome -->
+  	<!--link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"-->
+	<link rel="stylesheet" href="css/font-awesome.min.css">
+    <!-- Ionicons -->
+  	<!--link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"-->
+	<link rel="stylesheet" href="css/ionicons.min.css">
+    <!-- <link rel="stylesheet" href="css/screen.css" type="text/css" /> -->
+    <!-- DataTables -->
+    <!--<link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">-->
+    <!--link rel="stylesheet" href="angular-datatables/plugins/bootstrap/datatables.bootstrap.min.css" -->
+    <link rel="stylesheet" href="angular-datatables/plugins/bootstrap/datatables.bootstrap.css">
+    <!-- iCheck for checkboxes and radio inputs -->
+  	<link rel="stylesheet" href="plugins/iCheck/all.css">
+  	<!-- bootstrap datepicker -->
+  	<link rel="stylesheet" href="plugins/datepicker/datepicker3.css">
+  	<!-- Bootstrap time Picker -->
+  	<link rel="stylesheet" href="plugins/timepicker/bootstrap-timepicker.min.css">
+	<!-- Bootstrap tags Picker -->
+  	<link rel="stylesheet" href="plugins/tagsinput/bootstrap-tagsinput.css">
+  	<!-- Select2
+  	<link rel="stylesheet" href="plugins/select2/select2.min.css"> -->
+	<!--link rel="stylesheet" href="angular-datatables/css/angular-datatables.min.css" -->
+	<link rel="stylesheet" href="angular-datatables/css/angular-datatables.css">
+
+  	<!--link rel="stylesheet" href="plugins/ui-select/dist/select.min.css"-->
+  	<link rel="stylesheet" href="plugins/ui-select/dist/select.css">
+  	
+  	<!--link href="https://cdn.datatables.net/responsive/2.1.0/css/responsive.dataTables.min.css" rel="stylesheet" -->
+	<!--link href="css/responsive.dataTables.min.css" rel="stylesheet" -->
+	<link href="css/responsive.dataTables.min.css" rel="stylesheet">
+	<!--link href="css/style.css" rel="stylesheet" -->
+	
+	<link rel="icon" type="image/png" href="img/favicon.png" />
+</head>
+<!--body class="hold-transition skin-blue sidebar-mini" -->
+<body class="hold-transition skin-blue  sidebar-collapse sidebar-mini" id="cuerpoPrincipal">
+<body class="hold-transition skin-blue sidebar-collapse" id="cuerpoPrincipal">
+<div ui-view></div>
+
+
+<!-- Load jQuery -->
+<!--  <script src="js/libs/jquery-2.0.3.js"></script>
+-->
+<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="js/sweetalert2.all.min.js"></script>
+<!-- jQuery UI 1.11.4 -->
+<!--script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script -->
+<script src="js/jquery-ui.min.js"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+	$.widget.bridge('uibutton', $.ui.button);
+</script>
+<!-- Load Bootstrap JS components -->
+<!--  <script src="js/libs/bootstrap.js"></script>
+-->
+<!-- Bootstrap 3.3.6 -->
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<!-- Select2 -->
+<script src="plugins/select2/select2.full.min.js"></script>
+
+<!-- InputMask -->
+<script src="plugins/input-mask/jquery.inputmask.js"></script>
+<script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+<script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
+
+<!-- AdminLTE App -->
+<script src="dist/js/app.js"></script>
+
+<!-- FastClick -->
+<script src="plugins/fastclick/fastclick.js"></script>
+
+<!-- DataTables -->
+<script src="plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="plugins/datatables/extensions/ColReorder/js/dataTables.colReorder.min.js"></script>
+<script src="js/dataTables.responsive.min.js"></script>
+
+
+<!-- SlimScroll -->
+<script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
+
+<!-- iCheck 1.0.1 -->
+<script src="plugins/iCheck/icheck.min.js"></script>
+
+<!-- bootstrap datepicker -->
+<script src="plugins/datepicker/bootstrap-datepicker.js"></script>
+
+<!-- bootstrap time picker -->
+<script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
+<!-- bootstrap tags picker -->
+<script src="plugins/tagsinput/bootstrap-tagsinput.min.js"></script>
+
+<!-- Load angularjs -->
+<script src="angular/angular.min.js"></script>
+<!-- Load angularjs-route, which allows us to use multiple views displayed through application routes -->
+<script src="angular/angular-ui-router.min.js"></script>
+<!-- Load angularjs-resource, which allows us to interact with REST resources as high level services -->
+<script src="angular/angular-resource.min.js"></script>
+
+<script src="angular/angular-route.min.js"></script>
+	
+<script src="angular/angular-cookies.min.js"></script>
+<script src="angular/angular-sanitize.min.js"></script>
+		
+<script src="angular-datatables/angular-datatables.min.js"></script>
+<script src="angular-datatables/plugins/bootstrap/angular-datatables.bootstrap.min.js"></script>
+<script src="angular-datatables/plugins/colreorder/angular-datatables.colreorder.min.js"></script>
+
+<script src="plugins/ui-select/dist/select.min.js"></script>
+
+<script src="plugins/sparkline/jquery.sparkline.min.js"></script>
+
+<!-- Load the controllers for our app -->
+
+<script src="js/ctg/common/ctgconfig.service.js"></script>
+<script src="js/ctg/common/ctgconfig.controller.js"></script>
+
+
+<!-- PROCESOS -->
+
+<!-- Seguridad -->
+
+<script src="js/security/security.service.js"></script>
+<script src="js/security/security.controller.js"></script>
+
+<!-- LOGIN -->
+
+<script src="js/login/authentication.service.js"></script>
+<script src="js/login/authorization.service.js"></script>
+<script src="js/login/flash.service.js"></script>
+<script src="js/login/usuario.service.js"></script>
+<script src="js/login/home.controller.js"></script>
+<script src="js/login/login.controller.js"></script>
+
+<script src="js/app.js"></script>
+<script src="global.js"></script>
+
+<!-- CONVERSION HTML A PDF -->
+<!--script src="js/jspdf.min.js"></script>  
+<script src="js/jspdf.plugin.autotable.js"></script -->
+
+</body>
+</html>

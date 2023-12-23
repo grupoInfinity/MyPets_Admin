@@ -1,0 +1,37 @@
+<div class="box">
+	<div class="box-header">
+    	<h3 class="box-title">Listado de Auditor&iacute;a</h3>
+		<em ng-show="auditorias.length == 0">No existen datos de Auditor&iacute;a</em>
+    </div>	
+	<div class="box-body table-responsive no-padding">
+        <table ng-hide="auditorias.length == 0" class="table table-hover">
+            <tr>
+                    <th>ID</th>
+                    <th>FECHA DE AUDITOR&Iacute;A</th>
+                    <th>USUARIO</th>
+                    <th>CREACI&Oacute;N</th>
+                    <th>USUARIO CREACI&Oacute;N</th>
+                    <th>MODIFICACI&Oacute;N</th>
+                    <th>USUARIO MODIFICACI&Oacute;N</th>
+                    <th></th>
+            </tr>
+            <!-- The table is built using the AngularJS repeat function, iterating over the members variable, and ordering by the property specified in the orderBy variable -->
+            <tr ng-repeat="auditoria in audiorias | orderBy:orderBy">
+                <td>{{auditoria.idAuditoria}}</td>
+                <td>{{auditoria.fecAuditoria  | date:'d/M/yyyy HH:mm:ss'}}</td>
+                <td>{{auditoria.usr}}</td>
+                <td>{{auditoria.fecCrAu | date:'d/M/yyyy HH:mm:ss'}}</td>
+                <td>{{auditoria.usrCrAu}}</td>
+                <td>{{auditoria.fecLstmodAu | date:'d/M/yyyy HH:mm:ss'}}</td>
+                <td>{{auditoria.usrLstmodAu}}</td>
+                <td>
+            	<button class="btn btn-danger btn-xs"  ng-click="deleteAuditoria(auditoria.idAuditoria)"><i class="fa fa-trash-o"></i></button>
+                <button class="btn btn-warning btn-xs" ng-click="modifyAuditoria(auditoria.idAuditoria)"><i class="fa fa-edit"></i></button>
+                </td>
+        </table>
+    </div>
+    <div class="box-footer">
+    	<input type="button" ng-click="refresh()" name="refresh" id="refresh" value="Refresh" class="btn btn-default" />
+    	<a ui-sref="addAuditoria" class="btn btn-info pull-right">Nuevo</a>
+    </div>
+</div>

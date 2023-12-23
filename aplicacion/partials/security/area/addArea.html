@@ -1,0 +1,18 @@
+<div class="box box-info">
+    <div class="box-header with-border">
+    	<h3 class="box-title">&Aacute;rea</h3>
+    </div>
+    <!-- Standard HTML form, with the submit function bound to the register() function defined in the the controller -->
+    <form name="regForm" class="form-horizontal" ng-submit="registerArea()">
+      <div class="box-body">
+		<div ng-include="'partials/security/area/formArea.html'"></div>
+      </div>
+      <div class="box-footer">
+      	<input type="submit" ng-disabled="regForm.$invalid" id="register" value="Guardar" class="btn btn-primary" />
+        <input type="button" ng-click="reset()" name="cancel" id="cancel" value="Nuevo" class="btn btn-default" />
+        <a class="btn btn-info pull-right" ui-sref="menuMaster.listArea()">Ver Lista</a>
+      </div>
+    </form>
+
+
+</div>

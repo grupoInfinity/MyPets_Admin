@@ -1,0 +1,99 @@
+      
+    <fieldset>
+            <div ng-show="isNew(formType)">
+          		<legend>Ingrese un nuevo Municipio</legend>
+        	</div>
+        	
+        	<div ng-show="!isNew(formType)">
+          		<legend>Modificaci&oacute;n del Municipio</legend>
+        	</div>
+        	
+        	<div class="form-group">
+        		<input type="hidden" name="formType" id="formType"  ng-model="formType" />
+        		<input type="hidden" name="id" id="id"  ng-model="newMunis.id" />
+        		 <!-- <input type="hidden" name="id" id="id"  ng-model="newMunis.id_depto" /> -->
+        	</div>
+        	
+        	
+            <!-- Each input is bound to a property on the prototype newMember object -->
+            <div class="form-group">
+            <!--{{newMunis}}-->
+                <label for="descripcion" class="col-sm-2 control-label">Municipio:</label>
+                <div class="col-sm-3">
+                    <input only-letters-input type="text" class="form-control" name="descripcion" id="descripcion"  ng-model="newMunis.descripcion" placeholder="Municipio" required autofocus ng-patern="onlyLetters"/>
+                    <span class="error help-block" ng-show="regForm.descripcion.$error.required">Requerido</span>
+                    <span class="error help-block" ng-show="errors.descripcion">{{errors.descripcion}}</span>
+                </div>
+			</div>
+			
+			<div class="form-group">				
+					<label for="idDepto" class="col-sm-2 control-label">Departamento:</label>
+				<div class="col-md-3">
+					<ui-select ng-model="newMunis.id_depto" name="idDepto" id="idDepto" ng-required="true"  >
+						<ui-select-match placeholder="Departamento" autofocus>
+							<span ng-bind="$select.selected.descripcion"></span>
+						</ui-select-match>
+						<ui-select-choices repeat="depts.id as depts in (depts | propsFilter: {descripcion: $select.search}) track by depts.id" >
+							<div ng-bind-html="depts.descripcion | highlight: $select.search"></div>
+						</ui-select-choices>
+					</ui-select>
+					<span class="error help-block" ng-show="regForm.idDepto.$error.required">Requerido</span>
+					<span class="error help-block" ng-show="errors.idDepto">{{errors.idDepto}}</span>
+			    </div>
+			    </div>
+			
+			<div class="form-group">
+				<label for="estado" class="col-sm-2 control-label">Estado:</label>
+				<div class="col-md-2">
+					<label class="switch">
+						<input type="checkbox" name="estado" id="estado" ng-model="newMunis.estado">
+						<div class="slider round">
+							<span class="on">Activo</span>
+							<span class="off">Inactivo</span>
+						</div>
+					</label>
+					<span class="error help-block" ng-show="regForm.estado.$error.required">Requerido</span>
+					<span class="error help-block" ng-show="errors.estado">{{errors.estado}}</span>
+				</div>
+			</div>
+
+            <div class="modal fade modal-primary" id="notificacionesModal"
+				tabindex="-1" role="dialog">
+				<div class="modal-dialog modal-sm" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title">Notificaciones</h4>
+						</div>
+						<div class="modal-body">
+						
+				            <!-- We output a list of success messages (appropriately styled!) for the form. -->
+				            <ul ng-hide="!successMessages" class="success">
+				                <li ng-repeat="message in successMessages">{{message}}</li>
+				            </ul>
+				
+				            <!-- Output the list of error messages if any. -->
+				            <ul ng-hide="!errorMessages" class="error">
+				                <li ng-repeat="message in errorMessages">{{message}}</li>
+				            </ul>
+						
+						</div>
+						<div class="modal-footer">
+		
+						</div>
+					</div>
+					<!-- /.modal-content -->
+				</div>
+				<!-- /.modal-dialog -->
+			</div> 
+
+        </fieldset>
+     
+     
+     
+     
+     
+  

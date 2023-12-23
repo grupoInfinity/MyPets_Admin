@@ -1,0 +1,46 @@
+<div class="box">
+	<div class="box-header">
+    	<h3 class="box-title">Listado de Opciones</h3>
+    </div>	
+	<div class="box-body" ng-controller="OpcionTableCtrl as showCase">
+     	<em ng-show="opciones.length == 0">No existen opciones</em>
+        <table datatable="ng" id="opcionTable" dt-options="showCase.dtOptions" dt-columns="showCase.dtColumnsDefs" ng-hide="showCase.opciones.length == 0" class="table table-bordered table-striped">
+			<thead>
+                <tr>
+                    <th>Opcion Principal</th>
+					<th>Empresa</th>
+                    <th>Opcion</th>
+					<th>Padre?</th>
+                    <th>Estado</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="opc in opciones">
+                   
+                    <td>{{ opc.sec_opc_principal.descripcion }}</td>
+					<td>{{ opc.ctg_empresa.descripcion }}</td> 
+                    <td>{{ opc.descripcion }}</td>
+					<td align="center">
+						<label ng-if=" opc.padre==1"><font color="green"><i class="fa fa-check-square-o"></i></font></label>
+						<label ng-if=" opc.padre!=1"><font color="red"><i class="fa fa-square-o"></i></font></label>
+					</td>
+                    <td align="center">
+						<label ng-if=" opc.estado=='A'"><font color="green"><i class="fa fa-check"></i></font></label>
+						<label ng-if=" opc.estado=='I'"><font color="red"><i class="fa fa-close"></i></font></label>
+					</td>
+                    <td>
+                        <button class="btn btn-danger btn-xs" ng-click="deleteOpcion(opc.id.id)"><i class="fa fa-trash-o"></i></button>
+                        <button class="btn btn-warning btn-xs" ng-click="modifyOpcion(opc.id.id)"><i class="fa fa-edit"></i></button>
+						<button class="btn btn-primary btn-xs" ng-click="activateOpcion(opc.id.id)"><i class="fa fa-check"></i></button>
+                    </td>
+                </tr>
+            </tbody>
+		</table>
+           
+    </div>
+    <div class="box-footer">
+	    <a ui-sref="menuMaster.home" class="btn btn-danger">Salir</a>
+    	<a ui-sref="menuMaster.addOpcion()" class="btn btn-info pull-right">Nuevo</a>
+    </div>
+</div>

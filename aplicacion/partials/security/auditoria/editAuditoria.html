@@ -1,0 +1,18 @@
+ <div class="box box-info">
+    <div class="box-header with-border">
+    	<h3 class="box-title">Auditor&iacute;a</h3>
+    </div>
+    <!-- Standard HTML form, with the submit function bound to the register() function defined in the the controller -->
+    <form name="regForm" class="form-horizontal" ng-submit="updateAuditoria()">
+      <div class="box-body">
+		<div ng-include="'partials/security/auditoria/formAuditoria.html'"></div>
+      </div>
+      <div class="box-footer">
+      	<input type="submit" ng-disabled="regForm.$invalid" id="update" value="Guardar" class="btn btn-primary" />
+
+        <a class="btn btn-info pull-right" ui-sref="listAuditoria()">Ver Lista</a>
+      </div>
+    </form>
+
+
+</div>

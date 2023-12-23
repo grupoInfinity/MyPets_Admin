@@ -1,0 +1,102 @@
+        <fieldset>
+            <div ng-show="isNew(formType)">
+          		<legend>Ingrese una nueva Auditor&iacute;a</legend>
+        	</div>
+        	
+        	<div ng-show="!isNew(formType)">
+          		<legend>Modificaci&oacute;n de la Auditor&iacute;a</legend>
+        	</div>
+        	
+        	<div class="form-group">
+        		<input type="hidden" name="formType" id="formType"  ng-model="formType" />
+        		<input type="hidden" name="idAuditoria" id="idAuditoria"  ng-model="newAuditoria.idAuditoria" />
+        	</div>
+        	
+            <!-- Each input is bound to a property on the prototype newMember object -->
+            <div class="form-group">
+            	<label for="fecAuditoria" class="col-sm-2 control-label">Fecha de Auditor&iacute;a:</label>
+               <div class="input-group date">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="text" class="form-control pull-right" id="fecAuditoria" name="fecAuditoria" ng-model="newAuditoria.fecAuditoria"/>
+                </div>
+               	<!-- /.input group -->
+            </div>
+            <div class="form-group">
+                <label for="usr" class="col-sm-2 control-label">Usuario:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="usr" id="usr"  ng-model="newAuditoria.usr" placeholder="Usuario" required autofocus/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="nomTabla" class="col-sm-2 control-label">Nombre de la Tabla:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="nomTabla" id="nomTabla"  ng-model="newAuditoria.nomTabla" placeholder="Nombre de la Tabla" required autofocus/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="uid" class="col-sm-2 control-label">UID:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="uid" id="uid"  ng-model="newAuditoria.uid" placeholder="UID" required autofocus/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="valoresOld" class="col-sm-2 control-label">Nuevos Antiguos:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="valoresOld" id="valoresOld"  ng-model="newAuditoria.valoresOld" placeholder="Valores Antiguos" required autofocus/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="valoresNew" class="col-sm-2 control-label">Nuevos Valores:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="valoresNew" id="valoresNew"  ng-model="newAuditoria.valoresNew" placeholder="Valores Nuevos" required autofocus/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="accion" class="col-sm-2 control-label">Acci&oacute;n:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="accion" id="accion"  ng-model="newAuditoria.accion" placeholder="Accion" required autofocus/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="comentarios" class="col-sm-2 control-label">Comentarios:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="comentarios" id="comentarios"  ng-model="newAuditoria.comentarios" placeholder="Comentarios" required autofocus/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="fecCrAu" class="col-sm-2 control-label">Fecha Creaci&oacute;n:</label>
+                <div class="col-sm-10">
+                    <input type="text" name="fecCrAu" id="fecCrAu"  ng-model="newAuditoria.fecCrAu" disabled="disabled"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="usrCrAu" class="col-sm-2 control-label">Usuario Creaci&oacute;n:</label>
+                <div class="col-sm-10">
+                    <input type="text" name="usrCrAu" id="usrCrAu"  ng-model="newAuditoria.usrCrAu" disabled="disabled"/>
+                </div>
+            </div>            
+            <div class="form-group">
+                <label for="fecLstmodAu" class="col-sm-2 control-label">Fecha Modificaci&oacute;n:</label>
+                <div class="col-sm-10">
+                    <input type="text" name="fecLstmodAu" id="fecLstmodAu"  ng-model="newAuditoria.fecLstmodAu" disabled="disabled"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="usrLstmodAu" class="col-sm-2 control-label">Usuario Modificaci&oacute;n:</label>
+                <div class="col-sm-10">
+                    <input type="text" name="usrLstmodAu" id="usrLstmodAu"  ng-model="newAuditoria.usrLstmodAu" disabled="disabled"/>
+                </div>
+            </div>            
+            <!-- We output a list of success messages (appropriately styled!) for the form. -->
+            <ul ng-hide="!successMessages" class="success">
+                <li ng-repeat="message in successMessages">{{message}}</li>
+            </ul>
+
+            <!-- Output the list of error messages if any. -->
+            <ul ng-hide="!errorMessages" class="error">
+                <li ng-repeat="message in errorMessages">{{message}}</li>
+            </ul>
+
+        </fieldset>

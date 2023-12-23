@@ -1,0 +1,17 @@
+<div class="box box-info">
+    <div class="box-header with-border">
+    	<h3 class="box-title">Opci&oacute;n Principal</h3>
+    </div>
+    <!-- Standard HTML form, with the submit function bound to the register() function defined in the the controller -->
+    <form name="regForm" class="form-horizontal" ng-submit="registerOpcionPrincipal()">
+      <div class="box-body">
+		<div ng-include="'partials/security/opcionprincipal/formOpcionPrincipal.html'"></div>
+      </div>
+      <div class="box-footer">
+      	<input type="submit" ng-disabled="regForm.$invalid" id="register" value="Guardar" class="btn btn-primary pull-right" />
+        <a class="btn btn-danger" ui-sref="menuMaster.listOpcionPrincipal()">Salir</a>
+      </div>
+    </form>
+
+
+</div>

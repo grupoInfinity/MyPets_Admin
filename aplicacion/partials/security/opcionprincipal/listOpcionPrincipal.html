@@ -1,0 +1,54 @@
+<!-- <div class="box">
+	<div class="box-header">
+    	<h3 class="box-title">Listado de Opciones Principales</h3>
+		<em ng-show="opciones.length == 0">No existen datos de opciones principales</em>
+    </div>	
+	<div class="box-body table-responsive no-padding">
+        <table ng-hide="opciones.length == 0" class="table table-hover"> -->     
+         
+ 
+    <div class="box">
+	<div class="box-header">
+    	<h3 class="box-title">Listado de Opciones Principales</h3>
+    </div>	
+	<div class="box-body" ng-controller="OpcionPrincipalListCtrl as showCase">
+     	<em ng-show="showCase.opcion.length == 0">No existen opciones</em>
+        <table datatable="ng" id="opcPpalTable" dt-options="showCase.dtOptions" dt-columns="showCase.dtColumnsDefs" ng-hide="showCase.opcPpal.length == 0" class="table table-bordered table-striped">
+			<thead>   
+             <tr>
+            
+                    <th>ID</th>
+                    <th>Empresa</th>
+                    <th>Opcio&oacute;n Principal</th>
+					<th>Acceso Directo</th>
+                    <th>Estado</th>
+                    <th></th>
+            </tr>
+            </thead> 
+            <!-- The table is built using the AngularJS repeat function, iterating over the members variable, and ordering by the property specified in the orderBy variable -->
+            <tr ng-repeat="opcPpal in showCase.opcPpal ">           
+                 <!----{{opcPpal}}
+                  | orderBy:orderBy-->
+                <td><i class="glyphicon {{opcPpal.menu_icon}}"></i> - {{opcPpal.id.id}}</td>
+                <td>{{opcPpal.ctg_empresa.descripcion}}</td>
+                <td>{{opcPpal.descripcion}}</td>
+				<td align="center">
+					<label ng-if=" opcPpal.acceso_directo==1"><font color="green"><i class="fa fa-check-square-o"></i></font></label>
+					<label ng-if=" opcPpal.acceso_directo!=1"><font color="red"><i class="fa fa-square-o"></i></font></label>
+				</td>
+				<td align="center">
+					<label ng-if=" opcPpal.estado=='A'"><font color="green"><i class="fa fa-check"></i></font></label>
+					<label ng-if=" opcPpal.estado=='I'"><font color="red"><i class="fa fa-close"></i></font></label>
+				</td>
+                <td>
+					<button class="btn btn-danger btn-xs"  ng-click="showCase.deleteOpcPpal(opcPpal.id)"><i class="fa fa-trash-o"></i></button>
+					<button class="btn btn-warning btn-xs" ng-click="showCase.editOpcPpal(opcPpal.id)"><i class="fa fa-edit"></i></button>
+					<button class="btn btn-primary btn-xs" ng-click="showCase.activateOpcPpal(opcPpal.id)"><i class="fa fa-check"></i></button>
+                </td>
+        </table>
+    </div>
+    <div class="box-footer">
+    	<a class="btn btn-danger pull-left" ui-sref="menuMaster.home">Salir</a>
+    	<a ui-sref="menuMaster.addOpcionPrincipal()" class="btn btn-info pull-right">Nuevo</a>
+    </div>
+</div>

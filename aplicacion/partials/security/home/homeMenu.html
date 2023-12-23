@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>KRAKEN</title>
+<style>
+	#padre {
+		position: relative;
+		width:100%;
+		height: 100px;
+
+	}
+	#hijo {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		width: 75%;
+		height: 10%;
+		margin: auto;
+	}
+	#tabla{
+		border-radius: 0px 25px 0px 25px;
+		padding: 20px;
+		width: 100%;
+		height: 150px;
+	}
+
+</style>
+</head>
+<body>
+	<div id="padre">
+		<div id="hijo">
+			<div class="row">
+				<h1>
+					<i class="glyphicon {{menuOpciones[0].secOpcPpal.menu_icon}}"></i> {{menuOpciones[0].secOpcPpal.descripcion}} <label ng-if="menuOpciones[0].desc_padre.length>0"> - {{menuOpciones[0].desc_padre}}</label>
+				</h1>
+				
+				
+				<div class="col-md-4" ng-show="opc.padre == 1" ng-repeat="opc in menuOpciones track by $index">
+					<div class="info-box" data-toggle="tooltip" title="{{opc.secOpc.descripcion}}" style="cursor:pointer;" ng-click="showMenuHijo(opc.id.id_opc_ppal, opc.id.id_opc);" >
+						<span class="info-box-icon bg-maroon-active color-palette"><i class="glyphicon {{menuOpciones[0].secOpcPpal.menu_icon}}"></i></span>
+						<div class="info-box-content" >
+							<span class="info-box-text">{{opc.secOpc.descripcion}}</span>
+							<span ng-show="opc.padre == 1" class="pull-right-container">
+								<i class="fa fa-angle-right pull-right"></i>
+							</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4" ng-show="opc.padre != 1 " ng-repeat="opc in menuOpciones track by $index">
+					<div class="info-box" data-toggle="tooltip" title="{{opc.secOpc.descripcion}}" style="cursor:pointer;" ng-click="showOpcion(opc.url);" >
+						<span class="info-box-icon bg-orange-active color-palette"><i class="glyphicon glyphicon-play"></i></span>
+						<div class="info-box-content" >
+							<span class="info-box-text">{{opc.secOpc.descripcion}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="box box-solid bg-red-gradient collapsed-box col-md-3 pull-right">
+					<div class="box-header with-border" ng-click="showSalirMenuPrincipal();" style="cursor:pointer;">
+						<span class="info-box-icon pull-left"><i class="glyphicon glyphicon-home"></i></span>
+						&nbsp;&nbsp;&nbsp;&nbsp;<h3 class="box-title">Salir</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

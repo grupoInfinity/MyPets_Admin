@@ -1,8 +1,8 @@
 <?php
 
 	$servername = "localhost";
-	$username = "userSQL";
-	$password = "pasf2";
+	$username = "root";
+	$password = "";
 /*
 	//$servername = "";
 	//$servername = "";
