@@ -228,18 +228,18 @@ CREATE TABLE IF NOT EXISTS dbMyPet.sec_rol_usuario (
 
 LOCK TABLES `sec_rol_usuario` WRITE;
 
-insert  into `sec_rol_usuario`(`usuario`,`id_rol`,`usuario_creacion`) 
-    values ('dbarrientos',5,'admin'),
-    ('dnery',3,'admin'),
-    ('esantos',3,'admin'),
-    ('gmoreno',1,'admin'),
-    ('iabrego',1,'admin'),
-    ('jcastaneda',2,'admin'),
-    ('kguardado',5,'admin'),
-    ('lcastillo',5,'admin'),
-    ('nmena',5,'admin'),
-    ('nmunoz',3,'admin'),
-    ('system',1,'system');
+insert  into `sec_rol_usuario`(`usuario`,`id_rol`,`usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`) 
+    values ('dbarrientos',5,'admin','2021-08-11 16:15:48',NULL,NULL),
+    ('dnery',3,'admin','2021-08-11 16:15:48',NULL,NULL),
+    ('esantos',3,'admin','2021-08-11 16:15:48',NULL,NULL),
+    ('gmoreno',1,'admin','2021-08-11 16:15:48',NULL,NULL),
+    ('iabrego',1,'admin','2021-08-11 16:15:48',NULL,NULL),
+    ('jcastaneda',2,'admin','2021-08-11 16:15:48',NULL,NULL),
+    ('kguardado',5,'admin','2021-08-11 16:15:48',NULL,NULL),
+    ('lcastillo',5,'admin','2021-08-11 16:15:48',NULL,NULL),
+    ('nmena',5,'admin','2021-08-11 16:15:48',NULL,NULL),
+    ('nmunoz',3,'admin','2021-08-11 16:15:48',NULL,NULL),
+    ('system',1,'system','2021-08-11 16:15:48',NULL,NULL);
 
 UNLOCK TABLES;
 
@@ -257,13 +257,13 @@ CREATE TABLE IF NOT EXISTS dbMyPet.ctg_tipovacunas(
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de los roles por usuario';
 
 insert  into `ctg_tipovacunas`(`id_tipovacuna`,`nombrevacuna`,`estado`,`usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`) 
-    values (1,'distemper','A','admin'),
-    (2,'parvovirosis','A','admin'),
-    (3,'adenovirus canino','A','admin'),
-    (4,'leptospirosis','A','admin'),
-    (5,'rabia','A','admin'),
-    (6,'polivalente','A','admin'),
-    (7,'moquillo canino','A','admin')
+    values (1,'distemper','A','admin','2021-08-11 16:15:48',NULL,NULL),
+    (2,'parvovirosis','A','admin','2021-08-11 16:15:48',NULL,NULL),
+    (3,'adenovirus canino','A','admin','2021-08-11 16:15:48',NULL,NULL),
+    (4,'leptospirosis','A','admin','2021-08-11 16:15:48',NULL,NULL),
+    (5,'rabia','A','admin','2021-08-11 16:15:48',NULL,NULL),
+    (6,'polivalente','A','admin','2021-08-11 16:15:48',NULL,NULL),
+    (7,'moquillo canino','A','admin','2021-08-11 16:15:48',NULL,NULL)
 
 LOCK TABLES `ctg_tipovacunas` WRITE;
 
@@ -279,11 +279,11 @@ CREATE TABLE IF NOT EXISTS dbMyPet.ctg_tipomascotas(
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de los roles por usuario';
 
 insert  into `ctg_tipomascotas`(`id_tipomascota`,`tipomascota`,`estado`,`usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`) 
-    values (1,'gato','A','admin'),
-    (2,'perro','A','admin'),
-    (3,'conejo','A','admin'),
-    (4,'tortuga','A','admin'),
-    (5,'hamster','A','admin')
+    values (1,'gato','A','admin','2021-08-11 16:15:48',NULL,NULL),
+    (2,'perro','A','admin','2021-08-11 16:15:48',NULL,NULL),
+    (3,'conejo','A','admin','2021-08-11 16:15:48',NULL,NULL),
+    (4,'tortuga','A','admin','2021-08-11 16:15:48',NULL,NULL),
+    (5,'hamster','A','admin','2021-08-11 16:15:48',NULL,NULL)
 
 LOCK TABLES `ctg_tipomascotas` WRITE;
 
@@ -299,21 +299,21 @@ CREATE TABLE IF NOT EXISTS dbMyPet.ctg_departamentos(
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de los roles por usuario';
 
 SELECT * from ctg_departamentos
-INSERT INTO ctg_departamentos (id_departamento, departamento,estado,usuario_creacion) 
-VALUE(1,'San Salvador','A','admin'),
-(2,'San Vicente','A','admin'),
-(3,'Ahuachapan','A','admin'),
-(4,'San Miguel','A','admin'),
-(5,'Santa Ana','A','admin'),
-(6,'Morazan','A','admin'),
-(7,'La Libertad','A','admin'),
-(8,'Sonsonate','A','admin'),
-(9,'Chalatenango','A','admin'),
-(10,'La Union','A','admin'),
-(11,'La Paz','A','admin'),
-(12,'Usulutan','A','admin'),
-(13,'Cabañas','A','admin'),
-(14,'Cuscatlan','A','admin')
+INSERT INTO ctg_departamentos (id_departamento, departamento,estado,usuario_creacion,fecha_creacion,usuario_update,fecha_update) 
+VALUE(1,'San Salvador','A','admin','2021-08-11 16:15:48',NULL,NULL),
+(2,'San Vicente','A','admin','2021-08-11 16:15:48',NULL,NULL),
+(3,'Ahuachapan','A','admin','2021-08-11 16:15:48',NULL,NULL),
+(4,'San Miguel','A','admin','2021-08-11 16:15:48',NULL,NULL),
+(5,'Santa Ana','A','admin','2021-08-11 16:15:48',NULL,NULL),
+(6,'Morazan','A','admin','2021-08-11 16:15:48',NULL,NULL),
+(7,'La Libertad','A','admin','2021-08-11 16:15:48',NULL,NULL),
+(8,'Sonsonate','A','admin','2021-08-11 16:15:48',NULL,NULL),
+(9,'Chalatenango','A','admin','2021-08-11 16:15:48',NULL,NULL),
+(10,'La Union','A','admin','2021-08-11 16:15:48',NULL,NULL),
+(11,'La Paz','A','admin','2021-08-11 16:15:48',NULL,NULL),
+(12,'Usulutan','A','admin','2021-08-11 16:15:48',NULL,NULL),
+(13,'Cabañas','A','admin','2021-08-11 16:15:48',NULL,NULL),
+(14,'Cuscatlan','A','admin','2021-08-11 16:15:48',NULL,NULL)
 
 SELECT * FROM ctg_departamentos
 
@@ -337,63 +337,63 @@ CREATE TABLE IF NOT EXISTS dbMyPet.ctg_municipios(
     CONSTRAINT `fk_municipios_dep` FOREIGN KEY(`id_departamento`) REFERENCES `ctg_departamentos`(`id_departamento`)
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de los roles por usuario';
 
-INSERT INTO ctg_municipios (id_municipio,id_departamento, municipio,estado,usuario_creacion) 
-VALUE(1, 1, 'San Salvador Norte', 'A', 'admin'),
-(2, 1, 'San Salvador Sur', 'A', 'admin'),
-(3, 1, 'San Salvador Este', 'A', 'admin'),
-(4, 1, 'San Salvador Oeste', 'A', 'admin'),
-(5, 2, 'San Vicente Norte', 'A', 'admin'),
-(6, 2, 'San Vicente Sur', 'A', 'admin'),
-(7, 2, 'San Vicente Este', 'A', 'admin'),
-(8, 2, 'San Vicente Oeste', 'A', 'admin'),
-(9, 3, 'Ahuachapan Norte', 'A', 'admin'),
-(10, 3, 'Ahuachapan Sur', 'A', 'admin'),
-(11, 3, 'Ahuachapan Este', 'A', 'admin'),
-(12, 3, 'Ahuachapan Oeste', 'A', 'admin'),
-(13, 7, 'La Libertad Norte', 'A', 'admin'),
-(14, 7, 'La Libertad Sur', 'A', 'admin'),
-(15, 7, 'La Libertad Este', 'A', 'admin'),
-(16, 7, 'La Libertad Oeste', 'A', 'admin'),
-(17, 8, 'Sonsonate Norte', 'A', 'admin'),
-(18, 8, 'Sonsonate Sur', 'A', 'admin'),
-(19, 8, 'Sonsonate Este', 'A', 'admin'),
-(20, 8, 'Sonsonate Oeste', 'A', 'admin'),
-(21, 9, 'Chalatenango Norte', 'A', 'admin'),
-(22, 9, 'Chalatenango Sur', 'A', 'admin'),
-(23, 9, 'Chalatenango Este', 'A', 'admin'),
-(24, 9, 'Chalatenango Oeste', 'A', 'admin'),
-(25, 10, 'La Union Norte', 'A', 'admin'),
-(26, 10, 'La Union Sur', 'A', 'admin'),
-(27, 10, 'La Union Este', 'A', 'admin'),
-(28, 10, 'La Union Oeste', 'A', 'admin'),
-(29, 11, 'La Paz Norte', 'A', 'admin'),
-(30, 11, 'La Paz Sur', 'A', 'admin'),
-(31, 11, 'La Paz Este', 'A', 'admin'),
-(32, 11, 'La Paz Oeste', 'A', 'admin'),
-(33, 12, 'Usulutan Norte', 'A', 'admin'),
-(34, 12, 'Usulutan Sur', 'A', 'admin'),
-(35, 12, 'Usulutan Este', 'A', 'admin'),
-(36, 12, 'Usulutan Oeste', 'A', 'admin'),
-(37, 13, 'Cabañas Norte', 'A', 'admin'),
-(38, 13, 'Cabañas Sur', 'A', 'admin'),
-(39, 13, 'Cabañas Este', 'A', 'admin'),
-(40, 13, 'Cabañas Oeste', 'A', 'admin'),
-(41, 14, 'Cuscatlan Norte', 'A', 'admin'),
-(42, 14, 'Cuscatlan Sur', 'A', 'admin'),
-(43, 14, 'Cuscatlan Este', 'A', 'admin'),
-(44, 14, 'Cuscatlan Oeste', 'A', 'admin'),
-(45, 4, 'San Miguel Norte', 'A', 'admin'),
-(46, 4, 'San Miguel Sur', 'A', 'admin'),
-(47, 4, 'San Miguel Este', 'A', 'admin'),
-(48, 4, 'San Miguel Oeste', 'A', 'admin'),
-(49, 5, 'Santa Ana Norte', 'A', 'admin'),
-(50, 5, 'Santa Ana Sur', 'A', 'admin'),
-(51, 5, 'Santa Ana Este', 'A', 'admin'),
-(52, 5, 'Santa Ana Oeste', 'A', 'admin'),
-(53, 6, 'Morazan Norte', 'A', 'admin'),
-(54, 6, 'Morazan Sur', 'A', 'admin'),
-(55, 6, 'Morazan Este', 'A', 'admin'),
-(56, 6, 'Morazan Oeste', 'A', 'admin')
+INSERT INTO ctg_municipios (id_municipio,id_departamento, municipio,estado,usuario_creacion,fecha_creacion,usuario_update,fecha_update) 
+VALUE(1, 1, 'San Salvador Norte', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(2, 1, 'San Salvador Sur', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(3, 1, 'San Salvador Este', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(4, 1, 'San Salvador Oeste', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(5, 2, 'San Vicente Norte', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(6, 2, 'San Vicente Sur', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(7, 2, 'San Vicente Este', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(8, 2, 'San Vicente Oeste', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(9, 3, 'Ahuachapan Norte', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(10, 3, 'Ahuachapan Sur', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(11, 3, 'Ahuachapan Este', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(12, 3, 'Ahuachapan Oeste', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(13, 7, 'La Libertad Norte', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(14, 7, 'La Libertad Sur', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(15, 7, 'La Libertad Este', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(16, 7, 'La Libertad Oeste', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(17, 8, 'Sonsonate Norte', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(18, 8, 'Sonsonate Sur', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(19, 8, 'Sonsonate Este', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(20, 8, 'Sonsonate Oeste', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(21, 9, 'Chalatenango Norte', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(22, 9, 'Chalatenango Sur', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(23, 9, 'Chalatenango Este', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(24, 9, 'Chalatenango Oeste', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(25, 10, 'La Union Norte', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(26, 10, 'La Union Sur', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(27, 10, 'La Union Este', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(28, 10, 'La Union Oeste', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(29, 11, 'La Paz Norte', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(30, 11, 'La Paz Sur', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(31, 11, 'La Paz Este', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(32, 11, 'La Paz Oeste', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(33, 12, 'Usulutan Norte', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(34, 12, 'Usulutan Sur', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(35, 12, 'Usulutan Este', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(36, 12, 'Usulutan Oeste', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(37, 13, 'Cabañas Norte', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(38, 13, 'Cabañas Sur', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(39, 13, 'Cabañas Este', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(40, 13, 'Cabañas Oeste', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(41, 14, 'Cuscatlan Norte', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(42, 14, 'Cuscatlan Sur', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(43, 14, 'Cuscatlan Este', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(44, 14, 'Cuscatlan Oeste', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(45, 4, 'San Miguel Norte', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(46, 4, 'San Miguel Sur', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(47, 4, 'San Miguel Este', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(48, 4, 'San Miguel Oeste', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(49, 5, 'Santa Ana Norte', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(50, 5, 'Santa Ana Sur', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(51, 5, 'Santa Ana Este', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(52, 5, 'Santa Ana Oeste', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(53, 6, 'Morazan Norte', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(54, 6, 'Morazan Sur', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(55, 6, 'Morazan Este', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
+(56, 6, 'Morazan Oeste', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL)
 
 LOCK TABLES `ctg_municipios` WRITE;
 
