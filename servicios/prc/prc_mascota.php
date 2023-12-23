@@ -125,7 +125,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         $date = ", fecha_update='" . date('Y-m-d H:i:s') . "'";
 
         $sql = "UPDATE $bd.$tabla SET $id_mascota $id_tipomascota $id_mun $direccion 
-        $estado_direc $nombremasc $codigo $nacim $foto $estado $user /*$date */
+        $estado_direc $nombremasc $codigo $nacim $foto $estado $user $date 
          WHERE id_mascota = $id_mascota ";
 
         echo $sql;
@@ -149,7 +149,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         $user = ", usuario_update='" . $user . "'";
         $date = ", fecha_update='" . date('Y-m-d H:i:s') . "'";
 
-        $sql = "UPDATE $bd.$tabla SET estado='A' $user WHERE id_mascota = $id_mascota ";
+        $sql = "UPDATE $bd.$tabla SET estado='A' $user $date WHERE id_mascota = $id_mascota ";
 
         if ($conn->query($sql) === TRUE) {
             $json = array("status" => 1, "info" => "Registro eliminado exitosamente.");
