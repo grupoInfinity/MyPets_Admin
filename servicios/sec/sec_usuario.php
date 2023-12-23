@@ -404,7 +404,9 @@ else{
 							$isRolAdmin = "N";
 							$isRolSupervisor = "N";
 							$isRolCajero = "N";
-							$sql_rol = "SELECT A.rol
+							$isRolCliente = "N";
+
+							$sql_rol = "SELECT A.id_rol
 										  FROM $bd.sec_rol_usuario A
 										  WHERE $usr";
 							//echo $sql_rol; 
@@ -412,13 +414,13 @@ else{
 							if (!empty($result2)) {
 								if($result2->num_rows > 0) {
 									while($row2 = $result2->fetch_assoc()) {
-										$rol = $row2["rol"];
+										$rol = $row2["id_rol"];
 												
 										/******************************************/
 										
-										$sql3 = "SELECT A.id, A.descripcion, A.estado
+										$sql3 = "SELECT A.id_rol, A.descripcion, A.estado
 												 FROM $bd.sec_rol A
-												 WHERE A.id = $rol";
+												 WHERE A.id_rol = $rol";
 												 
 										//echo $sql3;
 										
@@ -427,7 +429,7 @@ else{
 											if($result3->num_rows > 0) {
 												while($row3 = $result3->fetch_assoc()) {
 													$sec_rol[] = array(
-														'id' => $row3["id"],
+														'id' => $row3["id_rol"],
 														'descripcion'=>utf8_encode($row3["descripcion"]),
 														'estado'=>$row3["estado"]
 													);
@@ -456,136 +458,15 @@ else{
 										if ($idRolCajero== $rol) {
 											$isRolCajero = "S";
 										}
-									}
-								}
-							}
-							
-							/******************************************/
-							$sql2 = "SELECT A.id, A.descripcion, A.estado
-							, A.id_cuenta_efectivo, B.id_naturaleza AS id_cuenta_efectivo_naturaleza
-							, A.id_cuenta_inventarios, BB.id_naturaleza as id_cuenta_inventarios_naturaleza
-							, A.id_cuenta_costos, BBB.id_naturaleza as id_cuenta_costos_naturaleza
-							, A.id_cuenta_ventas, BBBB.id_naturaleza as id_cuenta_ventas_naturaleza
-							, A.id_centro_costo
-							FROM $bd.ctg_almacen A
-							INNER JOIN $bd.ctg_cuenta B on B.id = A.id_cuenta_efectivo
-							INNER JOIN $bd.ctg_cuenta BB on BB.id = A.id_cuenta_inventarios
-							INNER JOIN $bd.ctg_cuenta BBB on BBB.id = A.id_cuenta_costos
-							INNER JOIN $bd.ctg_cuenta BBBB on BBBB.id = A.id_cuenta_ventas
-							WHERE A.id = $id_almacen";
-							
-						   //echo $sql2;
-						   
-						   $result2 = $conn->query($sql2);
-							if (!empty($result2)) {
-							   if($result2->num_rows > 0) {
-									while($row2 = $result2->fetch_assoc()) {
-										$ctg_almacen[] = array(
-										   'id' => $row2["id"],
-										   'descripcion'=>utf8_encode($row2["descripcion"]),
-											//contabilidad
-										   'id_cuenta_efectivo'=>($row2["id_cuenta_efectivo"]),
-										   'id_cuenta_inventarios'=>($row2["id_cuenta_inventarios"]),
-										   'id_cuenta_costos'=>($row2["id_cuenta_costos"]),
-										   'id_cuenta_ventas'=>($row2["id_cuenta_ventas"]),
-										   'id_centro_costo'=>($row2["id_centro_costo"])
-										   
-											, 'id_cuenta_efectivo_naturaleza'=>$row2["id_cuenta_efectivo_naturaleza"]
-											, 'id_cuenta_inventarios_naturaleza'=>$row2["id_cuenta_inventarios_naturaleza"]
-											, 'id_cuenta_costos_naturaleza'=>$row2["id_cuenta_costos_naturaleza"]
-											, 'id_cuenta_ventas_naturaleza'=>$row2["id_cuenta_ventas_naturaleza"]
-										
-										    , 'estado'=>$row2["estado"]
-										);
-									}
-								} else {
-								   $ctg_almacen[] = null;
-								}
-							}
-							else $ctg_almacen[] = null;
-							/******************************************/
-							$isRolCajero = "N";
-							$sql_rol = "SELECT A.rol
-										  FROM $bd.sec_rol_usuario A
-										  WHERE $usr";
-							//echo $sql_rol; 
-							$result2 = $conn->query($sql_rol);
-							if (!empty($result2)) {
-								if($result2->num_rows > 0) {
-									while($row2 = $result2->fetch_assoc()) {
-										$rol = $row2["rol"];
-										/******************************************/
-										
-										$sql3 = "SELECT A.id, A.descripcion, A.estado
-												 FROM $bd.sec_rol A
-												 WHERE A.id = $rol and UPPER(A.descripcion) like '%CAJER%'";
-												 
-										//echo $sql3;
-										
-										$result3 = $conn->query($sql3);
-										if (!empty($result3)) {
-											if($result3->num_rows > 0) {
-												while($row3 = $result3->fetch_assoc()) {
-													$isRolCajero = "S";
-												}
-											}
+										$pos = strpos("roles_adm=".$idRolCliente, $rol);
+										//if ($pos > 0) {
+										if ($idRolCajero== $rol) {
+											$isRolCajero = "S";
 										}
 									}
 								}
 							}
-							//echo $isRolCajero;
-							//******************************************
 							
-							//VERIFICA LA IP DE LA MÁQUINA
-							/*
-							$ctg_caja=[];	
-							if($isRolCajero=="S"){
-								$ip = getIP();
-								
-								//echo $ip;
-								$sql2="SELECT A.descripcion_caja, A.ip
-								FROM $bd.ctg_almacen_caja A
-								WHERE A.id_almacen=$id_almacen AND A.ip = '$ip'";
-								//echo $sql2;
-								$result2 = $conn->query($sql2);
-								if (!empty($result2)) {
-									if($result2->num_rows > 0) {
-										while($row2 = $result2->fetch_assoc()) {
-											$descripcion = $row2["descripcion_caja"];
-											$ip = $row2["ip"];
-
-											$ctg_caja[] = array(
-											   'descripcion' => $descripcion,
-											   'ip'=>$ip
-											);
-										}
-									}
-									else $ctg_caja[] = array(
-											   'descripcion' => "no ha seteado caja",
-											   'ip'=>$ip
-											);
-								}
-								else $ctg_caja[] = array(
-									   'descripcion' => "no ha seteado caja",
-									   'ip'=>$ip
-									);
-							}//*/
-							//*******************************************
-							//VERIFICA LAS ORDENES PENDIENTES DE AUTORIZAR
-							/*
-							$sql2="SELECT COUNT(*) AS total_ordenes
-								FROM $bd.prc_po_politic_authorization A
-								WHERE A.id_puesto_autoriza = $id_puesto AND AND A.autorizada=0";
-							//echo $sql2;
-							$result2 = $conn->query($sql2);
-							$total_ordenes = 0;
-							if (!empty($result2)) {
-								if($result2->num_rows > 0) {
-									while($row2 = $result2->fetch_assoc()) {
-										$total_ordenes = $row2["total_ordenes"];
-									}
-								}
-							}
 							//*/
 							//*******************************************
 							
@@ -593,9 +474,8 @@ else{
 							  "idUser" => $ultimoId,
 							  "usr" => $row["usr"],
 							  "isRolAdmin" => $isRolAdmin,
-							  "isRolSupervisor" => $isRolSupervisor,
-							  "isRolCajero" => $isRolCajero,
-							  "sec_rol" => $sec_rol,
+							  "isRolCliente" => $isRolCliente,
+							  "sec_rol" => $sec_rol/*,
 							  "ctg_almacen" => $ctg_almacen,
 							  "ctg_caja" => $ctg_caja
 							  , "gral_params" => $gral_params
@@ -604,7 +484,7 @@ else{
 							  , "id_tipo_contribuyente" => $id_tipo_contribuyente 	
 							  , "id_puesto" => $id_puesto 	
 							  , "puesto" => $puesto 	
-							  //, "total_ordenes" => $total_ordenes 	
+							  , "total_ordenes" => $total_ordenes*/
 							  
 							);
 

@@ -22,17 +22,15 @@ $user = utf8_encode(isset($_GET['user']) ? $_GET['user'] : '');
 $json = "no has seteado nada.";
 
 if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
-	if(!empty($usr)) $usr="A.usr='$usr'";
+	if(!empty($usr)) $usr="A.usuario='$usr'";
 	else $usr="1=1";
-	if(!empty($rol)) $rol="AND A.rol = '$rol'";
+	if(!empty($rol)) $rol="AND A.id_rol = $rol";
 	else $rol="";
-	if(!empty($id_empresa)) $id_empresa="AND A.id_empresa = '$id_empresa'";
-	else $id_empresa="";
 		
 	$sql = "
-	SELECT A.usr, A.rol, A.id_empresa
+	SELECT A.usuario, A.rol
 	FROM $bd.$tabla A
-	WHERE $usr $rol $id_empresa";
+	WHERE $usr $rol";
 	
 	//echo $sql;
 	$result = $conn->query($sql);

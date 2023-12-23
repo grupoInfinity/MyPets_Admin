@@ -91,7 +91,7 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
                     else $resultsOpcPpal[] = null;
 
 
-                    $sql2 = "
+                    /*$sql2 = "
                     SELECT A.id, A.descripcion, A.estado
                     FROM $bd.ctg_empresa A
                     WHERE A.id = $id_empresa";
@@ -112,7 +112,7 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
                         } else {
                             $ctg_empresa[] = null;
                         }
-                        else $ctg_empresa[] = null;
+                        else $ctg_empresa[] = null;*/
                     
                     $results[] = array(
                         //"id" => $row["id"]
@@ -125,7 +125,6 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
                         , 'orden'=>$row["orden"]
                         , 'estado'=>$row["estado"]
                         , 'sec_opc_principal' => $resultsOpcPpal[$i]
-                        , 'ctg_empresa' => $ctg_empresa[$i]
                     );
                     $json = array("status"=>1, "info"=>$results);
                     //$ctg_almacen = null;
@@ -140,7 +139,7 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
 else{
     if(strtoupper($accion) =='I'){// VERIFICACION SI LA ACCION ES INSERCION
         $sql = "
-		SELECT MAX(a.id) + 1 as id
+		SELECT MAX(a.id_opc) + 1 as id
 		FROM $bd.$tabla a";
         
         $result = $conn->query($sql);
@@ -161,8 +160,8 @@ else{
         if($id_opc_padre=="null" || $id_opc_padre=="0") $id_opc_padre = "NULL";
 		if($padre=="null" || $padre=="0") $padre = "NULL";
 		
-        $sql = "INSERT INTO $bd.$tabla(ID, id_empresa, id_opc_principal, id_opc_padre, padre, DESCRIPCION, url, ORDEN, ESTADO, USUARIO_CREACION, FECHA_CREACION)
-		VALUE($id, $id_empresa, $id_opc_ppal, $id_opc_padre, $padre, '$desc', '$url', $orden, 'A', '$user', '$date')";
+        $sql = "INSERT INTO $bd.$tabla(id_opc, id_menu, id_opc_padre, padre, DESCRIPCION, url, ORDEN, ESTADO, USUARIO_CREACION, FECHA_CREACION)
+		VALUE($id, $id_opc_ppal, $id_opc_padre, $padre, '$desc', '$url', $orden, '$estado', '$user', '$date')";
         
         //echo $sql;
         if ($conn->query($sql) === TRUE) {
@@ -175,18 +174,19 @@ else{
 		if($id_opc_padre=="null" || $id_opc_padre=="0") $id_opc_padre = "NULL";
 		if($padre=="null" || $padre=="0") $padre = "NULL";
 		
-        $id_opc_ppal = "id_opc_principal=".$id_opc_ppal;
+        $id_opc_ppal = "id_menu=".$id_opc_ppal;
         $id_opc_padre = ", id_opc_padre=".$id_opc_padre;
         $padre = ", padre=".$padre;
         $desc = ", descripcion='".($desc)."'";
         $orden = ", orden='".($orden)."'";
         $url = ", url='".$url."'";
         $estado = ", estado='".strtoupper($estado)."'";
-        $user = ", usuario_modificacion='".$user."'";
-        $date = ", fecha_modificacion='".date('Y-m-d H:i:s')."'";
+        $user = ", usuario_update='".$user."'";
+        $date = ", fecha_update='".date('Y-m-d H:i:s')."'";
         
         
-        $sql = "UPDATE $bd.$tabla SET $id_opc_ppal $id_opc_padre $padre $desc $url $orden $estado $user $date WHERE id = $id_opc and id_empresa = $id_empresa";
+        $sql = "UPDATE $bd.$tabla SET $id_opc_ppal $id_opc_padre $padre $desc $url $orden $estado $user $date
+         WHERE id_opc = $id_opc ";
         //echo $sql;
         if ($conn->query($sql) === TRUE) {
             $json = array("status"=>1, "info"=>"Registro actualizado exitosamente.");
@@ -195,10 +195,10 @@ else{
         }
     }
     else if(strtoupper($accion) =='D'){// VERIFICACION SI LA ACCION ES INACTIVACION
-        $user = ", usuario_modificacion='".$user."'";
-        $date = ", fecha_modificacion='".date('Y-m-d H:i:s')."'";
+        $user = ", usuario_update='".$user."'";
+        $date = ", fecha_update='".date('Y-m-d H:i:s')."'";
         
-        $sql = "UPDATE $bd.$tabla set estado='I' $user $date WHERE id = $id_opc";
+        $sql = "UPDATE $bd.$tabla set estado='I' $user $date WHERE id_opc = $id_opc";
         
         if ($conn->query($sql) === TRUE) {
             $json = array("status"=>1, "info"=>"Registro eliminado exitosamente.");
@@ -207,10 +207,10 @@ else{
         }
     }
 	else if(strtoupper($accion) =='A'){// VERIFICACION SI LA ACCION ES ACTIVACION
-        $user = ", usuario_modificacion='".$user."'";
-        $date = ", fecha_modificacion='".date('Y-m-d H:i:s')."'";
+        $user = ", usuario_update='".$user."'";
+        $date = ", fecha_update='".date('Y-m-d H:i:s')."'";
         
-        $sql = "UPDATE $bd.$tabla set estado='A' $user $date WHERE id = $id_opc";
+        $sql = "UPDATE $bd.$tabla set estado='A' $user $date WHERE id_opc = $id_opc";
         
         if ($conn->query($sql) === TRUE) {
             $json = array("status"=>1, "info"=>"Registro eliminado exitosamente.");

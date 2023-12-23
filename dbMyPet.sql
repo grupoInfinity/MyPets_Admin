@@ -116,7 +116,7 @@ CREATE TABLE IF NOT EXISTS dbMyPet.sec_rol (
 LOCK TABLES `sec_rol` WRITE;
 
 insert  into `sec_rol`(`id_rol`,`descripcion`,`estado`,`usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`)
- values (1,'Administrador','A','admin','2021-08-11 16:15:48','admin','2019-02-11 00:00:00'),
+  (1,'Admi1nistrador','A','admin','2021-08-11 16:15:48','admin','2019-02-11 00:00:00'),
  (2,'Presidente','A','admin','2021-08-11 16:15:48',NULL,NULL),
  (3,'Gerente','A','admin','2021-08-11 16:15:48',NULL,NULL),
  (4,'Jefe','A','admin','2021-08-11 16:15:48','Mrivera','2020-04-12 00:00:00'),
@@ -160,6 +160,7 @@ insert  into `sec_usuario`(`usuario`,`clave`,`nombre`,`apellido`,`email`,`pin`,`
     ('system','321','Administrador','Sistemas','gustavo.moreno@gi-sv.com','000110','A',1,'admin','2021-11-14 13:13:24',NULL,NULL);
 
 
+SELECT * FROM sec_rol
 
 UNLOCK TABLES;
 
