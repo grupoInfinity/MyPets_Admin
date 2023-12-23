@@ -1,7 +1,7 @@
 <?php
 include_once('../config.php');
 
-$bd = "dbMyPet";
+//$bd = "dbMyPet";
 $tabla = "ctg_departamentos";
 
 $accion = isset($_GET['accion']) ? $_GET['accion'] : '';
@@ -50,7 +50,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
             if ($result->num_rows > 0) {
 
                 while ($row = $result->fetch_assoc()) {
-                    if (!is_null($row["id_departamento"])) $id = $row["id_departamento"];
+                    if (!is_null($row["id"])) $id = $row["id"];
                     else $id = 1;
                 }
             } else {

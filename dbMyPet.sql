@@ -35,14 +35,17 @@ CREATE TABLE IF NOT EXISTS dbMyPet.sec_menu (   #SEC MENU
   PRIMARY KEY (`id_menu`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de las opciones principales';
 
+
+
 LOCK TABLES `sec_menu` WRITE;
 
 insert  into `sec_menu`(`id_menu`,`descripcion`,`menu_icon`,`orden`,`acceso_directo`,`estado`,
 `usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`)
  values (1,'Administración','glyphicon-th',1,1,'A','admin','2018-11-09 15:28:56','nguerrero','2021-08-12 00:56:20'),
- (2,1,'Seguridad','glyphicon-cog',13,1,'A','admin','2018-11-09 15:28:56','nguerrero','2021-08-12 00:56:31'),
- (4,1,'Seguimiento','glyphicon-calendar',2,1,'A','admin','2018-11-09 15:28:56','admin','2019-02-18 21:49:07'),
- (16,1,'Dashboard','glyphicon-dashboard',14,1,'A','admin','2018-12-11 00:00:00','nguerrero','2021-08-12 00:56:26'),(18,1,'Reportes','glyphicon-file',17,1,'A','admin','2019-08-06 00:00:00','SYSTEM','2020-06-28 19:48:17');
+ (2,'Seguridad','glyphicon-cog',13,1,'A','admin','2018-11-09 15:28:56','nguerrero','2021-08-12 00:56:31'),
+ (4,'Seguimiento','glyphicon-calendar',2,1,'A','admin','2018-11-09 15:28:56','admin','2019-02-18 21:49:07'),
+ (16,'Dashboard','glyphicon-dashboard',14,1,'A','admin','2018-12-11 00:00:00','nguerrero','2021-08-12 00:56:26'),
+ (18,'Reportes','glyphicon-file',17,1,'A','admin','2019-08-06 00:00:00','SYSTEM','2020-06-28 19:48:17');
 
 UNLOCK TABLES;
 
@@ -71,7 +74,8 @@ ALTER TABLE `sec_opcion`
 LOCK TABLES `sec_opcion` WRITE;
 
 
-insert  into `sec_opcion`(`id_opc`,`id_menu`,`id_opc_padre`,`padre`,`descripcion`,`url`,`estado`,`usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`,`orden`) 
+insert  into `sec_opcion`(`id_opc`,`id_menu`,`id_opc_padre`,`padre`,`descripcion`,`url`,`estado`,
+`usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`,`orden`) 
     values (27,2,NULL,NULL,'Empleado','menuMaster.listEmpleado()','A','admin','2018-11-09 15:29:05','admin','2019-02-11 00:00:00',4),
     (28,1,61,NULL,'Cargo','menuMaster.listCargo()','A','admin','2018-11-09 15:29:05','system','2023-12-03 00:00:00',2),
     (30,4,NULL,NULL,'Seguimiento Tareas','menuMaster.listTarea()','A','admin','2018-11-09 15:29:05',NULL,NULL,2),
@@ -91,7 +95,8 @@ insert  into `sec_opcion`(`id_opc`,`id_menu`,`id_opc_padre`,`padre`,`descripcion
     (113,1,115,NULL,'Umbral Tipo Impacto','menuMaster.listTipoImpactoUmbral()','A',NULL,NULL,NULL,NULL,7),
     (114,1,115,NULL,'Deadline','menuMaster.listTipoDeadline()','A',NULL,NULL,NULL,NULL,8),
     (115,1,NULL,1,'Tarea','','A','admin','2018-11-09 15:29:05',NULL,NULL,4),
-    (116,16,NULL,NULL,'Reporte de Tareas Resueltas','menuMaster.dashboard()','A','nguerrero','2021-10-15 00:00:00','nguerrero','2021-10-18 00:00:00',1),(117,1,16,NULL,NULL,'Reporte de Tareas Pendientes','menuMaster.dashboardAtencion()','A','nguerrero','2021-10-15 00:00:00','nguerrero','2021-10-18 00:00:00',2);
+    (116,16,NULL,NULL,'Reporte de Tareas Resueltas','menuMaster.dashboard()','A','nguerrero','2021-10-15 00:00:00','nguerrero','2021-10-18 00:00:00',1),
+	 (117,16,NULL,NULL,'Reporte de Tareas Pendientes','menuMaster.dashboardAtencion()','A','nguerrero','2021-10-15 00:00:00','nguerrero','2021-10-18 00:00:00',2);
 
 UNLOCK TABLES;
 
@@ -175,10 +180,20 @@ CREATE TABLE IF NOT EXISTS dbMyPet.sec_opc_rol (
   CONSTRAINT `FK_ROL2` FOREIGN KEY (`id_rol`) REFERENCES `sec_rol` (`id_rol`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de las opciones por rol';
 
+	
+SELECT A.id_menu, A.id_opc, A.id_rol, C.orden, C.url, ifnull(CC.descripcion,'') as desc_padre
+		FROM sec_opc_rol A 
+		INNER JOIN sec_opcion C ON C.id_menu = A.id_menu AND C.id_opc = A.id_opc
+		LEFT JOIN sec_opcion CC ON CC.id_opc = C.id_opc_padre
+		#WHERE $id_opc_ppal $id_padre $id_rol 
+		ORDER BY C.orden ASC
+		
+
+
 LOCK TABLES `sec_opc_rol` WRITE;
 
 insert  into `sec_opc_rol`(`id_menu`,`id_opc`,`id_rol`,`usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`) 
-    values (1,1,27,1,'admin','2018-11-09 15:29:01',NULL,NULL),
+    values (1,27,1,'admin','2018-11-09 15:29:01',NULL,NULL),
     (1,27,3,'admin','2018-11-09 15:29:01',NULL,NULL),
     (1,28,1,'admin','2018-11-09 15:29:01',NULL,NULL),
     (1,28,3,'admin','2018-11-09 15:29:01',NULL,NULL),
@@ -278,6 +293,7 @@ CREATE TABLE IF NOT EXISTS dbMyPet.ctg_tipomascotas(
     `fecha_update` datetime DEFAULT NULL  COMMENT 'fecha modificacion'
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de los roles por usuario';
 
+
 insert  into `ctg_tipomascotas`(`id_tipomascota`,`tipomascota`,`estado`,`usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`) 
     values (1,'gato','A','admin','2021-08-11 16:15:48',NULL,NULL),
     (2,'perro','A','admin','2021-08-11 16:15:48',NULL,NULL),
@@ -330,7 +346,7 @@ CREATE TABLE IF NOT EXISTS dbMyPet.ctg_municipios(
     `usuario_creacion` varchar(255) DEFAULT NULL COMMENT 'usuario creacion',
     `fecha_creacion` datetime DEFAULT NULL COMMENT 'fecha creacion',
     `usuario_update` varchar(255) DEFAULT NULL COMMENT 'usuario modificacion',
-    `fecha_update` datetime DEFAULT NULL  COMMENT 'fecha modificacion'
+    `fecha_update` datetime DEFAULT NULL  COMMENT 'fecha modificacion',
     PRIMARY KEY (`id_municipio`),
     KEY `fk_municipios_dep` (`id_departamento`),
     -- DEPARTAMENTO A MUNICIPIO

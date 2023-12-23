@@ -1,7 +1,7 @@
 <?php
 include_once('../config.php'); 
 
-$bd = "dbMyPet";
+//$bd = "dbMyPet";
 $tabla = "ctg_municipios";
 $tabla2 = "ctg_departamentos";
 
@@ -60,7 +60,7 @@ else{
             if ($result->num_rows > 0) {
 
                 while ($row = $result->fetch_assoc()) {
-                    if (!is_null($row["id_municipio"])) $id_mun = $row["id_municipio"];
+                    if (!is_null($row["id"])) $id_mun = $row["id"];
                     else $id_mun = 1;
                 }
             } else {

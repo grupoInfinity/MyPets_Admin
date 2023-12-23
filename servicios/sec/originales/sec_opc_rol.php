@@ -37,12 +37,19 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
 	if(!empty($id_empresa)) $id_empresa="AND A.id_empresa = $id_empresa ";
 	else $id_empresa="";
 		
-	$sql = " SELECT A.id_opc_ppal, A.id_empresa, A.id_opc, A.id_rol, B.orden, B.acceso_directo, C.padre, ifnull(C.id_opc_padre, 0) AS id_opc_padre
+	/*$sql = " SELECT A.id_opc_ppal, A.id_empresa, A.id_opc, A.id_rol, B.orden, B.acceso_directo, C.padre, ifnull(C.id_opc_padre, 0) AS id_opc_padre
 	FROM $bd.$tabla A
 	INNER JOIN $bd.sec_opc_principal B ON B.id = A.id_opc_ppal
-	INNER JOIN $bd.sec_opcion C ON C.id_empresa = A.id_empresa AND C.id_opc_principal = A.id_opc_ppal AND C.id = A.id_opc $id_padre
-	WHERE $id_opc_ppal $id_opc $id_empresa $id_rol 
-	ORDER BY CAST(B.orden AS DECIMAL) ASC ";
+	INNER JOIN $bd.sec_opcion C ON C.id_empresa = A.id_empresa AND C.id_opc_principal = A.id_opc_ppal AND C.id = A.id_opc 
+	WHERE $id_opc_ppal $id_opc $id_empresa $id_rol $id_padre 
+	ORDER BY CAST(B.orden AS DECIMAL) ASC ";*/
+	$sql = "SELECT A.id_menu, A.id_opc, A.id_rol, B.orden, 
+	B.acceso_directo, C.padre, IFNULL(C.id_opc_padre, 0) AS id_opc_padre
+	FROM $bd.sec_opc_rol A
+	INNER JOIN $bd.sec_menu B ON B.id_menu = A.id_menu
+	INNER JOIN $bd.sec_opcion C ON C.id_menu = A.id_menu AND C.id_opc = A.id_opc 
+	WHERE $id_opc $id_menu $id_rol $id_padre 
+	ORDER BY CAST(B.orden AS DECIMAL) ASC";
 	
 	//echo $sql;
 	$result = $conn->query($sql);	
@@ -51,22 +58,20 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
 			$i=0;
 			    while($row = $result->fetch_assoc()) {
 
-			        $id_opc_ppal = $row["id_opc_ppal"];
+			        $id_opc_ppal = $row["id_menu"];
 			        $id_opc = $row["id_opc"];
 					$id_rol = $row["id_rol"];
-					$id_empresa = $row["id_empresa"];
 			        
 			        $id[] = array(
 			            'id_opc_ppal' => $id_opc_ppal
 			            , 'id_opc' => $id_opc
 						, 'id_rol' => $id_rol
-						, 'id_empresa' => $id_empresa
 			        );
 /*****************************************************************************************/
 			    $sql2 = "
-				SELECT A.id, A.id_empresa, A.descripcion, A.estado
+				SELECT A.id_opc, A.descripcion, A.estado
 				FROM $bd.sec_opcion A
-				WHERE A.id = $id_opc AND A.id_empresa = $id_empresa AND A.id_opc_principal= $id_opc_ppal";
+				WHERE A.id_opc = $id_opc AND A.id_menu= $id_opc_ppal";
 			        
 			  //  echo $sql2;
 			    $result2 = $conn->query($sql2);			        
@@ -74,7 +79,7 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
 			            if($result2->num_rows > 0) {
 			                while($row2 = $result2->fetch_assoc()) {
 			                    $resultsOpc[] = array(
-			                        'id' => $row2["id"]
+			                        'id' => $row2["id_opc"]
 			                        , 'descripcion' => ($row2["descripcion"])
 			                        , 'estado'=>$row2["estado"]
 			                    );
@@ -86,9 +91,9 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
 /*****************************************************************************************/
 			            
 				$sql2 = "
-				SELECT A.id, A.id_empresa, A.descripcion, A.estado
-				FROM $bd.sec_opc_principal A
-				WHERE A.id = $id_opc_ppal AND A.id_empresa= $id_empresa";
+				SELECT A.id_menu,, A.descripcion, A.estado
+				FROM $bd.sec_menu A
+				WHERE A.id_menu = $id_opc_ppal ";
 			            
 			           // echo $sql2;
 			            $result2 = $conn->query($sql2);
@@ -97,7 +102,7 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
 			                if($result2->num_rows > 0) {
 			                    while($row2 = $result2->fetch_assoc()) {
 			                        $resultsOpcPpal[] = array(
-			                            'id' => $row2["id"]
+			                            'id' => $row2["id_menu"]
 			                            , 'descripcion' => ($row2["descripcion"])
 			                            , 'estado'=>$row2["estado"]
 			                        );
@@ -109,9 +114,9 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
 			                
 /*****************************************************************************************/
 			    $sql2 = "
-				SELECT A.id, A.descripcion, A.estado
+				SELECT A.id_rol, A.descripcion, A.estado
 				FROM $bd.sec_rol A
-				WHERE A.id = $id_rol";
+				WHERE A.id_rol = $id_rol";
 			                
 			                //echo $sql2;
 			                $result2 = $conn->query($sql2);
@@ -120,7 +125,7 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
 			                    if($result2->num_rows > 0) {
 			                        while($row2 = $result2->fetch_assoc()) {
 			                            $resultsRol[] = array(
-			                                'id' => $row2["id"]
+			                                'id' => $row2["id_rol"]
 			                                , 'descripcion' => ($row2["descripcion"])
 			                                , 'estado'=>$row2["estado"]
 			                            );
@@ -131,7 +136,7 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
 								else $resultsRol[] = null;
 								
 /*****************************************************************************************/
-				$sql2 = "
+				/*$sql2 = "
 				SELECT A.id, A.descripcion, A.estado
 				FROM $bd.ctg_empresa A
 				WHERE A.id = $id_empresa";
@@ -151,7 +156,7 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
 			                    } else {
 			                        $resultsEmpresa[] = null;
 			                    }
-								else $resultsEmpresa[] = null;
+								else $resultsEmpresa[] = null;*/
 
 /*****************************************************************************************/								
 				$results[] = array(
@@ -162,8 +167,7 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
 					'acceso_directo' => $row['acceso_directo'],
 				    'secOpc' => $resultsOpc[$i],
 				    'secRol' => $resultsRol[$i],
-					'secOpcPpal' => $resultsOpcPpal[$i],
-					'ctgEmpresa' => $resultsEmpresa[$i]);
+					'secOpcPpal' => $resultsOpcPpal[$i]);
 			
 				$json = array("status"=>1, "info"=>$results);
 				$i++;
@@ -179,30 +183,29 @@ else{
 		else $id_opc="";
 		if(!empty($id_padre)) $id_padre="AND C.id_opc=$id_padre";
 		else $id_padre="";
-		if(!empty($id_opc_ppal)) $id_opc_ppal=" A.id_opc_ppal=$id_opc_ppal";
+		if(!empty($id_opc_ppal)) $id_opc_ppal=" A.id_menu=$id_opc_ppal";
 		else $id_opc_ppal=" 1=1";
 		if(!empty($id_rol)) $id_rol="AND A.id_rol = $id_rol";
 		else $id_rol="AND 1=1";
-		if(!empty($id_empresa)) $id_empresa="AND A.id_empresa = $id_empresa ";
-		else $id_empresa="";
 
-		$sql = " 		
-		SELECT X.id_opc_ppal, X.id_empresa, X.id_opc, X.id_rol, X.orden, X.padre, X.url	
+		$sql = "SELECT X.id_menu, X.id_opc, X.id_rol, X.orden, X.padre, X.url	
 		FROM
 		(
-			SELECT A.id_opc_ppal, A.id_empresa, A.id_opc, A.id_rol, C.orden, C.padre, C.url
+			SELECT A.id_menu, A.id_opc, A.id_rol, C.orden, C.padre, C.url
 			FROM $bd.sec_opc_rol A 
-			INNER JOIN $bd.sec_opcion C ON C.id_empresa = A.id_empresa AND C.id_opc_principal = A.id_opc_ppal AND C.id = A.id_opc AND C.padre =1
-			WHERE $id_opc_ppal $id_empresa $id_rol 
+			INNER JOIN $bd.sec_opcion C ON C.id_menu = A.id_menu 
+			AND C.id_opc = A.id_opc AND C.padre =1
+			WHERE $id_opc_ppal $id_rol 
 
 			UNION ALL
 
-			SELECT A.id_opc_ppal, A.id_empresa, A.id_opc, A.id_rol, C.orden, C.padre, C.url
+			SELECT A.id_menu, A.id_opc, A.id_rol, C.orden, C.padre, C.url
 			FROM $bd.sec_opc_rol A 
-			INNER JOIN $bd.sec_opcion C ON C.id_empresa = A.id_empresa AND C.id_opc_principal = A.id_opc_ppal AND C.id = A.id_opc AND C.padre IS NULL AND C.id_opc_padre IS NULL
-			WHERE $id_opc_ppal $id_empresa $id_rol 
+			INNER JOIN $bd.sec_opcion C ON C.id_menu = A.id_menu 
+			AND C.id_opc = A.id_opc AND C.padre IS NULL AND C.id_opc_padre IS NULL
+			WHERE $id_opc_ppal $id_rol 
 		) X
-		ORDER BY X.id_opc_ppal, X.orden ASC";
+		ORDER BY X.id_menu, X.orden ASC";
 		
 		//echo $sql;
 		$result = $conn->query($sql);	
@@ -211,22 +214,19 @@ else{
 				$i=0;
 					while($row = $result->fetch_assoc()) {
 
-						$id_opc_ppal = $row["id_opc_ppal"];
+						$id_opc_ppal = $row["id_menu"];
 						$id_opc = $row["id_opc"];
 						$id_rol = $row["id_rol"];
-						$id_empresa = $row["id_empresa"];
 						
 						$id[] = array(
 							'id_opc_ppal' => $id_opc_ppal
 							, 'id_opc' => $id_opc
 							, 'id_rol' => $id_rol
-							, 'id_empresa' => $id_empresa
 						);
 	/*****************************************************************************************/
-					$sql2 = "
-					SELECT A.id, A.id_empresa, A.descripcion, A.estado
+					$sql2 = "SELECT A.id_opc, A.descripcion, A.estado
 					FROM $bd.sec_opcion A
-					WHERE A.id = $id_opc AND A.id_empresa = $id_empresa AND A.id_opc_principal= $id_opc_ppal";
+					WHERE A.id_opc = $id_opc AND A.id_menu= $id_opc_ppal";
 						
 				  //  echo $sql2;
 					$result2 = $conn->query($sql2);			        
@@ -234,7 +234,7 @@ else{
 							if($result2->num_rows > 0) {
 								while($row2 = $result2->fetch_assoc()) {
 									$resultsOpc[] = array(
-										'id' => $row2["id"]
+										'id' => $row2["id_opc"]
 										, 'descripcion' => ($row2["descripcion"])
 										, 'estado'=>$row2["estado"]
 									);
@@ -245,10 +245,9 @@ else{
 							else $resultsOpc[] = null;
 	/*****************************************************************************************/
 							
-					$sql2 = "
-					SELECT A.id, A.id_empresa, A.descripcion, A.estado, A.menu_icon
-					FROM $bd.sec_opc_principal A
-					WHERE A.id = $id_opc_ppal AND A.id_empresa= $id_empresa";
+					$sql2 = "SELECT A.id_menu, A.descripcion, A.estado, A.menu_icon
+					FROM $bd.sec_menu A
+					WHERE A.id_menu = $id_opc_ppal";
 							
 						   // echo $sql2;
 							$result2 = $conn->query($sql2);
@@ -257,7 +256,7 @@ else{
 								if($result2->num_rows > 0) {
 									while($row2 = $result2->fetch_assoc()) {
 										$resultsOpcPpal[] = array(
-											'id' => $row2["id"]
+											'id' => $row2["id_menu"]
 											, 'descripcion' => ($row2["descripcion"])
 											, 'menu_icon' => $row2["menu_icon"]
 											, 'estado'=>$row2["estado"]
@@ -270,9 +269,9 @@ else{
 								
 	/*****************************************************************************************/
 					$sql2 = "
-					SELECT A.id, A.descripcion, A.estado
+					SELECT A.id_rol, A.descripcion, A.estado
 					FROM $bd.sec_rol A
-					WHERE A.id = $id_rol";
+					WHERE A.id_rol = $id_rol";
 								
 								//echo $sql2;
 								$result2 = $conn->query($sql2);
@@ -281,7 +280,7 @@ else{
 									if($result2->num_rows > 0) {
 										while($row2 = $result2->fetch_assoc()) {
 											$resultsRol[] = array(
-												'id' => $row2["id"]
+												'id' => $row2["id_rol"]
 												, 'descripcion' => ($row2["descripcion"])
 												, 'estado'=>$row2["estado"]
 											);
@@ -292,7 +291,7 @@ else{
 									else $resultsRol[] = null;
 									
 	/*****************************************************************************************/
-					$sql2 = "
+					/*$sql2 = "
 					SELECT A.id, A.descripcion, A.estado
 					FROM $bd.ctg_empresa A
 					WHERE A.id = $id_empresa";
@@ -312,7 +311,7 @@ else{
 									} else {
 										$resultsEmpresa[] = null;
 									}
-									else $resultsEmpresa[] = null;
+									else $resultsEmpresa[] = null;*/
 
 	/*****************************************************************************************/								
 					$href = str_replace("menuMaster.", "", $row['url']);
@@ -327,8 +326,7 @@ else{
 						//'acceso_directo' => $row['acceso_directo'],
 						'secOpc' => $resultsOpc[$i],
 						'secRol' => $resultsRol[$i],
-						'secOpcPpal' => $resultsOpcPpal[$i],
-						'ctgEmpresa' => $resultsEmpresa[$i]);
+						'secOpcPpal' => $resultsOpcPpal[$i]);
 				
 					$json = array("status"=>1, "info"=>$results);
 					$i++;
@@ -343,19 +341,16 @@ else{
 		else $id_opc="";
 		if(!empty($id_padre)) $id_padre="AND C.id_opc_padre=$id_padre";
 		else $id_padre="";
-		if(!empty($id_opc_ppal)) $id_opc_ppal=" A.id_opc_ppal=$id_opc_ppal";
+		if(!empty($id_opc_ppal)) $id_opc_ppal=" A.id_menu=$id_opc_ppal";
 		else $id_opc_ppal=" 1=1";
 		if(!empty($id_rol)) $id_rol="AND A.id_rol = $id_rol";
 		else $id_rol="AND 1=1";
-		if(!empty($id_empresa)) $id_empresa="AND A.id_empresa = $id_empresa ";
-		else $id_empresa="";
 
-		$sql = " 		
-		SELECT A.id_opc_ppal, A.id_empresa, A.id_opc, A.id_rol, C.orden, C.url, ifnull(CC.descripcion,'') as desc_padre
-			FROM $bd.sec_opc_rol A 
-			INNER JOIN $bd.sec_opcion C ON C.id_empresa = A.id_empresa AND C.id_opc_principal = A.id_opc_ppal AND C.id = A.id_opc
-			LEFT JOIN $bd.sec_opcion CC ON CC.id = C.id_opc_padre
-			WHERE $id_opc_ppal $id_padre $id_empresa $id_rol 
+		$sql = "SELECT A.id_menu, A.id_opc, A.id_rol, C.orden, C.url, ifnull(CC.descripcion,'') as desc_padre
+		FROM $bd.sec_opc_rol A 
+		INNER JOIN $bd.sec_opcion C ON C.id_menu = A.id_menu AND C.id_opc = A.id_opc
+		LEFT JOIN $bd.sec_opcion CC ON CC.id_opc = C.id_opc_padre
+		WHERE $id_opc_ppal $id_padre $id_rol 
 		ORDER BY C.orden ASC";
 		
 		//echo $sql;
@@ -365,22 +360,19 @@ else{
 				$i=0;
 					while($row = $result->fetch_assoc()) {
 
-						$id_opc_ppal = $row["id_opc_ppal"];
+						$id_opc_ppal = $row["id_menu"];
 						$id_opc = $row["id_opc"];
 						$id_rol = $row["id_rol"];
-						$id_empresa = $row["id_empresa"];
 						
 						$id[] = array(
 							'id_opc_ppal' => $id_opc_ppal
 							, 'id_opc' => $id_opc
 							, 'id_rol' => $id_rol
-							, 'id_empresa' => $id_empresa
 						);
 	/*****************************************************************************************/
-					$sql2 = "
-					SELECT A.id, A.id_empresa, A.descripcion, A.estado
+					$sql2 = "SELECT A.id_opc, A.descripcion, A.estado
 					FROM $bd.sec_opcion A
-					WHERE A.id = $id_opc AND A.id_empresa = $id_empresa AND A.id_opc_principal= $id_opc_ppal";
+					WHERE A.id_opc = $id_opc AND A.id_menu= $id_opc_ppal";
 						
 				  //  echo $sql2;
 					$result2 = $conn->query($sql2);			        
@@ -388,7 +380,7 @@ else{
 							if($result2->num_rows > 0) {
 								while($row2 = $result2->fetch_assoc()) {
 									$resultsOpc[] = array(
-										'id' => $row2["id"]
+										'id' => $row2["id_opc"]
 										, 'descripcion' => ($row2["descripcion"])
 										, 'estado'=>$row2["estado"]
 									);
@@ -400,9 +392,9 @@ else{
 	/*****************************************************************************************/
 							
 					$sql2 = "
-					SELECT A.id, A.id_empresa, A.descripcion, A.estado
-					FROM $bd.sec_opc_principal A
-					WHERE A.id = $id_opc_ppal AND A.id_empresa= $id_empresa";
+					SELECT A.id_menu, A.descripcion, A.estado
+					FROM $bd.sec_menu A
+					WHERE A.id_menu = $id_opc_ppal";
 							
 						   // echo $sql2;
 							$result2 = $conn->query($sql2);
@@ -411,7 +403,7 @@ else{
 								if($result2->num_rows > 0) {
 									while($row2 = $result2->fetch_assoc()) {
 										$resultsOpcPpal[] = array(
-											'id' => $row2["id"]
+											'id' => $row2["id_menu"]
 											, 'descripcion' => $row2["descripcion"]
 											, 'estado'=>$row2["estado"]
 										);
@@ -423,9 +415,9 @@ else{
 								
 	/*****************************************************************************************/
 					$sql2 = "
-					SELECT A.id, A.descripcion, A.estado
+					SELECT A.id_rol, A.descripcion, A.estado
 					FROM $bd.sec_rol A
-					WHERE A.id = $id_rol";
+					WHERE A.id_rol = $id_rol";
 								
 								//echo $sql2;
 								$result2 = $conn->query($sql2);
@@ -434,7 +426,7 @@ else{
 									if($result2->num_rows > 0) {
 										while($row2 = $result2->fetch_assoc()) {
 											$resultsRol[] = array(
-												'id' => $row2["id"]
+												'id' => $row2["id_rol"]
 												, 'descripcion' => $row2["descripcion"]
 												, 'estado'=>$row2["estado"]
 											);
@@ -445,7 +437,7 @@ else{
 									else $resultsRol[] = null;
 									
 	/*****************************************************************************************/
-					$sql2 = "
+					/*$sql2 = "
 					SELECT A.id, A.descripcion, A.estado
 					FROM $bd.ctg_empresa A
 					WHERE A.id = $id_empresa";
@@ -465,7 +457,7 @@ else{
 									} else {
 										$resultsEmpresa[] = null;
 									}
-									else $resultsEmpresa[] = null;
+									else $resultsEmpresa[] = null;*/
 
 	/*****************************************************************************************/
 					$href = str_replace("menuMaster.", "", $row['url']);
@@ -480,8 +472,7 @@ else{
 						//'acceso_directo' => $row['acceso_directo'],
 						'secOpc' => $resultsOpc[$i],
 						'secRol' => $resultsRol[$i],
-						'secOpcPpal' => $resultsOpcPpal[$i],
-						'ctgEmpresa' => $resultsEmpresa[$i]);
+						'secOpcPpal' => $resultsOpcPpal[$i]);
 				
 					$json = array("status"=>1, "info"=>$results);
 					$i++;
@@ -510,7 +501,7 @@ else{
 	        }
 	    }
 	    else $id_opc=1;*/
-		$date = date('Y-m-d');
+		$date = date('Y-m-d H:i:s');
 	
 		$sql = "INSERT INTO $bd.$tabla(id_opc_ppal, id_empresa, id_opc, id_rol, USUARIO_CREACION, FECHA_CREACION) 
 		VALUE ($id_opc_ppal, $id_empresa, $id_opc, $id_rol, '$user', '$date')";

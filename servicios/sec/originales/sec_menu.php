@@ -10,7 +10,7 @@ $method = $_SERVER['REQUEST_METHOD'];
 if($method == "OPTIONS") {
     die();
 }
-$tabla = "sec_opc_principal";
+$tabla = "sec_menu";
 
 $accion = isset($_GET['accion']) ? $_GET['accion'] : '';
 $orden = isset($_GET['orden']) ? $_GET['orden'] : '';
@@ -25,7 +25,7 @@ $id_empresa = (isset($_GET['id_empresa']) ? $_GET['id_empresa'] : '');
 $json = "no has seteado nada.";
 
 if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
-    if(!empty($id_opc_ppal)) $id_opc_ppal="A.id='$id_opc_ppal'";
+    if(!empty($id_opc_ppal)) $id_opc_ppal="A.id_menu='$id_opc_ppal'";
     else $id_opc_ppal="1=1";
     if(!empty($desc)) $desc="AND A.descripcion LIKE '%$desc%'";
     else $desc="";
@@ -35,14 +35,12 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
     else $accesoDirecto="";
     if(!empty($estado)) $estado="AND A.estado='$estado'";
     else $estado="";
-    if(!empty($id_empresa)) $id_empresa="AND A.id_empresa='$id_empresa'";
-    else $id_empresa="";
     
     $sql = "
-	SELECT A.id, A.descripcion, A.menu_icon, A.estado, A.id_empresa, A.orden, A.acceso_directo
+	SELECT A.id_menu, A.descripcion, A.menu_icon, A.estado, A.id_empresa, A.orden, A.acceso_directo
 	FROM $bd.$tabla A
 	WHERE $id_opc_ppal $desc $menuicon $estado $id_empresa $accesoDirecto
-	ORDER BY A.id";
+	ORDER BY A.id_menu";
     //echo $sql;
     $result = $conn->query($sql);
     
@@ -50,16 +48,14 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
         if($result->num_rows > 0) {
             $i=0;
             while($row = $result->fetch_assoc()) {
-                $id_opc_ppal = $row["id"];
-                $id_empresa  = $row["id_empresa"];             
+                $id_opc_ppal = $row["id_menu"];            
                 
                 $id[] = array(
                     'id' => $id_opc_ppal
-                    , 'id_empresa' => $id_empresa
                    
                 );
                 /*****************************************************/
-                $sql2 = "
+                /*$sql2 = "
 					SELECT A.id, A.descripcion, A.estado
 					FROM $bd.ctg_empresa A
 					WHERE A.id = $id_empresa";
@@ -79,18 +75,15 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
 			            } else {
 			                $ctg_empresa[] = null;
 			            }
-			            else $ctg_empresa[] = null;
+			            else $ctg_empresa[] = null;*/
                 /*****************************************************/
                 $results[] = array(
                     "id" => $id[$i],
-					
-                    'id_empresa' => ($row["id_empresa"]), 
                     'descripcion' => ($row["descripcion"]), 
                     'menu_icon'=>$row["menu_icon"], 
                     'orden'=>$row["orden"],
                     'acceso_directo'=>$row["acceso_directo"],
-                    'estado'=>$row["estado"],
-                    'ctg_empresa' => $ctg_empresa[$i],
+                    'estado'=>$row["estado"]
                 );
                 $json = array("status"=>1, "info"=>$results);
                 $i++;
@@ -103,7 +96,7 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
 else{
     if(strtoupper($accion) =='I'){// VERIFICACION SI LA ACCION ES INSERCION
         $sql = "
-		SELECT MAX(a.id) + 1 as id
+		SELECT MAX(a.id_menu) + 1 as id
 		FROM $bd.$tabla a";
         
         $result = $conn->query($sql);
@@ -120,10 +113,10 @@ else{
             }
         }
         else $id=1;
-        $date = date('Y-m-d');
+        $date = date('Y-m-d H:i:s');
         
-        $sql = "INSERT INTO $bd.$tabla(ID, ID_EMPRESA, DESCRIPCION, ESTADO, MENU_ICON, ORDEN, ACCESO_DIRECTO, USUARIO_CREACION, FECHA_CREACION) 
-		VALUE($id, $id_empresa, '".($desc)."', 'A','$menuicon', $orden, $accesoDirecto, '$user', '$date')";
+        $sql = "INSERT INTO $bd.$tabla(ID, DESCRIPCION, ESTADO, MENU_ICON, ORDEN, ACCESO_DIRECTO, USUARIO_CREACION, FECHA_CREACION) 
+		VALUE($id, '".($desc)."', '$estado','$menuicon', $orden, $accesoDirecto, '$user', '$date')";
         
         if ($conn->query($sql) === TRUE) {
             $json = array("status"=>1, "info"=>"Registro almacenado exitosamente.");
@@ -142,7 +135,8 @@ else{
         $date = ", fecha_modificacion='".date('Y-m-d H:i:s')."'";
         
         
-        $sql = "UPDATE $bd.$tabla SET $desc $menuicon $estado $accesoDirecto $orden $user $date WHERE id = $id_opc_ppal AND id_empresa = $id_empresa";
+        $sql = "UPDATE $bd.$tabla SET $desc $menuicon $estado $accesoDirecto $orden $user $date 
+        WHERE id_menu = $id_opc_ppal";
         
         if ($conn->query($sql) === TRUE) {
             $json = array("status"=>1, "info"=>"Registro actualizado exitosamente.");
@@ -154,7 +148,8 @@ else{
         $user = ", usuario_modificacion='".$user."'";
         $date = ", fecha_modificacion='".date('Y-m-d H:i:s')."'";
         
-        $sql = "UPDATE $bd.$tabla set estado='I' $user $date WHERE id = $id_opc_ppal AND id_empresa = $id_empresa";
+        $sql = "UPDATE $bd.$tabla set estado='I' $user $date 
+        WHERE id_menu = $id_opc_ppal";
         
         if ($conn->query($sql) === TRUE) {
             $json = array("status"=>1, "info"=>"Registro eliminado exitosamente.");
@@ -166,7 +161,7 @@ else{
         $user = ", usuario_modificacion='".$user."'";
         $date = ", fecha_modificacion='".date('Y-m-d H:i:s')."'";
         
-        $sql = "UPDATE $bd.$tabla set estado='A' $user $date WHERE id = $id_opc_ppal AND id_empresa = $id_empresa";
+        $sql = "UPDATE $bd.$tabla set estado='A' $user $date WHERE id_menu = $id_opc_ppal ";
         
         if ($conn->query($sql) === TRUE) {
             $json = array("status"=>1, "info"=>"Registro eliminado exitosamente.");

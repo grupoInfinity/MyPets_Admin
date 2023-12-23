@@ -87,7 +87,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
             if ($result->num_rows > 0) {
 
                 while ($row = $result->fetch_assoc()) {
-                    if (!is_null($row["id_mascota"])) $id_mun = $row["id_mascota"];
+                    if (!is_null($row["id"])) $id_mun = $row["id"];
                     else $id_mun = 1;
                 }
             } else {

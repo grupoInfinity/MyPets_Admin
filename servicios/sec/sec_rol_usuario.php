@@ -1,7 +1,7 @@
 <?php
 include_once('../config.php'); 
 
-$bd = "dbmypet";
+//$bd = "dbmypet";
 $tabla = "sec_rol_usuario";
 
 $accion = isset($_GET['accion']) ? $_GET['accion'] : '';

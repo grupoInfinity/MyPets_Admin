@@ -20,17 +20,17 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 	else $id="1=1";
     if(!empty($desc)) $desc="AND v.descripcion LIKE '%'$desc%'";
 	else $desc="";
-	if(!empty($menu_icon)) $menu_icon="AND v.menu_icon='$menu_icon'";
+	if(!empty($menu_icon)) $menu_icon="AND v.menu_icon LIKE '%$menu_icon%'";
 	else $menu_icon="";
 	if(!empty($orden)) $orden="AND v.orden='$orden'";
 	else $orden="";
-    if(!empty($acceso_directo)) $acceso_directo="AND v.acceso_directo='$acceso_directo'";
+    if(!empty($acceso_directo)) $acceso_directo="AND v.acceso_directo LIKE '%$acceso_directo%'";
 	else $acceso_directo="";
     if (!empty($estado)) $estado = "AND v.estado='$estado'";
     else $estado = "";
 
-    $sql = "
-	SELECT * FROM $bd.$tabla v
+    $sql = "SELECT v.id_menu,v.descripcion,v.menu_icon,v.orden,v.acceso_directo,v.estado 
+    FROM $bd.$tabla v
     WHERE $id $desc $menu_icon $orden $acceso_directo $estado ";
 
     $result = $conn->query($sql);
@@ -64,17 +64,18 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
             if ($result->num_rows > 0) {
 
                 while ($row = $result->fetch_assoc()) {
-                    if (!is_null($row["id_menu"])) $id = $row["id_menu"];
+                    if (!is_null($row["id"])) $id = $row["id"];
                     else $id = 1;
                 }
             } else {
                 $id = 1;
             }
         } else $id = 1;
-        //$date = (new DateTime())->format('Y-m-d');
+        $date = date('Y-m-d H:i:s');
 
-        $sql = "INSERT INTO $bd.$tabla(id_menu, descripcion,menu_icon,orden,acceso_directo,estado, usuario_creacion/*, fecha_creacion*/) 
-        VALUE($id,'$desc','$menu_icon','$acceso_directo', '$estado', '$user'/*, '$date'*/)";
+        $sql = "INSERT INTO 
+        $bd.$tabla(id_menu, descripcion,menu_icon,orden,acceso_directo,estado, usuario_creacion, fecha_creacion) 
+        VALUE($id,'$desc','$menu_icon','$orden','$acceso_directo', '$estado', '$user', '$date')";
 
         if ($conn->query($sql) === TRUE) {
             $json = array("status" => 1, "info" => "Registro almacenado exitosamente.");
@@ -89,9 +90,9 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         $acceso_directo = "acceso_directo='".$acceso_directo."'";
 		$estado = ", estado='".strtoupper($estado)."'";
 		$user = ", usuario_modificacion='".$user."'";
-        //$date = ", fecha_update='" . (new DateTime())->format('Y-m-d') . "'";
+        $date = ", fecha_update='" . date('Y-m-d H:i:s') . "'";
 
-        $sql = "UPDATE $bd.$tabla SET $desc $menu_icon $orden $acceso_directo $estado $user /*$date*/ WHERE id_menu = $id";
+        $sql = "UPDATE $bd.$tabla SET $desc $menu_icon $orden $acceso_directo $estado $user $date WHERE id_menu = $id";
 
         if ($conn->query($sql) === TRUE) {
             $json = array("status" => 1, "info" => "Registro actualizado exitosamente.");
@@ -100,9 +101,9 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         }
     } else if (strtoupper($accion) == 'D') { // VERIFICACION SI LA ACCION ES ELIMINACION
         $user = ", usuario_update='" . $user . "'";
-       // $date = ", fecha_update='" . (new DateTime())->format('Y-m-d') . "'";
+        $date = ", fecha_update='" . date('Y-m-d H:i:s') . "'";
 
-        $sql = "UPDATE $bd.$tabla set estado='I' $user /*$date*/ WHERE id_menu = $id";
+        $sql = "UPDATE $bd.$tabla set estado='I' $user $date WHERE id_menu = $id";
 
         if ($conn->query($sql) === TRUE) {
             $json = array("status" => 1, "info" => "Registro eliminado exitosamente.");
@@ -112,9 +113,9 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
     }
     else if (strtoupper($accion) == 'A') { // VERIFICACION SI LA ACCION ES ACTIVAR REGISTRO
         $user = ", usuario_update='" . $user . "'";
-        //$date = ", fecha_update='" . (new DateTime())->format('Y-m-d') . "'";
+        $date = ", fecha_update='" . date('Y-m-d H:i:s') . "'";
 
-        $sql = "UPDATE $bd.$tabla set estado='A' $user /*$date*/ WHERE id_menu = $id";
+        $sql = "UPDATE $bd.$tabla set estado='A' $user $date WHERE id_menu = $id";
 
         if ($conn->query($sql) === TRUE) {
             $json = array("status" => 1, "info" => "Registro eliminado exitosamente.");
