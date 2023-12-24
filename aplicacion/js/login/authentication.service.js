@@ -28,7 +28,7 @@ angular.module('authenticationService',[]).
              });
          };
          
-         function SetCredentials(username, idUser, password, isRolAdmin, isRolSupervisor, isRolCajero, sec_rol) {
+         function SetCredentials(username, /*idUser,*/ password, /*isRolAdmin, isRolSupervisor, isRolCajero,*/ sec_rol) {
              var authdata = Base64.encode(username + ':' + password);
              var language = {
                     "sProcessing":     "Procesando...",
@@ -62,11 +62,11 @@ angular.module('authenticationService',[]).
 			$rootScope.globals = {
 				currentUser: {
 					username: username,
-					idUser: idUser,
+					//idUser: idUser,
 					authdata: authdata,
-					isRolAdmin: isRolAdmin,
+					/*isRolAdmin: isRolAdmin,
 					isRolSupervisor: isRolSupervisor,
-					isRolCajero: isRolCajero,
+					isRolCajero: isRolCajero,*/
 					sec_rol: sec_rol
 				}
 				, language: language
@@ -87,7 +87,7 @@ angular.module('authenticationService',[]).
              
 			 
 			 //DESLOGEEO
-			if($rootScope.globals.currentUser!=undefined){
+			/*if($rootScope.globals.currentUser!=undefined){
 				var url = URL_API + '/servicios/sec/sec_usuario.php?accion=LO'+
 				'&usr=' + $rootScope.globals.currentUser.username + 
 				'&idUser=' + $rootScope.globals.currentUser.idUser
@@ -96,7 +96,7 @@ angular.module('authenticationService',[]).
 				$http.post(url).
 					then(function(response) {
 				});
-			}
+			}*/
 			 
 			$rootScope.globals = {};
 			$cookies.remove('globals');
