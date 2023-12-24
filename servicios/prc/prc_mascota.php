@@ -1,7 +1,15 @@
 <?php
 include_once('../config.php');
 
-$bd = "dbMyPet";
+header('Content-type: application/json; charset=UTF-8');
+header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization");
+header("Access-Control-Allow-Methods: GET,PUT,POST,DELETE,PATCH,OPTIONS");
+header("Allow: GET, POST, OPTIONS, PUT, DELETE");
+$method = $_SERVER['REQUEST_METHOD'];
+if($method == "OPTIONS") {
+    die();
+}
 $tabla = "prc_mascotas";
 $tabla2 = "ctg_vacunas";
 $tabla3 = "ctg_tipovacunas";
@@ -14,15 +22,15 @@ $accion = isset($_GET['accion']) ? $_GET['accion'] : '';
 $id_mascota = isset($_GET['id_mascota']) ? $_GET['id_mascota'] : '';
 $id_tipomascota = isset($_GET['id_tipomascota']) ? $_GET['id_tipomascota'] : '';
 $id_mun = isset($_GET['id_mun']) ? $_GET['id_mun'] : '';
-$usuario = utf8_decode(isset($_GET['usuario']) ? $_GET['usuario'] : '');
-$direccion = utf8_decode(isset($_GET['direccion']) ? $_GET['direccion'] : '');
+$usuario = isset($_GET['usuario']) ? $_GET['usuario'] : '';
+$direccion = isset($_GET['direccion']) ? $_GET['direccion'] : '';
 $estado_direc = isset($_GET['estado_direc']) ? $_GET['estado_direc'] : '';
-$nombremasc = utf8_decode(isset($_GET['nombremasc']) ? $_GET['nombremasc'] : '');
-$codigo = utf8_decode(($_GET['codigo']) ? $_GET['codigo'] : '');
-$nacim = utf8_decode(($_GET['nacim']) ? $_GET['nacim'] : '');
-$foto = utf8_decode(isset($_GET['foto']) ? $_GET['foto'] : '');
+$nombremasc = isset($_GET['nombremasc']) ? $_GET['nombremasc'] : '';
+$codigo = isset($_GET['codigo']) ? $_GET['codigo'] : '';
+$nacim = isset($_GET['nacim']) ? $_GET['nacim'] : '';
+$foto = isset($_GET['foto']) ? $_GET['foto'] : '';
 $estado = isset($_GET['estado']) ? $_GET['estado'] : '';
-$user = utf8_decode(isset($_GET['user']) ? $_GET['user'] : '');
+$user = isset($_GET['user']) ? $_GET['user'] : '';
 
 $json = "no has seteado nada.";
 function imageToBase64($imagePath) {
@@ -42,33 +50,67 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
     else $estado = "";
 
 
-    $sql = "SELECT m.id_mascota, u.usuario, u.mail,u.telefono,m.nombremascota,
-    d.departamento,mu.municipio,m.direccion,m.estado_direc,m.codigo,m.nacimiento 
-    FROM $bd.$tabla m, $bd.$tabla4 t, $bd.$tabla5 mu,$bd.$tabla6 u, $bd.$tabla7 d 
-    WHERE $id_mascota $usuario $nombremasc $estado 
-    AND m.id_tipomascota=t.id_tipomascota AND m.id_usuario=u.id_usuario 
-    AND mu.id_departamento=d.id_departamento  ";
+    $sql = "SELECT m.id_mascota, u.usuario, u.email,u.telefono,m.nombremascota,
+    d.descripcion as depto,mu.descripcion as muni,m.direccion,m.estado_direc,m.codigo,m.nacimiento 
+    FROM $bd.prc_mascotas m, $bd.ctg_tipomascotas t, $bd.ctg_municipios mu,
+    $bd.sec_usuario u, $bd.ctg_departamentos d 
+    WHERE $id_mascota $usuario $nombremasc $estado AND 
+	 m.id_tipomascota=t.id_tipomascota AND m.usuario=u.usuario 
+    AND m.id_municipio=mu.id_municipio AND mu.id_departamento=d.id_departamento";
 
     $result = $conn->query($sql);
 
     if (!empty($result))
         if ($result->num_rows > 0) {
+            $i=0;
             while ($row = $result->fetch_assoc()) {
-                $results[] = array(
-                    "id_mascota" => $row["id_mascota"],
+                $idm=$row["id_mascota"];
+                $mascota[] = array(
+                    'id_mascota' => $row["id_mascota"],
                     'usuario'  => $row["usuario"],
-                    'mail' => utf8_decode($row["mail"]),
-                    'telefono' => utf8_decode($row["telefono"]),
-                    'nombremascota' => utf8_decode($row["nombremascota"]),
-                    'departamento' => utf8_decode($row["departamento"]),
-                    'municipio' => utf8_decode($row["municipio"]),
-                    'direccion' => utf8_decode($row["direccion"]),
-                    'estado_direc' => utf8_decode($row["estado_direc"]),
-                    'nacim' => utf8_decode($row["nacimiento"]),
-                    'foto' =>  imageToBase64(utf8_decode($row["foto"])),
-                    'codigo' => utf8_decode($row["codigo"])
+                    'mail' => ($row["email"]),
+                    'telefono' => ($row["telefono"]),
+                    'nombremascota' => ($row["nombremascota"]),
+                    'departamento' => ($row["depto"]),
+                    'municipio' => ($row["muni"]),
+                    'direccion' => ($row["direccion"]),
+                    'estado_direc' => ($row["estado_direc"]),
+                    'nacim' => $row["nacimiento"],
+                    //'foto' =>  imageToBase64($row["foto"]),
+                    'codigo' => $row["codigo"]
                 );
+                
+                $sql2="SELECT v.id_vacuna,v.id_mascota,v.id_tipovacuna,
+                t.nombrevacuna,DATE(v.fecha_creacion) AS fecha_creacion,v.estado
+                FROM $bd.prc_vacunas v, $bd.prc_mascotas m, $bd.ctg_tipovacunas t 
+                WHERE v.id_mascota=$idm AND 
+                v.id_mascota=m.id_mascota AND v.id_tipovacuna=t.id_tipovacuna";
+
+                $result2 = $conn->query($sql2);
+
+				if (!empty($result2))
+					if ($result2->num_rows > 0) {
+						while ($row2 = $result2->fetch_assoc()) {
+							$vacuna[] = array(
+								'idvacuna' => $row2["id_vacuna"], 
+                                'idmascota' => $row2["id_mascota"], 
+                                'idtipovacuna' => $row2["id_tipovacuna"],
+                                'nombrevacuna' => $row2["nombrevacuna"],
+                                'fecha_creacion' => $row2["fecha_creacion"],
+                                'estado' => $row2["estado"]
+							);
+						}
+					} else {
+						$vacuna[] = null;
+					}
+				else $vacuna[] = null;
+
+                $results[] = array(
+					'mascota' => $mascota[$i],
+					'vacuna' => $vacuna[$i]
+				);
                 $json = array("status" => 1, "info" => $results);
+                $i++;
             }
         } else {
             $json = array("status" => 0, "info" => "No existe información con ese criterio.");
@@ -103,7 +145,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         $bd.$tabla(id_mascota, id_usuario,id_tipomascota,id_municipio,direccion,estado_direc,
         nombremascota, codigo,nacimiento,foto,estado,usuario_creacion, fecha_creacion) 
 		VALUE($id_mascota, $id_usuario,$id_tipomascota,$id_mun,'$direccion',
-        '$estado_direc','$nombremasc',$codigo,'$nacim','$foto','$estado','$user', '$date')";
+        '$estado_direc','$nombremasc','$codigo','$nacim','$foto','$estado','$user', '$date')";
 
         if ($conn->query($sql) === TRUE) {
             $json = array("status" => 1, "info" => "Registro almacenado exitosamente.");

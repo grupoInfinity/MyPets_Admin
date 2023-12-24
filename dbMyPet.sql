@@ -116,11 +116,8 @@ CREATE TABLE IF NOT EXISTS dbMyPet.sec_rol (
 LOCK TABLES `sec_rol` WRITE;
 
 insert  into `sec_rol`(`id_rol`,`descripcion`,`estado`,`usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`)
-  (1,'Admi1nistrador','A','admin','2021-08-11 16:15:48','admin','2019-02-11 00:00:00'),
- (2,'Presidente','A','admin','2021-08-11 16:15:48',NULL,NULL),
- (3,'Gerente','A','admin','2021-08-11 16:15:48',NULL,NULL),
- (4,'Jefe','A','admin','2021-08-11 16:15:48','Mrivera','2020-04-12 00:00:00'),
- (5,'Sub Alterno','A','admin','2021-08-11 16:15:48','system','2023-12-03 00:00:00');
+  VALUE(1,'Administrador','A','admin','2021-08-11 16:15:48','admin','2019-02-11 00:00:00'),
+ (2,'Cliente','A','admin','2021-08-11 16:15:48',NULL,NULL);
 
 UNLOCK TABLES;
 
@@ -132,6 +129,7 @@ CREATE TABLE IF NOT EXISTS dbMyPet.sec_usuario (
   `nombre` varchar(255) DEFAULT NULL COMMENT 'nombre del usuario',
   `apellido` varchar(255) DEFAULT NULL COMMENT 'apellido del usuario',
   `email` varchar(255) DEFAULT NULL COMMENT 'email del usuario',
+  `telefono` varchar(255) DEFAULT NULL COMMENT 'telefono del usuario',
   `pin` varchar(255) DEFAULT NULL COMMENT 'pin para recuperar clave',
   `estado` varchar(1) DEFAULT 'A' COMMENT 'estado del usuario',
   `tipo_usuario` int(1) DEFAULT NULL COMMENT 'tipo de usuario',
@@ -149,18 +147,18 @@ SELECT DISTINCT A.usuario, A.clave, A.nombre, A.apellido,A.email, A.estado
 
 LOCK TABLES `sec_usuario` WRITE;
 
-insert  into `sec_usuario`(`usuario`,`clave`,`nombre`,`apellido`,`email`,`pin`,`estado`,`tipo_usuario`,`usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`) 
-    values ('dbarrientos','123','Dennis','Barrientos','gustavo.moreno@gi-sv.com','000100','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
-    ('dnery','123','Daniel','Nery','gustavo.moreno@gi-sv.com','000200','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
-    ('esantos','123','Eneas','Santos','gustavo.moreno@gi-sv.com','000300','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
-    ('gmoreno','456','Gustavo','Moreno','gustavo.moreno@gi-sv.com','000400','A',1,'admin','2021-11-14 13:13:24','gmoreno','2021-11-14 16:01:38'),
-    ('iabrego','123','Iv?n','Abrego','gustavo.moreno@gi-sv.com','000100','A',1,'admin','2021-11-14 13:13:24','system','2023-12-03 00:00:00'),
-    ('jcastaneda','123','Jorge','Castaneda','gustavo.moreno@gi-sv.com','000500','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
-    ('kguardado','123','Karina','Guardado','gustavo.moreno@gi-sv.com','000600','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
-    ('lcastillo','123','Luis','Castillo','gustavo.moreno@gi-sv.com','000700','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
-    ('nmena','123','Nelson','Mena','gustavo.moreno@gi-sv.com','000800','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
-    ('nmunoz','123','Nelson','Muñoz','gustavo.moreno@gi-sv.com','000900','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
-    ('system','321','Administrador','Sistemas','gustavo.moreno@gi-sv.com','000110','A',1,'admin','2021-11-14 13:13:24',NULL,NULL);
+insert  into `sec_usuario`(`usuario`,`clave`,`telefono`,`nombre`,`apellido`,`email`,`pin`,`estado`,`tipo_usuario`,`usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`) 
+    values ('dbarrientos','22222222','123','Dennis','Barrientos','gustavo.moreno@gi-sv.com','000100','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
+    ('dnery','123','22222222','Daniel','Nery','gustavo.moreno@gi-sv.com','000200','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
+    ('esantos','123','22222223','Eneas','Santos','gustavo.moreno@gi-sv.com','000300','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
+    ('gmoreno','456','22222224','Gustavo','Moreno','gustavo.moreno@gi-sv.com','000400','A',1,'admin','2021-11-14 13:13:24','gmoreno','2021-11-14 16:01:38'),
+    ('iabrego','123','22222225','Ivan','Abrego','gustavo.moreno@gi-sv.com','000100','A',1,'admin','2021-11-14 13:13:24','system','2023-12-03 00:00:00'),
+    ('jcastaneda','123','22222226','Jorge','Castaneda','gustavo.moreno@gi-sv.com','000500','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
+    ('kguardado','123','22222227','Karina','Guardado','gustavo.moreno@gi-sv.com','000600','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
+    ('lcastillo','123','22222228','Luis','Castillo','gustavo.moreno@gi-sv.com','000700','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
+    ('nmena','123','22222229','Nelson','Mena','gustavo.moreno@gi-sv.com','000800','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
+    ('nmunoz','123','22222202','Nelson','Muñoz','gustavo.moreno@gi-sv.com','000900','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
+    ('system','321','22222002','Administrador','Sistemas','gustavo.moreno@gi-sv.com','000110','A',1,'admin','2021-11-14 13:13:24',NULL,NULL);
 
 
 SELECT * FROM sec_rol_user
@@ -203,11 +201,11 @@ LOCK TABLES `sec_opc_rol` WRITE;
 
 insert  into `sec_opc_rol`(`id_menu`,`id_opc`,`id_rol`,`usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`) 
     values (1,27,1,'admin','2018-11-09 15:29:01',NULL,NULL),
-    (1,27,3,'admin','2018-11-09 15:29:01',NULL,NULL),
+    (1,27,2,'admin','2018-11-09 15:29:01',NULL,NULL),
     (1,28,1,'admin','2018-11-09 15:29:01',NULL,NULL),
-    (1,28,3,'admin','2018-11-09 15:29:01',NULL,NULL),
+    (1,28,2,'admin','2018-11-09 15:29:01',NULL,NULL),
     (1,61,1,'admin','2018-11-09 15:29:01',NULL,NULL),
-    (1,61,3,'admin','2018-11-09 15:29:01',NULL,NULL),
+    (1,61,2,'admin','2018-11-09 15:29:01',NULL,NULL),
     (1,108,1,'admin','2021-08-12 00:00:00',NULL,NULL),
     (1,109,1,'admin','2019-02-12 00:00:00',NULL,NULL),
     (1,110,1,'admin','2019-02-12 00:00:00',NULL,NULL),
@@ -225,9 +223,6 @@ insert  into `sec_opc_rol`(`id_menu`,`id_opc`,`id_rol`,`usuario_creacion`,`fecha
     (2,107,1,'admin','2021-08-07 00:00:00',NULL,NULL),
     (4,30,1,'admin','2019-02-12 00:00:00',NULL,NULL),
     (4,30,2,'admin','2018-11-09 15:29:01',NULL,NULL),
-    (4,30,3,'admin','2018-11-09 15:29:01',NULL,NULL),
-    (4,30,4,'admin','2019-03-03 00:00:00',NULL,NULL),
-    (4,30,5,'admin','2019-06-09 00:00:00',NULL,NULL),
     (4,31,1,'admin','2021-09-07 00:00:00',NULL,NULL),
     (16,116,1,'admin','2021-10-15 00:00:00',NULL,NULL),
     (16,117,1,'admin','2021-10-18 00:00:00',NULL,NULL);
@@ -253,16 +248,16 @@ CREATE TABLE IF NOT EXISTS dbMyPet.sec_rol_usuario (
 LOCK TABLES `sec_rol_usuario` WRITE;
 
 insert  into `sec_rol_usuario`(`usuario`,`id_rol`,`usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`) 
-    values ('dbarrientos',5,'admin','2021-08-11 16:15:48',NULL,NULL),
-    ('dnery',3,'admin','2021-08-11 16:15:48',NULL,NULL),
-    ('esantos',3,'admin','2021-08-11 16:15:48',NULL,NULL),
+    values ('dbarrientos',1,'admin','2021-08-11 16:15:48',NULL,NULL),
+    ('dnery',1,'admin','2021-08-11 16:15:48',NULL,NULL),
+    ('esantos',1,'admin','2021-08-11 16:15:48',NULL,NULL),
     ('gmoreno',1,'admin','2021-08-11 16:15:48',NULL,NULL),
     ('iabrego',1,'admin','2021-08-11 16:15:48',NULL,NULL),
-    ('jcastaneda',2,'admin','2021-08-11 16:15:48',NULL,NULL),
-    ('kguardado',5,'admin','2021-08-11 16:15:48',NULL,NULL),
-    ('lcastillo',5,'admin','2021-08-11 16:15:48',NULL,NULL),
-    ('nmena',5,'admin','2021-08-11 16:15:48',NULL,NULL),
-    ('nmunoz',3,'admin','2021-08-11 16:15:48',NULL,NULL),
+    ('jcastaneda',1,'admin','2021-08-11 16:15:48',NULL,NULL),
+    ('kguardado',1,'admin','2021-08-11 16:15:48',NULL,NULL),
+    ('lcastillo',1,'admin','2021-08-11 16:15:48',NULL,NULL),
+    ('nmena',1,'admin','2021-08-11 16:15:48',NULL,NULL),
+    ('nmunoz',2,'admin','2021-08-11 16:15:48',NULL,NULL),
     ('system',1,'system','2021-08-11 16:15:48',NULL,NULL);
     
     
@@ -319,7 +314,7 @@ LOCK TABLES `ctg_tipomascotas` WRITE;
 DROP TABLE IF EXISTS `ctg_departamentos`;
 CREATE TABLE IF NOT EXISTS dbMyPet.ctg_departamentos(
     `id_departamento` INT PRIMARY KEY,
-    `departamento` VARCHAR(255),
+    `descripcion` VARCHAR(255),
     `estado` VARCHAR(1),
     `usuario_creacion` varchar(255) DEFAULT NULL COMMENT 'usuario creacion',
     `fecha_creacion` datetime DEFAULT NULL COMMENT 'fecha creacion',
@@ -327,8 +322,9 @@ CREATE TABLE IF NOT EXISTS dbMyPet.ctg_departamentos(
     `fecha_update` datetime DEFAULT NULL  COMMENT 'fecha modificacion'
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de los roles por usuario';
 
+
 SELECT * from ctg_departamentos
-INSERT INTO ctg_departamentos (id_departamento, departamento,estado,usuario_creacion,fecha_creacion,usuario_update,fecha_update) 
+INSERT INTO ctg_departamentos (id_departamento, descripcion,estado,usuario_creacion,fecha_creacion,usuario_update,fecha_update) 
 VALUE(1,'San Salvador','A','admin','2021-08-11 16:15:48',NULL,NULL),
 (2,'San Vicente','A','admin','2021-08-11 16:15:48',NULL,NULL),
 (3,'Ahuachapan','A','admin','2021-08-11 16:15:48',NULL,NULL),
@@ -354,7 +350,7 @@ DROP TABLE IF EXISTS `ctg_municipios`;
 CREATE TABLE IF NOT EXISTS dbMyPet.ctg_municipios(
     `id_municipio` INT,
     `id_departamento` INT,
-    `municipio` VARCHAR(255),
+    `descripcion` VARCHAR(255),
     `estado` VARCHAR(1),
     `usuario_creacion` varchar(255) DEFAULT NULL COMMENT 'usuario creacion',
     `fecha_creacion` datetime DEFAULT NULL COMMENT 'fecha creacion',
@@ -366,7 +362,9 @@ CREATE TABLE IF NOT EXISTS dbMyPet.ctg_municipios(
     CONSTRAINT `fk_municipios_dep` FOREIGN KEY(`id_departamento`) REFERENCES `ctg_departamentos`(`id_departamento`)
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de los roles por usuario';
 
-INSERT INTO ctg_municipios (id_municipio,id_departamento, municipio,estado,usuario_creacion,fecha_creacion,usuario_update,fecha_update) 
+SELECT * FROM ctg_municipios
+
+INSERT INTO ctg_municipios (id_municipio,id_departamento, descripcion,estado,usuario_creacion,fecha_creacion,usuario_update,fecha_update) 
 VALUE(1, 1, 'San Salvador Norte', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
 (2, 1, 'San Salvador Sur', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
 (3, 1, 'San Salvador Este', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
@@ -439,13 +437,11 @@ CREATE TABLE IF NOT EXISTS dbMyPet.prc_mascotas(
     `id_mascota` INT,
     `id_tipomascota` INT,
     `id_municipio` INT,
-    #---ESTE TRAE EL ID DEL DEPARTAMENTO
     `usuario` varchar(255),
-    #--IDENTIFICADOR DEL ENCARGADO
     `direccion` VARCHAR(255),
     `estado_direc` VARCHAR(1),
     `nombremascota` VARCHAR(255),
-    `codigo` INT,
+    `codigo` VARCHAR(255),
     `nacimiento` date,
     `foto` LONGTEXT,
     `estado` VARCHAR(1),
@@ -462,7 +458,22 @@ CREATE TABLE IF NOT EXISTS dbMyPet.prc_mascotas(
     CONSTRAINT `fk_mascotas_us` FOREIGN KEY(`usuario`) REFERENCES `sec_usuario`(`usuario`)
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de los roles por usuario';
 
-SELECT * FROM prc_mascotas
+INSERT INTO prc_mascotas(id_mascota,id_tipomascota,id_municipio,usuario,direccion,estado_direc,nombremascota,
+codigo,nacimiento,foto,estado,usuario_creacion,fecha_creacion,usuario_update,fecha_update) 
+VALUE(1,1,1,'dnery','Avenida','A','Charly','239022','2019-03-02',NULL,'A','dnery','2021-08-11 16:15:48',NULL,NULL);
+
+SELECT * FROM ctg_departamentos;SELECT * FROM ctg_municipios
+
+SELECT m.id_mascota, u.usuario, u.email,u.telefono,m.nombremascota,
+    d.descripcion as depto,mu.descripcion as muni,m.direccion,m.estado_direc,m.codigo,m.nacimiento 
+    FROM prc_mascotas m, ctg_tipomascotas t, ctg_municipios mu,
+    sec_usuario u, ctg_departamentos d 
+    WHERE #$id_mascota $usuario $nombremasc $estado AND 
+	 m.id_tipomascota=t.id_tipomascota AND m.usuario=u.usuario 
+    AND m.id_municipio=mu.id_municipio AND mu.id_departamento=d.id_departamento
+
+
+SELECT * FROM prc_mascotas 
 LOCK TABLES `prc_mascotas` WRITE;
 /*
  SELECT m.id_mascota, u.id_usuario, u.mail,u.telefono,m.nombremascota,
@@ -488,6 +499,10 @@ CREATE TABLE IF NOT EXISTS dbMyPet.prc_vacunas(
     CONSTRAINT `fk_tipovac_vac` FOREIGN KEY(`id_tipovacuna`) REFERENCES `ctg_tipovacunas`(`id_tipovacuna`)
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de los roles por usuario';
 
+INSERT INTO prc_vacunas(id_vacuna,id_mascota,id_tipovacuna,estado,usuario_creacion,fecha_creacion,usuario_update,fecha_update) 
+VALUE(1,1,1,'A','dnery','2021-08-11 16:15:48',NULL,NULL);
+
+INSERT INTO prc_vacunas
 
 LOCK TABLES `prc_vacunas` WRITE;
 USE dbmypet

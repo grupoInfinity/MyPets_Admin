@@ -138,8 +138,8 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 	    }
 	}
 	*/ else if (strtoupper($accion) == 'D') { // VERIFICACION SI LA ACCION ES ELIMINACION
-		$user = ", usuario_modificacion='" . $user . "'";
-		$date = ", fecha_modificacion='" . date('Y-m-d') . "'";
+		$user = ", usuario_update='" . $user . "'";
+		$date = ", fecha_update='" . date('Y-m-d') . "'";
 
 		$sql = "DELETE FROM $bd.$tabla WHERE usr = '$usr' AND rol = $rol";
 

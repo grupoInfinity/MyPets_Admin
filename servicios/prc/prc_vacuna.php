@@ -1,10 +1,19 @@
 <?php
 include_once('../config.php'); 
 
-$bd = "dbMyPet";
+header('Content-type: application/json; charset=UTF-8');
+header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization");
+header("Access-Control-Allow-Methods: GET,PUT,POST,DELETE,PATCH,OPTIONS");
+header("Allow: GET, POST, OPTIONS, PUT, DELETE");
+$method = $_SERVER['REQUEST_METHOD'];
+if($method == "OPTIONS") {
+    die();
+}
 $tabla = "prc_vacunas";
 $tabla2 = "prc_mascotas";
 $tabla3 = "ctg_tipovacunas";
+
 
 $accion = isset($_GET['accion']) ? $_GET['accion'] : '';
 $id_vacuna = isset($_GET['id_vacuna']) ? $_GET['id_vacuna'] : '';
@@ -31,8 +40,8 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
 		
 	$sql = "SELECT v.id_vacuna,v.id_mascota,v.id_tipovacuna,m.nombremascota,
 	t.nombrevacuna,DATE(v.fecha_creacion) AS fecha_creacion,v.estado
-	FROM $bd.$tabla v, $bd.$tabla2 m, $bd.$tabla3 t 
-	WHERE $id_vacuna $id_mascota $id_tipovac $nombrevac $estado 
+	FROM $bd.prc_vacunas v, $bd.prc_mascotas m, $bd.ctg_tipovacunas t 
+	WHERE $id_vacuna $id_mascota $id_tipovac $nombrevac $estado AND
 	v.id_mascota=m.id_mascota AND v.id_tipovacuna=t.id_tipovacuna ";
 	
 	$result = $conn->query($sql);

@@ -11,7 +11,7 @@ if($method == "OPTIONS") {
     die();
 }
 
-$tabla = "ctg_depto";
+$tabla = "ctg_departamento";
 
 $accion = isset($_GET['accion']) ? $_GET['accion'] : '';
 $id = isset($_GET['id']) ? $_GET['id'] : '';
@@ -22,7 +22,7 @@ $user = utf8_encode(isset($_GET['user']) ? $_GET['user'] : '');
 $json = "no has seteado nada.";
 
 if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
-	if(!empty($id)) $id="A.id='$id'";
+	if(!empty($id)) $id="A.id_departamento='$id'";
 	else $id="1=1";
 	if(!empty($desc)) $desc="AND A.descripcion LIKE '%$desc%'";
 	else $desc="";
@@ -30,7 +30,7 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
 	else $estado="";
 	
 	$sql = "
-	SELECT A.id, A.descripcion, A.estado
+	SELECT A.id_departamento, A.descripcion, A.estado
 	FROM $bd.$tabla A
 	WHERE $id $desc $estado ";
 	//echo $sql;
@@ -39,7 +39,9 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
 	if (!empty($result))
 		if($result->num_rows > 0) {
 			while($row = $result->fetch_assoc()) {
-				$results[] = array("id" => $row["id"], 'descripcion' => utf8_encode($row["descripcion"]), 'estado'=>$row["estado"]);
+				$results[] = array("id" => $row["id_departamento"], 
+				'descripcion' => utf8_encode($row["descripcion"]), 
+				'estado'=>$row["estado"]);
 				$json = array("status"=>1, "info"=>$results);
 			}
 		} else {
@@ -50,7 +52,7 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
 else{
 	if(strtoupper($accion) =='I'){// VERIFICACION SI LA ACCION ES INSERCION
 		$sql = "
-		SELECT MAX(a.id) + 1 as id
+		SELECT MAX(a.id_departamento) + 1 as id
 		FROM $bd.$tabla a";
 		
 		$result = $conn->query($sql);
@@ -67,9 +69,10 @@ else{
 			}
 		}
 		else $id=1;
-		$date = date('Y-m-d');
+		$date = date('Y-m-d H:i:s');
 	
-		$sql = "INSERT INTO $bd.$tabla(ID, DESCRIPCION, ESTADO, USUARIO_CREACION, FECHA_CREACION) VALUE($id,'".strtoupper($desc)."', 'A', '$user', '$date')";
+		$sql = "INSERT INTO $bd.$tabla(ID_DEPARTAMENTO, DESCRIPCION, ESTADO, USUARIO_CREACION, FECHA_CREACION)
+		VALUE($id,'".strtoupper($desc)."', '$estado', '$user', '$date')";
 		
 		if ($conn->query($sql) === TRUE) {
 			$json = array("status"=>1, "info"=>"Registro almacenado exitosamente.");
@@ -81,11 +84,11 @@ else{
 	
 		$desc = "descripcion='".strtoupper($desc)."'";
 		$estado = ", estado='".strtoupper($estado)."'";
-		$user = ", usuario_modificacion='".$user."'";
-		$date = ", fecha_modificacion='".date('Y-m-d')."'";
+		$user = ", usuario_update='".$user."'";
+		$date = ", fecha_update='".date('Y-m-d H:i:s')."'";
 		
 		
-		$sql = "UPDATE $bd.$tabla SET $desc $estado $user $date WHERE id = $id";
+		$sql = "UPDATE $bd.$tabla SET $desc $estado $user $date WHERE id_departamento = $id";
 		
 		if ($conn->query($sql) === TRUE) {
 			$json = array("status"=>1, "info"=>"Registro actualizado exitosamente.");
@@ -94,10 +97,10 @@ else{
 		}
 	}
 	else if(strtoupper($accion) =='D'){// VERIFICACION SI LA ACCION ES ELIMINACION
-		$user = ", usuario_modificacion='".$user."'";
-		$date = ", fecha_modificacion='".date('Y-m-d')."'";
+		$user = ", usuario_update='".$user."'";
+		$date = ", fecha_update='".date('Y-m-d H:i:s')."'";
 		
-		$sql = "UPDATE $bd.$tabla set estado='I' $user $date WHERE id = $id";
+		$sql = "UPDATE $bd.$tabla set estado='I' $user $date WHERE id_departamento = $id";
 		
 		if ($conn->query($sql) === TRUE) {
 			$json = array("status"=>1, "info"=>"Registro eliminado exitosamente.");
@@ -106,10 +109,10 @@ else{
 		}
 	}
 	else if(strtoupper($accion) =='A'){// VERIFICACION SI LA ACCION ES ELIMINACION
-	    $user = ", usuario_modificacion='".$user."'";
-	    $date = ", fecha_modificacion='".date('Y-m-d')."'";
+	    $user = ", usuario_update='".$user."'";
+	    $date = ", fecha_update='".date('Y-m-d H:i:s')."'";
 	    
-	    $sql = "UPDATE $bd.$tabla set estado='A' $user $date WHERE id = $id";
+	    $sql = "UPDATE $bd.$tabla set estado='A' $user $date WHERE id_departamento = $id";
 	    
 	    if ($conn->query($sql) === TRUE) {
 	        $json = array("status"=>1, "info"=>"Registro activado exitosamente.");

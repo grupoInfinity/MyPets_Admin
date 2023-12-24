@@ -1,6 +1,14 @@
 <?php
 include_once('../config.php');
-
+header('Content-type: application/json; charset=UTF-8');
+header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization");
+header("Access-Control-Allow-Methods: GET,PUT,POST,DELETE,PATCH,OPTIONS");
+header("Allow: GET, POST, OPTIONS, PUT, DELETE");
+$method = $_SERVER['REQUEST_METHOD'];
+if($method == "OPTIONS") {
+    die();
+}
 //$bd = "dbMyPet";
 $tabla = "ctg_tipomascotas";
 
