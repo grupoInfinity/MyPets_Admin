@@ -7,7 +7,7 @@ header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Conte
 header("Access-Control-Allow-Methods: GET,PUT,POST,DELETE,PATCH,OPTIONS");
 header("Allow: GET, POST, OPTIONS, PUT, DELETE");
 $method = $_SERVER['REQUEST_METHOD'];
-if($method == "OPTIONS") {
+if ($method == "OPTIONS") {
     die();
 }
 $tabla = "prc_mascotas";
@@ -33,7 +33,8 @@ $estado = isset($_GET['estado']) ? $_GET['estado'] : '';
 $user = isset($_GET['user']) ? $_GET['user'] : '';
 
 $json = "no has seteado nada.";
-function imageToBase64($imagePath) {
+function imageToBase64($imagePath)
+{
     $imageData = file_get_contents($imagePath);
     $base64 = base64_encode($imageData);
     return $base64;
@@ -62,9 +63,12 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 
     if (!empty($result))
         if ($result->num_rows > 0) {
-            $i=0;
+            $i = 0;
             while ($row = $result->fetch_assoc()) {
-                $idm=$row["id_mascota"];
+                $idm = $row["id_mascota"];
+                if (!empty($row["foto"])) $foto = imageToBase64($row["foto"]);
+                else $foto = "";
+
                 $mascota[] = array(
                     'id_mascota' => $row["id_mascota"],
                     'usuario'  => $row["usuario"],
@@ -76,11 +80,11 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
                     'direccion' => ($row["direccion"]),
                     'estado_direc' => ($row["estado_direc"]),
                     'nacim' => $row["nacimiento"],
-                    //'foto' =>  imageToBase64($row["foto"]),
+                    'foto' =>  $foto,
                     'codigo' => $row["codigo"]
                 );
-                
-                $sql2="SELECT v.id_vacuna,v.id_mascota,v.id_tipovacuna,
+
+                $sql2 = "SELECT v.id_vacuna,v.id_mascota,v.id_tipovacuna,
                 t.nombrevacuna,DATE(v.fecha_creacion) AS fecha_creacion,v.estado
                 FROM $bd.prc_vacunas v, $bd.prc_mascotas m, $bd.ctg_tipovacunas t 
                 WHERE v.id_mascota=$idm AND 
@@ -88,27 +92,27 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 
                 $result2 = $conn->query($sql2);
 
-				if (!empty($result2))
-					if ($result2->num_rows > 0) {
-						while ($row2 = $result2->fetch_assoc()) {
-							$vacuna[] = array(
-								'idvacuna' => $row2["id_vacuna"], 
-                                'idmascota' => $row2["id_mascota"], 
+                if (!empty($result2))
+                    if ($result2->num_rows > 0) {
+                        while ($row2 = $result2->fetch_assoc()) {
+                            $vacuna[] = array(
+                                'idvacuna' => $row2["id_vacuna"],
+                                'idmascota' => $row2["id_mascota"],
                                 'idtipovacuna' => $row2["id_tipovacuna"],
                                 'nombrevacuna' => $row2["nombrevacuna"],
                                 'fecha_creacion' => $row2["fecha_creacion"],
                                 'estado' => $row2["estado"]
-							);
-						}
-					} else {
-						$vacuna[] = null;
-					}
-				else $vacuna[] = null;
+                            );
+                        }
+                    } else {
+                        $vacuna[] = null;
+                    }
+                else $vacuna[] = null;
 
                 $results[] = array(
-					'mascota' => $mascota[$i],
-					'vacuna' => $vacuna[$i]
-				);
+                    'mascota' => $mascota[$i],
+                    'vacuna' => $vacuna[$i]
+                );
                 $json = array("status" => 1, "info" => $results);
                 $i++;
             }
@@ -139,7 +143,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 
         $date = date('Y-m-d H:i:s');
         $nacim = date_create_from_format('Y-m-d', $nacim);
-        
+
 
         $sql = "INSERT INTO 
         $bd.$tabla(id_mascota, id_usuario,id_tipomascota,id_municipio,direccion,estado_direc,
@@ -161,10 +165,11 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         $nombremasc = ",nombremascota='" . $nombremasc . "'";
         $codigo = ",codigo='" . $codigo . "'";
         $nacim = ",nacimiento='" . $nacim . "'";
-        $foto = ",foto='" . $foto . "'";
         $estado = ",estado='" . $estado . "'";
         $user = ", usuario_update='" . $user . "'";
         $date = ", fecha_update='" . date('Y-m-d H:i:s') . "'";
+        if (!empty($foto)) $foto = ",foto='" . ($foto) . "'";
+        else $foto = "foto=foto";
 
         $sql = "UPDATE $bd.$tabla SET $id_mascota $id_tipomascota $id_mun $direccion 
         $estado_direc $nombremasc $codigo $nacim $foto $estado $user $date 
@@ -198,7 +203,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         } else {
             $json = array("status" => 0, "error" => $conn->error);
         }
-    } 
+    }
 }
 $conn->close();
 

@@ -460,7 +460,9 @@ CREATE TABLE IF NOT EXISTS dbMyPet.prc_mascotas(
 
 INSERT INTO prc_mascotas(id_mascota,id_tipomascota,id_municipio,usuario,direccion,estado_direc,nombremascota,
 codigo,nacimiento,foto,estado,usuario_creacion,fecha_creacion,usuario_update,fecha_update) 
-VALUE(1,1,1,'dnery','Avenida','A','Charly','239022','2019-03-02',NULL,'A','dnery','2021-08-11 16:15:48',NULL,NULL);
+VALUE(1,1,1,'dnery','Avenida','A','Charly','239022','2019-03-02',NULL,'A','dnery','2021-08-11 16:15:48',NULL,NULL),
+(2,2,1,'dnery','Avenida Hulin','A','Mily','200022','2019-03-02',NULL,'A','dnery','2021-08-11 16:15:48',NULL,NULL);
+
 
 SELECT * FROM ctg_departamentos;SELECT * FROM ctg_municipios
 
@@ -501,6 +503,9 @@ CREATE TABLE IF NOT EXISTS dbMyPet.prc_vacunas(
 
 INSERT INTO prc_vacunas(id_vacuna,id_mascota,id_tipovacuna,estado,usuario_creacion,fecha_creacion,usuario_update,fecha_update) 
 VALUE(1,1,1,'A','dnery','2021-08-11 16:15:48',NULL,NULL);
+
+INSERT INTO prc_vacunas(id_vacuna,id_mascota,id_tipovacuna,estado,usuario_creacion,fecha_creacion,usuario_update,fecha_update) 
+VALUE(2,2,2,'A','dnery','2021-08-11 16:15:48',NULL,NULL);
 
 INSERT INTO prc_vacunas
 

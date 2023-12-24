@@ -139,9 +139,9 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 	}
 	*/ else if (strtoupper($accion) == 'D') { // VERIFICACION SI LA ACCION ES ELIMINACION
 		$user = ", usuario_update='" . $user . "'";
-		$date = ", fecha_update='" . date('Y-m-d') . "'";
+		$date = ", fecha_update='" . date('Y-m-d H:i:s') . "'";
 
-		$sql = "DELETE FROM $bd.$tabla WHERE usr = '$usr' AND rol = $rol";
+		$sql = "DELETE FROM $bd.$tabla WHERE usr = '$usr' AND id_rol = $rol";
 
 		if ($conn->query($sql) === TRUE) {
 			$json = array("status" => 1, "info" => "Registro eliminado exitosamente.");

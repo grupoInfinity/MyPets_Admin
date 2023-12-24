@@ -20,12 +20,12 @@ function generarPin(){
 $accion = isset($_GET['accion']) ? $_GET['accion'] : '';
 $usr = isset($_GET['usr']) ? $_GET['usr'] : '';
 $pin = isset($_GET['pin']) ? $_GET['pin'] : '';
-$clave = utf8_encode(isset($_GET['clave']) ? $_GET['clave'] : '');
-$nuevaClave = utf8_encode(isset($_GET['nuevaClave']) ? $_GET['nuevaClave'] : '');
-$confirmarClave = utf8_encode(isset($_GET['confirmarClave']) ? $_GET['confirmarClave'] : '');
-$nombre = utf8_encode(isset($_GET['nombre']) ? $_GET['nombre'] : '');
-$apellido = utf8_encode(isset($_GET['apellido']) ? $_GET['apellido'] : '');
-$email = utf8_encode(isset($_GET['email']) ? $_GET['email'] : '');
+$clave = (isset($_GET['clave']) ? $_GET['clave'] : '');
+$nuevaClave = (isset($_GET['nuevaClave']) ? $_GET['nuevaClave'] : '');
+$confirmarClave = (isset($_GET['confirmarClave']) ? $_GET['confirmarClave'] : '');
+$nombre = (isset($_GET['nombre']) ? $_GET['nombre'] : '');
+$apellido = (isset($_GET['apellido']) ? $_GET['apellido'] : '');
+$email = isset($_GET['email']) ? $_GET['email'] : '';
 
 $estado = isset($_GET['estado']) ? $_GET['estado'] : '';
 $user = utf8_encode(isset($_GET['user']) ? $_GET['user'] : '');
@@ -66,10 +66,10 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 
 				$results[] = array(
 					"usr" => $usr,
-					'clave' => utf8_encode($clave),
-					'nombre' => utf8_encode($nombre), 
-					'apellido' => utf8_encode($apellido),
-					'email' => utf8_encode($email),
+					'clave' => $clave,
+					'nombre' => ($nombre), 
+					'apellido' => ($apellido),
+					'email' => ($email),
 					'pin' => $pin,
 					'estado' => $estado
 				);
@@ -85,8 +85,10 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 
 		$date = date('Y-m-d H:i:s');
 
-		$sql = "INSERT INTO $bd.$tabla(usuario, clave, nombre, apellido, email, estado, tipo_usuario, USUARIO_CREACION, FECHA_CREACION) 
-		VALUE('$usr','$clave', $idEmpleado, $id_almacen, '$nombre', '$apellido', '$email', 'A', $tipouser, '$user', '$date')";
+		$sql = "INSERT INTO $bd.$tabla(usuario, clave, nombre, apellido, 
+		email,pin, estado,USUARIO_CREACION, FECHA_CREACION) 
+		VALUE('$usr','$clave', '$nombre', '$apellido', '$email','".generarPin()."', 
+		'$estado', '$user', '$date')";
 
 		if ($conn->query($sql) === TRUE) {
 			$json = array("estado" => 1, "info" => "Registro almacenado exitosamente.");
@@ -103,7 +105,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 		else $apellido = "apellido=apellido";
 		if (!empty($email)) $email = ", email='" . ($email) . "'";
 		else $email = "email=email";
-		if (!empty($pin)) $pin = ",pin='" . ($pin) . "'";
+		if (!empty($pin)) $pin = ",pin='" . generarPin() . "'";
 		else $pin = "pin=pin";
 
 		$estado = ", estado='" . strtoupper($estado) . "'";
