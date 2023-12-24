@@ -142,6 +142,9 @@ CREATE TABLE IF NOT EXISTS dbMyPet.sec_usuario (
   PRIMARY KEY (`usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de usuario';
 
+SELECT DISTINCT A.usuario, A.clave, A.nombre, A.apellido,A.email, A.estado
+	FROM sec_usuario A
+	WHERE 1=1 AND A.usuario!='system'
 
 
 LOCK TABLES `sec_usuario` WRITE;
@@ -160,7 +163,7 @@ insert  into `sec_usuario`(`usuario`,`clave`,`nombre`,`apellido`,`email`,`pin`,`
     ('system','321','Administrador','Sistemas','gustavo.moreno@gi-sv.com','000110','A',1,'admin','2021-11-14 13:13:24',NULL,NULL);
 
 
-SELECT * FROM sec_rol
+SELECT * FROM sec_rol_user
 
 UNLOCK TABLES;
 
@@ -261,6 +264,10 @@ insert  into `sec_rol_usuario`(`usuario`,`id_rol`,`usuario_creacion`,`fecha_crea
     ('nmena',5,'admin','2021-08-11 16:15:48',NULL,NULL),
     ('nmunoz',3,'admin','2021-08-11 16:15:48',NULL,NULL),
     ('system',1,'system','2021-08-11 16:15:48',NULL,NULL);
+    
+    
+SELECT A.id_rol, A.descripcion, A.estado
+FROM sec_rol A WHERE A.id_rol = 1
 
 UNLOCK TABLES;
 
