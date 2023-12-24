@@ -76,8 +76,7 @@ factory('Opcion', function($http, URL_API){
         '&url=' + opcion.url +        
         '&orden=' + opcion.orden +        
         '&user=' + opcion.usuario +
-		'&estado=' + opcion.estado +
-        '&id_empresa=' + opcion.id_empresa;
+		'&estado=' + opcion.estado;
 		
         $http.post(url ,opcion).
         then(function(response) {
@@ -111,8 +110,7 @@ factory('Opcion', function($http, URL_API){
         '&url=' + opcion.url +        
         '&orden=' + opcion.orden +        
         '&user=' + opcion.usuario +        
-        '&estado=' + (opcion.estado?'A':'I') +
-        '&id_empresa=' + opcion.id_empresa;
+        '&estado=' + (opcion.estado?'A':'I');
 		
         $http.post(url
         ,opcion).
@@ -141,7 +139,6 @@ factory('OpcPpal', function($http, URL_API){
     service.insertar = insertar;
     service.actualizar = actualizar;
     service.findById = findById;
-    service.findByEmpresaA = findByEmpresaA;
 
     function findAll(callback){
 		var url = URL_API + '/servicios/sec/sec_opc_principal.php?accion=C';
@@ -158,19 +155,8 @@ factory('OpcPpal', function($http, URL_API){
            callback(response);
         });
     };
-    function findById(id, idEmpresa, callback){
-		var url = URL_API + '/servicios/sec/sec_opc_principal.php?accion=C&id=' + id + '&id_empresa=' + idEmpresa;
-        $http.get(url).
-        then(function(response) {
-           callback(response);
-        });
-    };
-	
-	function findByEmpresaA(idEmpresa, callback){
-		var url = URL_API + '/servicios/sec/sec_opc_principal.php?accion=C'+ 
-		'&id_empresa=' + idEmpresa+
-		'&estado=A';
-		//console.log(url);
+    function findById(id,  callback){
+		var url = URL_API + '/servicios/sec/sec_opc_principal.php?accion=C&id=' + id ;
         $http.get(url).
         then(function(response) {
            callback(response);
@@ -178,7 +164,7 @@ factory('OpcPpal', function($http, URL_API){
     };
 
     function borrar(id, usuario, callback){
-		var url = URL_API + '/servicios/sec/sec_opc_principal.php?accion=D&id=' + id.id + '&id_empresa=' + id.id_empresa + '&user=' + usuario;
+		var url = URL_API + '/servicios/sec/sec_opc_principal.php?accion=D&id=' + id.id + '&user=' + usuario;
 		
         $http.post(url, id).
         then(function(response) {
@@ -187,7 +173,7 @@ factory('OpcPpal', function($http, URL_API){
     };
 	
 	function activar(id, usuario, callback){
-		var url = URL_API + '/servicios/sec/sec_opc_principal.php?accion=A&id=' + id.id + '&id_empresa=' + id.id_empresa + '&user=' + usuario;
+		var url = URL_API + '/servicios/sec/sec_opc_principal.php?accion=A&id=' + id.id + '&user=' + usuario;
 		
         $http.post(url, id).
         then(function(response) {
@@ -200,8 +186,7 @@ factory('OpcPpal', function($http, URL_API){
         '&menuicon=' + opcPpal.menu_icon +
         '&orden=' + opcPpal.orden +
         '&accesoDirecto=' + opcPpal.acceso_directo +
-        '&user=' + opcPpal.usuario +
-        '&id_empresa=' + opcPpal.id_empresa ;
+        '&user=' + opcPpal.usuario;
 		
         $http.post(url,opcPpal).
         then(function(response) {
@@ -216,8 +201,7 @@ factory('OpcPpal', function($http, URL_API){
 		'&orden=' + opcPpal.orden +
 		'&accesoDirecto=' + opcPpal.acceso_directo +
         '&estado=' + (opcPpal.estado?'A':'I') +
-        '&user=' + opcPpal.usuario +
-        '&id_empresa=' + opcPpal.id_empresa;
+        '&user=' + opcPpal.usuario;
 		
         $http.post(url, opcPpal).
         then(function(response) {
@@ -348,7 +332,7 @@ factory('OpcRol', function($http, URL_API){
         });
     };
 	
-	function findByIdOpcPpalRol(idOpcPpal, idRol, idEmpresa, callback){
+	function findByIdOpcPpalRol(idOpcPpal, idRol, callback){
 		var url = URL_API + '/servicios/sec/sec_opc_rol.php?accion=CP&'+
 		'id_opc_ppal=' + idOpcPpal +
         '&id_rol=' + idRol ;
@@ -360,12 +344,11 @@ factory('OpcRol', function($http, URL_API){
         });
     };
 	
-	function findByIdOpcPpalOpcPadreRol(idOpcPpal, idOpcPadre, idRol, idEmpresa, callback){
+	function findByIdOpcPpalOpcPadreRol(idOpcPpal, idOpcPadre, idRol, callback){
 		var url = URL_API + '/servicios/sec/sec_opc_rol.php?accion=CH'+
 		'&id_opc_ppal=' + idOpcPpal +
 		'&id_opc_padre=' + idOpcPadre +
-        '&id_rol=' + idRol +
-        '&id_empresa=' + idEmpresa;
+        '&id_rol=' + idRol;
 		
 		//console.log(url);
         $http.get(url).
@@ -386,7 +369,6 @@ factory('OpcRol', function($http, URL_API){
     function insertar(opcRol, callback){
         $http.post(URL_API + '/servicios/sec/sec_opc_rol.php?accion=I&id_opc_ppal=' + opcRol.id_opc_ppal +
         '&id_opc=' + opcRol.id_opc +
-        '&id_empresa=' + opcRol.id_empresa +
         '&id_rol=' + opcRol.id_rol.id +
         '&user=' + opcRol.usuario, opcRol).
         then(function(response) {
@@ -539,8 +521,7 @@ factory('RolUsuario', function($http, URL_API){
     function insertar(rolUsuario, callback){
         $http.post(URL_API + '/servicios/sec/sec_rol_usuario.php?accion=I&usr=' + rolUsuario.usr.usr +
         '&rol=' + rolUsuario.rol.id +
-        '&user=' + rolUsuario.usuario+
-        '&id_empresa=' + rolUsuario.id_empresa.id_empresa
+        '&user=' + rolUsuario.usuario
         , rolUsuario).
         then(function(response) {
             callback(response);
@@ -550,8 +531,7 @@ factory('RolUsuario', function($http, URL_API){
     function actualizar(rolUsuario, callback){
 		var url=URL_API + '/servicios/sec/sec_rol_usuario.php?accion=U&usr=' + rolUsuario.id.usr + 
         '&rol=' + rolUsuario.id.rol +
-        '&user=' + rolUsuario.usuario+
-        '&id_empresa=' + rolUsuario.id_empresa.id_empresa;
+        '&user=' + rolUsuario.usuario;
 		
         $http.post(url, rolUsuario).
         then(function(response) {
@@ -580,7 +560,6 @@ factory('Usr', function($http, URL_API){
     service.insertar = insertar;
     service.actualizar = actualizar;
     service.findByUsr = findByUsr;
-    service.findByEmpresa = findByEmpresa;
     service.findAllA = findAllA; 
     /*    service.getUser = getUser;
 
@@ -614,8 +593,8 @@ factory('Usr', function($http, URL_API){
         });
     };
 
-    function findByUsr(usuarioId, id_empresa, callback){
-		var url = URL_API + '/servicios/sec/sec_usuario.php?accion=C&usr=' + usuarioId + '&id_empresa=' + id_empresa;
+    function findByUsr(usuarioId, callback){
+		var url = URL_API + '/servicios/sec/sec_usuario.php?accion=C&usr=' + usuarioId ;
 		
         $http.get(url).
         then(function(response) {
@@ -623,19 +602,9 @@ factory('Usr', function($http, URL_API){
         });
     };
 	
-	function findByEmpresa(id_empresa, callback){
-		var url = URL_API + '/servicios/sec/sec_usuario.php?accion=C' 
-		+ '&id_empresa=' + id_empresa;
-		
-		//console.log(url);
-        $http.get(url).
-        then(function(response) {
-           callback(response);
-        });
-    };
 
-    function borrar(usuarioId, id_empresa, usuario, callback){
-		var url = URL_API + '/servicios/sec/sec_usuario.php?accion=D&usr=' + usuarioId + '&id_empresa=' + id_empresa;
+    function borrar(usuarioId,usuario, callback){
+		var url = URL_API + '/servicios/sec/sec_usuario.php?accion=D&usr=' + usuarioId;
 		
 		//console.log(url);
         $http.post(url, usuarioId).
@@ -644,8 +613,8 @@ factory('Usr', function($http, URL_API){
         });
     };
 	
-	function activar(usuarioId, id_empresa, usuario, callback){
-		var url = URL_API + '/servicios/sec/sec_usuario.php?accion=A&usr=' + usuarioId + '&id_empresa=' + id_empresa;
+	function activar(usuarioId, usuario, callback){
+		var url = URL_API + '/servicios/sec/sec_usuario.php?accion=A&usr=' + usuarioId;
 		
 		//console.log(url);
         $http.post(url, usuarioId).
@@ -656,16 +625,12 @@ factory('Usr', function($http, URL_API){
 
     function insertar(usuario, callback){
 		var url = URL_API + '/servicios/sec/sec_usuario.php?accion=I'+
-		'&usr=' + usuario.usr + 
-		'&idEmpleado=' + usuario.id_empleado + 
-		'&id_empresa=' + usuario.id_empresa +
-		'&id_almacen=' + usuario.id_almacen + 
+		'&usr=' + usuario.usr +
 		'&clave=' + usuario.clave + 
 		'&nombre=' + usuario.nombre + 
 		'&apellido=' + usuario.apellido + 
 		'&email=' + usuario.email + 
 		'&estado=' + usuario.estado +
-		'&tipouser=' + usuario.tipo_usuario + 
 		'&user=' + usuario.usuario ;
 		
         $http.post(url, usuario).
@@ -676,16 +641,12 @@ factory('Usr', function($http, URL_API){
 
     function actualizar(usuario, callback){
 		var url = URL_API + '/servicios/sec/sec_usuario.php?accion=U'+
-		'&usr=' + usuario.usr + 
-		'&idEmpleado=' + usuario.id_empleado + 
-		'&id_empresa=' + usuario.id_empresa +
-		'&id_almacen=' + usuario.id_almacen + 
+		'&usr=' + usuario.usr +
 		'&clave=' + usuario.clave + 
 		'&nombre=' + usuario.nombre + 
 		'&apellido=' + usuario.apellido + 
 		'&email=' + usuario.email + 
 		'&estado=' + (usuario.estado?'A':'I') +
-		'&tipouser=' + usuario.tipo_usuario + 
 		'&user=' + usuario.usuario;
 		
 		//console.log(url);

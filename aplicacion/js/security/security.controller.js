@@ -117,7 +117,6 @@ function OpcionAddCtrl($scope, $rootScope, $filter, $http, $state, Opcion, OpcPp
 		var date = new Date();
 		$scope.newOpcion = {
 			id:""
-			, id_empresa:""
 			, id_opc_ppal:""
 			, id_opc_padre:""
 			, padre:0
@@ -191,7 +190,6 @@ function OpcionAddCtrl($scope, $rootScope, $filter, $http, $state, Opcion, OpcPp
 		$scope.opcppales = [];
 	
 		$scope.newOpcion.id_opc_ppal = "";
-		if ($scope.newOpcion.id_empresa==null) $scope.newOpcion.id_empresa = "";
 		if ($scope.newOpcion.id_opc_ppal==null) $scope.newOpcion.id_opc_ppal = "";
 		if ($scope.newOpcion.id_empresa != "") {
 			OpcPpal.findByEmpresaA($scope.newOpcion.id_empresa, function(response){
@@ -242,8 +240,7 @@ function OpcionEditCtrl($scope, $rootScope, $rootScope, $filter, $state, $stateP
 	$scope.loadOpcion = function() {
 		Opcion.findById($stateParams.idOpcion, function(response) {
 			if(response.data.status==1)
-					$scope.newOpcion = response.data.info[0];					
-					$scope.newOpcion.id_empresa = response.data.info[0].id.id_empresa;
+					$scope.newOpcion = response.data.info[0];
 					$scope.newOpcion.id_opc_ppal = response.data.info[0].id.id_opc_principal;					
 					$scope.newOpcion.id = response.data.info[0].id.id;
 					if($scope.newOpcion.estado=='A'){
@@ -263,13 +260,6 @@ function OpcionEditCtrl($scope, $rootScope, $rootScope, $filter, $state, $stateP
 	};
 	$scope.listOpcPpal();
 
-	$scope.empresa = {};
-	$scope.loadEmpresa = function() {
-		Empresa.findAll(function(response) {
-			if(response.data.status==1)
-			$scope.empresa = response.data.info;
-		});
-	};
 	$scope.loadEmpresa();
 	
 	$scope.opcppales = null;
@@ -277,7 +267,6 @@ function OpcionEditCtrl($scope, $rootScope, $rootScope, $filter, $state, $stateP
 		$scope.opcppales = [];
 	
 		$scope.newOpcion.id_opc_ppal = "";
-		if ($scope.newOpcion.id_empresa==null) $scope.newOpcion.id_empresa = "";
 		if ($scope.newOpcion.id_opc_ppal==null) $scope.newOpcion.id_opc_ppal = "";
 		if ($scope.newOpcion.id_empresa != "") {
 			OpcPpal.findByEmpresaA($scope.newOpcion.id_empresa, function(response){
@@ -1033,77 +1022,7 @@ function UsuarioAddCtrl($rootScope, $stateParams, $scope, URL_API, $filter, $htt
 
 	$scope.reset();	
 
-	$scope.onlyLetters = "/^[a-zA-Z.\-\s\Ññ\_\]+$/i/";
-	
-	
-	$scope.loadEmpleado = function() {
-		Empleado.findAllByEmpresaA($scope.newUsuario.id_empresa, function(response) {
-			if(response.data.status==1) 
-			$scope.empleado = response.data.info;
-			else $scope.empleado = [];
-		});
-	};
-
-	$scope.loadEmpleado();
-	
-
-	$scope.loadEmpresa = function() {
-		Empresa.findAll(function(response) {
-			if(response.data.status==1) 
-			$scope.empresa = response.data.info;
-			else $scope.empleado = [];
-		});
-	};
-
-	$scope.loadEmpresa();
-
-	
-	$scope.loadAlmacen = function() {
-		Almacen.findAllByEmpresaIdA(function(response) {
-			if(response.data.status==1)
-			$scope.almacen = response.data.info;
-		});
-	};
-
-	$scope.loadAlmacen();
-	
-	
-	$scope.almacen = null;
-	$scope.updateAlmacen = function(){
-	
-		$scope.almacen = [];
-		$scope.newUsuario.id_almacen = "";
-		if ($scope.newUsuario.id_empresa==null) $scope.newUsuario.id_empresa = "";
-		if ($scope.newUsuario.id_almacen==null) $scope.newUsuario.id_almacen = "";
-		if ($scope.newUsuario.id_empresa != "") {
-			Almacen.findAllByEmpresaIdA($scope.newUsuario.id_empresa, function(response){
-				if (response.data.status==1) 
-				$scope.almacen = response.data.info;
-				else $scope.almacen = [];
-			});
-		}
-	};
-	
-	$scope.empleado = null;
-	$scope.loadEmpleados = function() {
-		$scope.empleado = [];
-	
-		$scope.newUsuario.id_empleado = "";
-		if ($scope.newUsuario.id_empresa==null) $scope.newUsuario.id_empresa = "";
-		if ($scope.newUsuario.id_almacen==null) $scope.newUsuario.id_almacen = "";
-		if ($scope.newUsuario.id_empresa==null) $scope.newUsuario.id_empresa = "";
-		if ($scope.newUsuario.id_empresa != "") {
-			Empleado.findAllByAlmacenA($scope.newUsuario.id_empresa, $scope.newUsuario.id_almacen, function(response){
-				if (response.data.status==1) 
-				$scope.empleado = response.data.info;
-				else $scope.empleado = [];
-			});
-		}
-	};
-	
-	
-	
-	
+	$scope.onlyLetters = "/^[a-zA-Z.\-\s\Ññ\_\]+$/i/";	
 		
 };
 
@@ -1130,7 +1049,7 @@ function UsuarioEditCtrl($rootScope, $scope, $filter, $state, $stateParams, URL_
         $rootScope.$broadcast("refreshRoles", 0);
         
         var date = new Date();
-        $scope.newUsuario = {usr: "", id_empresa:"", id_empleado: "", id_almacen:"", usuario: $rootScope.globals.currentUser.username};
+        $scope.newUsuario = {usr: "", usuario: $rootScope.globals.currentUser.username};
 
         $scope.clearMessages();
     };
@@ -1219,81 +1138,7 @@ function UsuarioEditCtrl($rootScope, $scope, $filter, $state, $stateParams, URL_
 	  };
 
 	  $scope.loadUsuario();
-	
-	
-	$scope.loadEmpleado = function() {
-			Empleado.findAllByAlmacenA($scope.newUsuario.id_empresa, $scope.newUsuario.id_almacen, function(response){
-					if (response.data.status==1) 
-					$scope.empleado = response.data.info;
-					else $scope.empleado = [];
-				});
-	};
 
-	
-
-	$scope.loadEmpresa = function() {
-		Empresa.findAll(function(response) {
-			if(response.data.status==1)
-			$scope.empresa = response.data.info;
-			//$scope.id_empresa = response.data.info.id.id;
-		});
-	};
-
-	$scope.loadEmpresa();
-
-
-	$scope.loadAlmacen = function() {
-		Almacen.findAllByEmpresaIdA($rootScope.globals.currentUser.id_empresa, function(response) {
-			if(response.data.status==1) $scope.almacen = response.data.info;
-			else $scope.almacen = [];
-		});
-	};
-
-	$scope.loadAlmacen();
-	
-	
-	/*$scope.loadAlmacen = function() {
-		Almacen.findAllByEmpresaId($rootScope.globals.currentUser.id_empresa, function(response) {
-			if(response.data.status==1)
-			$scope.almacen = response.data.info;
-		});
-	};
-
-	$scope.loadAlmacen();*/
-	
-	
-	$scope.almacen = null;
-	$scope.updateAlmacen = function(){
-	
-		$scope.almacen = [];
-		$scope.newUsuario.id_almacen = "";
-		if ($scope.newUsuario.id_empresa==null) $scope.newUsuario.id_empresa = "";
-		if ($scope.newUsuario.id_almacen==null) $scope.newUsuario.id_almacen = "";
-		if ($scope.newUsuario.id_empresa != "") {
-			Almacen.findAllByEmpresaIdA($scope.newUsuario.id_empresa, function(response){
-				if (response.data.status==1)
-				 $scope.almacen = response.data.info;
-				else $scope.almacen = [];
-			});
-		}
-	};
-	
-	$scope.empleado = null;
-	$scope.loadEmpleados = function() {
-		$scope.empleado = [];
-	
-		$scope.newUsuario.id_empleado = "";
-		if ($scope.newUsuario.id_empresa==null) $scope.newUsuario.id_empresa = "";
-		if ($scope.newUsuario.id_almacen==null) $scope.newUsuario.id_almacen = "";
-		if ($scope.newUsuario.id_empresa==null) $scope.newUsuario.id_empresa = "";
-		if ($scope.newUsuario.id_empresa != "") {
-			Empleado.findAllByAlmacenA($scope.newUsuario.id_empresa, $scope.newUsuario.id_almacen, function(response){
-				if (response.data.status==1) 
-				$scope.empleado = response.data.info;
-				else $scope.empleado = [];
-			});
-		}
-	};
 	
 };
 
@@ -1321,7 +1166,7 @@ function UsuarioListCtrl($scope, $rootScope, $state, $compile, $window,popupServ
 	vm.activateUsuario = activateUsuario;
 	vm.editUsuario = editUsuario;
 
-	function listUsuario() {
+	/*function listUsuario() {
 		Usr.findByEmpresa($rootScope.globals.currentUser.id_empresa, function(response) {
 			if(response.data.status==1)
 			vm.usuario = response.data.info;
@@ -1341,7 +1186,7 @@ function UsuarioListCtrl($scope, $rootScope, $state, $compile, $window,popupServ
 				
 		});
 
-	}
+	}*/
 	;
 
 	function deleteUsuario(usuarioId, id_empresa) {
