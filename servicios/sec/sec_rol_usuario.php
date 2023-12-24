@@ -1,5 +1,5 @@
 <?php
-include_once('../config.php'); 
+include_once('../config.php');
 
 header('Content-type: application/json; charset=UTF-8');
 header('Access-Control-Allow-Origin: *');
@@ -7,8 +7,8 @@ header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Conte
 header("Access-Control-Allow-Methods: GET,PUT,POST,DELETE,PATCH,OPTIONS");
 header("Allow: GET, POST, OPTIONS, PUT, DELETE");
 $method = $_SERVER['REQUEST_METHOD'];
-if($method == "OPTIONS") {
-    die();
+if ($method == "OPTIONS") {
+	die();
 }
 $tabla = "sec_rol_usuario";
 
@@ -21,138 +21,105 @@ $user = utf8_encode(isset($_GET['user']) ? $_GET['user'] : '');
 
 $json = "no has seteado nada.";
 
-if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
-	if(!empty($usr)) $usr="A.usuario='$usr'";
-	else $usr="1=1";
-	if(!empty($rol)) $rol="AND A.id_rol = $rol";
-	else $rol="";
-		
+if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
+	if (!empty($usr)) $usr = "A.usuario='$usr'";
+	else $usr = "1=1";
+	if (!empty($rol)) $rol = "AND A.id_rol = $rol";
+	else $rol = "";
+
 	$sql = "
-	SELECT A.usuario, A.rol
+	SELECT A.usuario, A.id_rol
 	FROM $bd.$tabla A
 	WHERE $usr $rol";
-	
+
 	//echo $sql;
 	$result = $conn->query($sql);
-	
+
 	if (!empty($result))
-		if($result->num_rows > 0) {		    
-			    $i=0;
-			    while($row = $result->fetch_assoc()) {
-			        $usr = $row["usr"];
-					$id_empresa = $row["id_empresa"];
-					$rol = $row["rol"];
-			        
-			        $id[] = array(
-			            'rol' => $rol
-						, 'id_empresa' => $id_empresa
-						, 'usr' => $usr
-			        );
-			        
-			        $sql2 = "
-				SELECT A.usr, A.id_empleado, A.nombre, A.clave, A.apellido, A.email, A.estado
+		if ($result->num_rows > 0) {
+			$i = 0;
+			while ($row = $result->fetch_assoc()) {
+				$usr = $row["usuario"];
+				$rol = $row["id_rol"];
+
+				$id[] = array(
+					'rol' => $rol, 'usr' => $usr
+				);
+
+				$sql2 = "SELECT A.usuario, A.nombre, A.clave, A.apellido, A.email, A.estado,A.pin 
 				FROM $bd.sec_usuario A
-				WHERE A.usr = $usr";
-			        
-			        //echo $sql2;
-			        $result2 = $conn->query($sql2);
-			        
-			        if (!empty($result2))
-			            if($result2->num_rows > 0) {
-			                while($row2 = $result2->fetch_assoc()) {
-			                    $resultsUsr[] = array(
-			                        'usr' => $row2["usr"]
-			                        , 'id_empleado' => $row2["id_empleado"]
-			                        , 'nombre'=>$row2["nombre"]
-			                        , 'clave'=>$row2["clave"]
-			                        , 'apellido'=>$row2["apellido"]
-			                        , 'email'=>$row2["email"]
-			                        , 'estado'=>$row2["estado"]			                       
-			                    );
-			                }
-			            } else {
-			                $resultsUsr[] = null;
-			            }
-			            else $resultsUsr[] = null;
-			    
-/****************************************************************************************/
-			            
-			            $sql2 = "
-				SELECT A.id, A.descripcion, A.estado
-				FROM $bd.sec_rol A
-				WHERE A.id = $rol";
-			            
-			            //echo $sql2;
-			            $result2 = $conn->query($sql2);
-			            
-			            if (!empty($result2))
-			                if($result2->num_rows > 0) {
-			                    while($row2 = $result2->fetch_assoc()) {
-			                        $resultsRol[] = array(
-			                            'id' => $row2["id"]
-			                            , 'descripcion' => $row2["descripcion"]
-			                            , 'estado'=>$row2["estado"]
-			                        );
-			                    }
-			                } else {
-			                    $resultsRol[] = null;
-			                }
-							else $resultsRol[] = null;
-							
-							  
-							$sql2 = "
-							SELECT A.id, A.descripcion, A.estado
-							FROM $bd.ctg_empresa A
-							WHERE A.id = $id_empresa";
-									
-									//echo $sql2;
-									$result2 = $conn->query($sql2);
-									
-									if (!empty($result2))
-										if($result2->num_rows > 0) {
-											while($row2 = $result2->fetch_assoc()) {
-												$ctg_empresa[] = array(
-													'id' => $row2["id"]
-													, 'descripcion' => $row2["descripcion"]
-													, 'estado'=>$row2["estado"]
-												);
-											}
-										} else {
-											$ctg_empresa[] = null;
-										}
-										else $ctg_empresa[] = null;
-			                
+				WHERE A.usuario = '$usr'";
+
+				//echo $sql2;
+				$result2 = $conn->query($sql2);
+
+				if (!empty($result2))
+					if ($result2->num_rows > 0) {
+						while ($row2 = $result2->fetch_assoc()) {
+							$resultsUsr[] = array(
+								'usr' => $row2["usuario"],
+								'pin' => $row2["pin"],
+								'nombre' => $row2["nombre"],
+								'clave' => $row2["clave"], 
+								'apellido' => $row2["apellido"], 
+								'email' => $row2["email"],
+							    'estado' => $row2["estado"]
+							);
+						}
+					} else {
+						$resultsUsr[] = null;
+					}
+				else $resultsUsr[] = null;
+
+				$sql2 = "SELECT A.id_rol, A.descripcion, A.estado
+				FROM $bd.sec_rol A WHERE A.id_rol = $rol";
+
+				//echo $sql2;
+				$result2 = $conn->query($sql2);
+
+				if (!empty($result2))
+					if ($result2->num_rows > 0) {
+						while ($row2 = $result2->fetch_assoc()) {
+							$resultsRol[] = array(
+								'id' => $row2["id_rol"], 
+								'descripcion' => $row2["descripcion"], 
+								'estado' => $row2["estado"]
+							);
+						}
+					} else {
+						$resultsRol[] = null;
+					}
+				else $resultsRol[] = null;
+
 				$results[] = array(
-				    "id" => $id[$i],
-				    'ctgUsr' => $resultsUsr[$i],
-					'ctgRol' => $resultsRol[$i],
-					'ctg_empresa' => $ctg_empresa[$i]);
-				
-				$json = array("status"=>1, "info"=>$results);
-				
+					"id" => $id[$i],
+					'ctgUsr' => $resultsUsr[$i],
+					'ctgRol' => $resultsRol[$i]
+				);
+
+				$json = array("status" => 1, "info" => $results);
+
 				$i++;
-				
 			}
 		} else {
-			$json = array("status"=>0, "info"=>"No existe información con ese criterio.");
+			$json = array("status" => 0, "info" => "No existe información con ese criterio.");
 		}
-	else $json = array("status"=>0, "info"=>"No existe información.");
-}
-else{
-	if(strtoupper($accion) =='I'){// VERIFICACION SI LA ACCION ES INSERCION
-			
-		$date = date('Y-m-d');
-	
-		$sql = "INSERT INTO $bd.$tabla(USR, ID_EMPRESA, ROL, USUARIO_CREACION, FECHA_CREACION) 
-		VALUE('$usr', $id_empresa, $rol, '$user', '$date')";
+	else $json = array("status" => 0, "info" => "No existe información.");
+} else {
+	if (strtoupper($accion) == 'I') { // VERIFICACION SI LA ACCION ES INSERCION
+
+		$date = date('Y-m-d H:i:s');
+
+		$sql = "INSERT INTO $bd.$tabla(usuario,id_rol, USUARIO_CREACION, FECHA_CREACION) 
+		VALUE('$usr', $rol, '$user', '$date')";
 		//echo $sql;
 		if ($conn->query($sql) === TRUE) {
-			$json = array("status"=>1, "info"=>"Registro almacenado exitosamente.");
+			$json = array("status" => 1, "info" => "Registro almacenado exitosamente.");
 		} else {
-			$json = array("status"=>0, "info"=>$conn->error);
+			$json = array("status" => 0, "info" => $conn->error);
 		}
 	}
-	
+
 	/*else if(strtoupper($accion) =='U'){// VERIFICACION SI LA ACCION ES MODIFICACION
 	    
 	    $usr = " usr='".$usr."'";
@@ -170,20 +137,18 @@ else{
 	        $json = array("status"=>0, "error"=>$conn->error);
 	    }
 	}
-	*/
-	
-	else if(strtoupper($accion) =='D'){// VERIFICACION SI LA ACCION ES ELIMINACION
-		$user = ", usuario_modificacion='".$user."'";
-		$date = ", fecha_modificacion='".date('Y-m-d')."'";
-		
+	*/ else if (strtoupper($accion) == 'D') { // VERIFICACION SI LA ACCION ES ELIMINACION
+		$user = ", usuario_modificacion='" . $user . "'";
+		$date = ", fecha_modificacion='" . date('Y-m-d') . "'";
+
 		$sql = "DELETE FROM $bd.$tabla WHERE usr = '$usr' AND rol = $rol";
-		
+
 		if ($conn->query($sql) === TRUE) {
-			$json = array("status"=>1, "info"=>"Registro eliminado exitosamente.");
+			$json = array("status" => 1, "info" => "Registro eliminado exitosamente.");
 		} else {
-			$json = array("status"=>0, "error"=>$conn->error);
+			$json = array("status" => 0, "error" => $conn->error);
 		}
-	}	
+	}
 }
 $conn->close();
 
@@ -191,4 +156,3 @@ $conn->close();
 
 echo json_encode($json);
 //*/
- ?>
