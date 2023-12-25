@@ -1,0 +1,28 @@
+<div class="box box-info">
+    <!--div class="box-header with-border">
+		<section class="content-header">
+			<h1>
+				Cat&aacute;lagos - 
+				<small>Municipios</small>
+			</h1>
+			<ol class="breadcrumb">
+				<li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
+				<li><a>Cat&aacute;logos</a></li>
+				<li><a ui-sref="menuMaster.listMuni()">Municipios</a></li>
+				<li class="active">Mantenimiento</li>
+			</ol>
+		</section>
+    </div -->
+    <!-- Standard HTML form, with the submit function bound to the register() function defined in the the controller -->
+    <form name="regForm" class="form-horizontal" ng-submit="registerMunis()">
+      <div class="box-body">
+		<div ng-include="'partials/catalogos/ctg_muni/formMuni.html'"></div>
+      </div>
+      <div class="box-footer">
+      	<input type="submit" ng-disabled="regForm.$invalid" id="register" value="Guardar" class="btn btn-primary pull-right" />
+        <a class="btn btn-danger" ui-sref="menuMaster.listMuni()">Salir</a>
+      </div>
+    </form>
+
+
+</div>

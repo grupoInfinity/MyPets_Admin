@@ -1,31 +1,7 @@
 var app = angular.module('japapp', ['ui.router', 'ngRoute', 'ngCookies', 'ngSanitize', 'ui.select',
 	'datatables', 'datatables.bootstrap'
 	//CATALOGOS
-	, 'deptsService', 'munisService'/*,'estCivilService'				,'nivEstudioService'			,'sectorService'
-	,'tiempoCtrService'				,'tipoCtrService'				,'sedeService' 					,'proyectoService'			
-	,'carreraService'				,'grupoService'					,'actEconoService'				,'bienesServiciosService'
-	,'cursoService'					,'formaIngresoService' 			,'ingresoMensualService'		,'parentescoService'
-	,'tecnicaTrabajoService'		,'tenenciaViviendaService'		,'tipoTrabajoService' 			,'tipoViviendaService'
-	,'munisService'					,'tipoPlazaService'				,'motivoNoContratacionService'	,'tipoRequerimientoService'
-	,'generoService'*/
-
-	//CATALOGOS JAP
-	/*, 'marcaService', 'accsMotoService', 'estilMotoService'
-	, 'modeloService', 'tallerService', 'tipoDocService'
-	, 'tipoDocProvService', 'tipoProdService', 'tipoVehiculoService'
-
-	//ESTUDIANTE
-	, 'estudianteService', 'habilidadEstudianteService', 'habilidadService', 'facademicaEstudianteService'
-	, 'situacionLaboralEstService', 'socioEconomicoEstService', 'cursoEstudianteService', 'infoAdicionalService'
-	, 'empleabilidadEstService', 'herramientaEstudianteService', 'ofertasService', 'empleosAnterioresEstudianteService'
-	, 'ofertasBolsaEmpleoService', 'refPersonalService', 'refLaboralService'
-
-	//EMPRESA
-	//,'empresaService'				,'plazaService'					,'requisitoPlazaService'		,'requerimientoPlazaService'
-	//,'aplicacionService'			,'prestacionPlazaService'		,'sucursalService'				, 'competenciaService'
-
-	//GESTOR
-	, 'gestorService', 'herramientaGestorService'*/
+	, 'deptsService', 'munisService'
 
 	//SEGURIDAD
 	, 'authenticationService', 'flashService', 'usuarioService'])
@@ -35,72 +11,6 @@ var app = angular.module('japapp', ['ui.router', 'ngRoute', 'ngCookies', 'ngSani
 		.controller('HomeController', HomeController)
 		.controller('DeptsTableCtrl', DeptsTableCtrl)
 		.controller('MunicipioTableCtrl', MunicipioTableCtrl)
-		.controller('EstCivilTableCtrl', EstCivilTableCtrl)
-		.controller('NivEstudioTableCtrl', NivEstudioTableCtrl)
-		.controller('SectorTableCtrl', SectorTableCtrl)
-		.controller('TiempoCtrTableCtrl', TiempoCtrTableCtrl)
-		.controller('TipoCtrTableCtrl', TipoCtrTableCtrl)
-		.controller('SedeTableCtrl', SedeTableCtrl)
-		.controller('ProyectoTableCtrl', ProyectoTableCtrl)
-		.controller('CarreraTableCtrl', CarreraTableCtrl)
-		.controller('GrupoTableCtrl', GrupoTableCtrl)
-		.controller('ActEconoTableCtrl', ActEconoTableCtrl)
-		.controller('BienesServiciosTableCtrl', BienesServiciosTableCtrl)
-		.controller('CursoTableCtrl', CursoTableCtrl)
-		.controller('FormaIngresoTableCtrl', FormaIngresoTableCtrl)
-		.controller('IngresoMensualTableCtrl', IngresoMensualTableCtrl)
-		.controller('ParentescoTableCtrl', ParentescoTableCtrl)
-		.controller('TecnicaTrabajoTableCtrl', TecnicaTrabajoTableCtrl)
-		.controller('TenenciaViviendaTableCtrl', TenenciaViviendaTableCtrl)
-		.controller('TipoTrabajoTableCtrl', TipoTrabajoTableCtrl)
-		.controller('TipoViviendaTableCtrl', TipoViviendaTableCtrl)
-		.controller('TipoPlazaTableCtrl', TipoPlazaTableCtrl)
-		.controller('MotivoNoContratacionTableCtrl', MotivoNoContratacionTableCtrl)
-		.controller('TipoRequerimientoTableCtrl', TipoRequerimientoTableCtrl)
-		.controller('GeneroTableCtrl', GeneroTableCtrl)
-
-		//ESTUDIANTE
-		/*.controller('EstudianteTableCtrl', EstudianteTableCtrl)
-		.controller('HabilidadEstudianteCtrl', HabilidadEstudianteCtrl)
-		.controller('FAcademicaEstudianteCtrl', FAcademicaEstudianteCtrl)
-		.controller('SituacionLaboralEstCtrl', SituacionLaboralEstCtrl)
-		.controller('SocioEconoEstCtrl', SocioEconoEstCtrl)
-		.controller('CursoEstudianteCtrl', CursoEstudianteCtrl)
-		.controller('InfoAdicionalEstCtrl', InfoAdicionalEstCtrl)
-		.controller('EmpleabilidadEstCtrl', EmpleabilidadEstCtrl)
-		.controller('OfertasLaboralesTableCtrl', OfertasLaboralesTableCtrl)
-		.controller('EmpleosAnterioresEstudianteCtrl', EmpleosAnterioresEstudianteCtrl)
-		.controller('MisPostulacionesTableCtrl', MisPostulacionesTableCtrl)
-		.controller('OfertasSugeridasTableCtrl', OfertasSugeridasTableCtrl)
-		.controller('RefPersonalEstCtrl', RefPersonalEstCtrl)
-		.controller('RefLaboralEstCtrl', RefLaboralEstCtrl)*/
-
-		//EMPRESAS
-		/*.controller('EmpresaTableCtrl', EmpresaTableCtrl)
-		.controller('PlazaTableCtrl', PlazaTableCtrl)
-		.controller('RequisitoPlazaCtrl', RequisitoPlazaCtrl)
-		.controller('RequerimientoPlazaCtrl', RequerimientoPlazaCtrl)
-		.controller('PrestacionPlazaCtrl', PrestacionPlazaCtrl)
-		.controller('AplicacionTableCtrl', AplicacionTableCtrl)
-		.controller('SucursalCtrl', SucursalCtrl)
-		.controller('CompetenciaTableCtrl', CompetenciaTableCtrl)*/
-
-		//JAP CATALOGO
-		.controller('AccsMotoTableCtrl', AccsMotoTableCtrl)
-		.controller('EstilMotoTableCtrl', EstilMotoTableCtrl)
-		.controller('MarcaTableCtrl', MarcaTableCtrl)
-		.controller('ModeloTableCtrl', ModeloTableCtrl)
-		.controller('TipoDocProvTableCtrl', TipoDocProvTableCtrl)
-		.controller('TipoDocTableCtrl', TipoDocTableCtrl)
-		.controller('TipoProdTableCtrl', TipoProdTableCtrl)
-		.controller('TipoVehiculoTableCtrl', TipoVehiculoTableCtrl)
-		.controller('TallerTableCtrl', TallerTableCtrl)
-
-		//JAP SEGURIDAD
-
-		//GESTOR
-		.controller('GestorTableCtrl', GestorTableCtrl)
-
 ;
 
 app.config(['$qProvider', function ($qProvider) {

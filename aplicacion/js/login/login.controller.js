@@ -25,11 +25,13 @@ function LoginController($scope, $state, $stateParams, Authentication, Flash)
 			vm.dataLoading = true;
 			Authentication.Login(vm.secUsuario, function (response) {
 				if (response.data.status == '1') {
-					Authentication.SetCredentials(vm.secUsuario.usr, response.data.info[0].idUser,
+					Authentication.SetCredentials(
+						vm.secUsuario.usr, 
+						//response.data.info[0].idUser,
 						vm.secUsuario.clave,
-						response.data.info[0].isRolAdmin,
+						/*response.data.info[0].isRolAdmin,
 						response.data.info[0].isRolSupervisor,
-						response.data.info[0].isRolCajero,
+						response.data.info[0].isRolCajero,*/
 						// vm.secUsuario.clave,
 						response.data.info[0].sec_rol
 					);
