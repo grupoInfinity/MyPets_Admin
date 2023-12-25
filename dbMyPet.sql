@@ -118,6 +118,8 @@ LOCK TABLES `sec_rol` WRITE;
 insert  into `sec_rol`(`id_rol`,`descripcion`,`estado`,`usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`)
   VALUE(1,'Administrador','A','admin','2021-08-11 16:15:48','admin','2019-02-11 00:00:00'),
  (2,'Cliente','A','admin','2021-08-11 16:15:48',NULL,NULL);
+ 
+ SELECT * FROM sec_rol
 
 UNLOCK TABLES;
 
