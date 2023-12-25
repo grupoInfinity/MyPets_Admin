@@ -4,7 +4,7 @@ function DeptsAddCtrl($rootScope, $scope, $filter, $http, $state, Depts) {
 
 	$scope.formType = 'ADD';
 
-	$scope.isNew = function(value) {
+	$scope.isNew = function (value) {
 
 		if (value == 'ADD')
 			return true;
@@ -12,14 +12,14 @@ function DeptsAddCtrl($rootScope, $scope, $filter, $http, $state, Depts) {
 			return false;
 	};
 
-	$scope.clearMessages = function() {
+	$scope.clearMessages = function () {
 
 		$scope.successMessages = '';
 		$scope.errorMessages = '';
 		$scope.errors = {};
 	};
 
-	$scope.reset = function() {
+	$scope.reset = function () {
 
 		// Sets the form to it's pristine state
 		if ($scope.regForm) {
@@ -28,34 +28,34 @@ function DeptsAddCtrl($rootScope, $scope, $filter, $http, $state, Depts) {
 
 		var date = new Date();
 		$scope.newDepts = {
-			descripcion : "",
-			usuario : $rootScope.globals.currentUser.username
+			descripcion: "",
+			usuario: $rootScope.globals.currentUser.username
 		};
 
 		$scope.clearMessages();
 	};
 
-	$scope.registerDepts = function() {
+	$scope.registerDepts = function () {
 		$scope.clearMessages();
 
 		Depts
-				.insertar(
-						$scope.newDepts,
-						function(response) {
+			.insertar(
+				$scope.newDepts,
+				function (response) {
 
-							$scope.reset();
+					$scope.reset();
 
-							$scope.successMessages = [ 'Departamento Registrado correctamente' ];
+					$scope.successMessages = ['Departamento Registrado correctamente'];
 
-						},
-						function(result) {
-							if ((result.status == 409)
-									|| (result.status == 400)) {
-								$scope.errors = result.data;
-							} else {
-								$scope.errorMessages = [ 'Unknown error de servidor' ];
-							}
-						});
+				},
+				function (result) {
+					if ((result.status == 409)
+						|| (result.status == 400)) {
+						$scope.errors = result.data;
+					} else {
+						$scope.errorMessages = ['Unknown error de servidor'];
+					}
+				});
 		//$('#notificacionesModal').modal('show');
 		$state.go('menuMaster.listDepts');
 
@@ -68,49 +68,49 @@ function DeptsAddCtrl($rootScope, $scope, $filter, $http, $state, Depts) {
 
 function DeptsEditCtrl($rootScope, $scope, $filter, $state, $stateParams, Depts) {
 
-	$scope.updateDepts = function() {
+	$scope.updateDepts = function () {
 
 		var date = new Date();
 		var DeptsObj = {
-			usuario : $rootScope.globals.currentUser.username
+			usuario: $rootScope.globals.currentUser.username
 		};
 
 		$scope.newDepts.usuario = DeptsObj.usuario;
 
 		Depts.actualizar(
-						$scope.newDepts,
-						function(response) {
-							$scope.successMessages = [ 'Departamento Actualizado correctamente' ];
-							Swal.fire({
-								toast: true,
-								position: 'top-end',
-								type: 'success',
-								title: 'Exito',
-								text: "Registro actualizado correctamente",
-								showConfirmButton: false,
-								timer: 2000
-							});
-							$state.go('menuMaster.listDepts');
-						},
-						function(result) {
-							if ((result.status == 409)
-									|| (result.status == 400)) {
-								$scope.errors = result.data;
-							} else {
-								$scope.errorMessages = [ 'Unknown error de servidor' ];
-							}
-							$('#notificacionesModal').modal('show');
-						});
+			$scope.newDepts,
+			function (response) {
+				$scope.successMessages = ['Departamento Actualizado correctamente'];
+				Swal.fire({
+					toast: true,
+					position: 'top-end',
+					type: 'success',
+					title: 'Exito',
+					text: "Registro actualizado correctamente",
+					showConfirmButton: false,
+					timer: 2000
+				});
+				$state.go('menuMaster.listDepts');
+			},
+			function (result) {
+				if ((result.status == 409)
+					|| (result.status == 400)) {
+					$scope.errors = result.data;
+				} else {
+					$scope.errorMessages = ['Unknown error de servidor'];
+				}
+				$('#notificacionesModal').modal('show');
+			});
 		////
 		//$state.go('menuMaster.listDepts');
 
 	};
 
-	$scope.loadDepts = function() {
-		Depts.findById($stateParams.idDepts, function(response) {
-			if (response.data.status==1){
+	$scope.loadDepts = function () {
+		Depts.findById($stateParams.idDepts, function (response) {
+			if (response.data.status == 1) {
 				$scope.newDepts = response.data.info[0];
-				if($scope.newDepts.estado=='A'){
+				if ($scope.newDepts.estado == 'A') {
 					$scope.newDepts.estado = true;
 				}
 			}
@@ -123,7 +123,7 @@ function DeptsEditCtrl($rootScope, $scope, $filter, $state, $stateParams, Depts)
 };
 
 function DeptsTableCtrl($scope, $rootScope, $state, $compile, $window,
-		popupService, DTOptionsBuilder, DTColumnDefBuilder, Depts, URL_API) {
+	popupService, DTOptionsBuilder, DTColumnDefBuilder, Depts, URL_API) {
 	var vm = this;
 
 	vm.listDepts = listDepts;
@@ -132,27 +132,27 @@ function DeptsTableCtrl($scope, $rootScope, $state, $compile, $window,
 	vm.message = '';
 	vm.depts = {};
 
-	Depts.findAll(function(response) {
-		if (response.data.status==1){
-		vm.depts = response.data.info;
+	Depts.findAll(function (response) {
+		if (response.data.status == 1) {
+			vm.depts = response.data.info;
 		}
 	});
 
 	vm.dtOptions = DTOptionsBuilder.newOptions().withPaginationType(
-			'full_numbers').withLanguage($rootScope.globals.language);
-	vm.dtColumnDefs = [ DTColumnDefBuilder.newColumnDef(0),
-			DTColumnDefBuilder.newColumnDef(1),
-			DTColumnDefBuilder.newColumnDef(2),
-			DTColumnDefBuilder.newColumnDef(3).notSortable() ];
+		'full_numbers').withLanguage($rootScope.globals.language);
+	vm.dtColumnDefs = [DTColumnDefBuilder.newColumnDef(0),
+	DTColumnDefBuilder.newColumnDef(1),
+	DTColumnDefBuilder.newColumnDef(2),
+	DTColumnDefBuilder.newColumnDef(3).notSortable()];
 
 	vm.deleteDept = deleteDept;
 	vm.editDept = editDept;
 	vm.activateDept = activateDept;
 
 	function listDepts() {
-		Depts.findAll(function(response) {
-			if (response.data.status==1){
-			vm.depts = response.data.info;
+		Depts.findAll(function (response) {
+			if (response.data.status == 1) {
+				vm.depts = response.data.info;
 			}
 		});
 
@@ -160,9 +160,9 @@ function DeptsTableCtrl($scope, $rootScope, $state, $compile, $window,
 	;
 
 	function reloadData() {
-		Depts.findAll(function(response) {
-			if (response.data.status==1){
-			vm.depts = response.data.info;
+		Depts.findAll(function (response) {
+			if (response.data.status == 1) {
+				vm.depts = response.data.info;
 			}
 		});
 
@@ -171,27 +171,27 @@ function DeptsTableCtrl($scope, $rootScope, $state, $compile, $window,
 
 	function deleteDept(deptsId) {
 		Swal.fire({
-		  title: 'Esta seguro de inactivar este registro?',
-		  text: "",
-		  type: 'warning',
-		  showCancelButton: true,
-		  confirmButtonColor: '#3085d6',
-		  cancelButtonColor: '#d33',
-		  confirmButtonText: 'Si, inactivar!'
+			title: 'Esta seguro de inactivar este registro?',
+			text: "",
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Si, inactivar!'
 		}).then((result) => {
 			if (result.value) {
 				Depts.borrar(deptsId, $rootScope.globals.currentUser.username,
-					function(response) {
+					function (response) {
 						reloadData();
 					});
-					
+
 				Swal.fire({
-					toast:true,
-				  position: 'top-end',
-				  type: 'success',
-				  title: 'Departamento Inactivado',
-				  showConfirmButton: false,
-				  timer: 1000
+					toast: true,
+					position: 'top-end',
+					type: 'success',
+					title: 'Departamento Inactivado',
+					showConfirmButton: false,
+					timer: 1000
 				})
 			}
 		})
@@ -209,22 +209,22 @@ function DeptsTableCtrl($scope, $rootScope, $state, $compile, $window,
 	function editDept(deptsId) {
 
 		$state.go('menuMaster.editDepts', {
-			idDepts : deptsId
+			idDepts: deptsId
 		});
 
 	}
 	;
-	
+
 	function activateDept(deptsId) {
 
 		Depts.activar(deptsId, $rootScope.globals.currentUser.username,
-				function(response) {
-					reloadData();
-			 }
+			function (response) {
+				reloadData();
+			}
 		);
 
-}
-;
+	}
+	;
 
 };
 
@@ -233,7 +233,7 @@ function MunisAddCtrl($rootScope, $scope, $filter, $http, $state, Munis, Depts) 
 
 	$scope.formType = 'ADD';
 
-	$scope.isNew = function(value) {
+	$scope.isNew = function (value) {
 
 		if (value == 'ADD')
 			return true;
@@ -241,14 +241,14 @@ function MunisAddCtrl($rootScope, $scope, $filter, $http, $state, Munis, Depts) 
 			return false;
 	};
 
-	$scope.clearMessages = function() {
+	$scope.clearMessages = function () {
 
 		$scope.successMessages = '';
 		$scope.errorMessages = '';
 		$scope.errors = {};
 	};
 
-	$scope.reset = function() {
+	$scope.reset = function () {
 
 		// Sets the form to it's pristine state
 		if ($scope.regForm) {
@@ -257,27 +257,27 @@ function MunisAddCtrl($rootScope, $scope, $filter, $http, $state, Munis, Depts) 
 
 		var date = new Date();
 		$scope.newMunis = {
-		id : "",	descripcion : "", id_depto : "",
-			usuario : $rootScope.globals.currentUser.username
+			id: "", descripcion: "", id_depto: "",
+			usuario: $rootScope.globals.currentUser.username
 		};
 
 		$scope.clearMessages();
 	};
 
-	$scope.registerMunis = function() {
+	$scope.registerMunis = function () {
 		$scope.clearMessages();
 
-		Munis.insertar($scope.newMunis, function(response) {
+		Munis.insertar($scope.newMunis, function (response) {
 			//$scope.newMunis.id_depto = $scope.resp.id.id_depto;
 			$scope.reset();
 
-			$scope.successMessages = [ 'Municipio Registrado correctamente' ];
+			$scope.successMessages = ['Municipio Registrado correctamente'];
 
-		}, function(result) {
+		}, function (result) {
 			if ((result.status == 409) || (result.status == 400)) {
 				$scope.errors = result.data;
 			} else {
-				$scope.errorMessages = [ 'Unknown error de servidor' ];
+				$scope.errorMessages = ['Unknown error de servidor'];
 			}
 		});
 		////$('#notificacionesModal').modal('show');
@@ -287,10 +287,10 @@ function MunisAddCtrl($rootScope, $scope, $filter, $http, $state, Munis, Depts) 
 
 	$scope.reset();
 
-	$scope.loadDepts = function() {
-		Depts.findAll(function(response) {
-			if (response.data.status==1){
-			$scope.depts = response.data.info;
+	$scope.loadDepts = function () {
+		Depts.findAll(function (response) {
+			if (response.data.status == 1) {
+				$scope.depts = response.data.info;
 			}
 		});
 	};
@@ -300,16 +300,16 @@ function MunisAddCtrl($rootScope, $scope, $filter, $http, $state, Munis, Depts) 
 
 function MunisEditCtrl($rootScope, $scope, $filter, $state, $stateParams, Munis, Depts) {
 
-	$scope.updateMunis = function() {
+	$scope.updateMunis = function () {
 
 		var date = new Date();
 		var MunisObj = {
-			usuario : $rootScope.globals.currentUser.username
+			usuario: $rootScope.globals.currentUser.username
 		};
 
 		$scope.newMunis.usuario = MunisObj.usuario;
 
-		Munis.actualizar($scope.newMunis, function(response) {
+		Munis.actualizar($scope.newMunis, function (response) {
 			//$scope.successMessages = [ 'Municipio Actualizado correctamente' ];
 			Swal.fire({
 				toast: true,
@@ -321,11 +321,11 @@ function MunisEditCtrl($rootScope, $scope, $filter, $state, $stateParams, Munis,
 				timer: 2000
 			});
 			$state.go('menuMaster.listMuni');
-		}, function(result) {
+		}, function (result) {
 			if ((result.status == 409) || (result.status == 400)) {
 				$scope.errors = result.data;
 			} else {
-				$scope.errorMessages = [ 'Unknown error de servidor' ];
+				$scope.errorMessages = ['Unknown error de servidor'];
 			}
 			$('#notificacionesModal').modal('show');
 		});
@@ -333,13 +333,13 @@ function MunisEditCtrl($rootScope, $scope, $filter, $state, $stateParams, Munis,
 
 	};
 
-	$scope.loadMunis = function() {
-		Munis.findById($stateParams.idDepto, $stateParams.idMunis, function(response) {
-			if (response.data.status==1){
+	$scope.loadMunis = function () {
+		Munis.findById($stateParams.idDepto, $stateParams.idMunis, function (response) {
+			if (response.data.status == 1) {
 				$scope.newMunis = response.data.info[0];
 				$scope.newMunis.id_depto = response.data.info[0].id.id_depto;
 				$scope.newMunis.id = response.data.info[0].id.id;
-				if($scope.newMunis.estado=='A'){
+				if ($scope.newMunis.estado == 'A') {
 					$scope.newMunis.estado = true;
 				}
 			}
@@ -348,12 +348,12 @@ function MunisEditCtrl($rootScope, $scope, $filter, $state, $stateParams, Munis,
 
 	$scope.loadMunis();
 
-	$scope.loadDepts = function() {
-		Depts.findAll(function(response) {
-			if (response.data.status==1){
-			$scope.depts = response.data.info;
+	$scope.loadDepts = function () {
+		Depts.findAll(function (response) {
+			if (response.data.status == 1) {
+				$scope.depts = response.data.info;
 			}
-			
+
 		});
 	};
 
@@ -361,7 +361,7 @@ function MunisEditCtrl($rootScope, $scope, $filter, $state, $stateParams, Munis,
 };
 
 function MunisTableCtrl($scope, $rootScope, $state, $compile, $window,
-		popupService, DTOptionsBuilder, DTColumnDefBuilder, Munis, Depts, URL_API) {
+	popupService, DTOptionsBuilder, DTColumnDefBuilder, Munis, Depts, URL_API) {
 	var vm = this;
 
 	vm.listMunis = listMunis;
@@ -370,27 +370,27 @@ function MunisTableCtrl($scope, $rootScope, $state, $compile, $window,
 	vm.message = '';
 	vm.munis = {};
 
-	Munis.findAll(function(response) {
-		if (response.data.status==1){
-		vm.munis = response.data.info;
+	Munis.findAll(function (response) {
+		if (response.data.status == 1) {
+			vm.munis = response.data.info;
 		}
 	});
 
 	vm.dtOptions = DTOptionsBuilder.newOptions().withPaginationType(
-			'full_numbers').withLanguage($rootScope.globals.language);
-	vm.dtColumnDefs = [ DTColumnDefBuilder.newColumnDef(0),
-			DTColumnDefBuilder.newColumnDef(1),
-			DTColumnDefBuilder.newColumnDef(2),
-			DTColumnDefBuilder.newColumnDef(3).notSortable() ];
+		'full_numbers').withLanguage($rootScope.globals.language);
+	vm.dtColumnDefs = [DTColumnDefBuilder.newColumnDef(0),
+	DTColumnDefBuilder.newColumnDef(1),
+	DTColumnDefBuilder.newColumnDef(2),
+	DTColumnDefBuilder.newColumnDef(3).notSortable()];
 
 	vm.deleteMunis = deleteMunis;
 	vm.editMunis = editMunis;
 	vm.activateMunis = activateMunis;
 
 	function listMunis() {
-		Munis.findAll(function(response) {
-			if (response.data.status==1){
-			vm.munis = response.data.info;
+		Munis.findAll(function (response) {
+			if (response.data.status == 1) {
+				vm.munis = response.data.info;
 			}
 		});
 
@@ -398,9 +398,9 @@ function MunisTableCtrl($scope, $rootScope, $state, $compile, $window,
 	;
 
 	function reloadData() {
-		Munis.findAll(function(response) {
-			if (response.data.status==1){
-			vm.munis = response.data.info;
+		Munis.findAll(function (response) {
+			if (response.data.status == 1) {
+				vm.munis = response.data.info;
 			}
 		});
 
@@ -408,22 +408,22 @@ function MunisTableCtrl($scope, $rootScope, $state, $compile, $window,
 
 	function deleteMunis(munisId, deptsId) {
 		Swal.fire({
-		  title: 'Esta seguro de inactivar este registro?',
-		  text: "",
-		  type: 'warning',
-		  showCancelButton: true,
-		  confirmButtonColor: '#3085d6',
-		  cancelButtonColor: '#d33',
-		  confirmButtonText: 'Si, inactivar!'
+			title: 'Esta seguro de inactivar este registro?',
+			text: "",
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Si, inactivar!'
 		}).then((result) => {
 			if (result.value) {
 				Munis.borrar(deptsId, munisId, $rootScope.globals.currentUser.username,
-					function(response) {
+					function (response) {
 						reloadData();
 					});
-					
+
 				Swal.fire({
-					toast:true,
+					toast: true,
 					position: 'top-end',
 					type: 'success',
 					title: 'Municipio Inactivado',
@@ -447,22 +447,481 @@ function MunisTableCtrl($scope, $rootScope, $state, $compile, $window,
 	function editMunis(deptsId, munisId) {
 
 		$state.go('menuMaster.editMunis', {
-			idDepto : deptsId, 
-			idMunis : munisId 
+			idDepto: deptsId,
+			idMunis: munisId
 		});
 
 	}
 	;
-	
+
 	function activateMunis(munisId) {
 
 		Munis.activar(munisId, $rootScope.globals.currentUser.username,
-				function(response) {
-					reloadData();
-			 }
+			function (response) {
+				reloadData();
+			}
 		);
 
-}
-;
-	
+	};
+
+};
+
+
+//TIPO VACUNA
+function tpvacAddCtrl($rootScope, $scope, $filter, $http, $state, tpvac) {
+
+	$scope.formType = 'ADD';
+
+	$scope.isNew = function (value) {
+
+		if (value == 'ADD')
+			return true;
+		else
+			return false;
+	};
+
+	$scope.clearMessages = function () {
+
+		$scope.successMessages = '';
+		$scope.errorMessages = '';
+		$scope.errors = {};
+	};
+
+	$scope.reset = function () {
+
+		// Sets the form to it's pristine state
+		if ($scope.regForm) {
+			$scope.regForm.$setPristine();
+		}
+
+		var date = new Date();
+		$scope.newtpvac = {
+			descripcion: "",
+			usuario: $rootScope.globals.currentUser.username
+		};
+
+		$scope.clearMessages();
+	};
+
+	$scope.registerTpvac = function () {
+		$scope.clearMessages();
+
+		tpvac
+			.insertar(
+				$scope.newtpvac,
+				function (response) {
+
+					$scope.reset();
+
+					$scope.successMessages = ['Tipo de vacuna Registrado correctamente'];
+
+				},
+				function (result) {
+					if ((result.status == 409)
+						|| (result.status == 400)) {
+						$scope.errors = result.data;
+					} else {
+						$scope.errorMessages = ['Unknown error de servidor'];
+					}
+				});
+		//$('#notificacionesModal').modal('show');
+		$state.go('menuMaster.listTipovac');
+
+	};
+
+	$scope.reset();
+
+	$scope.onlyLetters = "/^[a-zA-Z.\-\s\Ññ\_\]+$/i/";
+};
+
+function tpvacEditCtrl($rootScope, $scope, $filter, $state, $stateParams, tpvac) {
+
+	$scope.updateTpvac = function () {
+
+		var date = new Date();
+		var tpvacObj = {
+			usuario: $rootScope.globals.currentUser.username
+		};
+
+		$scope.newtpvac.usuario = tpvacObj.usuario;
+
+		tpvac.actualizar(
+			$scope.newtpvac,
+			function (response) {
+				$scope.successMessages = ['Tipo de vacuna Actualizado correctamente'];
+				Swal.fire({
+					toast: true,
+					position: 'top-end',
+					type: 'success',
+					title: 'Exito',
+					text: "Registro actualizado correctamente",
+					showConfirmButton: false,
+					timer: 2000
+				});
+				$state.go('menuMaster.listTipovac');
+			},
+			function (result) {
+				if ((result.status == 409)
+					|| (result.status == 400)) {
+					$scope.errors = result.data;
+				} else {
+					$scope.errorMessages = ['Unknown error de servidor'];
+				}
+				$('#notificacionesModal').modal('show');
+			});
+		////
+		//$state.go('menuMaster.listDepts');
+
+	};
+
+	$scope.loadTpvac = function () {
+		tpvac.findById($stateParams.idtpvac, function (response) {
+			if (response.data.status == 1) {
+				$scope.newtpvac = response.data.info[0];
+				if ($scope.newtpvac.estado == 'A') {
+					$scope.newtpvac.estado = true;
+				}
+			}
+		});
+	};
+
+	$scope.loadTpvac();
+
+	$scope.onlyLetters = "/^[a-zA-Z.\-\s\Ññ\_\]+$/i/";
+};
+
+function tpvacTableCtrl($scope, $rootScope, $state, $compile, $window,
+	popupService, DTOptionsBuilder, DTColumnDefBuilder, Tpvac, URL_API) {
+	var vm = this;
+
+	vm.listTpvac = listTpvac;
+	vm.reloadData = reloadData;
+
+	vm.message = '';
+	vm.tpvac = {};
+
+	Tpvac.findAll(function (response) {
+		if (response.data.status == 1) {
+			vm.tpvac = response.data.info;
+		}
+	});
+
+	vm.dtOptions = DTOptionsBuilder.newOptions().withPaginationType(
+		'full_numbers').withLanguage($rootScope.globals.language);
+	vm.dtColumnDefs = [DTColumnDefBuilder.newColumnDef(0),
+	DTColumnDefBuilder.newColumnDef(1),
+	DTColumnDefBuilder.newColumnDef(2),
+	DTColumnDefBuilder.newColumnDef(3).notSortable()];
+
+	vm.deleteTpvac = deleteTpvac;
+	vm.editTpvac = editTpvac;
+	vm.activateTpvac = activateTpvac;
+
+	function listTpvac() {
+		Tpvac.findAll(function (response) {
+			if (response.data.status == 1) {
+				vm.tpvac = response.data.info;
+			}
+		});
+
+	}
+	;
+
+	function reloadData() {
+		Tpvac.findAll(function (response) {
+			if (response.data.status == 1) {
+				vm.tpvac = response.data.info;
+			}
+		});
+
+	}
+	;
+
+	function deleteTpvac(tpvacId) {
+		Swal.fire({
+			title: 'Esta seguro de inactivar este registro?',
+			text: "",
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Si, inactivar!'
+		}).then((result) => {
+			if (result.value) {
+				Tpvac.borrar(tpvacId, $rootScope.globals.currentUser.username,
+					function (response) {
+						reloadData();
+					});
+
+				Swal.fire({
+					toast: true,
+					position: 'top-end',
+					type: 'success',
+					title: 'Departamento Inactivado',
+					showConfirmButton: false,
+					timer: 1000
+				})
+			}
+		})
+		/*
+		if (popupService.showPopup('Esta seguro de borrar este registro?')) {
+			Depts.borrar(deptsId, $rootScope.globals.currentUser.username,
+					function(response) {
+						reloadData();
+					});
+
+		}//*/
+	}
+	;
+
+	function editTpvac(tpvacId) {
+
+		$state.go('menuMaster.editDepts', {
+			idtpvac: tpvacId
+		});
+
+	}
+	;
+
+	function activateTpvac(tpvacId) {
+
+		Tpvac.activar(tpvacId, $rootScope.globals.currentUser.username,
+			function (response) {
+				reloadData();
+			}
+		);
+
+	}
+	;
+
+};
+
+
+//TIPO VACUNA
+function tpvacAddCtrl($rootScope, $scope, $filter, $http, $state, tpvac) {
+
+	$scope.formType = 'ADD';
+
+	$scope.isNew = function (value) {
+
+		if (value == 'ADD')
+			return true;
+		else
+			return false;
+	};
+
+	$scope.clearMessages = function () {
+
+		$scope.successMessages = '';
+		$scope.errorMessages = '';
+		$scope.errors = {};
+	};
+
+	$scope.reset = function () {
+
+		// Sets the form to it's pristine state
+		if ($scope.regForm) {
+			$scope.regForm.$setPristine();
+		}
+
+		var date = new Date();
+		$scope.newtpvac = {
+			descripcion: "",
+			usuario: $rootScope.globals.currentUser.username
+		};
+
+		$scope.clearMessages();
+	};
+
+	$scope.registerTpvac = function () {
+		$scope.clearMessages();
+
+		tpvac
+			.insertar(
+				$scope.newtpvac,
+				function (response) {
+
+					$scope.reset();
+
+					$scope.successMessages = ['Tipo de vacuna Registrado correctamente'];
+
+				},
+				function (result) {
+					if ((result.status == 409)
+						|| (result.status == 400)) {
+						$scope.errors = result.data;
+					} else {
+						$scope.errorMessages = ['Unknown error de servidor'];
+					}
+				});
+		//$('#notificacionesModal').modal('show');
+		$state.go('menuMaster.listTipovac');
+
+	};
+
+	$scope.reset();
+
+	$scope.onlyLetters = "/^[a-zA-Z.\-\s\Ññ\_\]+$/i/";
+};
+
+function tpvacEditCtrl($rootScope, $scope, $filter, $state, $stateParams, tpvac) {
+
+	$scope.updateTpvac = function () {
+
+		var date = new Date();
+		var tpvacObj = {
+			usuario: $rootScope.globals.currentUser.username
+		};
+
+		$scope.newtpvac.usuario = tpvacObj.usuario;
+
+		tpvac.actualizar(
+			$scope.newtpvac,
+			function (response) {
+				$scope.successMessages = ['Tipo de vacuna Actualizado correctamente'];
+				Swal.fire({
+					toast: true,
+					position: 'top-end',
+					type: 'success',
+					title: 'Exito',
+					text: "Registro actualizado correctamente",
+					showConfirmButton: false,
+					timer: 2000
+				});
+				$state.go('menuMaster.listTipovac');
+			},
+			function (result) {
+				if ((result.status == 409)
+					|| (result.status == 400)) {
+					$scope.errors = result.data;
+				} else {
+					$scope.errorMessages = ['Unknown error de servidor'];
+				}
+				$('#notificacionesModal').modal('show');
+			});
+		////
+		//$state.go('menuMaster.listDepts');
+
+	};
+
+	$scope.loadTpvac = function () {
+		tpvac.findById($stateParams.idtpvac, function (response) {
+			if (response.data.status == 1) {
+				$scope.newtpvac = response.data.info[0];
+				if ($scope.newtpvac.estado == 'A') {
+					$scope.newtpvac.estado = true;
+				}
+			}
+		});
+	};
+
+	$scope.loadTpvac();
+
+	$scope.onlyLetters = "/^[a-zA-Z.\-\s\Ññ\_\]+$/i/";
+};
+
+function tpvacTableCtrl($scope, $rootScope, $state, $compile, $window,
+	popupService, DTOptionsBuilder, DTColumnDefBuilder, Tpvac, URL_API) {
+	var vm = this;
+
+	vm.listTpvac = listTpvac;
+	vm.reloadData = reloadData;
+
+	vm.message = '';
+	vm.tpvac = {};
+
+	Tpvac.findAll(function (response) {
+		if (response.data.status == 1) {
+			vm.tpvac = response.data.info;
+		}
+	});
+
+	vm.dtOptions = DTOptionsBuilder.newOptions().withPaginationType(
+		'full_numbers').withLanguage($rootScope.globals.language);
+	vm.dtColumnDefs = [DTColumnDefBuilder.newColumnDef(0),
+	DTColumnDefBuilder.newColumnDef(1),
+	DTColumnDefBuilder.newColumnDef(2),
+	DTColumnDefBuilder.newColumnDef(3).notSortable()];
+
+	vm.deleteTpvac = deleteTpvac;
+	vm.editTpvac = editTpvac;
+	vm.activateTpvac = activateTpvac;
+
+	function listTpvac() {
+		Tpvac.findAll(function (response) {
+			if (response.data.status == 1) {
+				vm.tpvac = response.data.info;
+			}
+		});
+
+	}
+	;
+
+	function reloadData() {
+		Tpvac.findAll(function (response) {
+			if (response.data.status == 1) {
+				vm.tpvac = response.data.info;
+			}
+		});
+
+	}
+	;
+
+	function deleteTpvac(tpvacId) {
+		Swal.fire({
+			title: 'Esta seguro de inactivar este registro?',
+			text: "",
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Si, inactivar!'
+		}).then((result) => {
+			if (result.value) {
+				Tpvac.borrar(tpvacId, $rootScope.globals.currentUser.username,
+					function (response) {
+						reloadData();
+					});
+
+				Swal.fire({
+					toast: true,
+					position: 'top-end',
+					type: 'success',
+					title: 'Departamento Inactivado',
+					showConfirmButton: false,
+					timer: 1000
+				})
+			}
+		})
+		/*
+		if (popupService.showPopup('Esta seguro de borrar este registro?')) {
+			Depts.borrar(deptsId, $rootScope.globals.currentUser.username,
+					function(response) {
+						reloadData();
+					});
+
+		}//*/
+	}
+	;
+
+	function editTpvac(tpvacId) {
+
+		$state.go('menuMaster.editDepts', {
+			idtpvac: tpvacId
+		});
+
+	}
+	;
+
+	function activateTpvac(tpvacId) {
+
+		Tpvac.activar(tpvacId, $rootScope.globals.currentUser.username,
+			function (response) {
+				reloadData();
+			}
+		);
+
+	}
+	;
+
 };
