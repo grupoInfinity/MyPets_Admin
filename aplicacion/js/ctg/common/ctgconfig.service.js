@@ -189,9 +189,9 @@ factory('Munis', function($http, URL_API){
         return $window.confirm(message);
     }
 });
-//TTIPO VACUNA
-angular.module('deptsService', []).
-factory('Depts', function($http, URL_API){
+//TIPO VACUNA
+angular.module('tpvacService', []).
+factory('tpvac', function($http, URL_API){
 
     var service = {};
 
@@ -204,8 +204,8 @@ factory('Depts', function($http, URL_API){
     service.activar = activar;
 
 
-    function activar(deptId, usuario, callback){
-            $http.post(URL_API + '/servicios/ctg/ctg_depto.php?accion=A&id=' + deptId + '&user=' + usuario, deptId).
+    function activar(tpvacId, usuario, callback){
+            $http.post(URL_API + '/servicios/ctg/ctg_tipovacuna.php?accion=A&id=' + tpvacId + '&user=' + usuario, tpvacId).
             then(function(response) {
                callback(response);
             });
