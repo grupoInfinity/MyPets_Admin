@@ -1,5 +1,3 @@
-//*****************************************APP***********************************************
-
 //DEPARTAMENTO
 angular.module('deptsService', []).
 factory('Depts', function($http, URL_API){
@@ -179,6 +177,88 @@ factory('Munis', function($http, URL_API){
 		'&user=' + munis.usuario;
 		//console.log(url);
         $http.post(url ,munis).
+        then(function(response) {
+            callback(response);
+         });
+    };
+
+    return service;
+  
+}).service('popupService', function($window){
+    this.showPopup=function(message){
+        return $window.confirm(message);
+    }
+});
+//TTIPO VACUNA
+angular.module('deptsService', []).
+factory('Depts', function($http, URL_API){
+
+    var service = {};
+
+    service.findAll = findAll;
+    service.findAllByFilters = findAllByFilters;
+    service.borrar = borrar;
+    service.insertar = insertar;
+    service.actualizar = actualizar;
+    service.findById = findById;
+    service.activar = activar;
+
+
+    function activar(deptId, usuario, callback){
+            $http.post(URL_API + '/servicios/ctg/ctg_depto.php?accion=A&id=' + deptId + '&user=' + usuario, deptId).
+            then(function(response) {
+               callback(response);
+            });
+        };
+        
+
+
+    function findAll(callback){
+    	var url = URL_API + '/servicios/ctg/ctg_depto.php?accion=C';
+    	$http.get(url).
+        then(function(response) {
+           callback(response);
+        });
+    };
+
+    function findAllByFilters(filtro, callback){
+    	var url = URL_API + '/servicios/ctg/ctg_depto.php?accion=C&estado='+filtro.estado;
+    	$http.get(url).
+        then(function(response) {
+           callback(response);
+        });
+    };
+
+    function findById(deptId, callback){
+        $http.get(URL_API + '/servicios/ctg/ctg_depto.php?accion=C&id=' + deptId).
+        then(function(response) {
+           callback(response);
+        });
+    };
+
+    function borrar(deptId, usuario, callback){
+        $http.post(URL_API + '/servicios/ctg/ctg_depto.php?accion=D&id=' + deptId + '&user=' + usuario, deptId).
+        then(function(response) {
+           callback(response);
+        });
+    };
+
+    function insertar(dept, callback){
+        $http.post(URL_API + '/servicios/ctg/ctg_depto.php?accion=I&desc=' + dept.descripcion + '&user=' + dept.usuario ,dept).
+        then(function(response) {
+            callback(response);
+         });
+    };
+
+    function actualizar(dept, callback){
+		var url = URL_API + '/servicios/ctg/ctg_depto.php?accion=U'+
+		'&id=' + dept.id + 
+		'&desc=' + dept.descripcion + 
+		'&estado=' + (dept.estado?'A':'I') + 
+		'&user=' + dept.usuario;
+		
+		console.log(url);
+        $http.post(url ,dept).
         then(function(response) {
             callback(response);
          });

@@ -657,7 +657,7 @@ function tpvacTableCtrl($scope, $rootScope, $state, $compile, $window,
 					toast: true,
 					position: 'top-end',
 					type: 'success',
-					title: 'Departamento Inactivado',
+					title: 'Tipo vacuna Inactivado',
 					showConfirmButton: false,
 					timer: 1000
 				})
@@ -676,7 +676,7 @@ function tpvacTableCtrl($scope, $rootScope, $state, $compile, $window,
 
 	function editTpvac(tpvacId) {
 
-		$state.go('menuMaster.editDepts', {
+		$state.go('menuMaster.editTipovac', {
 			idtpvac: tpvacId
 		});
 
@@ -697,8 +697,8 @@ function tpvacTableCtrl($scope, $rootScope, $state, $compile, $window,
 };
 
 
-//TIPO VACUNA
-function tpvacAddCtrl($rootScope, $scope, $filter, $http, $state, tpvac) {
+//TIPO MASCOTA 
+function tpmascAddCtrl($rootScope, $scope, $filter, $http, $state, tpmasc) {
 
 	$scope.formType = 'ADD';
 
@@ -725,7 +725,7 @@ function tpvacAddCtrl($rootScope, $scope, $filter, $http, $state, tpvac) {
 		}
 
 		var date = new Date();
-		$scope.newtpvac = {
+		$scope.newtpmasc = {
 			descripcion: "",
 			usuario: $rootScope.globals.currentUser.username
 		};
@@ -733,17 +733,17 @@ function tpvacAddCtrl($rootScope, $scope, $filter, $http, $state, tpvac) {
 		$scope.clearMessages();
 	};
 
-	$scope.registerTpvac = function () {
+	$scope.registerTpmasc = function () {
 		$scope.clearMessages();
 
-		tpvac
+		tpmasc
 			.insertar(
-				$scope.newtpvac,
+				$scope.newtpmasc,
 				function (response) {
 
 					$scope.reset();
 
-					$scope.successMessages = ['Tipo de vacuna Registrado correctamente'];
+					$scope.successMessages = ['Tipo de mascota Registrado correctamente'];
 
 				},
 				function (result) {
@@ -764,21 +764,21 @@ function tpvacAddCtrl($rootScope, $scope, $filter, $http, $state, tpvac) {
 	$scope.onlyLetters = "/^[a-zA-Z.\-\s\Ññ\_\]+$/i/";
 };
 
-function tpvacEditCtrl($rootScope, $scope, $filter, $state, $stateParams, tpvac) {
+function tpmascEditCtrl($rootScope, $scope, $filter, $state, $stateParams,tpmasc) {
 
-	$scope.updateTpvac = function () {
+	$scope.updateTpmasc = function () {
 
 		var date = new Date();
-		var tpvacObj = {
+		var tpmascObj = {
 			usuario: $rootScope.globals.currentUser.username
 		};
 
-		$scope.newtpvac.usuario = tpvacObj.usuario;
+		$scope.newtpmasc.usuario = tpmascObj.usuario;
 
-		tpvac.actualizar(
-			$scope.newtpvac,
+		tpmasc.actualizar(
+			$scope.newtpmasc,
 			function (response) {
-				$scope.successMessages = ['Tipo de vacuna Actualizado correctamente'];
+				$scope.successMessages = ['Tipo de mascota Actualizado correctamente'];
 				Swal.fire({
 					toast: true,
 					position: 'top-end',
@@ -804,35 +804,35 @@ function tpvacEditCtrl($rootScope, $scope, $filter, $state, $stateParams, tpvac)
 
 	};
 
-	$scope.loadTpvac = function () {
-		tpvac.findById($stateParams.idtpvac, function (response) {
+	$scope.loadTpmasc = function () {
+		tpmasc.findById($stateParams.idtpmasc, function (response) {
 			if (response.data.status == 1) {
-				$scope.newtpvac = response.data.info[0];
-				if ($scope.newtpvac.estado == 'A') {
-					$scope.newtpvac.estado = true;
+				$scope.newtpmasc = response.data.info[0];
+				if ($scope.newtpmasc.estado == 'A') {
+					$scope.newtpmasc.estado = true;
 				}
 			}
 		});
 	};
 
-	$scope.loadTpvac();
+	$scope.loadTpmasc();
 
 	$scope.onlyLetters = "/^[a-zA-Z.\-\s\Ññ\_\]+$/i/";
 };
 
-function tpvacTableCtrl($scope, $rootScope, $state, $compile, $window,
-	popupService, DTOptionsBuilder, DTColumnDefBuilder, Tpvac, URL_API) {
+function tpmascTableCtrl($scope, $rootScope, $state, $compile, $window,
+	popupService, DTOptionsBuilder, DTColumnDefBuilder, Tpmasc, URL_API) {
 	var vm = this;
 
-	vm.listTpvac = listTpvac;
+	vm.listTpmasc = listTpmasc;
 	vm.reloadData = reloadData;
 
 	vm.message = '';
-	vm.tpvac = {};
+	vm.Tpmasc = {};
 
-	Tpvac.findAll(function (response) {
+	Tpmasc.findAll(function (response) {
 		if (response.data.status == 1) {
-			vm.tpvac = response.data.info;
+			vm.tpmasc = response.data.info;
 		}
 	});
 
@@ -843,14 +843,14 @@ function tpvacTableCtrl($scope, $rootScope, $state, $compile, $window,
 	DTColumnDefBuilder.newColumnDef(2),
 	DTColumnDefBuilder.newColumnDef(3).notSortable()];
 
-	vm.deleteTpvac = deleteTpvac;
-	vm.editTpvac = editTpvac;
-	vm.activateTpvac = activateTpvac;
+	vm.deleteTpmasc = deleteTpmasc;
+	vm.editTpmasc = editTpmasc;
+	vm.activateTpmasc = activateTpmasc;
 
-	function listTpvac() {
-		Tpvac.findAll(function (response) {
+	function listTpmasc() {
+		Tpmasc.findAll(function (response) {
 			if (response.data.status == 1) {
-				vm.tpvac = response.data.info;
+				vm.tpmasc = response.data.info;
 			}
 		});
 
@@ -858,16 +858,16 @@ function tpvacTableCtrl($scope, $rootScope, $state, $compile, $window,
 	;
 
 	function reloadData() {
-		Tpvac.findAll(function (response) {
+		Tpmasc.findAll(function (response) {
 			if (response.data.status == 1) {
-				vm.tpvac = response.data.info;
+				vm.tpmasc = response.data.info;
 			}
 		});
 
 	}
 	;
 
-	function deleteTpvac(tpvacId) {
+	function deleteTpmasc(tpvacId) {
 		Swal.fire({
 			title: 'Esta seguro de inactivar este registro?',
 			text: "",
@@ -878,7 +878,7 @@ function tpvacTableCtrl($scope, $rootScope, $state, $compile, $window,
 			confirmButtonText: 'Si, inactivar!'
 		}).then((result) => {
 			if (result.value) {
-				Tpvac.borrar(tpvacId, $rootScope.globals.currentUser.username,
+				Tpmasc.borrar(tpmascId, $rootScope.globals.currentUser.username,
 					function (response) {
 						reloadData();
 					});
@@ -887,7 +887,7 @@ function tpvacTableCtrl($scope, $rootScope, $state, $compile, $window,
 					toast: true,
 					position: 'top-end',
 					type: 'success',
-					title: 'Departamento Inactivado',
+					title: 'Tipo mascota Inactivado',
 					showConfirmButton: false,
 					timer: 1000
 				})
@@ -904,18 +904,18 @@ function tpvacTableCtrl($scope, $rootScope, $state, $compile, $window,
 	}
 	;
 
-	function editTpvac(tpvacId) {
+	function editTpmasc(tpmascId) {
 
-		$state.go('menuMaster.editDepts', {
-			idtpvac: tpvacId
+		$state.go('menuMaster.editTPmascota', {
+			idtpmasc: tpmascId
 		});
 
 	}
 	;
 
-	function activateTpvac(tpvacId) {
+	function activateTpmasc(tpmascId) {
 
-		Tpvac.activar(tpvacId, $rootScope.globals.currentUser.username,
+		Tpmasc.activar(tpmascId, $rootScope.globals.currentUser.username,
 			function (response) {
 				reloadData();
 			}
