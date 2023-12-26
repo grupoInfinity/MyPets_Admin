@@ -15,7 +15,7 @@ $tabla = "ctg_tipovacunas";
 
 $accion = isset($_GET['accion']) ? $_GET['accion'] : '';
 $id = isset($_GET['id']) ? $_GET['id'] : '';
-$nombrevac= utf8_decode(isset($_GET['nombrevac']) ? $_GET['nombrevac'] : '');
+$nombrevac= utf8_decode(isset($_GET['desc']) ? $_GET['desc'] : '');
 $estado = isset($_GET['estado']) ? $_GET['estado'] : '';
 $user = utf8_decode(isset($_GET['user']) ? $_GET['user'] : '');
 
@@ -31,7 +31,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 
     $sql = "SELECT A.id_tipovacuna,A.nombrevacuna,A.estado 
     FROM $bd.$tabla A 
-    WHERE $id $depto $estado ";
+    WHERE $id $nombrevac $estado ";
 
     $result = $conn->query($sql);
 

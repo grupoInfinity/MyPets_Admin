@@ -1,7 +1,10 @@
 var app = angular.module('japapp', ['ui.router', 'ngRoute', 'ngCookies', 'ngSanitize', 'ui.select',
 	'datatables', 'datatables.bootstrap'
 	//CATALOGOS
-	, 'deptsService', 'munisService'
+	, 'deptsService', 'munisService','tpvacService','tpmascService'
+
+	//PRC
+
 
 	//SEGURIDAD
 	, 'authenticationService', 'flashService', 'usuarioService'])

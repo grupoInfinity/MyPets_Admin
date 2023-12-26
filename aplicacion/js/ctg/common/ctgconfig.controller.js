@@ -755,7 +755,7 @@ function tpmascAddCtrl($rootScope, $scope, $filter, $http, $state, tpmasc) {
 					}
 				});
 		//$('#notificacionesModal').modal('show');
-		$state.go('menuMaster.listTipovac');
+		$state.go('menuMaster.listTPmascota');
 
 	};
 
@@ -788,7 +788,7 @@ function tpmascEditCtrl($rootScope, $scope, $filter, $state, $stateParams,tpmasc
 					showConfirmButton: false,
 					timer: 2000
 				});
-				$state.go('menuMaster.listTipovac');
+				$state.go('menuMaster.listTPmascota');
 			},
 			function (result) {
 				if ((result.status == 409)

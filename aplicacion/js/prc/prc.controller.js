@@ -1,16 +1,17 @@
 
-
-function OpcionTableCtrl($scope, $rootScope, $http, $state, $window, popupService, 
-	DTOptionsBuilder, DTColumnDefBuilder, Opcion) {
+//MASCOTA
+function mascTableCtrl($scope, $rootScope, $http, $state, $window, popupService,
+	 DTOptionsBuilder, DTColumnDefBuilder, Masc) {
 	var vm = this;
 	$scope.refresh = function () {
-		Opcion.findAll(function (response) {
-			$scope.opciones = response.data.info;
+		Masc.findAll(function (response) {
+			$scope.mascotas = response.data.info;
 		});
 	};
 
 
-	vm.dtOptions = DTOptionsBuilder.newOptions().withPaginationType('full_numbers').withLanguage($rootScope.globals.language);
+	vm.dtOptions = DTOptionsBuilder.newOptions()
+	.withPaginationType('full_numbers').withLanguage($rootScope.globals.language);
 
 	vm.dtColumnDefs = [DTColumnDefBuilder.newColumnDef(0),
 	DTColumnDefBuilder.newColumnDef(1),

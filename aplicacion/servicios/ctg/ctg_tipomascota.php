@@ -14,7 +14,7 @@ $tabla = "ctg_tipomascotas";
 
 $accion = isset($_GET['accion']) ? $_GET['accion'] : '';
 $id = isset($_GET['id']) ? $_GET['id'] : '';
-$tipomascota= utf8_decode(isset($_GET['tipomascota']) ? $_GET['tipomascota'] : '');
+$tipomascota= utf8_decode(isset($_GET['desc']) ? $_GET['desc'] : '');
 $estado = utf8_decode(isset($_GET['estado']) ? $_GET['estado'] : '');
 $user = utf8_decode(isset($_GET['user']) ? $_GET['user'] : '');
 
