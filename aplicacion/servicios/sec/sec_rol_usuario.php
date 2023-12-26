@@ -14,7 +14,6 @@ $tabla = "sec_rol_usuario";
 
 $accion = isset($_GET['accion']) ? $_GET['accion'] : '';
 $usr = isset($_GET['usr']) ? $_GET['usr'] : '';
-$id_empresa = isset($_GET['id_empresa']) ? $_GET['id_empresa'] : '';
 $rol = utf8_encode(isset($_GET['rol']) ? $_GET['rol'] : '');
 
 $user = utf8_encode(isset($_GET['user']) ? $_GET['user'] : '');

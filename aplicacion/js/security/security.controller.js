@@ -950,7 +950,9 @@ function UsuarioAddCtrl($rootScope, $stateParams, $scope, URL_API, $filter, $htt
 		$scope.formType = 'ADD';
 
 		var date = new Date();
-		$scope.newUsuario = { usr: "", id_empleado: "", email: "", usuario: $rootScope.globals.currentUser.username };
+		$scope.newUsuario = { usr: "", 
+		id_empleado: "",
+		 email: "", usuario: $rootScope.globals.currentUser.username };
 
 		$scope.clearMessages();
 	};
@@ -966,7 +968,7 @@ function UsuarioAddCtrl($rootScope, $stateParams, $scope, URL_API, $filter, $htt
 
 				$scope.formType = "UPD";
 
-				Usr.findByUsr($scope.newUsuario.usr, $stateParams.id_empresa, function (response) {
+				Usr.findByUsr($scope.newUsuario.usr,function (response) {
 					if (response.data.status == 1)
 						$scope.newUsuario = response.data.info[0];
 					// $scope.newUsuario.id_empleado = response.data.info[0].id_empleado;
@@ -1065,7 +1067,7 @@ function UsuarioEditCtrl($rootScope, $scope, $filter, $state, $stateParams, URL_
 				$scope.isVisibleAfterUsuario = $scope.isVisibleAfterUsuario ? false : true;
 				$scope.formType = "UPD";
 
-				Usr.findByUsr($scope.newUsuario.usr, $stateParams.id_empresa, function (response) {
+				Usr.findByUsr($scope.newUsuario.usr, function (response) {
 					if (response.data.status == 1)
 						$scope.newUsuario = response.data.info[0];
 					/*$scope.newUsuario.id_empleado = response.data.info[0].id_empleado;
@@ -1128,13 +1130,12 @@ function UsuarioEditCtrl($rootScope, $scope, $filter, $state, $stateParams, URL_
 
 	$scope.loadUsuario = function () {
 
-		Usr.findByUsr($stateParams.idUsuario, $stateParams.id_empresa, function (response) {
+		Usr.findByUsr($stateParams.idUsuario,function (response) {
 			//if(response.data.status==1)
 			$scope.newUsuario = response.data.info[0];
 			if ($scope.newUsuario.estado == 'A') {
 				$scope.newUsuario.estado = true;
 			}
-			$scope.loadEmpleado();
 		});
 	};
 

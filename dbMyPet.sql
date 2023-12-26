@@ -186,6 +186,8 @@ CREATE TABLE IF NOT EXISTS dbMyPet.sec_opc_rol (
   CONSTRAINT `FK_ROL2` FOREIGN KEY (`id_rol`) REFERENCES `sec_rol` (`id_rol`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de las opciones por rol';
 
+
+
 SELECT DISTINCT opc.id_opc, opc.id_menu, IFNULL(opc.id_opc_padre,'NA') as id_opc_padre
 		, IFNULL(opc.padre,'') AS padre, opc.descripcion
         , opc.url, opc.estado
@@ -234,18 +236,18 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `sec_rol_usuario`;
 
 CREATE TABLE IF NOT EXISTS dbMyPet.sec_rol_usuario (
-  `id_sec_rol` INT NOT NULL DEFAULT 1 COMMENT 'id empresa',
   `usuario` varchar(30) NOT NULL COMMENT 'id de usuario',
   `id_rol` INT NOT NULL COMMENT 'id del rol',
   `usuario_creacion` varchar(255) DEFAULT NULL COMMENT 'usuario creacion',
   `fecha_creacion` datetime DEFAULT NULL COMMENT 'fecha creacion',
   `usuario_update` varchar(255) DEFAULT NULL COMMENT 'usuario modificacion',
   `fecha_update` datetime DEFAULT NULL  COMMENT 'fecha modificacion',
-  PRIMARY KEY (`id_sec_rol`,`usuario`,`id_rol`),
+  PRIMARY KEY (`usuario`,`id_rol`),
   KEY `FK_ROL1` (`id_rol`),
   KEY `FK_USUARIO1` (`usuario`),
   CONSTRAINT `FK_ROL1` FOREIGN KEY (`id_rol`) REFERENCES `sec_rol` (`id_rol`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de los roles por usuario';
+
 
 LOCK TABLES `sec_rol_usuario` WRITE;
 
