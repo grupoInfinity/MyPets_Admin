@@ -1,52 +1,32 @@
-      
-    <fieldset>
+        <fieldset>
             <div ng-show="isNew(formType)">
-          		<legend>Ingrese un nuevo Municipio</legend>
+          		<legend>Ingrese un nuevo tipo de vacuna</legend>
         	</div>
         	
         	<div ng-show="!isNew(formType)">
-          		<legend>Modificaci&oacute;n del Municipio</legend>
+          		<legend>Modificaci&oacute;n del tipo de vacuna</legend>
         	</div>
         	
         	<div class="form-group">
         		<input type="hidden" name="formType" id="formType"  ng-model="formType" />
-        		<input type="hidden" name="id" id="id"  ng-model="newMunis.id" />
-        		 <!-- <input type="hidden" name="id" id="id"  ng-model="newMunis.id_depto" /> -->
+        		<input type="hidden" name="id" id="id"  ng-model="newDepts.id" />
         	</div>
-        	
         	
             <!-- Each input is bound to a property on the prototype newMember object -->
             <div class="form-group">
-            <!--{{newMunis}}-->
-                <label for="descripcion" class="col-sm-2 control-label">Municipio:</label>
+                <label for="descripcion" class="col-sm-2 control-label">Tipo de vacuna:</label>
                 <div class="col-sm-3">
-                    <input only-letters-input type="text" class="form-control" name="descripcion" id="descripcion"  ng-model="newMunis.descripcion" placeholder="Municipio" required autofocus ng-patern="onlyLetters"/>
+                    <input only-letters-input type="text" class="form-control" name="descripcion" id="descripcion"  
+					ng-model="newTpvac.descripcion" placeholder="Nombre de la vacuna" required autofocus ng-patern="onlyLetters"/>
                     <span class="error help-block" ng-show="regForm.descripcion.$error.required">Requerido</span>
                     <span class="error help-block" ng-show="errors.descripcion">{{errors.descripcion}}</span>
                 </div>
 			</div>
-			
-			<div class="form-group">				
-					<label for="idDepto" class="col-sm-2 control-label">Departamento:</label>
-				<div class="col-md-3">
-					<ui-select ng-model="newMunis.id_depto" name="idDepto" id="idDepto" ng-required="true"  >
-						<ui-select-match placeholder="Departamento" autofocus>
-							<span ng-bind="$select.selected.descripcion"></span>
-						</ui-select-match>
-						<ui-select-choices repeat="depts.id as depts in (depts | propsFilter: {descripcion: $select.search}) track by depts.id" >
-							<div ng-bind-html="depts.descripcion | highlight: $select.search"></div>
-						</ui-select-choices>
-					</ui-select>
-					<span class="error help-block" ng-show="regForm.idDepto.$error.required">Requerido</span>
-					<span class="error help-block" ng-show="errors.idDepto">{{errors.idDepto}}</span>
-			    </div>
-			    </div>
-			
 			<div class="form-group">
 				<label for="estado" class="col-sm-2 control-label">Estado:</label>
 				<div class="col-md-2">
 					<label class="switch">
-						<input type="checkbox" name="estado" id="estado" ng-model="newMunis.estado">
+						<input type="checkbox" name="estado" id="estado" ng-model="newDepts.estado">
 						<div class="slider round">
 							<span class="on">Activo</span>
 							<span class="off">Inactivo</span>
@@ -91,9 +71,3 @@
 			</div> 
 
         </fieldset>
-     
-     
-     
-     
-     
-  

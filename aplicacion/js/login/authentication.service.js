@@ -28,7 +28,8 @@ angular.module('authenticationService',[]).
              });
          };
          
-         function SetCredentials(username, /*idUser,*/ password, /*isRolAdmin, isRolSupervisor, isRolCajero,*/ sec_rol) {
+         function SetCredentials(username, /*idUser,*/ password, /*isRolAdmin, isRolSupervisor, isRolCajero,*/
+           sec_rol) {
              var authdata = Base64.encode(username + ':' + password);
              var language = {
                     "sProcessing":     "Procesando...",

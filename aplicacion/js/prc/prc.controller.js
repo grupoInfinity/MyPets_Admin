@@ -420,7 +420,7 @@ function VacunaTableCtrl($scope, $rootScope, $http, $state, $window, popupServic
 
 	};
 
-	$scope.activateOpcion = function (vacunaId) {
+	$scope.activateVacuna = function (vacunaId) {
 		Swal.fire({
 			title: 'Esta seguro de activar este registro?',
 			text: "",
@@ -484,7 +484,7 @@ function VacunaAddCtrl($scope, $rootScope, $filter, $http, $state, Vacuna) {
 
 		var date = new Date();
 		$scope.newVacuna = {
-			id: ""
+			  id: ""
 			, idmasc: ""
 			, idtpmasc: ""
 			, usuario: $rootScope.globals.currentUser.username
@@ -508,11 +508,11 @@ function VacunaAddCtrl($scope, $rootScope, $filter, $http, $state, Vacuna) {
 				toast: true,
 				position: 'top-end',
 				type: 'success',
-				title: 'Opcion registrada correctamente',
+				title: 'Vacuna registrada correctamente',
 				showConfirmButton: false,
 				timer: 1000
 			})
-			$state.go('menuMaster.listOpcion');
+			$state.go('menuMaster.listVac');
 		}, function (result) {
 			if ((result.status == 409) || (result.status == 400)) {
 				$scope.errors = result.data;
@@ -528,9 +528,17 @@ function VacunaAddCtrl($scope, $rootScope, $filter, $http, $state, Vacuna) {
 
 	$scope.reset();
 
+	$scope.loadVacuna = function () {
+		Vacuna.findById($stateParams.idVacuna, function (response) {
+			if (response.data.status == 1)
+				$scope.newVacuna = response.data.info[0];
+		});
+	};
+
+	$scope.loadVacuna();
 
 	//$scope.loadOpcPadre();
-
+/*
 	$scope.opcppales = null;
 	$scope.loadOpcPpal = function () {
 		$scope.opcppales = [];
@@ -544,34 +552,35 @@ function VacunaAddCtrl($scope, $rootScope, $filter, $http, $state, Vacuna) {
 				else $scope.opcppales = [];
 			});
 		}
-	};
+	};*/
 
 };
 
 
-function OpcionEditCtrl($scope, $rootScope, $rootScope, $filter, $state, $stateParams, Opcion, OpcPpal, Empresa) {
+function VacunaEditCtrl($scope, $rootScope, $rootScope, $filter,
+	 $state, $stateParams, Vacuna) {
 	$scope.isDisabled = 'disabled';
-	$scope.updateOpcion = function () {
+	$scope.updateVacuna = function () {
 
 		var date = new Date();
 		$scope.date = date.toISOString().substring(0, 10);
 
-		var OpcionObj = {
+		var VacunaObj = {
 			usuario: $rootScope.globals.currentUser.username
 		};
 
-		$scope.newOpcion.usuario = OpcionObj.usuario;
+		$scope.newVacuna.usuario = VacunaObj.usuario;
 
-		Opcion.actualizar($scope.newOpcion, function (response) {
+		Vacuna.actualizar($scope.newVacuna, function (response) {
 			Swal.fire({
 				toast: true,
 				position: 'top-end',
 				type: 'success',
-				title: 'Opcion actualizada correctamente',
+				title: 'Vacuna actualizada correctamente',
 				showConfirmButton: false,
 				timer: 1000
 			})
-			$state.go('menuMaster.listOpcion');
+			$state.go('menuMaster.listVac');
 
 		}, function (result) {
 			if ((result.status == 409) || (result.status == 400)) {
@@ -583,51 +592,14 @@ function OpcionEditCtrl($scope, $rootScope, $rootScope, $filter, $state, $stateP
 		});
 	};
 
-	$scope.loadOpcion = function () {
-		Opcion.findById($stateParams.idOpcion, function (response) {
+	$scope.loadVacuna = function () {
+		Vacuna.findById($stateParams.idVacuna, function (response) {
 			if (response.data.status == 1)
-				$scope.newOpcion = response.data.info[0];
-			$scope.newOpcion.id_opc_ppal = response.data.info[0].id.id_opc_principal;
-			$scope.newOpcion.id = response.data.info[0].id.id;
-			if ($scope.newOpcion.estado == 'A') {
-				$scope.newOpcion.estado = true;
-			}
+				$scope.newVacuna = response.data.info[0];
 		});
 	};
 
-	$scope.loadOpcion();
-
-	$scope.opcppales = {};
-	$scope.listOpcPpal = function () {
-		OpcPpal.findAll(function (response) {
-			if (response.data.status == 1)
-				$scope.opcppales = response.data.info;
-		});
-	};
-	$scope.listOpcPpal();
-
-
-	$scope.opcppales = null;
-	$scope.loadOpcPpal = function () {
-		$scope.opcppales = [];
-
-		$scope.newOpcion.id_opc_ppal = "";
-		if ($scope.newOpcion.id_opc_ppal == null) $scope.newOpcion.id_opc_ppal = "";
-		if ($scope.newOpcion.id_empresa != "") {
-			OpcPpal.findByEmpresaA($scope.newOpcion.id_empresa, function (response) {
-				if (response.data.status == 1) $scope.opcppales = response.data.info;
-				else $scope.opcppales = [];
-			});
-		}
-	};
-
-	$scope.loadOpcPadre = function () {
-		Opcion.findAllPadre($scope.newOpcion.id_opc_ppal, function (response) {
-			if (response.data.status == 1)
-				$scope.opces = response.data.info;
-			else $scope.opces = {};
-		});
-	};
+	$scope.loadVacuna();
 
 	//$scope.loadOpcPadre();
 };

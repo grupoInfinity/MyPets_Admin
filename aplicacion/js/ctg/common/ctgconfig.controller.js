@@ -525,7 +525,7 @@ function tpvacAddCtrl($rootScope, $scope, $filter, $http, $state, tpvac) {
 					}
 				});
 		//$('#notificacionesModal').modal('show');
-		$state.go('menuMaster.listTipovac');
+		$state.go('menuMaster.listTpvac');
 
 	};
 
@@ -558,7 +558,7 @@ function tpvacEditCtrl($rootScope, $scope, $filter, $state, $stateParams, tpvac)
 					showConfirmButton: false,
 					timer: 2000
 				});
-				$state.go('menuMaster.listTipovac');
+				$state.go('menuMaster.listTpvac');
 			},
 			function (result) {
 				if ((result.status == 409)
