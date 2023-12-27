@@ -14,14 +14,15 @@
 		</section>
     </div -->
     <!-- Standard HTML form, with the submit function bound to the register() function defined in the the controller -->
-    <form name="regForm" class="form-horizontal" ng-submit="updateDepts()">
+    <form name="regForm" class="form-horizontal" ng-submit="updateTpmasc()">
       <div class="box-body">
-		<div ng-include="'partials/catalogos/ctg_depts/formDepts.html'"></div>
+		<div ng-include="'partials/catalogos/ctg_tpmascota/formTPmascota.html'"></div>
       </div>
       <div class="box-footer">
-      	<input type="submit" ng-disabled="regForm.$invalid" id="update" value="Guardar" class="btn btn-primary pull-right" />
+      	<input type="submit" ng-disabled="regForm.$invalid" id="update" value="Guardar"
+		class="btn btn-primary pull-right" />
 
-        <a class="btn btn-danger" ui-sref="menuMaster.listDepts()">Salir</a>
+        <a class="btn btn-danger" ui-sref="menuMaster.listTpmasc()">Salir</a>
       </div>
     </form>
 

@@ -28,7 +28,9 @@ function DeptsAddCtrl($rootScope, $scope, $filter, $http, $state, Depts) {
 
 		var date = new Date();
 		$scope.newDepts = {
+			id:"",
 			descripcion: "",
+			estado:"",
 			usuario: $rootScope.globals.currentUser.username
 		};
 
@@ -257,7 +259,10 @@ function MunisAddCtrl($rootScope, $scope, $filter, $http, $state, Munis, Depts) 
 
 		var date = new Date();
 		$scope.newMunis = {
-			id: "", descripcion: "", id_depto: "",
+			id: "", 
+			descripcion: "",
+			id_depto: "",
+			estado:"",
 			usuario: $rootScope.globals.currentUser.username
 		};
 
@@ -496,7 +501,9 @@ function tpvacAddCtrl($rootScope, $scope, $filter, $http, $state, tpvac) {
 
 		var date = new Date();
 		$scope.newtpvac = {
+			id: "",
 			descripcion: "",
+			estado:"",
 			usuario: $rootScope.globals.currentUser.username
 		};
 
@@ -726,7 +733,9 @@ function tpmascAddCtrl($rootScope, $scope, $filter, $http, $state, tpmasc) {
 
 		var date = new Date();
 		$scope.newtpmasc = {
+			id:"",
 			descripcion: "",
+			estado:"",
 			usuario: $rootScope.globals.currentUser.username
 		};
 
@@ -828,7 +837,7 @@ function tpmascTableCtrl($scope, $rootScope, $state, $compile, $window,
 	vm.reloadData = reloadData;
 
 	vm.message = '';
-	vm.Tpmasc = {};
+	vm.tpmasc = {};
 
 	Tpmasc.findAll(function (response) {
 		if (response.data.status == 1) {

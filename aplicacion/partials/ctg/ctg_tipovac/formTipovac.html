@@ -9,7 +9,7 @@
         	
         	<div class="form-group">
         		<input type="hidden" name="formType" id="formType"  ng-model="formType" />
-        		<input type="hidden" name="id" id="id"  ng-model="newDepts.id" />
+        		<input type="hidden" name="id" id="id"  ng-model="newtpvac.id" />
         	</div>
         	
             <!-- Each input is bound to a property on the prototype newMember object -->
@@ -17,7 +17,7 @@
                 <label for="descripcion" class="col-sm-2 control-label">Tipo de vacuna:</label>
                 <div class="col-sm-3">
                     <input only-letters-input type="text" class="form-control" name="descripcion" id="descripcion"  
-					ng-model="newTpvac.descripcion" placeholder="Nombre de la vacuna" required autofocus ng-patern="onlyLetters"/>
+					ng-model="newtpvac.descripcion" placeholder="Nombre de la vacuna" required autofocus ng-patern="onlyLetters"/>
                     <span class="error help-block" ng-show="regForm.descripcion.$error.required">Requerido</span>
                     <span class="error help-block" ng-show="errors.descripcion">{{errors.descripcion}}</span>
                 </div>
@@ -26,7 +26,7 @@
 				<label for="estado" class="col-sm-2 control-label">Estado:</label>
 				<div class="col-md-2">
 					<label class="switch">
-						<input type="checkbox" name="estado" id="estado" ng-model="newDepts.estado">
+						<input type="checkbox" name="estado" id="estado" ng-model="newtpvac.estado">
 						<div class="slider round">
 							<span class="on">Activo</span>
 							<span class="off">Inactivo</span>

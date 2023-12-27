@@ -21,7 +21,8 @@
     </div>	
 	<div class="box-body" ng-controller="DeptsTableCtrl as showCase">
 		<em ng-show="showCase.depts.length == 0">No existen datos de departamentos</em>
-        <table datatable="ng" id="deptTable" dt-options="showCase.dtOptions" dt-columns="showCase.dtColumnsDefs" ng-hide="showCase.depts.length == 0" class="table table-bordered table-striped">
+        <table datatable="ng" id="deptTable" dt-options="showCase.dtOptions" dt-columns="showCase.dtColumnsDefs" 
+        ng-hide="showCase.depts.length == 0" class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th>ID</th>

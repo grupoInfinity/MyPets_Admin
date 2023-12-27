@@ -1,22 +1,23 @@
         <fieldset>
             <div ng-show="isNew(formType)">
-          		<legend>Ingrese un nuevo Departamento</legend>
+          		<legend>Ingrese un nuevo tipo de mascota</legend>
         	</div>
         	
         	<div ng-show="!isNew(formType)">
-          		<legend>Modificaci&oacute;n del Departamento</legend>
+          		<legend>Modificaci&oacute;n del tipo de mascota</legend>
         	</div>
         	
         	<div class="form-group">
         		<input type="hidden" name="formType" id="formType"  ng-model="formType" />
-        		<input type="hidden" name="id" id="id"  ng-model="newDepts.id" />
+        		<input type="hidden" name="id" id="id"  ng-model="newtpmasc.id" />
         	</div>
         	
             <!-- Each input is bound to a property on the prototype newMember object -->
             <div class="form-group">
-                <label for="descripcion" class="col-sm-2 control-label">Departamento:</label>
+                <label for="descripcion" class="col-sm-2 control-label">Tipo mascota:</label>
                 <div class="col-sm-3">
-                    <input only-letters-input type="text" class="form-control" name="descripcion" id="descripcion"  ng-model="newDepts.descripcion" placeholder="Nombre del Departamento" required autofocus ng-patern="onlyLetters"/>
+                    <input only-letters-input type="text" class="form-control" name="descripcion" id="descripcion"  
+					ng-model="newtpmasc.descripcion" placeholder="Nombre del tipo de mascota" required autofocus ng-patern="onlyLetters"/>
                     <span class="error help-block" ng-show="regForm.descripcion.$error.required">Requerido</span>
                     <span class="error help-block" ng-show="errors.descripcion">{{errors.descripcion}}</span>
                 </div>
@@ -25,7 +26,7 @@
 				<label for="estado" class="col-sm-2 control-label">Estado:</label>
 				<div class="col-md-2">
 					<label class="switch">
-						<input type="checkbox" name="estado" id="estado" ng-model="newDepts.estado">
+						<input type="checkbox" name="estado" id="estado" ng-model="newtpmasc.estado">
 						<div class="slider round">
 							<span class="on">Activo</span>
 							<span class="off">Inactivo</span>
