@@ -88,7 +88,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
                 );
 
                 $sql2 = "SELECT v.id_vacuna,v.id_mascota,v.id_tipovacuna,
-                t.nombrevacuna,DATE(v.fecha_creacion) AS fecha_creacion,v.estado
+                t.nombrevacuna,DATE(v.fecha_creacion) AS fecha_creacion
                 FROM $bd.prc_vacunas v, $bd.prc_mascotas m, $bd.ctg_tipovacunas t 
                 WHERE v.id_mascota=$idm AND 
                 v.id_mascota=m.id_mascota AND v.id_tipovacuna=t.id_tipovacuna";
@@ -103,8 +103,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
                                 'idmascota' => $row2["id_mascota"],
                                 'idtipovacuna' => $row2["id_tipovacuna"],
                                 'nombrevacuna' => $row2["nombrevacuna"],
-                                'fecha_creacion' => $row2["fecha_creacion"],
-                                'estado' => $row2["estado"]
+                                'fecha_creacion' => $row2["fecha_creacion"]
                             );
                         }
                     } else {
@@ -137,7 +136,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 
                 while ($row = $result->fetch_assoc()) {
                     if (!is_null($row["id"])) $id_mascota = $row["id"];
-                    else $id_mun = 1;
+                    else $id_mascota = 1;
                 }
             } else {
                 $id_mascota = 1;

@@ -372,7 +372,7 @@ function VacunaTableCtrl($scope, $rootScope, $http, $state, $window, popupServic
 	var vm = this;
 	$scope.refresh = function () {
 		Opcion.findAll(function (response) {
-			$scope.opciones = response.data.info;
+			$scope.vacuna = response.data.info;
 		});
 	};
 
@@ -385,14 +385,14 @@ function VacunaTableCtrl($scope, $rootScope, $http, $state, $window, popupServic
 	DTColumnDefBuilder.newColumnDef(3),
 	DTColumnDefBuilder.newColumnDef(4).notSortable()];
 
-	$scope.modifyOpcion = function (opcionId) {
+	$scope.modifyVacuna = function (vacunaId) {
 		$state.go(
-			'menuMaster.editOpcion',
-			{ idOpcion: opcionId }
+			'menuMaster.editVac',
+			{ idVacuna: vacunaId }
 		);
 	};
 
-	$scope.deleteOpcion = function (opcionId) {
+	$scope.deleteVacuna = function (vacunaId) {
 		Swal.fire({
 			title: 'Esta seguro de inactivar este registro?',
 			text: "",
@@ -403,15 +403,15 @@ function VacunaTableCtrl($scope, $rootScope, $http, $state, $window, popupServic
 			confirmButtonText: 'Si, inactivar!'
 		}).then((result) => {
 			if (result.value) {
-				Opcion.borrar(opcionId, $rootScope.globals.currentUser.username, function (response) {
-					$scope.refresh(opcionId);
+				Vacuna.borrar(vacunaId, $rootScope.globals.currentUser.username, function (response) {
+					$scope.refresh(vacunaId);
 				});
 
 				Swal.fire({
 					toast: true,
 					position: 'top-end',
 					type: 'success',
-					title: 'Opcion Inactivada',
+					title: 'Vacuna Inactivada',
 					showConfirmButton: false,
 					timer: 1000
 				})
@@ -420,7 +420,7 @@ function VacunaTableCtrl($scope, $rootScope, $http, $state, $window, popupServic
 
 	};
 
-	$scope.activateOpcion = function (opcionId) {
+	$scope.activateOpcion = function (vacunaId) {
 		Swal.fire({
 			title: 'Esta seguro de activar este registro?',
 			text: "",
@@ -431,15 +431,15 @@ function VacunaTableCtrl($scope, $rootScope, $http, $state, $window, popupServic
 			confirmButtonText: 'Si, activar!'
 		}).then((result) => {
 			if (result.value) {
-				Opcion.activar(opcionId, $rootScope.globals.currentUser.username, function (response) {
-					$scope.refresh(opcionId);
+				Vacuna.activar(vacunaId, $rootScope.globals.currentUser.username, function (response) {
+					$scope.refresh(vacunaId);
 				});
 
 				Swal.fire({
 					toast: true,
 					position: 'top-end',
 					type: 'success',
-					title: 'Opcion Activada',
+					title: 'Vacuna Activada',
 					showConfirmButton: false,
 					timer: 1000
 				})
@@ -450,11 +450,11 @@ function VacunaTableCtrl($scope, $rootScope, $http, $state, $window, popupServic
 
 	$scope.refresh();
 
-	$scope.orderBy = 'descOpcion';
+	//$scope.orderBy = 'descOpcion';
 
 };
 
-function OpcionAddCtrl($scope, $rootScope, $filter, $http, $state, Opcion, OpcPpal, Empresa) {
+function VacunaAddCtrl($scope, $rootScope, $filter, $http, $state, Vacuna) {
 	$scope.isDisabled = '';
 	$scope.formType = 'ADD';
 
@@ -483,25 +483,20 @@ function OpcionAddCtrl($scope, $rootScope, $filter, $http, $state, Opcion, OpcPp
 		$scope.formType = 'ADD';
 
 		var date = new Date();
-		$scope.newOpcion = {
+		$scope.newVacuna = {
 			id: ""
-			, id_opc_ppal: ""
-			, id_opc_padre: ""
-			, padre: 0
-			, descripcion: ""
-			, url: ""
-			, padre: ""
-			, orden: ""
+			, idmasc: ""
+			, idtpmasc: ""
 			, usuario: $rootScope.globals.currentUser.username
 		};
 
 		$scope.clearMessages();
 	};
 
-	$scope.guardarOpcion = function (value) {
+	$scope.guardarVacuna = function (value) {
 		$scope.clearMessages();
 
-		Opcion.insertar($scope.newOpcion, function (data) {
+		Vacuna.insertar($scope.newVacuna, function (data) {
 
 			$scope.isVisibleAfterOpcion = $scope.isVisibleAfterOpcion ? false : true;
 			$scope.formType = "UPD";
@@ -533,14 +528,6 @@ function OpcionAddCtrl($scope, $rootScope, $filter, $http, $state, Opcion, OpcPp
 
 	$scope.reset();
 
-
-	$scope.loadOpcPadre = function () {
-		Opcion.findAllPadre($scope.newOpcion.id_opc_ppal, function (response) {
-			if (response.data.status == 1)
-				$scope.opces = response.data.info;
-			else $scope.opces = {};
-		});
-	};
 
 	//$scope.loadOpcPadre();
 

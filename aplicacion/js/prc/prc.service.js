@@ -12,14 +12,14 @@ factory('Vacuna', function($http, URL_API){
     service.actualizar = actualizar;
 
     function findAll(callback){
-        $http.get(URL_API + '/servicios/sec/sec_opcion.php?accion=C').
+        $http.get(URL_API + '/servicios/prc/prc_vacuna.php?accion=C').
         then(function(response) {
            callback(response);
         });
     };
 	
 	function findByMasc(idMasc, callback){
-		var url =URL_API + '/servicios/sec/sec_opcion.php?accion=C&padre=1&estado=A&id_opc_ppal='+idMasc;
+		var url =URL_API + '/servicios/prc/prc_vacuna.php?accion=C&idmasc='+idMasc;
 		console.log(url);
         $http.get(url).
         then(function(response) {
@@ -28,7 +28,7 @@ factory('Vacuna', function($http, URL_API){
     };
 
     function findById(id, callback){
-		var url = URL_API + '/servicios/sec/sec_opcion.php?accion=C&id=' + idOpcion;
+		var url = URL_API + '/servicios/prc/prc_vacuna.php?accion=C&id=' + id;
 
         $http.get(url).
         then(function(response) {
@@ -36,84 +36,41 @@ factory('Vacuna', function($http, URL_API){
         });
     };
 
-    function borrar(id, usuario, callback){
-        $http.post(URL_API + '/servicios/sec/sec_opcion.php?accion=D&id=' + id + '&user=' + usuario, id).
+    function borrar(id, callback){
+        $http.post(URL_API + '/servicios/prc/prc_vacuna.php?accion=D&id=' + id, id).
         then(function(response) {
            callback(response);
         });
     };
 	
-	function activar(id, usuario, callback){
-        $http.post(URL_API + '/servicios/sec/sec_opcion.php?accion=A&id=' + id + '&user=' + usuario, id).
+	/*function activar(id, usuario, callback){
+        $http.post(URL_API + '/servicios/prc/prc_vacuna.php?accion=A&id=' + id + '&user=' + usuario, id).
         then(function(response) {
            callback(response);
         });
-    };
+    };*/
 
-    function insertar(opcion, callback){
+    function insertar(vacuna, callback){
 		
-        var idOpcPadre = '';
-        var padre = 0;
-        if(opcion.id_opc_padre.trim().length>0){
-            idOpcPadre = opcion.id_opc_padre;
-        }
-		else{
-			idOpcPadre = null;
-		}
+		var url=URL_API + '/servicios/prc/prc_vacuna.php?accion=I'+
+		'&idmasc=' + vacuna.idmasc + 
+        '&idtpvac=' + vacuna.idtpvac +       
+        '&user=' + vacuna.usuario;
 		
-		if(opcion.id_opc_padre!=null && opcion.padre.trim().length>0){
-            padre = opcion.padre;
-        }
-		else{
-			padre = 0;
-		}
-		
-		var url=URL_API + '/servicios/sec/sec_opcion.php?accion=I'+
-		'&id_opc_ppal=' + opcion.id_opc_ppal + 
-        '&id_opc_padre=' + idOpcPadre +
-        '&padre=' + padre +
-        '&desc=' + opcion.descripcion +
-        '&url=' + opcion.url +        
-        '&orden=' + opcion.orden +        
-        '&user=' + opcion.usuario +
-		'&estado=' + opcion.estado;
-		
-        $http.post(url ,opcion).
+        $http.post(url ,vacuna).
         then(function(response) {
             callback(response);
          });
     };
 
-    function actualizar(opcion, callback){
+    function actualizar(vacuna, callback){
         
-        var idOpcPadre = '';
-        var padre = 0;
-		 if(opcion.id_opc_padre!=null && opcion.id_opc_padre.trim().length>0){
-            idOpcPadre = opcion.id_opc_padre;
-        }
-		else{
-			idOpcPadre = null;
-		}
+		var url = URL_API + '/servicios/prc/prc_vacuna.php?accion=U'+
+		'&idmasc=' + vacuna.idmasc + 
+        '&idtpvac=' + vacuna.idtpvac +       
+        '&user=' + vacuna.usuario;
 		
-		if(opcion.padre!=null && opcion.padre.trim().length>0){
-            padre = opcion.padre;
-        }
-		else{
-			padre = 0;
-		}
-		var url = URL_API + '/servicios/sec/sec_opcion.php?accion=U'+
-		'&id=' + opcion.id + 
-        '&id_opc_ppal=' + opcion.id_opc_ppal + 
-        '&id_opc_padre=' + idOpcPadre +
-        '&padre=' + padre +
-        '&desc=' + opcion.descripcion +
-        '&url=' + opcion.url +        
-        '&orden=' + opcion.orden +        
-        '&user=' + opcion.usuario +        
-        '&estado=' + (opcion.estado?'A':'I');
-		
-        $http.post(url
-        ,opcion).
+        $http.post(url,vacuna).
         then(function(response) {
             callback(response);
          });
@@ -126,6 +83,9 @@ factory('Vacuna', function($http, URL_API){
         return $window.confirm(message);
     }
 });
+
+
+//////*********//////////////////MASCOTA SERVICE /////////////////**********////////
 
 angular.module('mascService', []).
 factory('Masc', function($http, URL_API){

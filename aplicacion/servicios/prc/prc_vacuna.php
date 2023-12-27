@@ -16,9 +16,9 @@ $tabla3 = "ctg_tipovacunas";
 
 
 $accion = isset($_GET['accion']) ? $_GET['accion'] : '';
-$id_vacuna = isset($_GET['id_vacuna']) ? $_GET['id_vacuna'] : '';
-$id_mascota = isset($_GET['id_mascota']) ? $_GET['id_mascota'] : '';
-$id_tipovac= isset($_GET['id_tipovac']) ? $_GET['id_tipovac'] : '';
+$id_vacuna = isset($_GET['id']) ? $_GET['id'] : '';
+$id_mascota = isset($_GET['idmasc']) ? $_GET['idmasc'] : '';
+$id_tipovac= isset($_GET['idtpvac']) ? $_GET['idtpvac'] : '';
 $nombrevac = utf8_decode(isset($_GET['nombrevac']) ? $_GET['nombrevac'] : '');
 $nombremasc = utf8_decode(isset($_GET['nombremasc']) ? $_GET['nombremasc'] : '');
 $fechacr = utf8_decode(isset($_GET['fechacr']) ? $_GET['fechacr'] : '');
@@ -28,7 +28,7 @@ $user = utf8_decode(isset($_GET['user']) ? $_GET['user'] : '');
 $json = "no has seteado nada.";
 
 if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
-	if(!empty($id_vacuna)) $id_vacuna="v.id_municipio='$id_vacuna'";
+	if(!empty($id_vacuna)) $id_vacuna="v.id_vacuna='$id_vacuna'";
 	else $id_vacuna="1=1";
 	if(!empty($id_mascota)) $id_mascota="AND v.id_mascota='$id_mascota'";
 	else $id_mascota="";
@@ -85,9 +85,9 @@ else{
                     else $id_vacuna = 1;
                 }
             } else {
-                $id_mun = 1;
+                $id_vacuna = 1;
             }
-        } else $id_mun = 1;
+        } else $id_vacuna = 1;
 
 		$date = date('Y-m-d H:i:s');
 	
@@ -116,10 +116,10 @@ else{
 		}
 	}*/
 	else if(strtoupper($accion) =='D'){// VERIFICACION SI LA ACCION ES ELIMINACION
-		$user = ", usuario_update='".$user."'";
-		$date = ", fecha_update='".date('Y-m-d H:i:s')."'";
+		/*$user = ", usuario_update='".$user."'";
+		$date = ", fecha_update='".date('Y-m-d H:i:s')."'";*/
 		
-		$sql = "UPDATE $bd.$tabla SET estado='I' WHERE id_vacuna = $id_vacuna ";
+		$sql = "DELETE $bd.$tabla WHERE id_vacuna = $id_vacuna ";
 		
 		if ($conn->query($sql) === TRUE) {
 			$json = array("status"=>1, "info"=>"Registro eliminado exitosamente.");
@@ -127,7 +127,7 @@ else{
 			$json = array("status"=>0, "error"=>$conn->error);
 		}
 	}
-	else if(strtoupper($accion) =='A'){// VERIFICACION SI LA ACCION ES ACTIVAR EL REGISTRO
+	/*else if(strtoupper($accion) =='A'){// VERIFICACION SI LA ACCION ES ACTIVAR EL REGISTRO
 		$user = ", usuario_update='".$user."'";
 		$date = ", fecha_update='".date('Y-m-d H:i:s')."'";
 		
@@ -138,7 +138,7 @@ else{
 		} else {
 			$json = array("status"=>0, "error"=>$conn->error);
 		}
-	}
+	}*/
 	
 	
 }
