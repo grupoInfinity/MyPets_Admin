@@ -161,7 +161,7 @@ else{
 		if($padre=="null" || $padre=="0") $padre = "NULL";
 		
         $sql = "INSERT INTO $bd.$tabla(id_opc, id_menu, id_opc_padre, padre, DESCRIPCION, url, ORDEN, ESTADO, USUARIO_CREACION, FECHA_CREACION)
-		VALUE($id, $id_opc_ppal, $id_opc_padre, $padre, '$desc', '$url', $orden, '$estado', '$user', '$date')";
+		VALUE($id, $id_opc_ppal, $id_opc_padre, $padre, '$desc', '$url', $orden, 'A', '$user', '$date')";
         
         //echo $sql;
         if ($conn->query($sql) === TRUE) {

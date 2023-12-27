@@ -72,7 +72,7 @@ else{
 		$date = date('Y-m-d H:i:s');
 	
 		$sql = "INSERT INTO $bd.$tabla(ID_DEPARTAMENTO, DESCRIPCION, ESTADO, USUARIO_CREACION, FECHA_CREACION)
-		VALUE($id,'".strtoupper($desc)."', '$estado', '$user', '$date')";
+		VALUE($id,'".strtoupper($desc)."', 'A', '$user', '$date')";
 		
 		if ($conn->query($sql) === TRUE) {
 			$json = array("status"=>1, "info"=>"Registro almacenado exitosamente.");

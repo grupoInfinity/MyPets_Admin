@@ -88,7 +88,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 		$sql = "INSERT INTO $bd.$tabla(usuario, clave, nombre, apellido, 
 		email,pin, estado,USUARIO_CREACION, FECHA_CREACION) 
 		VALUE('$usr','$clave', '$nombre', '$apellido', '$email','".generarPin()."', 
-		'$estado', '$user', '$date')";
+		'A', '$user', '$date')";
 
 		if ($conn->query($sql) === TRUE) {
 			$json = array("estado" => 1, "info" => "Registro almacenado exitosamente.");

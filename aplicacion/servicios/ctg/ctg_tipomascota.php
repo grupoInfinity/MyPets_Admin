@@ -69,7 +69,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         $date = date('Y-m-d H:i:s');
 
         $sql = "INSERT INTO $bd.$tabla(id_tipomascota, tipomascota, estado, usuario_creacion, fecha_creacion) 
-        VALUE($id,'$tipomascota', '$estado', '$user', '$date')";
+        VALUE($id,'$tipomascota', 'A', '$user', '$date')";
 
         if ($conn->query($sql) === TRUE) {
             $json = array("status" => 1, "info" => "Registro almacenado exitosamente.");

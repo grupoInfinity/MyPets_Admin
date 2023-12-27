@@ -149,7 +149,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         $bd.$tabla(id_mascota, usuario,id_tipomascota,id_municipio,direccion,estado_direc,
         nombremascota, codigo,nacimiento,foto,estado,usuario_creacion, fecha_creacion) 
 		VALUE($id_mascota, $usuario,$id_tipomascota,$id_mun,'$direccion',
-        '$estado_direc','$nombremasc','$codigo','$nacim','$foto','$estado','$user', '$date')";
+        '$estado_direc','$nombremasc','$codigo','$nacim','$foto','A','$user', '$date')";
 
         if ($conn->query($sql) === TRUE) {
             $json = array("status" => 1, "info" => "Registro almacenado exitosamente.");

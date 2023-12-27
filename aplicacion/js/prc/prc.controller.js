@@ -2,7 +2,7 @@
 /*************************** MASCOTA CONTROLLER ***********************************/
 
 function MascotaAddCtrl($rootScope, $stateParams, $scope,
-	 URL_API, $filter, $http, $state, Masc) {
+	URL_API, $filter, $http, $state, Masc) {
 
 
 	$scope.formType = 'ADD';
@@ -33,9 +33,18 @@ function MascotaAddCtrl($rootScope, $stateParams, $scope,
 		$scope.formType = 'ADD';
 
 		var date = new Date();
-		$scope.newMasc = { masc: "", 
-		 codigo: "",
-		 usuario: $rootScope.globals.currentUser.username };
+		$scope.newMasc = {
+			tpmascota: "",
+			muni,
+			direccion,
+			estadodir,
+			nmasc,
+			codigo,
+			nacim,
+			foto,
+			estado,
+			usuario: $rootScope.globals.currentUser.username
+		};
 
 		$scope.clearMessages();
 	};

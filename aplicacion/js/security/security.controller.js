@@ -1052,7 +1052,8 @@ function UsuarioEditCtrl($rootScope, $scope, $filter, $state, $stateParams, URL_
 		$rootScope.$broadcast("refreshRoles", 0);
 
 		var date = new Date();
-		$scope.newUsuario = { usr: "", usuario: $rootScope.globals.currentUser.username };
+		$scope.newUsuario = { usr: "", 
+		usuario: $rootScope.globals.currentUser.username };
 
 		$scope.clearMessages();
 	};
