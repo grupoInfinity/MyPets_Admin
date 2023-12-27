@@ -34,22 +34,22 @@ function MascotaAddCtrl($rootScope, $stateParams, $scope,
 
 		var date = new Date();
 		$scope.newMasc = {
+			idmasc: "",
 			tpmascota: "",
-			muni,
-			direccion,
-			estadodir,
-			nmasc,
-			codigo,
-			nacim,
-			foto,
-			estado,
+			muni: "",
+			direccion: "",
+			estadodir: "",
+			nmasc: "",
+			codigo: "",
+			nacim: "",
+			foto: "",
 			usuario: $rootScope.globals.currentUser.username
 		};
 
 		$scope.clearMessages();
 	};
 
-	$scope.registerMascota = function (value) {
+	$scope.registerMasc = function (value) {
 		$scope.clearMessages();
 
 		if (value == "ADD") {
@@ -60,7 +60,7 @@ function MascotaAddCtrl($rootScope, $stateParams, $scope,
 
 				$scope.formType = "UPD";
 
-				Usr.findByUsr($scope.newUsuario.usr, $stateParams.id_empresa, function (response) {
+				Masc.findById($scope.newMasc.idmasc, function (response) {
 					if (response.data.status == 1)
 						$scope.newMasc = response.data.info[0];
 					// $scope.newUsuario.id_empleado = response.data.info[0].id_empleado;
@@ -88,12 +88,12 @@ function MascotaAddCtrl($rootScope, $stateParams, $scope,
 		else {
 
 			var date = new Date();
-			var usuarioObj = { usuario: $rootScope.globals.currentUser.username };
+			var mascObj = { usuario: $rootScope.globals.currentUser.username };
 
-			$scope.newUsuario.usuario = usuarioObj.usuario;
+			$scope.newMasc.usuario = mascObj.usuario;
 
-			Usr.actualizar($scope.newUsuario, function (data) {
-				$scope.successMessages = ['Usuario Actualizado correctamente'];
+			Masc.actualizar($scope.newMasc, function (data) {
+				$scope.successMessages = ['Mascota Actualizada correctamente'];
 				Swal.fire({
 					toast: true,
 					position: 'top-end',
@@ -121,7 +121,8 @@ function MascotaAddCtrl($rootScope, $stateParams, $scope,
 
 };
 
-function UsuarioEditCtrl($rootScope, $scope, $filter, $state, $stateParams, URL_API, Usr, Empresa, Almacen, Empleado) {
+function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams, 
+	URL_API, Usr, Empresa, Almacen, Empleado) {
 
 	$scope.isVisibleAfterUsuario = true;
 
@@ -144,12 +145,22 @@ function UsuarioEditCtrl($rootScope, $scope, $filter, $state, $stateParams, URL_
 		$rootScope.$broadcast("refreshRoles", 0);
 
 		var date = new Date();
-		$scope.newUsuario = { usr: "", usuario: $rootScope.globals.currentUser.username };
+		$scope.newUsuario = { 
+			idmasc: "",
+			tpmascota: "",
+			muni: "",
+			direccion: "",
+			estadodir: "",
+			nmasc: "",
+			codigo: "",
+			nacim: "",
+			foto: "",
+			usuario: $rootScope.globals.currentUser.username};
 
 		$scope.clearMessages();
 	};
 
-	$scope.registerUsuario = function (value) {
+	$scope.registerMasc = function (value) {
 
 		$scope.clearMessages();
 
@@ -159,7 +170,7 @@ function UsuarioEditCtrl($rootScope, $scope, $filter, $state, $stateParams, URL_
 				$scope.isVisibleAfterUsuario = $scope.isVisibleAfterUsuario ? false : true;
 				$scope.formType = "UPD";
 
-				Usr.findByUsr($scope.newUsuario.usr, $stateParams.id_empresa, function (response) {
+				Usr.findById($scope.newUsuario.idmasc, function (response) {
 					if (response.data.status == 1)
 						$scope.newUsuario = response.data.info[0];
 					/*$scope.newUsuario.id_empleado = response.data.info[0].id_empleado;
@@ -220,9 +231,9 @@ function UsuarioEditCtrl($rootScope, $scope, $filter, $state, $stateParams, URL_
 
 	$scope.onlyLetters = "/^[a-zA-Z.\-\s\Ññ\_\]+$/i/";
 
-	$scope.loadUsuario = function () {
+	$scope.loadMasc = function () {
 
-		Usr.findByUsr($stateParams.idUsuario, $stateParams.id_empresa, function (response) {
+		Usr.findById($stateParams.idmasc,function (response) {
 			//if(response.data.status==1)
 			$scope.newUsuario = response.data.info[0];
 			if ($scope.newUsuario.estado == 'A') {
@@ -237,7 +248,8 @@ function UsuarioEditCtrl($rootScope, $scope, $filter, $state, $stateParams, URL_
 
 };
 
-function UsuarioListCtrl($scope, $rootScope, $state, $compile, $window, popupService, DTOptionsBuilder, DTColumnDefBuilder, Usr, Almacen, URL_API) {
+function MascotaListCtrl($scope, $rootScope, $state, $compile, $window, popupService,
+	 DTOptionsBuilder, DTColumnDefBuilder, Usr, Almacen, URL_API) {
 	var vm = this;
 
 	vm.listUsuario = listUsuario;
@@ -246,7 +258,7 @@ function UsuarioListCtrl($scope, $rootScope, $state, $compile, $window, popupSer
 	vm.message = '';
 	vm.usuario = {};
 
-	Usr.findByEmpresa($rootScope.globals.currentUser.id_empresa, function (response) {
+	Usr.findById($rootScope.globals.currentUser.id_empresa, function (response) {
 		vm.usuario = response.data.info;
 	});
 
@@ -284,7 +296,7 @@ function UsuarioListCtrl($scope, $rootScope, $state, $compile, $window, popupSer
 	}*/
 	;
 
-	function deleteUsuario(usuarioId, id_empresa) {
+	function deleteMasc(usuarioId, id_empresa) {
 		Swal.fire({
 			title: 'Esta seguro de inactivar este registro?',
 			text: "",
@@ -295,7 +307,8 @@ function UsuarioListCtrl($scope, $rootScope, $state, $compile, $window, popupSer
 			confirmButtonText: 'Si, inactivar!'
 		}).then((result) => {
 			if (result.value) {
-				Usr.borrar(usuarioId, id_empresa, $rootScope.globals.currentUser.username, function (response) {
+				Usr.borrar(usuarioId,
+					$rootScope.globals.currentUser.username, function (response) {
 					reloadData(id_empresa);
 				});
 
@@ -311,7 +324,7 @@ function UsuarioListCtrl($scope, $rootScope, $state, $compile, $window, popupSer
 		})
 	};
 
-	function activateUsuario(usuarioId, id_empresa) {
+	function activateMasc(usuarioId, id_empresa) {
 		Swal.fire({
 			title: 'Esta seguro de activar este registro?',
 			text: "",
@@ -338,7 +351,7 @@ function UsuarioListCtrl($scope, $rootScope, $state, $compile, $window, popupSer
 		})
 	};
 
-	function editUsuario(usuarioId, id_empresa) {
+	function editMasc(usuarioId, id_empresa) {
 
 		$state.go('menuMaster.editUsuario', {
 			idUsuario: usuarioId,

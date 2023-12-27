@@ -732,7 +732,8 @@ function RolAddCtrl($scope, $rootScope, $filter, $http, $state, Rol) {
 		$scope.formType = 'ADD';
 
 		var date = new Date();
-		$scope.newRol = { descripcion: "", usuario: $rootScope.globals.currentUser.username };
+		$scope.newRol = { descripcion: "", 
+		usuario: $rootScope.globals.currentUser.username };
 
 		$scope.clearMessages();
 	};
@@ -951,8 +952,8 @@ function UsuarioAddCtrl($rootScope, $stateParams, $scope, URL_API, $filter, $htt
 
 		var date = new Date();
 		$scope.newUsuario = { usr: "", 
-		id_empleado: "",
-		 email: "", usuario: $rootScope.globals.currentUser.username };
+		 email: "", 
+		 usuario: $rootScope.globals.currentUser.username };
 
 		$scope.clearMessages();
 	};

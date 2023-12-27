@@ -49,13 +49,15 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
     else $nombremasc = "";
     if (!empty($estado)) $estado = "AND A.estado='$estado'";
     else $estado = "";
+    if (!empty($codigo)) $codigo= "AND A.codigo='$codigo'";
+    else $codigo = "";
 
 
     $sql = "SELECT m.id_mascota, u.usuario, u.email,u.telefono,m.nombremascota,
     d.descripcion as depto,mu.descripcion as muni,m.direccion,m.estado_direc,m.codigo,m.nacimiento 
     FROM $bd.prc_mascotas m, $bd.ctg_tipomascotas t, $bd.ctg_municipios mu,
     $bd.sec_usuario u, $bd.ctg_departamentos d 
-    WHERE $id_mascota $usuario $nombremasc $estado AND 
+    WHERE $id_mascota $usuario $nombremasc $estado $codigo AND 
 	 m.id_tipomascota=t.id_tipomascota AND m.usuario=u.usuario 
     AND m.id_municipio=mu.id_municipio AND mu.id_departamento=d.id_departamento";
 

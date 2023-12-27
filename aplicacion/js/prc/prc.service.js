@@ -559,6 +559,7 @@ factory('Masc', function($http, URL_API){
     service.activar = activar;
     service.insertar = insertar;
     service.actualizar = actualizar;
+    service.findByCo = findByCo;
     service.findById = findById;
     service.findAllA = findAllA; 
     /*    service.getUser = getUser;
@@ -592,9 +593,17 @@ factory('Masc', function($http, URL_API){
            callback(response);
         });
     };
-
     function findById(usuarioId, callback){
 		var url = URL_API + '/servicios/prc/prc_mascota.php?accion=C&id=' + usuarioId ;
+		
+        $http.get(url).
+        then(function(response) {
+           callback(response);
+        });
+    };
+
+    function findByCo(usuarioId, callback){
+		var url = URL_API + '/servicios/prc/prc_mascota.php?accion=C&codigo=' + usuarioId ;
 		
         $http.get(url).
         then(function(response) {
