@@ -549,8 +549,8 @@ factory('RolUsuario', function($http, URL_API){
 
 
 
-angular.module('usrService', []).
-factory('Usr', function($http, URL_API){
+angular.module('mascService', []).
+factory('Masc', function($http, URL_API){
 
     var service = {};
 
@@ -559,7 +559,7 @@ factory('Usr', function($http, URL_API){
     service.activar = activar;
     service.insertar = insertar;
     service.actualizar = actualizar;
-    service.findByUsr = findByUsr;
+    service.findById = findById;
     service.findAllA = findAllA; 
     /*    service.getUser = getUser;
 
@@ -574,7 +574,7 @@ factory('Usr', function($http, URL_API){
     };*/
 
     function findAlls(callback){
-    	var url = URL_API + '/servicios/sec/sec_usuario.php?accion=C';
+    	var url = URL_API + '/servicios/prc/prc_mascota.php?accion=C';
 		
 		//console.log(url);
     	$http.get(url).
@@ -584,7 +584,7 @@ factory('Usr', function($http, URL_API){
     };
 	
 	function findAllA(callback){
-    	var url = URL_API + '/servicios/sec/sec_usuario.php?accion=C&estado=A';
+    	var url = URL_API + '/servicios/prc/prc_mascota.php?accion=C&estado=A';
 		
 		//console.log(url);
     	$http.get(url).
@@ -593,8 +593,8 @@ factory('Usr', function($http, URL_API){
         });
     };
 
-    function findByUsr(usuarioId, callback){
-		var url = URL_API + '/servicios/sec/sec_usuario.php?accion=C&usr=' + usuarioId ;
+    function findById(usuarioId, callback){
+		var url = URL_API + '/servicios/prc/prc_mascota.php?accion=C&id=' + usuarioId ;
 		
         $http.get(url).
         then(function(response) {
@@ -604,7 +604,7 @@ factory('Usr', function($http, URL_API){
 	
 
     function borrar(usuarioId,usuario, callback){
-		var url = URL_API + '/servicios/sec/sec_usuario.php?accion=D&usr=' + usuarioId;
+		var url = URL_API + '/servicios/prc/prc_mascota.php?accion=D&id=' + usuarioId;
 		
 		//console.log(url);
         $http.post(url, usuarioId).
@@ -614,7 +614,7 @@ factory('Usr', function($http, URL_API){
     };
 	
 	function activar(usuarioId, usuario, callback){
-		var url = URL_API + '/servicios/sec/sec_usuario.php?accion=A&usr=' + usuarioId;
+		var url = URL_API + '/servicios/prc/prc_mascota.php?accion=A&id=' + usuarioId;
 		
 		//console.log(url);
         $http.post(url, usuarioId).
@@ -624,12 +624,16 @@ factory('Usr', function($http, URL_API){
     };
 
     function insertar(usuario, callback){
-		var url = URL_API + '/servicios/sec/sec_usuario.php?accion=I'+
-		'&usr=' + usuario.usr +
-		'&clave=' + usuario.clave + 
-		'&nombre=' + usuario.nombre + 
-		'&apellido=' + usuario.apellido + 
-		'&email=' + usuario.email + 
+		var url = URL_API + '/servicios/prc/prc_mascota.php?accion=I'+
+		'&usuario=' + usuario.usuario + 
+		'&tpmascota=' + usuario.tpmascota + 
+		'&muni=' + usuario.muni + 
+		'&direccion=' + usuario.direccion + 
+        '&estadodir=' + usuario.estadodir + 
+        '&nmasc=' + usuario.nmasc + 
+        '&codigo=' + usuario.codigo + 
+        '&nacim=' + usuario.nacim + 
+        '&foto=' + usuario.foto + 
 		'&estado=' + usuario.estado +
 		'&user=' + usuario.usuario ;
 		
@@ -640,14 +644,18 @@ factory('Usr', function($http, URL_API){
     };
 
     function actualizar(usuario, callback){
-		var url = URL_API + '/servicios/sec/sec_usuario.php?accion=U'+
-		'&usr=' + usuario.usr +
-		'&clave=' + usuario.clave + 
-		'&nombre=' + usuario.nombre + 
-		'&apellido=' + usuario.apellido + 
-		'&email=' + usuario.email + 
-		'&estado=' + (usuario.estado?'A':'I') +
-		'&user=' + usuario.usuario;
+		var url = URL_API + '/servicios/prc/prc_mascota.php?accion=U'+
+		'&id=' + usuario.id +
+		'&tpmascota=' + usuario.tpmascota + 
+		'&muni=' + usuario.muni + 
+		'&direccion=' + usuario.direccion + 
+        '&estadodir=' + usuario.estadodir + 
+        '&nmasc=' + usuario.nmasc + 
+        '&codigo=' + usuario.codigo + 
+        '&nacim=' + usuario.nacim + 
+        '&foto=' + usuario.foto + 
+		'&estado=' + usuario.estado +
+		'&user=' + usuario.usuario ;
 		
 		//console.log(url);
         $http.post(url, usuario).

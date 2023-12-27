@@ -19,13 +19,13 @@ $tabla6 = "sec_usuarios";
 $tabla7 = "ctg_departamentos";
 
 $accion = isset($_GET['accion']) ? $_GET['accion'] : '';
-$id_mascota = isset($_GET['id_mascota']) ? $_GET['id_mascota'] : '';
-$id_tipomascota = isset($_GET['id_tipomascota']) ? $_GET['id_tipomascota'] : '';
-$id_mun = isset($_GET['id_mun']) ? $_GET['id_mun'] : '';
+$id_mascota = isset($_GET['id']) ? $_GET['id'] : '';
+$id_tipomascota = isset($_GET['tpmascota']) ? $_GET['tpmascota'] : '';
+$id_mun = isset($_GET['muni']) ? $_GET['muni'] : '';
 $usuario = isset($_GET['usuario']) ? $_GET['usuario'] : '';
 $direccion = isset($_GET['direccion']) ? $_GET['direccion'] : '';
-$estado_direc = isset($_GET['estado_direc']) ? $_GET['estado_direc'] : '';
-$nombremasc = isset($_GET['nombremasc']) ? $_GET['nombremasc'] : '';
+$estado_direc = isset($_GET['estadodir']) ? $_GET['estadodir'] : '';
+$nombremasc = isset($_GET['nmasc']) ? $_GET['nmasc'] : '';
 $codigo = isset($_GET['codigo']) ? $_GET['codigo'] : '';
 $nacim = isset($_GET['nacim']) ? $_GET['nacim'] : '';
 $foto = isset($_GET['foto']) ? $_GET['foto'] : '';
@@ -133,22 +133,22 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
             if ($result->num_rows > 0) {
 
                 while ($row = $result->fetch_assoc()) {
-                    if (!is_null($row["id"])) $id_mun = $row["id"];
+                    if (!is_null($row["id"])) $id_mascota = $row["id"];
                     else $id_mun = 1;
                 }
             } else {
-                $id_mun = 1;
+                $id_mascota = 1;
             }
-        } else $id_mun = 1;
+        } else $id_mascota = 1;
 
         $date = date('Y-m-d H:i:s');
         $nacim = date_create_from_format('Y-m-d', $nacim);
 
 
         $sql = "INSERT INTO 
-        $bd.$tabla(id_mascota, id_usuario,id_tipomascota,id_municipio,direccion,estado_direc,
+        $bd.$tabla(id_mascota, usuario,id_tipomascota,id_municipio,direccion,estado_direc,
         nombremascota, codigo,nacimiento,foto,estado,usuario_creacion, fecha_creacion) 
-		VALUE($id_mascota, $id_usuario,$id_tipomascota,$id_mun,'$direccion',
+		VALUE($id_mascota, $usuario,$id_tipomascota,$id_mun,'$direccion',
         '$estado_direc','$nombremasc','$codigo','$nacim','$foto','$estado','$user', '$date')";
 
         if ($conn->query($sql) === TRUE) {
@@ -157,7 +157,6 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
             $json = array("status" => 0, "info" => $conn->error);
         }
     } else if (strtoupper($accion) == 'U') { // VERIFICACION SI LA ACCION ES ACTUALIZACION
-        $id_mascota = " id_mascota=" . $id_mascota;
         $id_tipomascota = " ,id_tipomascota=" . $id_tipomascota;
         $id_mun = " ,id_municipio=" . $id_mun;
         $direccion = ",direccion='" . $direccion . "'";
@@ -171,7 +170,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         if (!empty($foto)) $foto = ",foto='" . ($foto) . "'";
         else $foto = "foto=foto";
 
-        $sql = "UPDATE $bd.$tabla SET $id_mascota $id_tipomascota $id_mun $direccion 
+        $sql = "UPDATE $bd.$tabla SET $id_tipomascota $id_mun $direccion 
         $estado_direc $nombremasc $codigo $nacim $foto $estado $user $date 
          WHERE id_mascota = $id_mascota ";
 
