@@ -22,7 +22,7 @@ $accion = isset($_GET['accion']) ? $_GET['accion'] : '';
 $id_mascota = isset($_GET['id']) ? $_GET['id'] : '';
 $id_tipomascota = isset($_GET['tpmascota']) ? $_GET['tpmascota'] : '';
 $id_mun = isset($_GET['muni']) ? $_GET['muni'] : '';
-$usuario = isset($_GET['usuario']) ? $_GET['usuario'] : '';
+$usuario = isset($_GET['dueno']) ? $_GET['dueno'] : '';
 $direccion = isset($_GET['direccion']) ? $_GET['direccion'] : '';
 $estado_direc = isset($_GET['estadodir']) ? $_GET['estadodir'] : '';
 $nombremasc = isset($_GET['nmasc']) ? $_GET['nmasc'] : '';
@@ -53,7 +53,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
     else $codigo = "";
 
 
-    $sql = "SELECT m.id_mascota, u.usuario, u.email,u.telefono,m.nombremascota,
+    $sql = "SELECT m.id_mascota, u.usuario, u.email,u.telefono,m.nombremascota,m.estado,
     d.descripcion as depto,mu.descripcion as muni,m.direccion,m.estado_direc,m.codigo,m.nacimiento 
     FROM $bd.prc_mascotas m, $bd.ctg_tipomascotas t, $bd.ctg_municipios mu,
     $bd.sec_usuario u, $bd.ctg_departamentos d 
@@ -83,7 +83,8 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
                     'estado_direc' => ($row["estado_direc"]),
                     'nacim' => $row["nacimiento"],
                     'foto' =>  $foto,
-                    'codigo' => $row["codigo"]
+                    'codigo' => $row["codigo"],
+                    'estado' => $row["estado"]
                 );
 
                 $sql2 = "SELECT v.id_vacuna,v.id_mascota,v.id_tipovacuna,
@@ -178,7 +179,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 
         echo $sql;
         if ($conn->query($sql) === TRUE) {
-            $json = array("status" => 1, "info" => "Registro eliminado exitosamente.");
+            $json = array("status" => 1, "info" => "Registro actualizado exitosamente.");
         } else {
             $json = array("status" => 0, "error" => $conn->error);
         }
@@ -186,7 +187,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         $user = ", usuario_update='" . $user . "'";
         $date = ", fecha_update='" . date('Y-m-d H:i:s') . "'";
 
-        $sql = "UPDATE $bd.$tabla SET estado='I' $user WHERE id_mascota = $id_mascota ";
+        $sql = "UPDATE $bd.$tabla SET estado='I' $user $date WHERE id_mascota = $id_mascota ";
 
         if ($conn->query($sql) === TRUE) {
             $json = array("status" => 1, "info" => "Registro eliminado exitosamente.");
@@ -200,7 +201,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         $sql = "UPDATE $bd.$tabla SET estado='A' $user $date WHERE id_mascota = $id_mascota ";
 
         if ($conn->query($sql) === TRUE) {
-            $json = array("status" => 1, "info" => "Registro eliminado exitosamente.");
+            $json = array("status" => 1, "info" => "Registro activado exitosamente.");
         } else {
             $json = array("status" => 0, "error" => $conn->error);
         }

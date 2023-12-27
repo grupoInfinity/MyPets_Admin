@@ -20,6 +20,7 @@ $id_vacuna = isset($_GET['id_vacuna']) ? $_GET['id_vacuna'] : '';
 $id_mascota = isset($_GET['id_mascota']) ? $_GET['id_mascota'] : '';
 $id_tipovac= isset($_GET['id_tipovac']) ? $_GET['id_tipovac'] : '';
 $nombrevac = utf8_decode(isset($_GET['nombrevac']) ? $_GET['nombrevac'] : '');
+$nombremasc = utf8_decode(isset($_GET['nombremasc']) ? $_GET['nombremasc'] : '');
 $fechacr = utf8_decode(isset($_GET['fechacr']) ? $_GET['fechacr'] : '');
 $estado = utf8_decode(isset($_GET['estado']) ? $_GET['estado'] : '');
 $user = utf8_decode(isset($_GET['user']) ? $_GET['user'] : '');
@@ -33,7 +34,9 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
 	else $id_mascota="";
 	if(!empty($id_tipovac)) $id_tipovac="AND v.id_tipovacuna='$id_tipovac'";
 	else $id_tipovac="";
-	if(!empty($nombrevac)) $nombrevac="AND v.nombrevacuna LIKE '%'$nombrevac%'";
+	if(!empty($nombremasc)) $nombremasc="AND m.nombremascota LIKE '%'$nombremasc%'";
+	else $nombremasc="";
+	if(!empty($nombrevac)) $nombrevac="AND t.nombrevacuna LIKE '%'$nombrevac%'";
 	else $nombrevac="";
     if (!empty($estado)) $estado = "AND v.estado='$estado'";
     else $estado = "";
@@ -41,7 +44,7 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
 	$sql = "SELECT v.id_vacuna,v.id_mascota,v.id_tipovacuna,m.nombremascota,
 	t.nombrevacuna,DATE(v.fecha_creacion) AS fecha_creacion,v.estado
 	FROM $bd.prc_vacunas v, $bd.prc_mascotas m, $bd.ctg_tipovacunas t 
-	WHERE $id_vacuna $id_mascota $id_tipovac $nombrevac $estado AND
+	WHERE $id_vacuna $id_mascota $id_tipovac $nombrevac $nombremasc $estado AND
 	v.id_mascota=m.id_mascota AND v.id_tipovacuna=t.id_tipovacuna ";
 	
 	$result = $conn->query($sql);
@@ -131,7 +134,7 @@ else{
 		$sql = "UPDATE $bd.$tabla SET estado='A' WHERE id_vacuna = $id_vacuna ";
 		
 		if ($conn->query($sql) === TRUE) {
-			$json = array("status"=>1, "info"=>"Registro eliminado exitosamente.");
+			$json = array("status"=>1, "info"=>"Registro activado exitosamente.");
 		} else {
 			$json = array("status"=>0, "error"=>$conn->error);
 		}

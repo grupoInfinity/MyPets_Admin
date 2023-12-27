@@ -167,15 +167,6 @@ function OpcionAddCtrl($scope, $rootScope, $filter, $http, $state, Opcion, OpcPp
 	$scope.reset();
 
 
-	$scope.loadEmpresa = function () {
-		Empresa.findAllA(function (response) {
-			if (response.data.status == 1)
-				$scope.empresa = response.data.info;
-		});
-	};
-
-	$scope.loadEmpresa();
-
 	$scope.loadOpcPadre = function () {
 		Opcion.findAllPadre($scope.newOpcion.id_opc_ppal, function (response) {
 			if (response.data.status == 1)
@@ -261,7 +252,6 @@ function OpcionEditCtrl($scope, $rootScope, $rootScope, $filter, $state, $stateP
 	};
 	$scope.listOpcPpal();
 
-	$scope.loadEmpresa();
 
 	$scope.opcppales = null;
 	$scope.loadOpcPpal = function () {
