@@ -493,7 +493,6 @@ CREATE TABLE IF NOT EXISTS dbMyPet.prc_vacunas(
     `id_vacuna` INT,
     `id_mascota` INT,
     `id_tipovacuna` INT,
-    `estado` VARCHAR(1),
     `usuario_creacion` varchar(255) DEFAULT NULL COMMENT 'usuario creacion',
     `fecha_creacion` datetime DEFAULT NULL COMMENT 'fecha creacion',
     `usuario_update` varchar(255) DEFAULT NULL COMMENT 'usuario modificacion',
@@ -505,13 +504,15 @@ CREATE TABLE IF NOT EXISTS dbMyPet.prc_vacunas(
     CONSTRAINT `fk_tipovac_vac` FOREIGN KEY(`id_tipovacuna`) REFERENCES `ctg_tipovacunas`(`id_tipovacuna`)
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de los roles por usuario';
 
-INSERT INTO prc_vacunas(id_vacuna,id_mascota,id_tipovacuna,estado,usuario_creacion,fecha_creacion,usuario_update,fecha_update) 
-VALUE(1,1,1,'A','dnery','2021-08-11 16:15:48',NULL,NULL);
 
-INSERT INTO prc_vacunas(id_vacuna,id_mascota,id_tipovacuna,estado,usuario_creacion,fecha_creacion,usuario_update,fecha_update) 
-VALUE(2,2,2,'A','dnery','2021-08-11 16:15:48',NULL,NULL);
 
-INSERT INTO prc_vacunas
+INSERT INTO prc_vacunas(id_vacuna,id_mascota,id_tipovacuna,usuario_creacion,fecha_creacion,usuario_update,fecha_update) 
+VALUE(1,1,1,'dnery','2021-08-11 16:15:48',NULL,NULL);
+
+INSERT INTO prc_vacunas(id_vacuna,id_mascota,id_tipovacuna,usuario_creacion,fecha_creacion,usuario_update,fecha_update) 
+VALUE(2,2,2,'dnery','2021-08-11 16:15:48',NULL,NULL);
+
+SELECT * from prc_mascotas
 
 LOCK TABLES `prc_vacunas` WRITE;
 USE dbmypet
