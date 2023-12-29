@@ -448,8 +448,7 @@ function MascotaListCtrl($scope, $rootScope, $state, $compile, $window, popupSer
 };
 //////////////////VACUNAS CONTROLLER /////////////////
 
-
-function RolUsuarioCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile, $window, popupService, RolUsuario, Rol) {
+function VacunaCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile, $window, popupService, Vacuna, Masc,Tipovac) {
 
 	$scope.clearMessages = function () {
 
@@ -549,12 +548,10 @@ function RolUsuarioCtrl($scope, $rootScope, $filter, $state, $stateParams, $comp
 
 			if (response.data.status == 1) {
 				$scope.rol = response.data.info[0];
-				$scope.rol.id_empresa = response.data.info[0].id.id_empresa;
 				$scope.rol.id_rol = response.data.info[0].id.id_rol;
 			}
 			else {
 				$scope.rol = [];
-				$scope.rol.id_empresa = $rootScope.globals.currentUser.id_empresa;
 				$scope.rol.id_rol = $rootScope.globals.currentUser.id_rol;
 			}
 		});
@@ -572,209 +569,6 @@ function RolUsuarioCtrl($scope, $rootScope, $filter, $state, $stateParams, $comp
 
 	$rootScope.$on("refreshRoles", function (event, data) {
 		$scope.refreshRol(data);
-	});
-};
-
-function OpcionRolCtrl($scope, $rootScope, $http, $filter, $state, DTOptionsBuilder, DTColumnDefBuilder, $stateParams, $compile, $window, popupService, OpcRol, OpcPpal, Opcion, Empresa, URL_API) {
-
-	$scope.clearMessages = function () {
-
-		$scope.successMessagesChild = '';
-		$scope.errorMessagesChild = '';
-		$scope.errorsChild = {};
-	};
-
-	var vm = this;
-
-	vm.dtOptions = DTOptionsBuilder.newOptions().withPaginationType(
-		'full_numbers').withLanguage($rootScope.globals.language);
-	vm.dtColumnDefs = [DTColumnDefBuilder.newColumnDef(0),
-	DTColumnDefBuilder.newColumnDef(1),
-	DTColumnDefBuilder.newColumnDef(2),
-	DTColumnDefBuilder.newColumnDef(3).notSortable()];
-
-
-	$scope.resetOpcion = function () {
-
-		// Sets the form to it's pristine state
-		if ($scope.opcionForm) {
-			$scope.opcionForm.$setPristine();
-		}
-
-		$scope.formTypeOpcion = "ADD";
-		var date = new Date();
-
-		$scope.opcion = { id_opc: "", id_opc_ppal: "", usuario: $rootScope.globals.currentUser.username };
-
-		$scope.opcion.id_rol = $scope.newRol;
-		//$scope.opcion.id_opc = $scope.opcion.id.id_opc;
-		//$scope.opcion.id_opc_ppal = $scope.opcion.id.id_opc_ppal;
-
-		$scope.clearMessages();
-	};
-
-	$scope.guardarOpcion = function (value) {
-		$scope.clearMessages();
-
-		if (value == "ADD") {
-
-			OpcRol.insertar($scope.opcion, function (data) {
-				$scope.formTypeOpcion = "UPD";
-				$scope.refreshOpcion($scope.newRol.id);
-				$scope.resetOpcion();
-				$scope.successMessagesChild = ['Opcion Registrada correctamente'];
-
-			}, function (result) {
-				if ((result.status == 409) || (result.status == 400)) {
-					$scope.errorsChild = result.data;
-				} else {
-					$scope.errorMessagesChild = ['Unknown error de servidor'];
-				}
-			});
-
-		}
-		else {
-
-			var date = new Date();
-			var opcionObj = { usuario: $rootScope.globals.currentUser.username };
-
-			$scope.opcion.usuario = opcionObj.usuario;
-
-			OpcRol.actualizar($scope.opcion, function (data) {
-				$scope.refreshOpcion($scope.newRol.id);
-				//$scope.modifyOpcion($scope.opcion.id_opc, $scope.opcion.id_opc_ppal);
-				$scope.successMessagesChild = ['Opcion Actualizada correctamente'];
-			}, function (result) {
-				if ((result.status == 409) || (result.status == 400)) {
-					$scope.errorsChild = result.data;
-				} else {
-					$scope.errorMessagesChild = ['Unknown error de servidor'];
-				}
-			});
-		}
-	};
-
-	$scope.resetOpcion();
-
-	$scope.loadOpciones = function () {
-
-		Opcion.findAll(function (response) {
-			if (response.data.status == 1)
-				$scope.opces = response.data.info;
-		});
-
-	};
-
-
-	$scope.loadOpcionesPpal = function () {
-		OpcPpal.findAll(function (response) {
-			if (response.data.status == 1)
-				$scope.opcppales = response.data.info;
-		});
-
-	};
-	$scope.loadOpciones();
-	$scope.loadOpcionesPpal();
-
-	$scope.updateOpcPpal = function () {
-		var id_empresa = 0;
-		//var opcppal = 0;		
-		$scope.opcppales = null;
-		$scope.opc = null;
-		$scope.opcion.id_opc_ppal = "";
-		$scope.opcion.id_opc = "";
-
-		if ($scope.opcion.id_opc == null) $scope.opcion.id_opc = "";
-		if ($scope.opcion.id_opc_ppal == null) $scope.opcion.id_opc_ppal = "";
-
-
-		$http.get(URL_API + '/servicios/sec/sec_opc_principal.php?accion=C').
-			then(function (response) {
-				if (response.data.status == 1) {
-					$scope.opcppales = response.data.info;
-					delete $scope.opcppales.id;
-				}
-			});
-
-	};
-
-
-
-	$scope.updateOpciones = function () {
-		var opcppal = 0;
-		$scope.opc = null;
-		$scope.opcion.id_opc = "";
-		if ($scope.opcion.id_opc == null) $scope.opcion.id_opc = "";
-		if ($scope.opcion.id_opc_ppal == null) $scope.opcion.id_opc_ppal = "";
-
-		if ($scope.opcion.id_opc_ppal == null) {
-			opcppal = 0;
-		} else {
-			opcppal = $scope.opcion.id_opc_ppal;
-		}
-
-		$http.get(URL_API + '/servicios/sec/sec_opcion.php?accion=C&id_opc_ppal=' + opcppal).
-			then(function (response) {
-				if (response.data.status == 1)
-					$scope.opc = response.data.info;
-				delete $scope.opc.id;
-			});
-
-	};
-
-	//LISTA
-	$scope.refreshOpcion = function (idRol) {
-		OpcRol.findByRol(idRol, function (response) {
-			if (response.data.status == 1)
-				$scope.opcionesrol = response.data.info;
-		});
-
-	};
-
-	if ($scope.formType == "ADD") {
-		$scope.refreshOpcion("NADA");
-	} else {
-		$scope.refreshOpcion($stateParams.idRol);
-	}
-
-
-
-
-	$scope.modifyOpcion = function (idRol, idOpcion) {
-		$scope.clearMessages();
-		$('#myOpcionModal').modal('show');
-		$scope.formTypeOpcion = "UPD";
-
-		OpcRol.findByRol(idRol, function (response) {
-			if (response.data.status == 1)
-				$scope.opcionesrol = response.data.info;
-		});
-
-		OpcRol.findById(idOpcion, idRol, function (response) {
-			if (response.data.status == 1)
-				$scope.opcion = response.data.info[0];
-			$scope.opcion.id_opc_ppal = response.data.info[0].id.id_opc_ppal;
-			$scope.opcion.id_opc = response.data.info[0].id.id_opc;
-			$scope.opcion.id_rol = response.data.info[0].id.id_rol;
-
-
-		});
-
-	};
-
-	$scope.deleteOpcion = function (idRol, idOpcion) {
-
-		if (popupService.showPopup('Esta seguro de borrar este registro?')) {
-
-			OpcRol.borrar(idOpcion, idRol, $rootScope.globals.currentUser.username, function (response) {
-				$scope.refreshOpcion(idRol);
-			});
-
-		}
-	};
-
-	$rootScope.$on("refreshOpciones", function (event, data) {
-		$scope.refreshOpcion(data);
 	});
 };
 
