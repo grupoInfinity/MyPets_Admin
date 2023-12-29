@@ -53,7 +53,8 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
     else $codigo = "";
 
 
-    $sql = "SELECT m.id_mascota, u.usuario, u.email,u.telefono,m.nombremascota,m.estado,
+    $sql = "SELECT m.id_mascota,m.id_tipomascota,m.id_municipio, u.usuario, u.email,
+    u.telefono,m.nombremascota,m.estado,t.tipomascota,
     d.descripcion as depto,mu.descripcion as muni,m.direccion,m.estado_direc,m.codigo,m.nacimiento 
     FROM $bd.prc_mascotas m, $bd.ctg_tipomascotas t, $bd.ctg_municipios mu,
     $bd.sec_usuario u, $bd.ctg_departamentos d 
@@ -73,10 +74,13 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 
                 $mascota[] = array(
                     'id_mascota' => $row["id_mascota"],
+                    'id_tipomascota' => $row["id_tipomascota"],
+                    'id_municipio' => $row["id_municipio"],
                     'usuario'  => $row["usuario"],
                     'mail' => ($row["email"]),
                     'telefono' => ($row["telefono"]),
                     'nombremascota' => ($row["nombremascota"]),
+                    'tipomascota' => ($row["tipomascota"]),
                     'departamento' => ($row["depto"]),
                     'municipio' => ($row["muni"]),
                     'direccion' => ($row["direccion"]),
