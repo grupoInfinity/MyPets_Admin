@@ -2,7 +2,7 @@
 /*************************** MASCOTA CONTROLLER ***********************************/
 
 function MascotaAddCtrl($rootScope, $stateParams, $scope,
-	URL_API, $filter, $http, $state, Masc) {
+	URL_API, $filter, $http, $state, Masc, Depto, Muni, Tipom) {
 
 
 	$scope.formType = 'ADD';
@@ -35,7 +35,7 @@ function MascotaAddCtrl($rootScope, $stateParams, $scope,
 		var date = new Date();
 		$scope.newMasc = {
 			idmasc: "",
-			dueno:"",
+			dueno: "",
 			tpmascota: "",
 			muni: "",
 			direccion: "",
@@ -120,10 +120,54 @@ function MascotaAddCtrl($rootScope, $stateParams, $scope,
 
 	$scope.onlyLetters = "/^[a-zA-Z.\-\s\Ññ\_\]+$/i/";
 
+	$scope.loadDept = function () {
+		Masc.findAllByEmpresaA($scope.newUsuario.id_empresa, function (response) {
+			if (response.data.status == 1)
+				$scope.dept = response.data.info;
+			else $scope.dept = [];
+		});
+	};
+
+
+	$scope.dept = null;
+	$scope.loadDept = function () {
+
+		$scope.dept = [];
+		if ($scope.newMasc.estado==null) $scope.newMasc.estado = "A";
+		Depto.findAllByFilters($scope.newMasc.estado,function (response) {
+			if (response.data.status == 1)
+				$scope.dept = response.data.info;
+			else $scope.dept = [];
+		});
+	};
+
+	$scope.muni = null;
+	$scope.loadMunis = function () {
+		$scope.muni = [];
+		if ($scope.newMasc.depto != "") {
+			Muni.findByIdDepto($scope.newMasc.depto, function (response) {
+				if (response.data.status == 1)
+					$scope.muni = response.data.muni;
+				else $scope.muni = [];
+			});
+		}
+	};
+
+	$scope.tpmasc = null;
+	$scope.loadTpmascota = function () {
+		$scope.tpmasc = [];
+		if ($scope.newMasc.estado==null) $scope.newMasc.estado = "A";
+		Tipom.findAllByFilters($scope.newMasc.estado, function (response) {
+			if (response.data.status == 1)
+				$scope.tpmasc = response.data.tpmasc;
+			else $scope.tpmasc = [];
+		});
+	};
+
 };
 
-function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams, 
-	URL_API, Masc) {
+function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
+	URL_API, Masc, Depto, Muni, Tipom) {
 
 	$scope.isVisibleAfterUsuario = true;
 
@@ -146,10 +190,11 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 		$rootScope.$broadcast("refreshRoles", 0);
 
 		var date = new Date();
-		$scope.newMasc = { 
+		$scope.newMasc = {
 			idmasc: "",
-			dueno:"",
+			dueno: "",
 			tpmascota: "",
+			depto: "",
 			muni: "",
 			direccion: "",
 			estadodir: "",
@@ -157,7 +202,8 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 			codigo: "",
 			nacim: "",
 			foto: "",
-			usuario: $rootScope.globals.currentUser.username};
+			usuario: $rootScope.globals.currentUser.username
+		};
 
 		$scope.clearMessages();
 	};
@@ -235,7 +281,7 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 
 	$scope.loadMasc = function () {
 
-		Masc.findById($stateParams.idmasc,function (response) {
+		Masc.findById($stateParams.idmasc, function (response) {
 			//if(response.data.status==1)
 			$scope.newMasc = response.data.info[0];
 			if ($scope.newMasc.estado == 'A') {
@@ -246,11 +292,46 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 
 	$scope.loadMasc();
 
+	$scope.dept = null;
+	$scope.loadDept = function () {
+
+		$scope.dept = [];
+		if ($scope.newMasc.estado==null) $scope.newMasc.estado = "A";
+		Depto.findAllByFilters($scope.newMasc.estado,function (response) {
+			if (response.data.status == 1)
+				$scope.dept = response.data.info;
+			else $scope.dept = [];
+		});
+	};
+
+	$scope.muni = null;
+	$scope.loadMunis = function () {
+		$scope.muni = [];
+		if ($scope.newMasc.depto != "") {
+			Muni.findByIdDepto($scope.newMasc.depto, function (response) {
+				if (response.data.status == 1)
+					$scope.muni = response.data.muni;
+				else $scope.muni = [];
+			});
+		}
+	};
+
+	$scope.tpmasc = null;
+	$scope.loadTpmascota = function () {
+		$scope.tpmasc = [];
+		if ($scope.newMasc.estado==null) $scope.newMasc.estado = "A";
+		Tipom.findAllByFilters($scope.newMasc.estado, function (response) {
+			if (response.data.status == 1)
+				$scope.tpmasc = response.data.tpmasc;
+			else $scope.tpmasc = [];
+		});
+	};
+
 
 };
 
 function MascotaListCtrl($scope, $rootScope, $state, $compile, $window, popupService,
-	 DTOptionsBuilder, DTColumnDefBuilder, Masc, Almacen, URL_API) {
+	DTOptionsBuilder, DTColumnDefBuilder, Masc, Almacen, URL_API) {
 	var vm = this;
 
 	vm.listMasc = listMasc;
@@ -259,7 +340,7 @@ function MascotaListCtrl($scope, $rootScope, $state, $compile, $window, popupSer
 	vm.message = '';
 	vm.masc = {};
 
-	Masc.findAlls( function (response) {
+	Masc.findAlls(function (response) {
 		vm.masc = response.data.info;
 	});
 
@@ -275,23 +356,23 @@ function MascotaListCtrl($scope, $rootScope, $state, $compile, $window, popupSer
 	vm.editMasc = editMasc;
 
 	function listMasc() {
-		Masc.findAlls( function(response) {
-			if(response.data.status==1)
-			vm.masc = response.data.info;
+		Masc.findAlls(function (response) {
+			if (response.data.status == 1)
+				vm.masc = response.data.info;
 		});
 
 	}
 	;
 
 	function reloadData() {
-		Masc.findAlls( function(response) {
-			if(response.data.estado==1){
+		Masc.findAlls(function (response) {
+			if (response.data.estado == 1) {
 				vm.masc = response.data.info;
 			}
-			else{
+			else {
 				vm.masc = [];
 			}
-				
+
 		});
 
 	}
@@ -310,8 +391,8 @@ function MascotaListCtrl($scope, $rootScope, $state, $compile, $window, popupSer
 			if (result.value) {
 				Masc.borrar(mascId,
 					$rootScope.globals.currentUser.username, function (response) {
-					reloadData();
-				});
+						reloadData();
+					});
 
 				Swal.fire({
 					toast: true,
@@ -337,10 +418,10 @@ function MascotaListCtrl($scope, $rootScope, $state, $compile, $window, popupSer
 		}).then((result) => {
 			if (result.value) {
 				Masc.activar(
-					mascId, 
+					mascId,
 					$rootScope.globals.currentUser.username, function (response) {
-					reloadData();
-				});
+						reloadData();
+					});
 
 				Swal.fire({
 					toast: true,
@@ -367,7 +448,7 @@ function MascotaListCtrl($scope, $rootScope, $state, $compile, $window, popupSer
 };
 //////////////////VACUNAS CONTROLLER /////////////////
 
-function VacunaTableCtrl($scope, $rootScope, $http, $state, $window, popupService, 
+function VacunaTableCtrl($scope, $rootScope, $http, $state, $window, popupService,
 	DTOptionsBuilder, DTColumnDefBuilder, Vacuna) {
 	var vm = this;
 	$scope.refresh = function () {
@@ -484,7 +565,7 @@ function VacunaAddCtrl($scope, $rootScope, $filter, $http, $state, Vacuna) {
 
 		var date = new Date();
 		$scope.newVacuna = {
-			  id: ""
+			id: ""
 			, idmasc: ""
 			, idtpmasc: ""
 			, usuario: $rootScope.globals.currentUser.username
@@ -538,27 +619,27 @@ function VacunaAddCtrl($scope, $rootScope, $filter, $http, $state, Vacuna) {
 	$scope.loadVacuna();
 
 	//$scope.loadOpcPadre();
-/*
-	$scope.opcppales = null;
-	$scope.loadOpcPpal = function () {
-		$scope.opcppales = [];
-
-		$scope.newOpcion.id_opc_ppal = "";
-		if ($scope.newOpcion.id_opc_ppal == null) $scope.newOpcion.id_opc_ppal = "";
-		if ($scope.newOpcion.id_empresa != "") {
-			OpcPpal.findByEmpresaA($scope.newOpcion.id_empresa, function (response) {
-				if (response.data.status == 1)
-					$scope.opcppales = response.data.info;
-				else $scope.opcppales = [];
-			});
-		}
-	};*/
+	/*
+		$scope.opcppales = null;
+		$scope.loadOpcPpal = function () {
+			$scope.opcppales = [];
+	
+			$scope.newOpcion.id_opc_ppal = "";
+			if ($scope.newOpcion.id_opc_ppal == null) $scope.newOpcion.id_opc_ppal = "";
+			if ($scope.newOpcion.id_empresa != "") {
+				OpcPpal.findByEmpresaA($scope.newOpcion.id_empresa, function (response) {
+					if (response.data.status == 1)
+						$scope.opcppales = response.data.info;
+					else $scope.opcppales = [];
+				});
+			}
+		};*/
 
 };
 
 
 function VacunaEditCtrl($scope, $rootScope, $rootScope, $filter,
-	 $state, $stateParams, Vacuna) {
+	$state, $stateParams, Vacuna) {
 	$scope.isDisabled = 'disabled';
 	$scope.updateVacuna = function () {
 

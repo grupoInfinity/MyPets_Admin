@@ -135,7 +135,7 @@ factory('Munis', function($http, URL_API){
     };
 	
 	function findByIdDepto(deptsId, callback){
-		var url = URL_API  + '/servicios/ctg/ctg_muni.php?accion=C&idDepto=' + deptsId;
+		var url = URL_API  + '/servicios/ctg/ctg_muni.php?accion=C&idDepto=' + deptsId+ '&estado=A';
 		
 		//console.log(url);
     	$http.get(url ).

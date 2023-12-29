@@ -553,6 +553,8 @@ factory('Usr', function($http, URL_API){
 		'&clave=' + usuario.clave + 
 		'&nombre=' + usuario.nombre + 
 		'&apellido=' + usuario.apellido + 
+        '&tel=' + usuario.tel+ 
+        '&pin=' + usuario.pin + 
 		'&email=' + usuario.email + 
 		'&estado=' + usuario.estado +
 		'&user=' + usuario.usuario ;
@@ -569,6 +571,8 @@ factory('Usr', function($http, URL_API){
 		'&clave=' + usuario.clave + 
 		'&nombre=' + usuario.nombre + 
 		'&apellido=' + usuario.apellido + 
+        '&tel=' + usuario.tel+
+        '&pin=' + usuario.pin + 
 		'&email=' + usuario.email + 
 		'&estado=' + (usuario.estado?'A':'I') +
 		'&user=' + usuario.usuario;

@@ -26,6 +26,7 @@ $confirmarClave = (isset($_GET['confirmarClave']) ? $_GET['confirmarClave'] : ''
 $nombre = (isset($_GET['nombre']) ? $_GET['nombre'] : '');
 $apellido = (isset($_GET['apellido']) ? $_GET['apellido'] : '');
 $email = isset($_GET['email']) ? $_GET['email'] : '';
+$tel = isset($_GET['tel']) ? $_GET['tel'] : '';
 
 $estado = isset($_GET['estado']) ? $_GET['estado'] : '';
 $user = utf8_encode(isset($_GET['user']) ? $_GET['user'] : '');
@@ -41,14 +42,16 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 	else $apellido = "";
 	if (!empty($email)) $email = "AND A.email LIKE '%$email%'";
 	else $email = "";
+	if (!empty($tel)) $tel = "AND A.telefono LIKE '%$tel%'";
+	else $tel = "";
 	if (!empty($estado)) $estado = "AND A.estado='$estado'";
 	else $estado = "";
 	if (!empty($pin)) $pin = "AND A.pin='$pin'";
 	else $pin = "";
 
-	$sql = "SELECT DISTINCT A.usuario, A.clave, A.nombre, A.apellido,A.email,A.pin, A.estado
+	$sql = "SELECT DISTINCT A.usuario, A.clave, A.nombre, A.apellido,A.email,A.pin, A.estado,A.telefono 
 	FROM $bd.$tabla A
-	WHERE 1=1 $usr $nombre $apellido $email $estado $pin AND A.usuario!='system'";
+	WHERE 1=1 $usr $nombre $apellido $email $estado $tel $pin AND A.usuario!='system'";
 	//echo $sql;
 	$result = $conn->query($sql);
 
@@ -62,6 +65,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 				$apellido = $row["apellido"];
 				$email = $row["email"];
 				$pin = $row["pin"];
+				$tel = $row["telefono"];
 				$estado = $row["estado"];
 
 				$results[] = array(
@@ -71,6 +75,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 					'apellido' => ($apellido),
 					'email' => ($email),
 					'pin' => $pin,
+					'tel' => $tel,
 					'estado' => $estado
 				);
 				$json = array("estado" => 1, "info" => $results);
@@ -86,8 +91,8 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 		$date = date('Y-m-d H:i:s');
 
 		$sql = "INSERT INTO $bd.$tabla(usuario, clave, nombre, apellido, 
-		email,pin, estado,USUARIO_CREACION, FECHA_CREACION) 
-		VALUE('$usr','$clave', '$nombre', '$apellido', '$email','".generarPin()."', 
+		email,telefono,pin, estado,USUARIO_CREACION, FECHA_CREACION) 
+		VALUE('$usr','$clave', '$nombre', '$apellido', '$email','$tel','".generarPin()."', 
 		'A', '$user', '$date')";
 
 		if ($conn->query($sql) === TRUE) {
@@ -113,7 +118,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 		$date = ", fecha_update='" . date('Y-m-d H:i:s') . "'";
 
 
-		$sql = "UPDATE $bd.$tabla SET $clave $nombre $apellido $email $pin $estado $user $date 
+		$sql = "UPDATE $bd.$tabla SET $clave $nombre $apellido $email $tel $pin $estado $user $date 
 		WHERE usuario = '$usr'";
 
 		//echo $sql;

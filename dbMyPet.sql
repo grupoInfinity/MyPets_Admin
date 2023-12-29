@@ -134,13 +134,15 @@ CREATE TABLE IF NOT EXISTS dbMyPet.sec_usuario (
   `telefono` varchar(255) DEFAULT NULL COMMENT 'telefono del usuario',
   `pin` varchar(255) DEFAULT NULL COMMENT 'pin para recuperar clave',
   `estado` varchar(1) DEFAULT 'A' COMMENT 'estado del usuario',
-  `tipo_usuario` int(1) DEFAULT NULL COMMENT 'tipo de usuario',
   `usuario_creacion` varchar(255) DEFAULT NULL COMMENT 'usuario creacion',
   `fecha_creacion` datetime DEFAULT NULL COMMENT 'fecha creacion',
   `usuario_update` varchar(255) DEFAULT NULL COMMENT 'usuario modificacion',
   `fecha_update` datetime DEFAULT NULL  COMMENT 'fecha modificacion',
   PRIMARY KEY (`usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de usuario';
+
+ALTER TABLE sec_usuario
+DROP COLUMN tipo_usuario;
 
 SELECT DISTINCT A.usuario, A.clave, A.nombre, A.apellido,A.email, A.estado
 	FROM sec_usuario A
@@ -149,18 +151,18 @@ SELECT DISTINCT A.usuario, A.clave, A.nombre, A.apellido,A.email, A.estado
 
 LOCK TABLES `sec_usuario` WRITE;
 
-insert  into `sec_usuario`(`usuario`,`clave`,`telefono`,`nombre`,`apellido`,`email`,`pin`,`estado`,`tipo_usuario`,`usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`) 
-    values ('dbarrientos','22222222','123','Dennis','Barrientos','gustavo.moreno@gi-sv.com','000100','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
-    ('dnery','123','22222222','Daniel','Nery','gustavo.moreno@gi-sv.com','000200','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
-    ('esantos','123','22222223','Eneas','Santos','gustavo.moreno@gi-sv.com','000300','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
-    ('gmoreno','456','22222224','Gustavo','Moreno','gustavo.moreno@gi-sv.com','000400','A',1,'admin','2021-11-14 13:13:24','gmoreno','2021-11-14 16:01:38'),
-    ('iabrego','123','22222225','Ivan','Abrego','gustavo.moreno@gi-sv.com','000100','A',1,'admin','2021-11-14 13:13:24','system','2023-12-03 00:00:00'),
-    ('jcastaneda','123','22222226','Jorge','Castaneda','gustavo.moreno@gi-sv.com','000500','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
-    ('kguardado','123','22222227','Karina','Guardado','gustavo.moreno@gi-sv.com','000600','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
-    ('lcastillo','123','22222228','Luis','Castillo','gustavo.moreno@gi-sv.com','000700','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
-    ('nmena','123','22222229','Nelson','Mena','gustavo.moreno@gi-sv.com','000800','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
-    ('nmunoz','123','22222202','Nelson','Muñoz','gustavo.moreno@gi-sv.com','000900','A',1,'admin','2021-11-14 13:13:24',NULL,NULL),
-    ('system','321','22222002','Administrador','Sistemas','gustavo.moreno@gi-sv.com','000110','A',1,'admin','2021-11-14 13:13:24',NULL,NULL);
+insert  into `sec_usuario`(`usuario`,`clave`,`telefono`,`nombre`,`apellido`,`email`,`pin`,`estado`,`usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`) 
+    values ('dbarrientos','22222222','123','Dennis','Barrientos','gustavo.moreno@gi-sv.com','000100','A','admin','2021-11-14 13:13:24',NULL,NULL),
+    ('dnery','123','22222222','Daniel','Nery','gustavo.moreno@gi-sv.com','000200','A','admin','2021-11-14 13:13:24',NULL,NULL),
+    ('esantos','123','22222223','Eneas','Santos','gustavo.moreno@gi-sv.com','000300','A','admin','2021-11-14 13:13:24',NULL,NULL),
+    ('gmoreno','456','22222224','Gustavo','Moreno','gustavo.moreno@gi-sv.com','000400','A','admin','2021-11-14 13:13:24','gmoreno','2021-11-14 16:01:38'),
+    ('iabrego','123','22222225','Ivan','Abrego','gustavo.moreno@gi-sv.com','000100','A','admin','2021-11-14 13:13:24','system','2023-12-03 00:00:00'),
+    ('jcastaneda','123','22222226','Jorge','Castaneda','gustavo.moreno@gi-sv.com','000500','A','admin','2021-11-14 13:13:24',NULL,NULL),
+    ('kguardado','123','22222227','Karina','Guardado','gustavo.moreno@gi-sv.com','000600','A','admin','2021-11-14 13:13:24',NULL,NULL),
+    ('lcastillo','123','22222228','Luis','Castillo','gustavo.moreno@gi-sv.com','000700','A','admin','2021-11-14 13:13:24',NULL,NULL),
+    ('nmena','123','22222229','Nelson','Mena','gustavo.moreno@gi-sv.com','000800','A','admin','2021-11-14 13:13:24',NULL,NULL),
+    ('nmunoz','123','22222202','Nelson','Muñoz','gustavo.moreno@gi-sv.com','000900','A','admin','2021-11-14 13:13:24',NULL,NULL),
+    ('system','321','22222002','Administrador','Sistemas','gustavo.moreno@gi-sv.com','000110','A','admin','2021-11-14 13:13:24',NULL,NULL);
 
 
 SELECT * FROM sec_rol_user

@@ -942,7 +942,13 @@ function UsuarioAddCtrl($rootScope, $stateParams, $scope, URL_API, $filter, $htt
 
 		var date = new Date();
 		$scope.newUsuario = { usr: "", 
+		 clave:"",
+		 nombre:"",
+		 apellido:"",
+		 tel:"",
+		 pin: "",
 		 email: "", 
+		 estado:"",
 		 usuario: $rootScope.globals.currentUser.username };
 
 		$scope.clearMessages();

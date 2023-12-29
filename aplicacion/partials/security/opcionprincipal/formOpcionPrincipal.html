@@ -16,7 +16,8 @@
             <div class="form-group" ng-class="{ 'has-error': regForm.descripcion.$error.required }">
                 <label for="descripcion" class="col-md-2 control-label">Descripci&oacute;n:</label>
                 <div class="col-md-3">
-                    <input type="text" class="form-control" name="descripcion" id="descripcion"  ng-model="newOpcionPrincipal.descripcion" placeholder="Nombre de la Opci&oacute;n Principal" required autofocus/>
+                    <input type="text" class="form-control" name="descripcion" id="descripcion" 
+					 ng-model="newOpcionPrincipal.descripcion" placeholder="Nombre de la Opci&oacute;n Principal" required autofocus/>
                     <span class="error help-block" ng-show="regForm.descripcion.$error.required">Requerido</span>
                     <span class="error help-block" ng-show="errors.descripcion">{{errors.descripcion}}</span>
                 </div>
