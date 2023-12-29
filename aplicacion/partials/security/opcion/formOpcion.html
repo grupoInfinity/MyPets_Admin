@@ -1,158 +1,165 @@
-        <fieldset>
-            <div ng-show="isNew(formType)">
-          		<legend>Ingrese una nueva Opci&oacute;n</legend>
-        	</div>
-        	
-        	<div ng-show="!isNew(formType)">
-          		<legend>Modificaci&oacute;n de la Opci&oacute;n</legend>
-        	</div>
+<fieldset>
+	<div ng-show="isNew(formType)">
+		<legend>Ingrese una nueva Opci&oacute;n</legend>
+	</div>
 
-        	<div class="form-group">
-        		<input type="hidden" name="formType" id="formType"  ng-model="formType" />
-        		<input type="hidden" name="id" id="id"  ng-model="newOpcion.id" />
-        	</div>
-             <div class="form-group">
-				
-				<div class="col-md-4">
-					<label for="idEmpresa" class="control-label">Empresa:</label>
-					<ui-select ng-model="newOpcion.id_empresa" name="idEmpresa" id="idEmpresa" ng-required="true" autofocus ng-change="loadOpcPpal()" ng-disabled="isDisabled">
-							<ui-select-match allow-clear="true">
-								<span ng-bind="$select.selected.descripcion"></span>
-							</ui-select-match>
-							<ui-select-choices repeat="empresa.id.id as empresa in (empresa | propsFilter: {descripcion: $select.search}) track by empresa.id.id">
-								<div ng-bind-html="empresa.descripcion | highlight: $select.search"></div>
-							</ui-select-choices>
-						</ui-select>
-						<span class="error help-block" ng-show="regForm.idEmpresa.$error.required">Requerido</span>
-						<span class="error help-block" ng-show="errors.idEmpresa">{{errors.idEmpresa}}</span>
+	<div ng-show="!isNew(formType)">
+		<legend>Modificaci&oacute;n de la Opci&oacute;n</legend>
+	</div>
+
+	<div class="form-group">
+		<input type="hidden" name="formType" id="formType" ng-model="formType" />
+		<input type="hidden" name="id" id="id" ng-model="newOpcion.id" />
+	</div>
+	<div class="form-group">
+
+		<div class="col-md-4">
+			<label for="idEmpresa" class="control-label">Empresa:</label>
+			<ui-select ng-model="newOpcion.id_empresa" name="idEmpresa" id="idEmpresa" ng-required="true" autofocus
+				ng-change="loadOpcPpal()" ng-disabled="isDisabled">
+				<ui-select-match allow-clear="true">
+					<span ng-bind="$select.selected.descripcion"></span>
+				</ui-select-match>
+				<ui-select-choices
+					repeat="empresa.id.id as empresa in (empresa | propsFilter: {descripcion: $select.search}) track by empresa.id.id">
+					<div ng-bind-html="empresa.descripcion | highlight: $select.search"></div>
+				</ui-select-choices>
+			</ui-select>
+			<span class="error help-block" ng-show="regForm.idEmpresa.$error.required">Requerido</span>
+			<span class="error help-block" ng-show="errors.idEmpresa">{{errors.idEmpresa}}</span>
+		</div>
+
+		<div class="col-md-4">
+			<label for="idOpcPpal" class="control-label">Opci&oacute;n Principal:</label>
+			<ui-select ng-model="newOpcion.id_opc_ppal" name="idOpcPpal" id="idOpcPpal" ng-required="true"
+				ng-change="loadOpcPadre()">
+				<ui-select-match allow-clear="true">
+					<span ng-bind="$select.selected.descripcion"></span>
+				</ui-select-match>
+				<ui-select-choices
+					repeat="opcppales.id.id as opcppales in (opcppales | propsFilter: {descripcion: $select.search}) track by opcppales.id.id">
+					<div ng-bind-html="opcppales.descripcion | highlight: $select.search"></div>
+				</ui-select-choices>
+			</ui-select>
+			<span class="error help-block" ng-show="regForm.idOpcPpal.$error.required">Requerido</span>
+			<span class="error help-block" ng-show="errors.idOpcPpal">{{errors.idOpcPpal}}</span>
+		</div>
+	</div>
+	<div class="form-group" ng-class="{ 'has-error': regForm.descripcion.$error.required }">
+		<div class="col-md-12">
+			<label for="descripcion" class="control-label">Descripci&oacute;n:</label>
+			<input type="text" class="form-control" name="descripcion" id="descripcion" ng-model="newOpcion.descripcion"
+				placeholder="Nombre de la Opci&oacute;n" required />
+			<span class="error help-block" ng-show="regForm.descripcion.$error.required">Requerido</span>
+			<span class="error help-block" ng-show="errors.descripcion">{{errors.descripcion}}</span>
+		</div>
+	</div>
+
+	<div class="form-group" ng-class="{ 'has-error': regForm.url.$error.required }">
+
+		<div class="col-md-6">
+			<label for="url" class="control-label">URL:</label>
+			<input type="text" class="form-control" name="url" id="url" ng-model="newOpcion.url"
+				placeholder="URL de la opcion" />
+			<span class="error help-block" ng-show="regForm.url.$error.required">Requerido</span>
+			<span class="error help-block" ng-show="errors.url">{{errors.url}}</span>
+		</div>
+
+	</div>
+
+	<div class="form-group">
+		<div class="col-md-12">
+			<label for="padre" class="control-label">&iquest;Es Padre?</label>
+			<!--input type="checkbox" class="icheckbox_flat-green" name="padre" id="padre"  ng-model="newOpcion.padre" ng-true-value="'1'" ng-false-value="'0'" / -->
+			<label class="switch">
+				<input type="checkbox" name="estado" id="estado" ng-model="newOpcion.padre" ng-true-value="'1'"
+					ng-false-value="'0'">
+				<div class="slider round">
+					<span class="on">Si</span>
+					<span class="off">No</span>
 				</div>
-             	
-				<div class="col-md-4">
-					<label for="idOpcPpal" class="control-label">Opci&oacute;n Principal:</label>
-					<ui-select ng-model="newOpcion.id_opc_ppal" name="idOpcPpal" id="idOpcPpal" ng-required="true" ng-change="loadOpcPadre()">
-						<ui-select-match allow-clear="true">
-							<span ng-bind="$select.selected.descripcion"></span>
-						</ui-select-match>
-						<ui-select-choices repeat="opcppales.id.id as opcppales in (opcppales | propsFilter: {descripcion: $select.search}) track by opcppales.id.id">
-							<div ng-bind-html="opcppales.descripcion | highlight: $select.search"></div>
-						</ui-select-choices>
-					</ui-select>
-					<span class="error help-block" ng-show="regForm.idOpcPpal.$error.required">Requerido</span>
-					<span class="error help-block" ng-show="errors.idOpcPpal">{{errors.idOpcPpal}}</span>
-			    </div>
-			</div>
-            <div class="form-group" ng-class="{ 'has-error': regForm.descripcion.$error.required }">
-                <div class="col-md-12">
-					<label for="descripcion" class="control-label">Descripci&oacute;n:</label>
-                    <input type="text" class="form-control" name="descripcion" id="descripcion"  ng-model="newOpcion.descripcion" placeholder="Nombre de la Opci&oacute;n" required />
-                    <span class="error help-block" ng-show="regForm.descripcion.$error.required">Requerido</span>
-                    <span class="error help-block" ng-show="errors.descripcion">{{errors.descripcion}}</span>
-                </div>
-            </div> 
-          
-    		<div class="form-group" ng-class="{ 'has-error': regForm.url.$error.required }">
-		    	
-			    <div class="col-md-6">
-					<label for="url" class="control-label">URL:</label>
-			    	<input type="text" class="form-control" name="url" id="url" ng-model="newOpcion.url" placeholder="URL de la opcion" />
-				  	<span class="error help-block" ng-show="regForm.url.$error.required">Requerido</span>
-                    <span class="error help-block" ng-show="errors.url">{{errors.url}}</span>
-			    </div>
-				
-            </div>      
+			</label>
+		</div>
+		<div class="col-md-6">
+			<label for="id_opc_padre" class="control-label">Opci&oacute;n Padre:</label>
+			<ui-select ng-model="newOpcion.id_opc_padre" name="idOpcPadre" id="idOpcPadre">
+				<ui-select-match allow-clear="true">
+					<span ng-bind="$select.selected.descripcion"></span>
+				</ui-select-match>
+				<ui-select-choices
+					repeat="opces.id.id as opces in (opces | propsFilter: {descripcion: $select.search}) track by opces.id.id">
+					<div ng-bind-html="opces.descripcion | highlight: $select.search"></div>
+				</ui-select-choices>
+			</ui-select>
+		</div>
 
-            <div class="form-group">
-				<div class="col-md-12">
-					<label for="padre" class="control-label">&iquest;Es Padre?</label>
-               		<!--input type="checkbox" class="icheckbox_flat-green" name="padre" id="padre"  ng-model="newOpcion.padre" ng-true-value="'1'" ng-false-value="'0'" / -->
-					<label class="switch">
-						<input type="checkbox" name="estado" id="estado" ng-model="newOpcion.padre" ng-true-value="'1'" ng-false-value="'0'" >
-						<div class="slider round">
-							<span class="on">Si</span>
-							<span class="off">No</span>
-						</div>
-					</label>
-                </div>
-                <div class="col-md-6">
-					<label for="id_opc_padre" class="control-label">Opci&oacute;n Padre:</label>
-					<ui-select ng-model="newOpcion.id_opc_padre" name="idOpcPadre" id="idOpcPadre">
-						<ui-select-match allow-clear="true">
-							<span ng-bind="$select.selected.descripcion"></span>
-						</ui-select-match>
-						<ui-select-choices repeat="opces.id.id as opces in (opces | propsFilter: {descripcion: $select.search}) track by opces.id.id">
-							<div ng-bind-html="opces.descripcion | highlight: $select.search"></div>
-						</ui-select-choices>
-					</ui-select>
+		<div class="col-md-6">
+			<label for="orden" class="control-label">Orden:</label>
+			<input type="number" min="1" max="99" string-to-number class="form-control" name="orden" id="orden"
+				ng-model="newOpcion.orden" placeholder="Orden de la opcion" required />
+			<span class="error help-block" ng-show="regForm.orden.$error.required">Requerido</span>
+			<span class="error help-block" ng-show="errors.orden">{{errors.orden}}</span>
+		</div>
+
+	</div>
+
+	<div class="form-group">
+
+		<div class="col-md-6">
+			<label for="estado" class="control-label">Estado:</label>
+			<label class="switch">
+				<input type="checkbox" name="estado" id="estado" ng-model="newOpcion.estado">
+				<div class="slider round">
+					<span class="on">Activo</span>
+					<span class="off">Inactivo</span>
 				</div>
-				
-			    <div class="col-md-6">
-					<label for="orden" class="control-label">Orden:</label>
-			    	<input type="number" min="1" max="99" string-to-number class="form-control" name="orden" id="orden" ng-model="newOpcion.orden" placeholder="Orden de la opcion" required/>
-				  	<span class="error help-block" ng-show="regForm.orden.$error.required">Requerido</span>
-                    <span class="error help-block" ng-show="errors.orden">{{errors.orden}}</span>
-			    </div>
-				
-            </div>
+			</label>
+			<span class="error help-block" ng-show="regForm.estado.$error.required">Requerido</span>
+			<span class="error help-block" ng-show="errors.estado">{{errors.estado}}</span>
+		</div>
+	</div>
 
-            <div class="form-group">
-				
-				<div class="col-md-6">
-					<label for="estado" class="control-label">Estado:</label>
-					<label class="switch">
-						<input type="checkbox" name="estado" id="estado" ng-model="newOpcion.estado">
-						<div class="slider round">
-							<span class="on">Activo</span>
-							<span class="off">Inactivo</span>
-						</div>
-					</label>
-				  	<span class="error help-block" ng-show="regForm.estado.$error.required">Requerido</span>
-                    <span class="error help-block" ng-show="errors.estado">{{errors.estado}}</span>
-			    </div>
-            </div>
-					    
-            <!-- We output a list of success messages (appropriately styled!) for the form.
+	<!-- We output a list of success messages (appropriately styled!) for the form.
             <ul ng-hide="!successMessages" class="success">
                 <li ng-repeat="message in successMessages">{{message}}</li>
             </ul> -->
 
-            <!-- Output the list of error messages if any.
+	<!-- Output the list of error messages if any.
             <ul ng-hide="!errorMessages" class="error">
                 <li ng-repeat="message in errorMessages">{{message}}</li>
             </ul> -->
-            
-            
-            <div class="modal fade modal-primary" id="notificacionesModal"
-				tabindex="-1" role="dialog">
-				<div class="modal-dialog modal-sm" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-							<h4 class="modal-title">Notificaciones</h4>
-						</div>
-						<div class="modal-body">
-						
-				            <!-- We output a list of success messages (appropriately styled!) for the form. -->
-				            <ul ng-hide="!successMessages" class="success">
-				                <li ng-repeat="message in successMessages">{{message}}</li>
-				            </ul>
-				
-				            <!-- Output the list of error messages if any. -->
-				            <ul ng-hide="!errorMessages" class="error">
-				                <li ng-repeat="message in errorMessages">{{message}}</li>
-				            </ul>
-						
-						</div>
-						<div class="modal-footer">
-		
-						</div>
-					</div>
-					<!-- /.modal-content -->
-				</div>
-				<!-- /.modal-dialog -->
-			</div> 
-            
 
-        </fieldset>
+
+	<div class="modal fade modal-primary" id="notificacionesModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">Notificaciones</h4>
+				</div>
+				<div class="modal-body">
+
+					<!-- We output a list of success messages (appropriately styled!) for the form. -->
+					<ul ng-hide="!successMessages" class="success">
+						<li ng-repeat="message in successMessages">{{message}}</li>
+					</ul>
+
+					<!-- Output the list of error messages if any. -->
+					<ul ng-hide="!errorMessages" class="error">
+						<li ng-repeat="message in errorMessages">{{message}}</li>
+					</ul>
+
+				</div>
+				<div class="modal-footer">
+
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+
+
+</fieldset>
