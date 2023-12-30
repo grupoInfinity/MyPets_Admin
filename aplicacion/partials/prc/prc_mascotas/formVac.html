@@ -1,22 +1,23 @@
 <input type="button" ng-click="resetVac()" name="resetVac" id="resetVac" value="Nueva vacuna" class="btn btn-primary"
 	data-toggle="modal" data-target="#myVacModal" />
-<em ng-show="rolesusr.length == 0">No existen datos de Roles.</em>
+<em ng-show="vacmasc.length == 0">No existen datos de vacunas</em>
 
 <div class="box-body no-padding">
-	<table datatable="ng" ng-hide="rolesusr.length == 0" class="table table-bordered">
+	<table datatable="ng" ng-hide="vacmasc.length == 0" class="table table-bordered">
 		<thead>
 			<tr>
-				<th>Rol</th>
-				<th></th>
+				<th>Vacuna</th>
+				<th>Fecha</th>
 			</tr>
 		</thead>
 		<!-- The table is built using the AngularJS repeat function, iterating over the members variable, and ordering by the property specified in the orderBy variable -->
 		<tbody>
-			<tr ng-repeat="rolusr in rolesusr">
-				<td>{{rolusr.ctgRol.descripcion}}</td>
+			<tr ng-repeat="vacmasc in vacmasc">
+				<td>{{vacmasc.nombrevacuna}}</td>
+				<td>{{vacmasc.fecha_creacion}}</td>
 				<td>
-					<button class="btn btn-danger btn-xs" ng-click="deleteRol(rolusr.id.usr, rolusr.id.rol)"><i
-							class="fa fa-trash-o"></i></button>
+					<button class="btn btn-danger btn-xs" ng-click="deleteVac(vacmasc.id_vacuna)">
+						<i class="fa fa-trash-o"></i></button>
 					<!--   <button class="btn btn-warning btn-xs" ng-click="modifyRol(rolusr.id.usr, rolusr.id.rol)"><i class="fa fa-edit"></i></button>  -->
 				</td>
 			</tr>
@@ -24,20 +25,20 @@
 	</table>
 </div>
 
-<div class="modal fade modal-primary" id="myRolModal" tabindex="-1" role="dialog">
+<div class="modal fade modal-primary" id="myVacModal" tabindex="-1" role="dialog">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
-			<form name="rolForm" class="form-horizontal" ng-submit="guardarRol(formTypeRol)">
+			<form name="vacForm" class="form-horizontal" ng-submit="guardarVac(formTypeVac)">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title">Ingrese un nuevo Rol</h4>
+					<h4 class="modal-title">Ingrese un nueva vacuna</h4>
 				</div>
 				<div class="modal-body">
 
 					<div class="form-group">
-						<input type="hidden" name="formTypeRol" id="formTypeRol" ng-model="formTypeRol" />
-						<input type="hidden" name="usrRol" id="usrRol" ng-model="rol.usr" />
+						<input type="hidden" name="formTypeRol" id="formTypeRol" ng-model="formTypeVac" />
+						<input type="hidden" name="" id="usrRol" ng-model="rol.usr" />
 					</div>
 
 					<div class="form-group" ng-class="{ 'has-error': rolForm.rol.$error.required }">

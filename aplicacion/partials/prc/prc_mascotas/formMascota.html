@@ -238,9 +238,9 @@
 	</form>
 	<!-- VACUNAS -->
 
-	<div id="rolesUsuario" ng-show="isVisibleAfterUsuario" class="box box-default collapsed-box box-solid">
+	<div id="vacunasMasc" ng-show="isVisibleAfterUsuario" class="box box-default collapsed-box box-solid">
 		<div class="box-header with-border">
-			<h3 class="box-title">Roles por Usuario</h3>
+			<h3 class="box-title">Vacunas por mascota</h3>
 			<div class="box-tools pull-right">
 				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
 				</button>
@@ -248,8 +248,8 @@
 			<!-- /.box-tools -->
 		</div>
 		<!-- /.box-header -->
-		<div class="box-body" ng-controller="RolUsuarioCtrl">
-			<div ng-include="'partials/security/usuario/roles/formRoles.html'"></div>
+		<div class="box-body" ng-controller="VacunaCtrl">
+			<div ng-include="'partials/prc/prc_mascotas/formVac.html'"></div>
 		</div>
 		<!-- /.box-body -->
 	</div>

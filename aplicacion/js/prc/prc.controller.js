@@ -448,7 +448,7 @@ function MascotaListCtrl($scope, $rootScope, $state, $compile, $window, popupSer
 };
 //////////////////VACUNAS CONTROLLER /////////////////
 
-function VacunaCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile, $window, popupService, Vacuna, Masc,Tipovac) {
+function VacunaCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile, $window, popupService, Vacuna, Masc,tpvac) {
 
 	$scope.clearMessages = function () {
 
@@ -457,32 +457,32 @@ function VacunaCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile,
 		$scope.errorsChild = {};
 	};
 
-	$scope.resetRol = function () {
+	$scope.resetVac = function () {
 
-		// Sets the form to it's pristine state
-		if ($scope.rolForm) {
-			$scope.rolForm.$setPristine();
+		if ($scope.vacForm) {
+			$scope.vacForm.$setPristine();
 		}
 
-		$scope.formTypeRol = "ADD";
+		$scope.formTypeVac = "ADD";
 		var date = new Date();
 
-		$scope.rol = { usuario: $rootScope.globals.currentUser.username };
+		$scope.vac = {
+			 usuario: $rootScope.globals.currentUser.username };
 
-		$scope.rol.usr = $scope.newUsuario;
-		$scope.rol.id_empresa = $scope.newUsuario;
+		$scope.vac.id_mascota = $scope.newMasc;
+		$scope.vac.id_tpvacuna = $scope.newtpvac;
 
 		$scope.clearMessages();
 	};
 
-	$scope.guardarRol = function (value) {
+	$scope.guardarVac = function (value) {
 		$scope.clearMessages();
 
 		if (value == "ADD") {
-			RolUsuario.insertar($scope.rol, function (data) {
-				$scope.formTypeRol = "UPD";
-				$scope.refreshRol($scope.newUsuario.usr);
-				$scope.resetRol();
+			Vacuna.insertar($scope.vac, function (data) {
+				$scope.formTypeVac = "UPD";
+				$scope.refreshVac($scope.newUsuario.usr);
+				$scope.resetVac();
 				$scope.successMessagesChild = ['Rol Registrado correctamente'];
 
 			}, function (result) {
@@ -495,9 +495,9 @@ function VacunaCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile,
 
 		} else {
 			var date = new Date();
-			var rolObj = { usuario: $rootScope.globals.currentUser.username };
+			var vacObj = { usuario: $rootScope.globals.currentUser.username };
 
-			$scope.rol.usuario = rolObj.usuario;
+			$scope.rol.usuario = vacObj.usuario;
 
 			RolUsuario.actualizar($scope.rol, function (data) {
 				$scope.refreshRol($scope.newUsuario.usr);
@@ -512,63 +512,63 @@ function VacunaCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile,
 		}
 	};
 
-	$scope.resetRol();
+	$scope.resetVac();
 
-	$scope.loadRoles = function () {
-		Rol.findAll(function (response) {
+	$scope.loadTPVacunas = function () {
+		tpvac.findAllByFilters('A',function (response) {
 			if (response.data.status == 1)
-				$scope.roles = response.data.info;
-			else $scope.roles = [];
+				$scope.tpvacs= response.data.info;
+			else $scope.tpvacs = [];
 		});
 	};
 
-	$scope.loadRoles();
+	$scope.loadTPVacunas();
 
 	//LISTA
-	$scope.refreshRol = function (usuario) {
-		RolUsuario.findByUsuario(usuario, function (response) {
+	$scope.refreshVac = function (idMasc) {
+		Vacuna.findByMasc(idMasc, function (response) {
 			if (response.data.status == 1)
-				$scope.rolesusr = response.data.info;
-			else $scope.rolesusr = [];
+				$scope.vacmasc = response.data.info;
+			else $scope.vacmasc = [];
 		});
 	};
 
 	if ($scope.formType == "ADD") {
-		$scope.refreshRol("NADA");
+		$scope.refreshVac("NADA");
 	} else {
-		$scope.refreshRol($stateParams.idUsuario);
+		$scope.refreshVac($stateParams.idMasc);
 	}
 
-	$scope.modifyRol = function (usuario, idRol) {
+	$scope.modifyVac = function (idVac) {
 		$scope.clearMessages();
-		$('#myRolModal').modal('show');
-		$scope.formTypeRol = "UPD";
+		$('#myVacModal').modal('show');
+		$scope.formTypeVac = "UPD";
 
-		RolUsuario.findById(usuario, idRol, function (response) {
+		Vacuna.findById(idVac,function (response) {
 
 			if (response.data.status == 1) {
-				$scope.rol = response.data.info[0];
-				$scope.rol.id_rol = response.data.info[0].id.id_rol;
+				$scope.vac = response.data.info[0];
+				//$scope.vac. = response.data.info[0].id.id_rol;
 			}
 			else {
-				$scope.rol = [];
-				$scope.rol.id_rol = $rootScope.globals.currentUser.id_rol;
+				$scope.vac = [];
+				//$scope.rol.id_rol = $rootScope.globals.currentUser.id_rol;
 			}
 		});
 
 	};
 
-	$scope.deleteRol = function (usuario, idRol) {
+	$scope.deleteVac = function (idVac) {
 
 		if (popupService.showPopup('Esta seguro de borrar este registro?')) {
-			RolUsuario.borrar(usuario, idRol, $rootScope.globals.currentUser.username, function (response) {
+			Vacuna.borrar(idVac, function (response) {
 				$scope.refreshRol(usuario);
 			});
 		}
 	};
 
-	$rootScope.$on("refreshRoles", function (event, data) {
-		$scope.refreshRol(data);
+	$rootScope.$on("refreshVacs", function (event, data) {
+		$scope.refreshVac(data);
 	});
 };
 
