@@ -154,16 +154,16 @@ angular.module('aplicacion')
 
     //TIPO MASCOTA
     $stateProvider.
-      state('menuMaster.addTipoMascota', {
+      state('menuMaster.addTPMascota', {
         url: '/addMuni',
-        templateUrl: 'partials/ctg/ctg_tipoMascota/addTipoMascota.html',
+        templateUrl: 'partials/ctg/ctg_tpmascota/addTPMascota.html',
         controller: MunisAddCtrl
-      }).state('menuMaster.listTipoMascota', {
-        url: '/listMascota',
-        templateUrl: 'partials/ctg/ctg_tipoMascota/listTipoMascota.html'
+      }).state('menuMaster.listTPMascota', {
+        url: '/listTPMascota',
+        templateUrl: 'partials/ctg/ctg_tpmascota/listTPMascota.html'
       }).state('menuMaster.editTipoMascota', {
         url: '/:idDepto/:idMunis/editMuni',
-        templateUrl: 'partials/ctg/ctg_tipoMascota/editTipoMascota.html',
+        templateUrl: 'partials/ctg/ctg_tpmascota/editTPMascota.html',
         controller: MunisEditCtrl
       });
 
