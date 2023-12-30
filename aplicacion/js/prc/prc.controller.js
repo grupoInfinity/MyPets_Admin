@@ -187,7 +187,7 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 
 		$scope.isVisibleAfterUsuario = false;
 		$scope.formType = 'ADD';
-		$rootScope.$broadcast("refreshRoles", 0);
+		$rootScope.$broadcast("refreshMasc", 0);
 
 		var date = new Date();
 		$scope.newMasc = {
@@ -481,9 +481,9 @@ function VacunaCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile,
 		if (value == "ADD") {
 			Vacuna.insertar($scope.vac, function (data) {
 				$scope.formTypeVac = "UPD";
-				$scope.refreshVac($scope.newUsuario.usr);
+				$scope.refreshVac($scope.newMasc.idmasc);
 				$scope.resetVac();
-				$scope.successMessagesChild = ['Rol Registrado correctamente'];
+				$scope.successMessagesChild = ['Vacuna Registrada correctamente'];
 
 			}, function (result) {
 				if ((result.status == 409) || (result.status == 400)) {
@@ -497,11 +497,11 @@ function VacunaCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile,
 			var date = new Date();
 			var vacObj = { usuario: $rootScope.globals.currentUser.username };
 
-			$scope.rol.usuario = vacObj.usuario;
+			$scope.vac.usuario = vacObj.usuario;
 
-			RolUsuario.actualizar($scope.rol, function (data) {
-				$scope.refreshRol($scope.newUsuario.usr);
-				$scope.successMessagesChild = ['Rol Actualizado correctamente'];
+			Vacuna.actualizar($scope.vac, function (data) {
+				$scope.refreshVac($scope.newMasc.idmasc);
+				$scope.successMessagesChild = ['Vacuna Actualizada correctamente'];
 			}, function (result) {
 				if ((result.status == 409) || (result.status == 400)) {
 					$scope.errorsChild = result.data;

@@ -37,23 +37,24 @@
 				<div class="modal-body">
 
 					<div class="form-group">
-						<input type="hidden" name="formTypeRol" id="formTypeRol" ng-model="formTypeVac" />
-						<input type="hidden" name="" id="usrRol" ng-model="rol.usr" />
+						<input type="hidden" name="formTypeVac" id="formTypeVac" ng-model="formTypeVac" />
+						<input type="hidden" name="" id="mascVac" ng-model="vac.id_tpvacuna" />
 					</div>
 
-					<div class="form-group" ng-class="{ 'has-error': rolForm.rol.$error.required }">
-						<label for="rol" class="col-sm-2 control-label">Rol:</label>
+					<div class="form-group" ng-class="{ 'has-error': vacForm.id_tpvacuna.$error.required }">
+						<label for="id_tpvacuna" class="col-sm-2 control-label">Tipo de vacuna:</label>
 						<div class="col-sm-4">
-							<ui-select ng-model="rol.rol" id="rol" name="rol" ng-required="true" autofocus>
+							<ui-select ng-model="vac.id_tpvacuna" id="id_tpvacuna" name="id_tpvacuna" ng-required="true"
+								autofocus>
 								<ui-select-match>
 									<span ng-bind="$select.selected.descripcion"></span>
 								</ui-select-match>
 								<ui-select-choices
-									repeat="ro in (roles | propsFilter: {descripcion: $select.search}) track by ro.id">
-									<div ng-bind-html="ro.descripcion | highlight: $select.search"></div>
+									repeat="tpv in (tpvac | propsFilter: {descripcion: $select.search}) track by tpv.id">
+									<div ng-bind-html="tpv.descripcion | highlight: $select.search"></div>
 								</ui-select-choices>
-								<span class="error help-block" ng-show="rolForm.rol.$error.required">Requerido</span>
-								<span class="error help-block" ng-show="errors.rol">{{errors.rol}}</span>
+								<span class="error help-block" ng-show="vacForm.vac.$error.required">Requerido</span>
+								<span class="error help-block" ng-show="errors.vac">{{errors.rol}}</span>
 							</ui-select>
 						</div>
 					</div>
@@ -71,7 +72,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cerrar</button>
-					<input type="submit" ng-disabled="rolForm.$invalid" id="guardarRol" value="Guardar cambios"
+					<input type="submit" ng-disabled="vacForm.$invalid" id="guardarVac" value="Guardar cambios"
 						class="btn btn-primary pull-right" />
 					<!--  <input type="button" ng-click="resetRol()" name="resetRol" id="resetRol" value="Nuevo Rol" class="btn btn-default" />-->
 				</div>
