@@ -78,13 +78,13 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 					'tel' => $tel,
 					'estado' => $estado
 				);
-				$json = array("estado" => 1, "info" => $results);
+				$json = array("status" => 1, "info" => $results);
 				
 			}
 		} else {
-			$json = array("estado" => 0, "info" => "No existe información con ese criterio.");
+			$json = array("status" => 0, "info" => "No existe información con ese criterio.");
 		}
-	else $json = array("estado" => 0, "info" => "No existe información.");
+	else $json = array("status" => 0, "info" => "No existe información.");
 } else {
 	if (strtoupper($accion) == 'I') { // VERIFICACION SI LA ACCION ES INSERCION
 
@@ -96,9 +96,9 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 		'A', '$user', '$date')";
 
 		if ($conn->query($sql) === TRUE) {
-			$json = array("estado" => 1, "info" => "Registro almacenado exitosamente.");
+			$json = array("status" => 1, "info" => "Registro almacenado exitosamente.");
 		} else {
-			$json = array("estado" => 0, "info" => $conn->error);
+			$json = array("status" => 0, "info" => $conn->error);
 		}
 	} else if (strtoupper($accion) == 'U') { // VERIFICACION SI LA ACCION ES MODIFICACION
 
@@ -123,9 +123,9 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 
 		//echo $sql;
 		if ($conn->query($sql) === TRUE) {
-			$json = array("estado" => 1, "info" => "Registro actualizado exitosamente.");
+			$json = array("status" => 1, "info" => "Registro actualizado exitosamente.");
 		} else {
-			$json = array("estado" => 0, "error" => $conn->error);
+			$json = array("status" => 0, "error" => $conn->error);
 		}
 	} else if (strtoupper($accion) == 'D') { // VERIFICACION SI LA ACCION ES INACTIVACION
 		$user = ", usuario_update='" . $user . "'";
@@ -136,9 +136,9 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 		//echo $sql;
 
 		if ($conn->query($sql) === TRUE) {
-			$json = array("estado" => 1, "info" => "Registro eliminado exitosamente.");
+			$json = array("status" => 1, "info" => "Registro eliminado exitosamente.");
 		} else {
-			$json = array("estado" => 0, "error" => $conn->error);
+			$json = array("status" => 0, "error" => $conn->error);
 		}
 	} else if (strtoupper($accion) == 'A') { // VERIFICACION SI LA ACCION ES ACTIVACION
 		$user = ", usuario_update='" . $user . "'";
@@ -149,9 +149,9 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 		//echo $sql;
 
 		if ($conn->query($sql) === TRUE) {
-			$json = array("estado" => 1, "info" => "Registro eliminado exitosamente.");
+			$json = array("status" => 1, "info" => "Registro eliminado exitosamente.");
 		} else {
-			$json = array("estado" => 0, "error" => $conn->error);
+			$json = array("status" => 0, "error" => $conn->error);
 		}
 	} else if (strtoupper($accion) == 'LU') { //VERIFICACION SI LA ACCION ES CONSULTA DEL LOGIN
 		if (!empty($usr)) $usr = "A.usuario='$usr'";
@@ -171,12 +171,12 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 					$results[] = array(
 						"usr" => $row["usuario"]
 					);
-					$json = array("estado" => 1, "info" => $results);
+					$json = array("status" => 1, "info" => $results);
 				}
 			} else {
-				$json = array("estado" => 0, "info" => "No existe información con ese criterio.");
+				$json = array("status" => 0, "info" => "No existe información con ese criterio.");
 			}
-		else $json = array("estado" => 0, "info" => "No existe información.");
+		else $json = array("status" => 0, "info" => "No existe información.");
 	} else if (strtoupper($accion) == 'LP') { //VERIFICACION SI LA ACCION ES CONSULTA DEL PASSWORD
 		$usrAux = $usr;
 		if (!empty($usr)) $usr = "A.usuario='$usr'";
@@ -234,12 +234,12 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 					);
 
 					//$sec_rol=null;
-					$json = array("estado" => 1, "info" => $results);
+					$json = array("status" => 1, "info" => $results);
 				}
 			} else {
-				$json = array("estado" => 0, "info" => "No existe información con ese criterio.");
+				$json = array("status" => 0, "info" => "No existe información con ese criterio.");
 			}
-		else $json = array("estado" => 0, "info" => "No existe información.");
+		else $json = array("status" => 0, "info" => "No existe información.");
 	} else if (strtoupper($accion) == 'LP2') { //VERIFICACION SI LA ACCION ES CONSULTA DEL LOGIN SIN PASSWORD
 		$usrAux = $usr;
 		if (!empty($usr)) $usr = "A.usuario='$usr'";
@@ -298,12 +298,12 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 					);
 
 					//$sec_rol=null;
-					$json = array("estado" => 1, "info" => $results);
+					$json = array("status" => 1, "info" => $results);
 				}
 			} else {
-				$json = array("estado" => 0, "info" => "No existe información con ese criterio.");
+				$json = array("status" => 0, "info" => "No existe información con ese criterio.");
 			}
-		else $json = array("estado" => 0, "info" => "No existe información.");
+		else $json = array("status" => 0, "info" => "No existe información.");
 		//echo $json;
 	} else if (strtoupper($accion) == 'UP') { // VERIFICACION SI LA ACCION ES MODIFICACION DE CLAVE
 
@@ -325,16 +325,16 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 					if (!strcmp($clave, $claveActual) && !strcmp($nuevaClave, $confirmarClave)) {
 						$sql = "UPDATE $bd.$tabla SET clave='$nuevaClave' $user $date WHERE usuario = '$usr'";
 						if ($conn->query($sql) === TRUE) {
-							$json = array("estado" => 1, "info" => "Cambio de Clave realizado exitosamente.");
+							$json = array("status" => 1, "info" => "Cambio de Clave realizado exitosamente.");
 						} else {
-							$json = array("estado" => 0, "error" => $conn->error);
+							$json = array("status" => 0, "error" => $conn->error);
 						}
-					} else $json = array("estado" => 0, "info" => "Por favor revise los valores ingresados.");
+					} else $json = array("status" => 0, "info" => "Por favor revise los valores ingresados.");
 				}
 			} else {
-				$json = array("estado" => 0, "info" => "No existe información con ese criterio.");
+				$json = array("status" => 0, "info" => "No existe información con ese criterio.");
 			}
-		} else $json = array("estado" => 0, "info" => "No existe informacion.");
+		} else $json = array("status" => 0, "info" => "No existe informacion.");
 	}
 }
 $conn->close();

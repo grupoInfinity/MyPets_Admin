@@ -21,25 +21,9 @@
                     <span class="error help-block" ng-show="regForm.descripcion.$error.required">Requerido</span>
                     <span class="error help-block" ng-show="errors.descripcion">{{errors.descripcion}}</span>
                 </div>
-				<label for="empresa" class="col-md-2 control-label">Empresa:</label>
-				<div class="col-md-3">
-				   <ui-select ng-model="newOpcionPrincipal.id_empresa" name="idempresa" id="idempresa" ng-required="true" autofocus>
-						   <ui-select-match allow-clear="true">
-							   <span ng-bind="$select.selected.descripcion"></span>
-						   </ui-select-match>
-						   <ui-select-choices repeat="empresa.id.id as empresa in (empresa | propsFilter: {descripcion: $select.search}) track by empresa.id.id">
-							   <div ng-bind-html="empresa.descripcion | highlight: $select.search"></div>
-						   </ui-select-choices>
-					   </ui-select>
-					   <span class="error help-block" ng-show="regForm.idempresa.$error.required">Requerido</span>
-					   <span class="error help-block" ng-show="errors.idempresa">{{errors.idempresa}}</span>
-				</div>
+				
 			</div>
 			
-			
-		
-	   
-            
             <div class="form-group" ng-class="{ 'has-error': regForm.menu_icon.$error.required }">
                 <label for="menu_icon" class="col-sm-2 control-label">Icono Menu:</label>
                 <div class="col-md-3">
@@ -59,10 +43,17 @@
             <div class="form-group" ng-class="{ 'has-error': regForm.estado.$error.required }">
 				<label for="acceso_directo" class="col-sm-2 control-label">Acceso Directo:</label>
 				<div class="col-md-3">
-					<select class="form-control" name="acceso_directo" id="acceso_directo" ng-model="newOpcionPrincipal.acceso_directo" >
+					<!--*select class="form-control" name="acceso_directo" id="acceso_directo" ng-model="newOpcionPrincipal.acceso_directo" >
 						<option value="1">S&iacute;</option>
 						<option value="0">No</option>
-					</select>
+					</select -->
+					<label class="switch">
+						<input type="checkbox" name="acceso_directo" id="acceso_directo" ng-model="newOpcionPrincipal.acceso_directo">
+						<div class="slider round">
+							<span class="on">S&iacute;</span>
+							<span class="off">No</span>
+						</div>
+					</label>
 				</div>
 				
 				<label for="estado" class="col-sm-2 control-label">Estado:</label>

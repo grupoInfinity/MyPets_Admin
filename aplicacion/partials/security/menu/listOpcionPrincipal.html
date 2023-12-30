@@ -18,8 +18,7 @@
              <tr>
             
                     <th>ID</th>
-                    <th>Empresa</th>
-                    <th>Opcio&oacute;n Principal</th>
+                    <th>Opci&oacute;n Principal</th>
 					<th>Acceso Directo</th>
                     <th>Estado</th>
                     <th></th>
@@ -29,8 +28,7 @@
             <tr ng-repeat="opcPpal in showCase.opcPpal ">           
                  <!----{{opcPpal}}
                   | orderBy:orderBy-->
-                <td><i class="glyphicon {{opcPpal.menu_icon}}"></i> - {{opcPpal.id.id}}</td>
-                <td>{{opcPpal.ctg_empresa.descripcion}}</td>
+                <td><i class="glyphicon {{opcPpal.menu_icon}}"></i> - {{opcPpal.id}}</td>
                 <td>{{opcPpal.descripcion}}</td>
 				<td align="center">
 					<label ng-if=" opcPpal.acceso_directo==1"><font color="green"><i class="fa fa-check-square-o"></i></font></label>

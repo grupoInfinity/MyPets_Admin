@@ -148,7 +148,8 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 			$json = array("status" => 0, "info" => "No existe información con ese criterio.");
 		}
 	else $json = array("status" => 0, "info" => "No existe información.");
-} else {
+} 
+else {
 	if (strtoupper($accion) == 'CP') { //VERIFICACION SI LA ACCION ES CONSULTA DE MENUS PADRES
 		if (!empty($id_opc)) $id_opc = "AND A.id_opc=$id_opc";
 		else $id_opc = "";
@@ -412,7 +413,8 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 				$json = array("status" => 0, "info" => "No existe información con ese criterio.");
 			}
 		else $json = array("status" => 0, "info" => "No existe información.");
-	} else if (strtoupper($accion) == 'I') { // VERIFICACION SI LA ACCION ES INSERCION
+	} 
+	else if (strtoupper($accion) == 'I') { // VERIFICACION SI LA ACCION ES INSERCION
 		/*  $sql = "
 		SELECT MAX(a.id_opc) + 1 as id_opc
 		FROM $bd.$tabla a";
@@ -441,7 +443,8 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 		} else {
 			$json = array("status" => 0, "info" => $conn->error);
 		}
-	} else if (strtoupper($accion) == 'U') { // VERIFICACION SI LA ACCION ES ACTUALIZACION
+	} 
+	else if (strtoupper($accion) == 'U') { // VERIFICACION SI LA ACCION ES ACTUALIZACION
 
 		// $id_rol = "id_rol=".$id_rol;
 		// $nid_opc = ", id_opc=".$nid_opc;
@@ -458,7 +461,8 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 		} else {
 			$json = array("status" => 0, "error" => $conn->error);
 		}
-	} else if (strtoupper($accion) == 'D') { // VERIFICACION SI LA ACCION ES ELIMINACION
+	} 
+	else if (strtoupper($accion) == 'D') { // VERIFICACION SI LA ACCION ES ELIMINACION
 		$user = ", usuario_update='" . $user . "'";
 		$date = ", fecha_update='" . date('Y-m-d H:i:s') . "'";
 
@@ -469,7 +473,8 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 		} else {
 			$json = array("status" => 0, "error" => $conn->error);
 		}
-	} else if (strtoupper($accion) == 'OP') { // VERIFICACION SI LA ACCION DE LAS OPCIONES PRINCIPALES
+	} 
+	else if (strtoupper($accion) == 'OP') { // VERIFICACION SI LA ACCION DE LAS OPCIONES PRINCIPALES
 
 		$sql = "SELECT DISTINCT opcppal.id_menu, opcppal.descripcion, opcppal.menu_icon,
 		ifnull(opcppal.acceso_directo, 0) as acceso_directo
@@ -495,14 +500,15 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 				$json = array("status" => 0, "info" => "No existe información con ese criterio.");
 			}
 		else $json = array("status" => 0, "info" => "No existe información.");
-	} else if (strtoupper($accion) == 'OU') { // VERIFICACION SI LA ACCION DE LAS OPCIONES DE LOS USUARIOS
+	} 
+	else if (strtoupper($accion) == 'OU') { // VERIFICACION SI LA ACCION DE LAS OPCIONES DE LOS USUARIOS
 
 		$sql = "SELECT DISTINCT opc.id_opc, opc.id_menu, IFNULL(opc.id_opc_padre,'NA') as id_opc_padre
 		, IFNULL(opc.padre,'') AS padre, opc.descripcion, opc.url, opc.estado
         , opc.usuario_creacion, opc.fecha_creacion, opc.usuario_update, opc.fecha_update , opc.orden
 		FROM $bd.sec_rol_usuario rusr
 		INNER JOIN $bd.sec_opc_rol opcr ON opcr.id_rol = rusr.id_rol
-		INNER JOIN $bd.sec_opcion opc ON opc.id = opcr.id_opc 
+		INNER JOIN $bd.sec_opcion opc ON opc.id_opc = opcr.id_opc 
 		AND COALESCE(opc.id_menu, -1) = COALESCE(opcr.id_menu, -1) AND opc.estado = 'A'
 		INNER JOIN $bd.sec_usuario us ON us.usuario = rusr.usuario AND us.estado = 'A' 
 		AND us.usuario = '$user' WHERE 1=1 ORDER BY opc.orden";

@@ -141,68 +141,71 @@ factory('OpcPpal', function($http, URL_API){
     service.findById = findById;
 
     function findAll(callback){
-		var url = URL_API + '/servicios/sec/sec_opc_principal.php?accion=C';
+		var url = URL_API + '/servicios/sec/sec_menu.php?accion=C';
+		//console.log(url);
         $http.get(url).
         then(function(response) {
            callback(response);
         });
     };
 	function findAllA(callback){
-		var url = URL_API + '/servicios/sec/sec_opc_principal.php?accion=C&estado=A';
+		var url = URL_API + '/servicios/sec/sec_menu.php?accion=C&estado=A';
 		
         $http.get(url).
         then(function(response) {
            callback(response);
         });
     };
-    function findById(id,  callback){
-		var url = URL_API + '/servicios/sec/sec_opc_principal.php?accion=C&id=' + id ;
+    function findById(id, callback){
+		var url = URL_API + '/servicios/sec/sec_menu.php?accion=C&id=' + id;
+		//console.log(url);
         $http.get(url).
         then(function(response) {
            callback(response);
         });
     };
-
     function borrar(id, usuario, callback){
-		var url = URL_API + '/servicios/sec/sec_opc_principal.php?accion=D&id=' + id.id + '&user=' + usuario;
+		var url = URL_API + '/servicios/sec/sec_menu.php?accion=D&id=' + id + '&user=' + usuario;
 		
         $http.post(url, id).
         then(function(response) {
            callback(response);
         });
     };
-	
 	function activar(id, usuario, callback){
-		var url = URL_API + '/servicios/sec/sec_opc_principal.php?accion=A&id=' + id.id + '&user=' + usuario;
-		
+		var url = URL_API + '/servicios/sec/sec_menu.php?accion=A&id=' + id + '&user=' + usuario;
+		//console.log(url);
+
         $http.post(url, id).
         then(function(response) {
            callback(response);
         });
     };
-
     function insertar(opcPpal, callback){
-		var url = URL_API + '/servicios/sec/sec_opc_principal.php?accion=I&desc=' + opcPpal.descripcion +
+		var url = URL_API + '/servicios/sec/sec_menu.php?accion=I&desc=' + opcPpal.descripcion +
         '&menuicon=' + opcPpal.menu_icon +
         '&orden=' + opcPpal.orden +
         '&accesoDirecto=' + opcPpal.acceso_directo +
-        '&user=' + opcPpal.usuario;
+        '&user=' + opcPpal.usuario ;
 		
         $http.post(url,opcPpal).
         then(function(response) {
             callback(response);
          });
     };
-
     function actualizar(opcPpal, callback){
-		var url = URL_API + '/servicios/sec/sec_opc_principal.php?accion=U&id=' + opcPpal.id.id + 
+		console.log("opcPpal.acceso_directo: "+ opcPpal.acceso_directo);
+		console.log("opcPpal.estado: "+ opcPpal.estado);
+		var url = URL_API + '/servicios/sec/sec_menu.php?accion=U&id=' + opcPpal.id + 
         '&desc=' + opcPpal.descripcion +
-        '&menuicon=' + opcPpal.menu_icon +
+        '&menu_icon=' + opcPpal.menu_icon +
 		'&orden=' + opcPpal.orden +
-		'&accesoDirecto=' + opcPpal.acceso_directo +
-        '&estado=' + (opcPpal.estado?'A':'I') +
+		'&acceso_directo=' + (opcPpal.acceso_directo==true?'1':'0')  +
+        '&estado=' + (opcPpal.estado==true?'A':'I') +
         '&user=' + opcPpal.usuario;
-		
+
+		console.log(url);
+
         $http.post(url, opcPpal).
         then(function(response) {
             callback(response);
@@ -253,7 +256,9 @@ factory('Rol', function($http, URL_API){
     };
 
     function borrar(id, usuario, callback){
-        $http.post(URL_API + '/servicios/sec/sec_rol.php?accion=D&id=' + id + '&user=' + usuario, id).
+		var url=URL_API + '/servicios/sec/sec_rol.php?accion=D&id=' + id + '&user=' + usuario;
+		//console.log(url);
+        $http.post(url, id).
         then(function(response) {
            callback(response);
         });
@@ -337,7 +342,7 @@ factory('OpcRol', function($http, URL_API){
 		'id_opc_ppal=' + idOpcPpal +
         '&id_rol=' + idRol ;
 		
-		console.log(url);
+		//console.log(url);
         $http.get(url).
         then(function(response) {
            callback(response);

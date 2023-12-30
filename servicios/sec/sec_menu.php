@@ -17,10 +17,9 @@ $orden = isset($_GET['orden']) ? $_GET['orden'] : '';
 $id_opc_ppal = isset($_GET['id']) ? $_GET['id'] : '';
 $desc = utf8_encode(isset($_GET['desc']) ? $_GET['desc'] : '');
 $estado = isset($_GET['estado']) ? $_GET['estado'] : '';
-$menuicon = isset($_GET['menuicon']) ? $_GET['menuicon'] : '';
-$accesoDirecto = isset($_GET['accesoDirecto']) ? $_GET['accesoDirecto'] : '';
+$menuicon = isset($_GET['menu_icon']) ? $_GET['menu_icon'] : '';
+$accesoDirecto = isset($_GET['acceso_directo']) ? $_GET['acceso_directo'] : '';
 $user = (isset($_GET['user']) ? $_GET['user'] : '');
-$id_empresa = (isset($_GET['id_empresa']) ? $_GET['id_empresa'] : '');
 
 $json = "no has seteado nada.";
 
@@ -37,9 +36,9 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
     else $estado="";
     
     $sql = "
-	SELECT A.id_menu, A.descripcion, A.menu_icon, A.estado, A.id_empresa, A.orden, A.acceso_directo
+	SELECT A.id_menu, A.descripcion, A.menu_icon, A.estado, A.orden, A.acceso_directo
 	FROM $bd.$tabla A
-	WHERE $id_opc_ppal $desc $menuicon $estado $id_empresa $accesoDirecto
+	WHERE $id_opc_ppal $desc $menuicon $estado $accesoDirecto
 	ORDER BY A.id_menu";
     //echo $sql;
     $result = $conn->query($sql);
@@ -50,35 +49,9 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
             while($row = $result->fetch_assoc()) {
                 $id_opc_ppal = $row["id_menu"];            
                 
-                $id[] = array(
-                    'id' => $id_opc_ppal
-                   
-                );
-                /*****************************************************/
-                /*$sql2 = "
-					SELECT A.id, A.descripcion, A.estado
-					FROM $bd.ctg_empresa A
-					WHERE A.id = $id_empresa";
-			        
-			        //echo $sql2;
-			        $result2 = $conn->query($sql2);
-			        
-			        if (!empty($result2))
-			            if($result2->num_rows > 0) {
-			                while($row2 = $result2->fetch_assoc()) {
-			                    $ctg_empresa[] = array(
-			                        'id' => $row2["id"]
-			                        , 'descripcion' => $row2["descripcion"]
-			                        , 'estado'=>$row2["estado"]
-			                    );
-			                }
-			            } else {
-			                $ctg_empresa[] = null;
-			            }
-			            else $ctg_empresa[] = null;*/
                 /*****************************************************/
                 $results[] = array(
-                    "id" => $id[$i],
+                    "id" => $id_opc_ppal,
                     'descripcion' => ($row["descripcion"]), 
                     'menu_icon'=>$row["menu_icon"], 
                     'orden'=>$row["orden"],
@@ -137,7 +110,7 @@ else{
         
         $sql = "UPDATE $bd.$tabla SET $desc $menuicon $estado $accesoDirecto $orden $user $date 
         WHERE id_menu = $id_opc_ppal";
-        
+        //echo $sql;
         if ($conn->query($sql) === TRUE) {
             $json = array("status"=>1, "info"=>"Registro actualizado exitosamente.");
         } else {

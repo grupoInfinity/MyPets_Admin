@@ -8,7 +8,7 @@ var app = angular.module('aplicacion', ['ui.router', 'ngRoute', 'ngCookies', 'ng
   //SEGURIDAD
   , 'opcionService', 'opcRolService', 'opcionPrincipalService', 'rolUsuarioService'
   , 'rolService', 'authenticationService', 'flashService', 'usrService'
-  , 'usrService', 'authorizationService', 'setupService'
+  , 'authorizationService', 'setupService','usuarioService'
 
 ])
 
@@ -90,36 +90,20 @@ angular.module('aplicacion')
         controller: OpcionEditCtrl
       });
 
-    //OPCION PRINCIPAL
-    $stateProvider.
-      state('menuMaster.addOpcionPrincipal', {
-        url: '/addOpcionPrincipal',
-        templateUrl: 'partials/security/opcionprincipal/addOpcionPrincipal.html',
-        controller: OpcionPrincipalAddCtrl
-      }).state('menuMaster.listOpcionPrincipal', {
-        url: '/listOpcionPrincipal',
-        templateUrl: 'partials/security/opcionprincipal/listOpcionPrincipal.html'
-      }).state('menuMaster.editOpcionPrincipal', {
-        url: '/:idOpcPpal/:idEmpresa/editOpcionPrincipal',
-        templateUrl: 'partials/security/opcionprincipal/editOpcionPrincipal.html',
-        controller: OpcionPrincipalEditCtrl
-      });
-
-    /*//OPCION POR ROL
-
-       $stateProvider.
-       state('menuMaster.addOpcRol', {	
-         url : '/addOpcRol',
-           templateUrl : 'partials/security/sec_opc_rol/addOpcRol.html',
-           controller : OpcionRolAddCtrl
-       }).state('menuMaster.listOpcRol', {
-             url : '/listOpcRol',
-           templateUrl : 'partials/security/sec_opc_rol/listOpcRol.html'
-       }).state('menuMaster.editOpcRol', {
-         url : '/:idOpcRol/editOpcRol',
-           templateUrl : 'partials/security/sec_opc_rol/editOpcRol.html',
-           controller : OpcionRolEditCtrl
-       });*/
+	//OPCION PRINCIPAL
+	$stateProvider.
+	state('menuMaster.addOpcionPrincipal', {	
+		url : '/addOpcionPrincipal',
+		templateUrl : 'partials/security/menu/addOpcionPrincipal.html',
+		controller : OpcionPrincipalAddCtrl
+	}).state('menuMaster.listOpcionPrincipal', {
+		url : '/listOpcionPrincipal',
+		templateUrl : 'partials/security/menu/listOpcionPrincipal.html'
+	}).state('menuMaster.editOpcionPrincipal', {
+		url : '/:idOpcPpal/editOpcionPrincipal',
+		templateUrl : 'partials/security/menu/editOpcionPrincipal.html',
+		controller : OpcionPrincipalEditCtrl
+	});
 
     //CATALOGOS
     //DEPTS CRUD
@@ -170,47 +154,32 @@ angular.module('aplicacion')
 
     //TIPO MASCOTA
     $stateProvider.
-      state('menuMaster.addTipovac', {
+      state('menuMaster.addTipoMascota', {
         url: '/addMuni',
-        templateUrl: 'partials/ctg/ctg_tipovac/addTipovac.html',
+        templateUrl: 'partials/ctg/ctg_tipoMascota/addTipoMascota.html',
         controller: MunisAddCtrl
-      }).state('menuMaster.listTipovac', {
-        url: '/listMuni',
-        templateUrl: 'partials/ctg/ctg_muni/listTipovac.html'
-      }).state('menuMaster.editMunis', {
+      }).state('menuMaster.listTipoMascota', {
+        url: '/listMascota',
+        templateUrl: 'partials/ctg/ctg_tipoMascota/listTipoMascota.html'
+      }).state('menuMaster.editTipoMascota', {
         url: '/:idDepto/:idMunis/editMuni',
-        templateUrl: 'partials/ctg/ctg_muni/editTipovac.html',
+        templateUrl: 'partials/ctg/ctg_tipoMascota/editTipoMascota.html',
         controller: MunisEditCtrl
       });
 
     //MASCOTA
     $stateProvider.
-      state('menuMaster.addUsuario', {
-        url: '/addUsuario',
-        templateUrl: 'partials/prc/prc_mascota/addUsuario.html',
-        controller: UsuarioAddCtrl
-      }).state('menuMaster.listUsuario', {
-        url: '/listUsuario',
-        templateUrl: 'partials/prc/prc_mascota/listUsuario.html'
-      }).state('menuMaster.editUsuario', {
-        url: '/:idUsuario/:id_empresa/editUsuario',
-        templateUrl: 'partials/prc/prc_mascota/editUsuario.html',
-        controller: UsuarioEditCtrl
-      });
-
-    //USUARIO
-    $stateProvider.
-      state('menuMaster.addUsuario', {
-        url: '/addUsuario',
-        templateUrl: 'partials/security/usuario/addUsuario.html',
-        controller: UsuarioAddCtrl
-      }).state('menuMaster.listUsuario', {
-        url: '/listUsuario',
-        templateUrl: 'partials/security/usuario/listUsuario.html'
-      }).state('menuMaster.editUsuario', {
-        url: '/:idUsuario/:id_empresa/editUsuario',
-        templateUrl: 'partials/security/usuario/editUsuario.html',
-        controller: UsuarioEditCtrl
+      state('menuMaster.addMascota', {
+        url: '/addMascota',
+        templateUrl: 'partials/prc/prc_mascota/addMascota.html',
+        controller: MascotaAddCtrl
+      }).state('menuMaster.listMascota', {
+        url: '/listMascota',
+        templateUrl: 'partials/prc/prc_mascota/listMascota.html'
+      }).state('menuMaster.editMascota', {
+        url: '/:idUsuario/editMascota',
+        templateUrl: 'partials/prc/prc_mascota/editMascota.html',
+        controller: MascotaEditCtrl
       });
 
     // MENU Y LOGIN

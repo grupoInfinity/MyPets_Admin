@@ -73,7 +73,6 @@ function HomeController($scope, $rootScope, $location, $stateParams, $state, Usu
 	};
 	
 	$scope.showMenu = function(idOpcPrincipal){
-		console.log($rootScope.globals.currentUser);
 		OpcRol.findByIdOpcPpalRol(idOpcPrincipal, $rootScope.globals.currentUser.sec_rol[0].id, function(response) {
 			
 			//console.log(response.data.info);
