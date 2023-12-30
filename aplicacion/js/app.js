@@ -171,14 +171,14 @@ angular.module('aplicacion')
     $stateProvider.
       state('menuMaster.addMascota', {
         url: '/addMascota',
-        templateUrl: 'partials/prc/prc_mascota/addMascota.html',
+        templateUrl: 'partials/prc/prc_mascotas/addMascota.html',
         controller: MascotaAddCtrl
       }).state('menuMaster.listMascota', {
         url: '/listMascota',
-        templateUrl: 'partials/prc/prc_mascota/listMascota.html'
+        templateUrl: 'partials/prc/prc_mascotas/listMascota.html'
       }).state('menuMaster.editMascota', {
         url: '/:idMasc/editMascota',
-        templateUrl: 'partials/prc/prc_mascota/editMascota.html',
+        templateUrl: 'partials/prc/prc_mascotas/editMascota.html',
         controller: MascotaEditCtrl
       });
 
