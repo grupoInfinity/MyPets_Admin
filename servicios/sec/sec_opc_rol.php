@@ -492,7 +492,7 @@ else {
 			if ($result->num_rows > 0) {
 				while ($row = $result->fetch_assoc()) {
 					$results[] = array(
-						"id" => $row["id_menu"], 
+						"id_menu" => $row["id_menu"], 
 						'descripcion' => ($row["descripcion"]), 
 						'menu_icon' => ($row["menu_icon"]), 
 						'acceso_directo' => ($row["acceso_directo"])

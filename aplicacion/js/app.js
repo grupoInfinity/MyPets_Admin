@@ -1,7 +1,6 @@
 var app = angular.module('aplicacion', ['ui.router', 'ngRoute', 'ngCookies', 'ngSanitize', 'ui.select', 'datatables', 'datatables.bootstrap'
   //CATALOGOS
-  , 'munisService'
-  , 'deptsService'
+  , 'munisService', 'deptsService', 'tpvacService', 'tpmascService'
   //PRC
   , 'vacunaService', 'mascService'
 
@@ -16,6 +15,8 @@ var app = angular.module('aplicacion', ['ui.router', 'ngRoute', 'ngCookies', 'ng
   .controller('HomeController', HomeController)
   .controller('DeptsTableCtrl', DeptsTableCtrl)
   .controller('MunisTableCtrl', MunisTableCtrl)
+  .controller('tpvacTableCtrl', tpvacTableCtrl)
+	.controller('tpmascTableCtrl', tpmascTableCtrl)
   //PROCEDIMIENTOS
   .controller('MascotaListCtrl', MascotaListCtrl)
   .controller('VacunaCtrl', VacunaCtrl)

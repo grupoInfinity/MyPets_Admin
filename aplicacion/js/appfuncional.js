@@ -14,6 +14,8 @@ var app = angular.module('japapp', ['ui.router', 'ngRoute', 'ngCookies', 'ngSani
 	.controller('HomeController', HomeController)
 	.controller('DeptsTableCtrl', DeptsTableCtrl)
 	.controller('MunicipioTableCtrl', MunicipioTableCtrl)
+	.controller('tpvacTableCtrl', tpvacTableCtrl)
+	.controller('tpmascTableCtrl', tpmascTableCtrl)
 
 	//PROCEDIMIENTOS
 	.controller('MascotaListCtrl', MascotaListCtrl)

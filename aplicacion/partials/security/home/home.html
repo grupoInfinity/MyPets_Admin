@@ -36,7 +36,7 @@
 	<div id="padre">
 		<div id="hijo">
 			<div class="row">
-				<div class="col-md-4" ng-repeat="opcppal in opcionesPpal track by opcppal.id">
+				<div class="col-md-4" ng-repeat="opcppal in opcionesPpal track by opcppal.id_menu">
 					<div class="info-box" data-toggle="tooltip" title="{{opcppal.descripcion}}" style="cursor:pointer;" ng-click="showMenu(opcppal.id);">
 						<span class="info-box-icon bg-purple-active color-palette"><i class="glyphicon {{opcppal.menu_icon}}"></i></span>
 						<div class="info-box-content" >
