@@ -492,7 +492,10 @@ else {
 			if ($result->num_rows > 0) {
 				while ($row = $result->fetch_assoc()) {
 					$results[] = array(
-						"id" => $row["id_menu"], 'descripcion' => ($row["descripcion"]), 'menu_icon' => ($row["menu_icon"]), 'acceso_directo' => ($row["acceso_directo"])
+						"id" => $row["id_menu"], 
+						'descripcion' => ($row["descripcion"]), 
+						'menu_icon' => ($row["menu_icon"]), 
+						'acceso_directo' => ($row["acceso_directo"])
 					);
 					$json = array("status" => 1, "info" => $results);
 				}
@@ -519,7 +522,12 @@ else {
 			if ($result->num_rows > 0) {
 				while ($row = $result->fetch_assoc()) {
 					$results[] = array(
-						"id" => $row["id_opc"], 'id_opc_principal' => ($row["id_menu"]), 'id_opc_padre' => ($row["id_opc_padre"]), 'padre' => ($row["padre"]), 'descripcion' => ($row["descripcion"]), 'url' => ($row["url"])
+						"id" => $row["id_opc"], 
+						'id_opc_principal' => ($row["id_menu"]), 
+						'id_opc_padre' => ($row["id_opc_padre"]), 
+						'padre' => ($row["padre"]), 
+						'descripcion' => ($row["descripcion"]), 
+						'url' => ($row["url"])
 					);
 					$json = array("status" => 1, "info" => $results);
 				}

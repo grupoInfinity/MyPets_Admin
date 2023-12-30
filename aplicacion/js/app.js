@@ -144,10 +144,10 @@ angular.module('aplicacion')
         controller: tpvacAddCtrl
       }).state('menuMaster.listTipovac', {
         url: '/listTipovac',
-        templateUrl: 'partials/ctg/ctg_tipovac/listTpmascota.html'
+        templateUrl: 'partials/ctg/ctg_tipovac/listTipovac.html'
       }).state('menuMaster.editTipovac', {
-        url: '/:idDepto/:idMunis/editTipovac',
-        templateUrl: 'partials/ctg/ctg_tipovac/editTpmascota.html',
+        url: '/:idtpvac/editTipovac',
+        templateUrl: 'partials/ctg/ctg_tipovac/editTipovac.html',
         controller: tpvacEditCtrl
       });
 
@@ -155,16 +155,16 @@ angular.module('aplicacion')
     //TIPO MASCOTA
     $stateProvider.
       state('menuMaster.addTPMascota', {
-        url: '/addMuni',
+        url: '/addTPmascota',
         templateUrl: 'partials/ctg/ctg_tpmascota/addTPMascota.html',
-        controller: MunisAddCtrl
+        controller: tpmascAddCtrl
       }).state('menuMaster.listTPMascota', {
         url: '/listTPMascota',
         templateUrl: 'partials/ctg/ctg_tpmascota/listTPMascota.html'
       }).state('menuMaster.editTipoMascota', {
-        url: '/:idDepto/:idMunis/editMuni',
+        url: '/:idtpmasc/editTPmascota',
         templateUrl: 'partials/ctg/ctg_tpmascota/editTPMascota.html',
-        controller: MunisEditCtrl
+        controller: tpmascEditCtrl
       });
 
     //MASCOTA
@@ -177,7 +177,7 @@ angular.module('aplicacion')
         url: '/listMascota',
         templateUrl: 'partials/prc/prc_mascota/listMascota.html'
       }).state('menuMaster.editMascota', {
-        url: '/:idUsuario/editMascota',
+        url: '/:idMasc/editMascota',
         templateUrl: 'partials/prc/prc_mascota/editMascota.html',
         controller: MascotaEditCtrl
       });
