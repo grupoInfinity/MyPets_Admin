@@ -1,20 +1,25 @@
 var app = angular.module('japapp', ['ui.router', 'ngRoute', 'ngCookies', 'ngSanitize', 'ui.select',
 	'datatables', 'datatables.bootstrap'
 	//CATALOGOS
-	, 'deptsService', 'munisService','tpvacService','tpmascService'
+	, 'deptsService', 'munisService', 'tpvacService', 'tpmascService'
 
 	//PRC
-
+	, 'vacunaService', 'mascService'
 
 	//SEGURIDAD
-	, 'authenticationService', 'flashService', 'usuarioService'])
+	, 'authenticationService', 'flashService', 'usrService'])
 
 
-		//CATALOGOS
-		.controller('HomeController', HomeController)
-		.controller('DeptsTableCtrl', DeptsTableCtrl)
-		.controller('MunicipioTableCtrl', MunicipioTableCtrl)
-;
+	//CATALOGOS
+	.controller('HomeController', HomeController)
+	.controller('DeptsTableCtrl', DeptsTableCtrl)
+	.controller('MunicipioTableCtrl', MunicipioTableCtrl)
+
+	//PROCEDIMIENTOS
+	.controller('MascotaListCtrl', MascotaListCtrl)
+	.controller('VacunaCtrl', VacunaCtrl)
+
+	;
 
 app.config(['$qProvider', function ($qProvider) {
 	$qProvider.errorOnUnhandledRejections(true);
