@@ -505,7 +505,7 @@ factory('Usr', function($http, URL_API){
     function findAlls(callback){
     	var url = URL_API + '/servicios/sec/sec_usuario.php?accion=C';
 		
-		//console.log(url);
+		console.log(url);
     	$http.get(url).
         then(function(response) {
            callback(response);
@@ -533,7 +533,8 @@ factory('Usr', function($http, URL_API){
 	
 
     function borrar(usuarioId,usuario, callback){
-		var url = URL_API + '/servicios/sec/sec_usuario.php?accion=D&usr=' + usuarioId;
+		var url = URL_API + '/servicios/sec/sec_usuario.php?accion=D&usr=' + usuarioId
+        +'&user='+usuario;
 		
 		//console.log(url);
         $http.post(url, usuarioId).
@@ -542,8 +543,9 @@ factory('Usr', function($http, URL_API){
         });
     };
 	
-	function activar(usuarioId, usuario, callback){
-		var url = URL_API + '/servicios/sec/sec_usuario.php?accion=A&usr=' + usuarioId;
+	function activar(usuarioId, callback){
+		var url = URL_API + '/servicios/sec/sec_usuario.php?accion=A&usr=' + usuarioId
+        +'&user='+usuario;
 		
 		//console.log(url);
         $http.post(url, usuarioId).

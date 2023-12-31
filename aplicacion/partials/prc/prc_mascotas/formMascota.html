@@ -118,7 +118,7 @@
 								<span ng-bind="$select.selected.descripcion"></span>
 							</ui-select-match>
 							<ui-select-choices
-								repeat="dept.id.id as dept in (almacen | propsFilter: {descripcion: $select.search}) track by dept.id.id">
+								repeat="dept.id.id as dept in (dept | propsFilter: {descripcion: $select.search}) track by dept.id.id">
 								<div ng-bind-html="dept.descripcion | highlight: $select.search"></div>
 							</ui-select-choices>
 						</ui-select>

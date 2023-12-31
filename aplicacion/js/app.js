@@ -55,7 +55,7 @@ angular.module('aplicacion')
         url: '/listUsuario',
         templateUrl: 'partials/security/usuario/listUsuario.html'
       }).state('menuMaster.editUsuario', {
-        url: '/:idUsuario/:id_empresa/editUsuario',
+        url: '/:idUsuario/editUsuario',
         templateUrl: 'partials/security/usuario/editUsuario.html',
         controller: UsuarioEditCtrl
       });

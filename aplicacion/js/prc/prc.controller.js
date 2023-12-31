@@ -331,7 +331,7 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 };
 
 function MascotaListCtrl($scope, $rootScope, $state, $compile, $window, popupService,
-	DTOptionsBuilder, DTColumnDefBuilder, Masc, Almacen, URL_API) {
+	DTOptionsBuilder, DTColumnDefBuilder, Masc, URL_API) {
 	var vm = this;
 
 	vm.listMasc = listMasc;

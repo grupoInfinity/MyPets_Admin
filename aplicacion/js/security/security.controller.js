@@ -1,6 +1,6 @@
 
 
-function OpcionTableCtrl($scope, $rootScope, $http, $state, $window, popupService, 
+function OpcionTableCtrl($scope, $rootScope, $http, $state, $window, popupService,
 	DTOptionsBuilder, DTColumnDefBuilder, Opcion) {
 	var vm = this;
 	$scope.refresh = function () {
@@ -183,7 +183,7 @@ function OpcionAddCtrl($scope, $rootScope, $filter, $http, $state, Opcion, OpcPp
 
 		$scope.newOpcion.id_opc_ppal = "";
 		if ($scope.newOpcion.id_opc_ppal == null) $scope.newOpcion.id_opc_ppal = "";
-		
+
 	};
 
 };
@@ -253,7 +253,7 @@ function OpcionEditCtrl($scope, $rootScope, $rootScope, $filter, $state, $stateP
 
 		$scope.newOpcion.id_opc_ppal = "";
 		if ($scope.newOpcion.id_opc_ppal == null) $scope.newOpcion.id_opc_ppal = "";
-		
+
 	};
 
 	$scope.loadOpcPadre = function () {
@@ -356,7 +356,7 @@ function OpcionPrincipalEditCtrl($rootScope, $scope, $filter, $state, $statePara
 		};
 
 		$scope.newOpcionPrincipal.usuario = OpcPpalObj.usuario;
-	
+
 		OpcPpal.actualizar($scope.newOpcionPrincipal, function (response) {
 			//$scope.successMessages = [ 'Opcion Principal Actualizada correctamente' ];
 			Swal.fire({
@@ -377,15 +377,15 @@ function OpcionPrincipalEditCtrl($rootScope, $scope, $filter, $state, $statePara
 			$('#notificacionesModal').modal('show');
 		});
 	};
-	
-	$scope.loadOpcPpal = function() {
-		OpcPpal.findById($stateParams.idOpcPpal, function(response) {
-			if(response.data.status==1){
+
+	$scope.loadOpcPpal = function () {
+		OpcPpal.findById($stateParams.idOpcPpal, function (response) {
+			if (response.data.status == 1) {
 				$scope.newOpcionPrincipal = response.data.info[0];
-				if($scope.newOpcionPrincipal.estado=='A'){
+				if ($scope.newOpcionPrincipal.estado == 'A') {
 					$scope.newOpcionPrincipal.estado = true;
 				}
-				if($scope.newOpcionPrincipal.acceso_directo=='1'){
+				if ($scope.newOpcionPrincipal.acceso_directo == '1') {
 					$scope.newOpcionPrincipal.acceso_directo = true;
 				}
 			}
@@ -394,11 +394,11 @@ function OpcionPrincipalEditCtrl($rootScope, $scope, $filter, $state, $statePara
 
 	$scope.loadOpcPpal();
 
-		//$scope.onlyLetters = "/^[a-zA-Z.\-\s\Ññ\_\]+$/i/";
-		
+	//$scope.onlyLetters = "/^[a-zA-Z.\-\s\Ññ\_\]+$/i/";
+
 };
 
-function OpcionPrincipalListCtrl($scope, $rootScope, $state, $compile, $window,	popupService, DTOptionsBuilder, DTColumnDefBuilder, OpcPpal, URL_API) {
+function OpcionPrincipalListCtrl($scope, $rootScope, $state, $compile, $window, popupService, DTOptionsBuilder, DTColumnDefBuilder, OpcPpal, URL_API) {
 	var vm = this;
 
 	vm.listOpcPpal = listOpcPpal;
@@ -407,34 +407,34 @@ function OpcionPrincipalListCtrl($scope, $rootScope, $state, $compile, $window,	
 	vm.message = '';
 	vm.opcPpal = {};
 
-	OpcPpal.findAll(function(response) {
+	OpcPpal.findAll(function (response) {
 		vm.opcPpal = response.data.info;
 	});
 
-	vm.dtOptions = DTOptionsBuilder.newOptions().withPaginationType('full_numbers').withLanguage($rootScope.globals.language).withOption('order', [0,'asc']);
-	vm.dtColumnDefs = [ DTColumnDefBuilder.newColumnDef(0),
-			DTColumnDefBuilder.newColumnDef(1),
-			DTColumnDefBuilder.newColumnDef(2),
-			DTColumnDefBuilder.newColumnDef(3),
-			DTColumnDefBuilder.newColumnDef(4).notSortable() ];
+	vm.dtOptions = DTOptionsBuilder.newOptions().withPaginationType('full_numbers').withLanguage($rootScope.globals.language).withOption('order', [0, 'asc']);
+	vm.dtColumnDefs = [DTColumnDefBuilder.newColumnDef(0),
+	DTColumnDefBuilder.newColumnDef(1),
+	DTColumnDefBuilder.newColumnDef(2),
+	DTColumnDefBuilder.newColumnDef(3),
+	DTColumnDefBuilder.newColumnDef(4).notSortable()];
 
 	vm.deleteOpcPpal = deleteOpcPpal;
 	vm.activateOpcPpal = activateOpcPpal;
 	vm.editOpcPpal = editOpcPpal;
 
 	function listOpcPpal() {
-		OpcPpal.findAll(function(response) {
-			if(response.data.status==1)  vm.opcPpal = response.data.info;
-			else vm.opcPpal =[];
+		OpcPpal.findAll(function (response) {
+			if (response.data.status == 1) vm.opcPpal = response.data.info;
+			else vm.opcPpal = [];
 		});
 
 	}
 	;
 
 	function reloadData() {
-		OpcPpal.findAll(function(response) {
-			if(response.data.status==1) vm.opcPpal = response.data.info;
-			else vm.opcPpal =[];
+		OpcPpal.findAll(function (response) {
+			if (response.data.status == 1) vm.opcPpal = response.data.info;
+			else vm.opcPpal = [];
 		});
 
 	}
@@ -443,50 +443,50 @@ function OpcionPrincipalListCtrl($scope, $rootScope, $state, $compile, $window,	
 	function deleteOpcPpal(opcPpalId) {
 		//console.log(opcPpalId);
 		Swal.fire({
-		  title: 'Esta seguro de inactivar este registro?',
-		  text: "",
-		  type: 'warning',
-		  showCancelButton: true,
-		  confirmButtonColor: '#3085d6',
-		  cancelButtonColor: '#d33',
-		  confirmButtonText: 'Si, inactivar!'
+			title: 'Esta seguro de inactivar este registro?',
+			text: "",
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Si, inactivar!'
 		}).then((result) => {
 			if (result.value) {
 				OpcPpal.borrar(opcPpalId, $rootScope.globals.currentUser.username,
-					function(response) {
+					function (response) {
 						reloadData();
 					});
-					
+
 				Swal.fire({
-					toast:true,
-				  position: 'top-end',
-				  type: 'success',
-				  title: 'Opcion Principal Inactivada',
-				  showConfirmButton: false,
-				  timer: 1000
+					toast: true,
+					position: 'top-end',
+					type: 'success',
+					title: 'Opcion Principal Inactivada',
+					showConfirmButton: false,
+					timer: 1000
 				})
 			}
 		})
 	};
-	
+
 	function activateOpcPpal(opcPpalId) {
 		Swal.fire({
-		  title: 'Esta seguro de activar este registro?',
-		  text: "",
-		  type: 'warning',
-		  showCancelButton: true,
-		  confirmButtonColor: '#3085d6',
-		  cancelButtonColor: '#d33',
-		  confirmButtonText: 'Si, activar!'
+			title: 'Esta seguro de activar este registro?',
+			text: "",
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Si, activar!'
 		}).then((result) => {
 			if (result.value) {
 				OpcPpal.activar(opcPpalId, $rootScope.globals.currentUser.username,
-					function(response) {
+					function (response) {
 						reloadData();
 					});
-					
+
 				Swal.fire({
-					toast:true,
+					toast: true,
 					position: 'top-end',
 					type: 'success',
 					title: 'Opcion Principal Activada',
@@ -499,7 +499,7 @@ function OpcionPrincipalListCtrl($scope, $rootScope, $state, $compile, $window,	
 	function editOpcPpal(opcPpalId) {
 
 		$state.go('menuMaster.editOpcionPrincipal', {
-			idOpcPpal : opcPpalId
+			idOpcPpal: opcPpalId
 		});
 
 	}
@@ -697,8 +697,10 @@ function RolAddCtrl($scope, $rootScope, $filter, $http, $state, Rol) {
 		$scope.formType = 'ADD';
 
 		var date = new Date();
-		$scope.newRol = { descripcion: "", 
-		usuario: $rootScope.globals.currentUser.username };
+		$scope.newRol = {
+			descripcion: "",
+			usuario: $rootScope.globals.currentUser.username
+		};
 
 		$scope.clearMessages();
 	};
@@ -885,7 +887,7 @@ function RolEditCtrl($scope, $rootScope, $rootScope, $filter, $state, $statePara
 
 /*************************** USUARIO CONTROLLER ***********************************/
 
-function UsuarioAddCtrl($rootScope, $stateParams, $scope, URL_API, $filter, $http, $state, Usr, Almacen, Empleado) {
+function UsuarioAddCtrl($rootScope, $stateParams, $scope, URL_API, $filter, $http, $state, Usr) {
 
 
 	$scope.formType = 'ADD';
@@ -916,15 +918,17 @@ function UsuarioAddCtrl($rootScope, $stateParams, $scope, URL_API, $filter, $htt
 		$scope.formType = 'ADD';
 
 		var date = new Date();
-		$scope.newUsuario = { usr: "", 
-		 clave:"",
-		 nombre:"",
-		 apellido:"",
-		 tel:"",
-		 pin: "",
-		 email: "", 
-		 estado:"",
-		 usuario: $rootScope.globals.currentUser.username };
+		$scope.newUsuario = {
+			usr: "",
+			clave: "",
+			nombre: "",
+			apellido: "",
+			tel: "",
+			pin: "",
+			email: "",
+			estado: "",
+			usuario: $rootScope.globals.currentUser.username
+		};
 
 		$scope.clearMessages();
 	};
@@ -940,7 +944,7 @@ function UsuarioAddCtrl($rootScope, $stateParams, $scope, URL_API, $filter, $htt
 
 				$scope.formType = "UPD";
 
-				Usr.findByUsr($scope.newUsuario.usr,function (response) {
+				Usr.findByUsr($scope.newUsuario.usr, function (response) {
 					if (response.data.status == 1)
 						$scope.newUsuario = response.data.info[0];
 					// $scope.newUsuario.id_empleado = response.data.info[0].id_empleado;
@@ -1001,7 +1005,7 @@ function UsuarioAddCtrl($rootScope, $stateParams, $scope, URL_API, $filter, $htt
 
 };
 
-function UsuarioEditCtrl($rootScope, $scope, $filter, $state, $stateParams, URL_API, Usr, Almacen, Empleado) {
+function UsuarioEditCtrl($rootScope, $scope, $filter, $state, $stateParams, URL_API, Usr) {
 
 	$scope.isVisibleAfterUsuario = true;
 
@@ -1024,8 +1028,10 @@ function UsuarioEditCtrl($rootScope, $scope, $filter, $state, $stateParams, URL_
 		$rootScope.$broadcast("refreshRoles", 0);
 
 		var date = new Date();
-		$scope.newUsuario = { usr: "", 
-		usuario: $rootScope.globals.currentUser.username };
+		$scope.newUsuario = {
+			usr: "",
+			usuario: $rootScope.globals.currentUser.username
+		};
 
 		$scope.clearMessages();
 	};
@@ -1103,7 +1109,7 @@ function UsuarioEditCtrl($rootScope, $scope, $filter, $state, $stateParams, URL_
 
 	$scope.loadUsuario = function () {
 
-		Usr.findByUsr($stateParams.idUsuario,function (response) {
+		Usr.findByUsr($stateParams.idUsuario, function (response) {
 			//if(response.data.status==1)
 			$scope.newUsuario = response.data.info[0];
 			if ($scope.newUsuario.estado == 'A') {
@@ -1117,7 +1123,8 @@ function UsuarioEditCtrl($rootScope, $scope, $filter, $state, $stateParams, URL_
 
 };
 
-function UsuarioListCtrl($scope, $rootScope, $state, $compile, $window, popupService, DTOptionsBuilder, DTColumnDefBuilder, Usr, Almacen, URL_API) {
+function UsuarioListCtrl($scope, $rootScope, $state, $compile, $window, popupService,
+	DTOptionsBuilder, DTColumnDefBuilder, Usr, URL_API) {
 	var vm = this;
 
 	vm.listUsuario = listUsuario;
@@ -1126,7 +1133,7 @@ function UsuarioListCtrl($scope, $rootScope, $state, $compile, $window, popupSer
 	vm.message = '';
 	vm.usuario = {};
 
-	Usr.findByEmpresa($rootScope.globals.currentUser.id_empresa, function (response) {
+	Usr.findAlls(function (response) {
 		vm.usuario = response.data.info;
 	});
 
@@ -1162,9 +1169,9 @@ function UsuarioListCtrl($scope, $rootScope, $state, $compile, $window, popupSer
 		});
 
 	}*/
-	;
 
-	function deleteUsuario(usuarioId, id_empresa) {
+
+	function deleteUsuario(usuarioId) {
 		Swal.fire({
 			title: 'Esta seguro de inactivar este registro?',
 			text: "",
@@ -1175,8 +1182,8 @@ function UsuarioListCtrl($scope, $rootScope, $state, $compile, $window, popupSer
 			confirmButtonText: 'Si, inactivar!'
 		}).then((result) => {
 			if (result.value) {
-				Usr.borrar(usuarioId, id_empresa, $rootScope.globals.currentUser.username, function (response) {
-					reloadData(id_empresa);
+				Usr.borrar(usuarioId, $rootScope.globals.currentUser.username, function (response) {
+					//reloadData(id_empresa);
 				});
 
 				Swal.fire({
@@ -1191,7 +1198,7 @@ function UsuarioListCtrl($scope, $rootScope, $state, $compile, $window, popupSer
 		})
 	};
 
-	function activateUsuario(usuarioId, id_empresa) {
+	function activateUsuario(usuarioId) {
 		Swal.fire({
 			title: 'Esta seguro de activar este registro?',
 			text: "",
@@ -1202,8 +1209,8 @@ function UsuarioListCtrl($scope, $rootScope, $state, $compile, $window, popupSer
 			confirmButtonText: 'Si, activar!'
 		}).then((result) => {
 			if (result.value) {
-				Usr.activar(usuarioId, id_empresa, $rootScope.globals.currentUser.username, function (response) {
-					reloadData(id_empresa);
+				Usr.activar(usuarioId, $rootScope.globals.currentUser.username, function (response) {
+					//reloadData(id_empresa);
 				});
 
 				Swal.fire({
@@ -1218,14 +1225,11 @@ function UsuarioListCtrl($scope, $rootScope, $state, $compile, $window, popupSer
 		})
 	};
 
-	function editUsuario(usuarioId, id_empresa) {
+	function editUsuario(usuarioId) {
 
 		$state.go('menuMaster.editUsuario', {
-			idUsuario: usuarioId,
-			id_empresa: id_empresa
-
+			idUsuario: usuarioId
 		});
-
 	}
 	;
 

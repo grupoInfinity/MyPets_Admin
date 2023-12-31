@@ -11,11 +11,12 @@
     </div>	
 	<div class="box-body" ng-controller="UsuarioListCtrl as showCase">
      	<em ng-show="showCase.usuario.length == 0">No existen opciones</em>
-        <table datatable="ng" id="usuarioTable" dt-options="showCase.dtOptions" dt-columns="showCase.dtColumnsDefs" ng-hide="showCase.usuario.length == 0" class="table table-bordered table-striped">
+        <table datatable="ng" id="usuarioTable" dt-options="showCase.dtOptions" 
+        dt-columns="showCase.dtColumnsDefs" ng-hide="showCase.usuario.length == 0" 
+        class="table table-bordered table-striped">
 			<thead>   
              <tr>
                     <th>Usuario</th>
-                    <th>Empresa</th>
                     <th>Nombre</th>
                     <th>Apellido</th>
                     <th>Estado</th>
@@ -25,7 +26,6 @@
             <!-- The table is built using the AngularJS repeat function, iterating over the members variable, and ordering by the property specified in the orderBy variable -->
             <tr ng-repeat="usuarios in showCase.usuario">
                 <td>{{usuarios.usr}}</td>
-                <td>{{usuarios.ctg_empresa[0].descripcion}}</td>
                 <td>{{usuarios.nombre}}</td>
                 <td>{{usuarios.apellido}}</td>
                 <td align="center">
@@ -33,9 +33,9 @@
 					<label ng-if=" usuarios.estado=='I'"><font color="red"><i class="fa fa-close"></i></font></label>
 				</td>
                 <td>
-            	<button class="btn btn-danger btn-xs"  ng-click="showCase.deleteUsuario(usuarios.usr, usuarios.id_empresa)"><i class="fa fa-trash-o"></i></button>
-                <button class="btn btn-warning btn-xs" ng-click="showCase.editUsuario(usuarios.usr, usuarios.id_empresa)"><i class="fa fa-edit"></i></button>
-				<button class="btn btn-primary btn-xs" ng-click="showCase.activateUsuario(usuarios.usr, usuarios.id_empresa)"><i class="fa fa-check"></i></button>
+            	<button class="btn btn-danger btn-xs"  ng-click="showCase.deleteUsuario(usuarios.usr)"><i class="fa fa-trash-o"></i></button>
+                <button class="btn btn-warning btn-xs" ng-click="showCase.editUsuario(usuarios.usr)"><i class="fa fa-edit"></i></button>
+				<button class="btn btn-primary btn-xs" ng-click="showCase.activateUsuario(usuarios.usr)"><i class="fa fa-check"></i></button>
                 </td>
              </tr>
         </table>
