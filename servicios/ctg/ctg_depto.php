@@ -11,7 +11,7 @@ if($method == "OPTIONS") {
     die();
 }
 
-$tabla = "ctg_departamento";
+$tabla = "ctg_departamentos";
 
 $accion = isset($_GET['accion']) ? $_GET['accion'] : '';
 $id = isset($_GET['id']) ? $_GET['id'] : '';
