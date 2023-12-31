@@ -42,14 +42,16 @@ LOCK TABLES `sec_menu` WRITE;
 insert  into `sec_menu`(`id_menu`,`descripcion`,`menu_icon`,`orden`,`acceso_directo`,`estado`,
 `usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`)
  values (1,'Administración','glyphicon-th',1,1,'A','admin','2018-11-09 15:28:56','nguerrero','2021-08-12 00:56:20'),
- (2,'Seguridad','glyphicon-cog',13,1,'A','admin','2018-11-09 15:28:56','nguerrero','2021-08-12 00:56:31'),
- (4,'Seguimiento','glyphicon-calendar',2,1,'A','admin','2018-11-09 15:28:56','admin','2019-02-18 21:49:07'),
- (16,'Dashboard','glyphicon-dashboard',14,1,'A','admin','2018-12-11 00:00:00','nguerrero','2021-08-12 00:56:26'),
- (18,'Reportes','glyphicon-file',17,1,'A','admin','2019-08-06 00:00:00','SYSTEM','2020-06-28 19:48:17');
+ 		  (2,'Seguridad','glyphicon-cog',2,1,'A','admin','2018-11-09 15:28:56','nguerrero','2021-08-12 00:56:31'),
+ 		  (3,'Perfil','glyphicon-user',3,1,'A','admin','2018-11-09 15:28:56','admin','2019-02-18 21:49:07');
 
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `sec_opcion`;
+DROP TABLE IF EXISTS `sec_opc_rol`;
+SELECT * FROM `sec_menu`;
+SELECT * FROM `sec_opc_rol`;
+SELECT * FROM `sec_opcion`;
 
 CREATE TABLE IF NOT EXISTS dbMyPet.sec_opcion (
   `id_opc` int NOT NULL COMMENT 'id de la opcion',
@@ -69,34 +71,34 @@ CREATE TABLE IF NOT EXISTS dbMyPet.sec_opcion (
   CONSTRAINT `FK_OPC_PRINCIPAL` FOREIGN KEY (`id_menu`) REFERENCES `sec_menu` (`id_menu`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de las opciones';
 
-ALTER TABLE `sec_opcion`
 
 LOCK TABLES `sec_opcion` WRITE;
 
+SELECT * FROM sec_menu
 
 insert  into `sec_opcion`(`id_opc`,`id_menu`,`id_opc_padre`,`padre`,`descripcion`,`url`,`estado`,
 `usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`,`orden`) 
-    values (27,2,NULL,NULL,'Empleado','menuMaster.listEmpleado()','A','admin','2018-11-09 15:29:05','admin','2019-02-11 00:00:00',4),
-    (28,1,61,NULL,'Cargo','menuMaster.listCargo()','A','admin','2018-11-09 15:29:05','system','2023-12-03 00:00:00',2),
-    (30,4,NULL,NULL,'Seguimiento Tareas','menuMaster.listTarea()','A','admin','2018-11-09 15:29:05',NULL,NULL,2),
-    (31,4,NULL,NULL,'Seguimiento Tareas 2','menuMaster.listTarea2()','I','admin','2018-11-09 15:29:05',NULL,NULL,2),
-    (47,2,NULL,NULL,'Usuario','menuMaster.listUsuario()','A','admin','2018-11-09 15:29:05',NULL,NULL,4),
-    (48,2,NULL,NULL,'Opción','menuMaster.listOpcion()','A','admin','2018-11-09 15:29:05','system','2023-12-03 00:00:00',2),
-    (49,2,NULL,NULL,'Parametros','menuMaster.listParametro()','I','admin','2018-11-09 15:29:05',NULL,NULL,5),
-    (50,2,NULL,NULL,'Rol','menuMaster.listRol()','A','admin','2018-11-09 15:29:05',NULL,NULL,3),
-    (61,1,NULL,1,'Empleado','','A','admin','2018-11-09 15:29:05','nguerrero','2021-08-12 00:00:00',3),
-    (87,2,NULL,NULL,'Opcion Principal','menuMaster.listOpcionPrincipal()','A','admin','2018-11-09 15:29:05',NULL,NULL,1),
-    (107,2,NULL,NULL,'Setup','menuMaster.listSetup()','I','admin','2021-08-07 18:12:47',NULL,NULL,7),
-    (108,1,61,NULL,'Puesto','menuMaster.listPuesto()','A','nguerrero','2021-08-12 00:00:00',NULL,NULL,3),
-    (109,1,61,NULL,'Area de Negocio','menuMaster.listAreaNegocio()','A',NULL,NULL,NULL,NULL,1),
-    (110,1,115,NULL,'Estado','menuMaster.listEstado()','A',NULL,NULL,NULL,NULL,4),
-    (111,1,115,NULL,'Impacto','menuMaster.listImpacto()','A',NULL,NULL,NULL,NULL,5),
-    (112,1,115,NULL,'Tipo Impacto','menuMaster.listTipoImpacto()','A',NULL,NULL,NULL,NULL,6),
-    (113,1,115,NULL,'Umbral Tipo Impacto','menuMaster.listTipoImpactoUmbral()','A',NULL,NULL,NULL,NULL,7),
-    (114,1,115,NULL,'Deadline','menuMaster.listTipoDeadline()','A',NULL,NULL,NULL,NULL,8),
-    (115,1,NULL,1,'Tarea','','A','admin','2018-11-09 15:29:05',NULL,NULL,4),
-    (116,16,NULL,NULL,'Reporte de Tareas Resueltas','menuMaster.dashboard()','A','nguerrero','2021-10-15 00:00:00','nguerrero','2021-10-18 00:00:00',1),
-	 (117,16,NULL,NULL,'Reporte de Tareas Pendientes','menuMaster.dashboardAtencion()','A','nguerrero','2021-10-15 00:00:00','nguerrero','2021-10-18 00:00:00',2);
+
+    VALUES 
+    #ADMINISTRACION
+    #CATALOGOS
+    (1,1,NULL,1,'Catalogos','','A','admin','2018-11-09 15:29:05','nguerrero','2021-08-12 00:00:00',1),#PADRE
+    (2,1,1,NULL,'Departamentos','menuMaster.listDepts()','A',NULL,NULL,NULL,NULL,1),
+    (3,1,1,NULL,'Municipios','menuMaster.listMuni()','A',NULL,NULL,NULL,NULL,2),
+    (4,1,1,NULL,'Tipos mascotas','menuMaster.listTPmascota()','A',NULL,NULL,NULL,NULL,3),
+    (5,1,1,NULL,'Tipos vacunas','menuMaster.listTipovac()','A',NULL,NULL,NULL,NULL,4),
+    #PROCEDIMIENTOS
+    (6,1,NULL,1,'Procedimientos','','A','admin','2018-11-09 15:29:05',NULL,NULL,2),#PADRE
+    (7,1,6,NULL,'Mascotas','menuMaster.listMascota()','A',NULL,NULL,NULL,NULL,1),
+    #SEGURIDAD
+    (8,2,NULL,1,'Usuario','menuMaster.listUsuario()','A','admin','2018-11-09 15:29:05',NULL,NULL,1),
+    (9,2,NULL,1,'Opción','menuMaster.listOpcion()','A','admin','2018-11-09 15:29:05','system','2023-12-03 00:00:00',2),
+    (10,2,NULL,1,'Rol','menuMaster.listRol()','A','admin','2018-11-09 15:29:05',NULL,NULL,3),
+    (11,2,NULL,1,'Opcion Principal','menuMaster.listOpcionPrincipal()','A','admin','2018-11-09 15:29:05',NULL,NULL,4),
+    (12,2,NULL,1,'Setup','menuMaster.listSetup()','I','admin','2021-08-07 18:12:47',NULL,NULL,5),
+    #PERFIL
+    (13,3,NULL,1,'Cuenta','','A','admin','2018-11-09 15:29:05',NULL,NULL,1);#PADRE
+   
 
 UNLOCK TABLES;
 
@@ -189,49 +191,32 @@ CREATE TABLE IF NOT EXISTS dbMyPet.sec_opc_rol (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de las opciones por rol';
 
 
-
-SELECT DISTINCT opc.id_opc, opc.id_menu, IFNULL(opc.id_opc_padre,'NA') as id_opc_padre
-		, IFNULL(opc.padre,'') AS padre, opc.descripcion
-        , opc.url, opc.estado
-        , opc.usuario_creacion, opc.fecha_creacion, opc.usuario_update, opc.fecha_update
-        , opc.orden
-		FROM sec_rol_usuario rusr
-		INNER JOIN sec_opc_rol opcr ON opcr.id_rol = rusr.id_rol 
-		INNER JOIN sec_opcion opc ON opc.id_opc = opcr.id_opc AND COALESCE(opc.id_menu, -1) = COALESCE(opcr.id_menu, -1)
-		AND opc.estado = 'A'
-		INNER JOIN sec_usuario us ON us.usuario = rusr.usuario AND us.estado = 'A' AND us.usuario = 'dbarrientos'
-		WHERE 1=1 
-		ORDER BY opc.orden
-
 LOCK TABLES `sec_opc_rol` WRITE;
 
 insert  into `sec_opc_rol`(`id_menu`,`id_opc`,`id_rol`,`usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`) 
-    values (1,27,1,'admin','2018-11-09 15:29:01',NULL,NULL),
-    (1,27,2,'admin','2018-11-09 15:29:01',NULL,NULL),
-    (1,28,1,'admin','2018-11-09 15:29:01',NULL,NULL),
-    (1,28,2,'admin','2018-11-09 15:29:01',NULL,NULL),
-    (1,61,1,'admin','2018-11-09 15:29:01',NULL,NULL),
-    (1,61,2,'admin','2018-11-09 15:29:01',NULL,NULL),
-    (1,108,1,'admin','2021-08-12 00:00:00',NULL,NULL),
-    (1,109,1,'admin','2019-02-12 00:00:00',NULL,NULL),
-    (1,110,1,'admin','2019-02-12 00:00:00',NULL,NULL),
-    (1,111,1,'admin','2019-02-12 00:00:00',NULL,NULL),
-    (1,112,1,'admin','2019-02-12 00:00:00',NULL,NULL),
-    (1,113,1,'admin','2019-02-12 00:00:00',NULL,NULL),
-    (1,114,1,'admin','2019-02-12 00:00:00',NULL,NULL),
-    (1,115,1,'admin','2019-02-12 00:00:00',NULL,NULL),
-    (2,27,1,'admin','2019-02-10 00:00:00',NULL,NULL),
-    (2,47,1,'admin','2018-11-09 15:29:01',NULL,NULL),
-    (2,48,1,'admin','2021-08-12 00:00:00',NULL,NULL),
-    (2,49,1,'admin','2021-08-01 00:00:00',NULL,NULL),
-    (2,50,1,'admin','2018-11-09 15:29:01',NULL,NULL),
-    (2,87,1,'admin','2021-08-12 00:00:00',NULL,NULL),
-    (2,107,1,'admin','2021-08-07 00:00:00',NULL,NULL),
-    (4,30,1,'admin','2019-02-12 00:00:00',NULL,NULL),
-    (4,30,2,'admin','2018-11-09 15:29:01',NULL,NULL),
-    (4,31,1,'admin','2021-09-07 00:00:00',NULL,NULL),
-    (16,116,1,'admin','2021-10-15 00:00:00',NULL,NULL),
-    (16,117,1,'admin','2021-10-18 00:00:00',NULL,NULL);
+    values
+    #ADMIN CATALOGO
+	 (1,1,1,'admin','2018-11-09 15:29:01',NULL,NULL),
+    (1,2,1,'admin','2018-11-09 15:29:01',NULL,NULL),#DEPARTAMENTOS
+    (1,3,1,'admin','2018-11-09 15:29:01',NULL,NULL),#MUNICIPIOS
+    (1,4,1,'admin','2018-11-09 15:29:01',NULL,NULL),#TIPO MASCOTAS
+    (1,5,1,'admin','2018-11-09 15:29:01',NULL,NULL),#TIPO VACUNAS
+    #ADMIN PROCEDIMIENTOS
+    (1,6,1,'admin','2018-11-09 15:29:01',NULL,NULL),
+    (1,6,2,'admin','2018-11-09 15:29:01',NULL,NULL),
+    (1,7,1,'admin','2018-11-09 15:29:01',NULL,NULL),#MASCOTA ADMIN
+    (1,7,2,'admin','2018-11-09 15:29:01',NULL,NULL),#MASCOTA CLIENTE
+    #SEGURIDAD
+    (2,8,1,'admin','2018-11-09 15:29:01',NULL,NULL),#USUARIOS
+    (2,9,1,'admin','2018-11-09 15:29:01',NULL,NULL),#OPCION
+    (2,10,1,'admin','2018-11-09 15:29:01',NULL,NULL),#ROL
+    (2,11,1,'admin','2018-11-09 15:29:01',NULL,NULL),#OPCION PRINCIPAL
+    (2,12,1,'admin','2018-11-09 15:29:01',NULL,NULL),#SETUP
+    #PERFIL
+    (3,13,1,'admin','2018-11-09 15:29:01',NULL,NULL),#SETUP
+    (3,13,2,'admin','2018-11-09 15:29:01',NULL,NULL);#SETUP
+
+SELECT * from
 
 UNLOCK TABLES;
 
