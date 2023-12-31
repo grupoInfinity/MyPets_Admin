@@ -43,9 +43,9 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
     if(!empty($padre)) $padre="AND A.padre=$padre";
     else $padre="";
     
-    $sql = "SELECT A.id_opc, A.id_id_menu, A.id_opc_padre, A.padre, 
-    A.descripcion, A.url, A.estado, A.id_empresa, A.orden
-	FROM $bd.$tabla A
+    $sql = "SELECT A.id_opc, A.id_menu, A.id_opc_padre, A.padre, 
+    A.descripcion, A.url, A.estado, A.orden
+	FROM $bd.sec_opcion A
     WHERE $id_opc $id_opc_ppal $id_opc_padre $desc $estado $padre
     ORDER BY CAST(A.orden AS DECIMAL) DESC ";
 
@@ -80,7 +80,7 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
                     if($result2->num_rows > 0) {
                         while($row2 = $result2->fetch_assoc()) {
                             $resultsOpcPpal[] = array(
-                                'id' => $row2["id"]
+                                'id' => $row2["id_menu"]
                                 , 'descripcion' => $row2["descripcion"]
                                 , 'estado'=>$row2["estado"]
                             );
@@ -117,7 +117,7 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
                     $results[] = array(
                         //"id" => $row["id"]
                          "id" => $id[$i]
-                       // , 'id_opc_principal' => ($row["id_opc_principal"])
+                        //, 'id_opc_principal' => ($row["id_opc_principal"])
                         , 'id_opc_padre' => ($row["id_opc_padre"])
                         , 'padre' => ($row["padre"])
                         , 'descripcion' => ($row["descripcion"])

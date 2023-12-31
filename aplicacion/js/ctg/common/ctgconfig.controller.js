@@ -473,7 +473,7 @@ function MunisTableCtrl($scope, $rootScope, $state, $compile, $window,
 
 
 //TIPO VACUNA
-function tpvacAddCtrl($rootScope, $scope, $filter, $http, $state, tpvac) {
+function tpvacAddCtrl($rootScope, $scope, $filter, $http, $state, Tpvac) {
 
 	$scope.formType = 'ADD';
 
@@ -513,7 +513,7 @@ function tpvacAddCtrl($rootScope, $scope, $filter, $http, $state, tpvac) {
 	$scope.registerTpvac = function () {
 		$scope.clearMessages();
 
-		tpvac
+		Tpvac
 			.insertar(
 				$scope.newtpvac,
 				function (response) {
@@ -541,7 +541,7 @@ function tpvacAddCtrl($rootScope, $scope, $filter, $http, $state, tpvac) {
 	$scope.onlyLetters = "/^[a-zA-Z.\-\s\Ññ\_\]+$/i/";
 };
 
-function tpvacEditCtrl($rootScope, $scope, $filter, $state, $stateParams, tpvac) {
+function tpvacEditCtrl($rootScope, $scope, $filter, $state, $stateParams, Tpvac) {
 
 	$scope.updateTpvac = function () {
 
@@ -552,7 +552,7 @@ function tpvacEditCtrl($rootScope, $scope, $filter, $state, $stateParams, tpvac)
 
 		$scope.newtpvac.usuario = tpvacObj.usuario;
 
-		tpvac.actualizar(
+		Tpvac.actualizar(
 			$scope.newtpvac,
 			function (response) {
 				$scope.successMessages = ['Tipo de vacuna Actualizado correctamente'];
@@ -582,7 +582,7 @@ function tpvacEditCtrl($rootScope, $scope, $filter, $state, $stateParams, tpvac)
 	};
 
 	$scope.loadTpvac = function () {
-		tpvac.findById($stateParams.idtpvac, function (response) {
+		Tpvac.findById($stateParams.idtpvac, function (response) {
 			if (response.data.status == 1) {
 				$scope.newtpvac = response.data.info[0];
 				if ($scope.newtpvac.estado == 'A') {
@@ -609,6 +609,7 @@ function tpvacTableCtrl($scope, $rootScope, $state, $compile, $window,
 
 	Tpvac.findAll(function (response) {
 		if (response.data.status == 1) {
+			console.log(1);
 			vm.tpvac = response.data.info;
 		}
 	});

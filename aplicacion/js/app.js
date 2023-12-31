@@ -1,4 +1,5 @@
-var app = angular.module('aplicacion', ['ui.router', 'ngRoute', 'ngCookies', 'ngSanitize', 'ui.select', 'datatables', 'datatables.bootstrap'
+var app = angular.module('aplicacion', ['ui.router', 'ngRoute', 'ngCookies', 'ngSanitize', 
+'ui.select', 'datatables', 'datatables.bootstrap'
   //CATALOGOS
   , 'munisService', 'deptsService', 'tpvacService', 'tpmascService'
   //PRC
@@ -7,7 +8,7 @@ var app = angular.module('aplicacion', ['ui.router', 'ngRoute', 'ngCookies', 'ng
   //SEGURIDAD
   , 'opcionService', 'opcRolService', 'opcionPrincipalService', 'rolUsuarioService'
   , 'rolService', 'authenticationService', 'flashService', 'usrService'
-  , 'authorizationService', 'setupService','usuarioService'
+  , 'authorizationService', 'setupService', 'usuarioService'
 
 ])
 
@@ -16,7 +17,7 @@ var app = angular.module('aplicacion', ['ui.router', 'ngRoute', 'ngCookies', 'ng
   .controller('DeptsTableCtrl', DeptsTableCtrl)
   .controller('MunisTableCtrl', MunisTableCtrl)
   .controller('tpvacTableCtrl', tpvacTableCtrl)
-	.controller('tpmascTableCtrl', tpmascTableCtrl)
+  .controller('tpmascTableCtrl', tpmascTableCtrl)
   //PROCEDIMIENTOS
   .controller('MascotaListCtrl', MascotaListCtrl)
   .controller('VacunaCtrl', VacunaCtrl)
@@ -91,20 +92,20 @@ angular.module('aplicacion')
         controller: OpcionEditCtrl
       });
 
-	//OPCION PRINCIPAL
-	$stateProvider.
-	state('menuMaster.addOpcionPrincipal', {	
-		url : '/addOpcionPrincipal',
-		templateUrl : 'partials/security/menu/addOpcionPrincipal.html',
-		controller : OpcionPrincipalAddCtrl
-	}).state('menuMaster.listOpcionPrincipal', {
-		url : '/listOpcionPrincipal',
-		templateUrl : 'partials/security/menu/listOpcionPrincipal.html'
-	}).state('menuMaster.editOpcionPrincipal', {
-		url : '/:idOpcPpal/editOpcionPrincipal',
-		templateUrl : 'partials/security/menu/editOpcionPrincipal.html',
-		controller : OpcionPrincipalEditCtrl
-	});
+    //OPCION PRINCIPAL
+    $stateProvider.
+      state('menuMaster.addOpcionPrincipal', {
+        url: '/addOpcionPrincipal',
+        templateUrl: 'partials/security/menu/addOpcionPrincipal.html',
+        controller: OpcionPrincipalAddCtrl
+      }).state('menuMaster.listOpcionPrincipal', {
+        url: '/listOpcionPrincipal',
+        templateUrl: 'partials/security/menu/listOpcionPrincipal.html'
+      }).state('menuMaster.editOpcionPrincipal', {
+        url: '/:idOpcPpal/editOpcionPrincipal',
+        templateUrl: 'partials/security/menu/editOpcionPrincipal.html',
+        controller: OpcionPrincipalEditCtrl
+      });
 
     //CATALOGOS
     //DEPTS CRUD
@@ -137,6 +138,21 @@ angular.module('aplicacion')
         controller: MunisEditCtrl
       });
 
+    //TIPO MASCOTA
+    $stateProvider.
+      state('menuMaster.addTPmascota', {
+        url: '/addTPmascota',
+        templateUrl: 'partials/ctg/ctg_tpmascota/addTPmascota.html',
+        controller: tpmascAddCtrl
+      }).state('menuMaster.listTPmascota', {
+        url: '/listTPmascota',
+        templateUrl: 'partials/ctg/ctg_tpmascota/listTPmascota.html'
+      }).state('menuMaster.editTPmascota', {
+        url: '/:idtpmasc/editTPmascota',
+        templateUrl: 'partials/ctg/ctg_tpmascota/editTPmascota.html',
+        controller: tpmascEditCtrl
+      });
+
     //TIPO VACUNA
     $stateProvider.
       state('menuMaster.addTipovac', {
@@ -152,21 +168,6 @@ angular.module('aplicacion')
         controller: tpvacEditCtrl
       });
 
-
-    //TIPO MASCOTA
-    $stateProvider.
-      state('menuMaster.addTPMascota', {
-        url: '/addTPmascota',
-        templateUrl: 'partials/ctg/ctg_tpmascota/addTPMascota.html',
-        controller: tpmascAddCtrl
-      }).state('menuMaster.listTPMascota', {
-        url: '/listTPMascota',
-        templateUrl: 'partials/ctg/ctg_tpmascota/listTPMascota.html'
-      }).state('menuMaster.editTipoMascota', {
-        url: '/:idtpmasc/editTPmascota',
-        templateUrl: 'partials/ctg/ctg_tpmascota/editTPMascota.html',
-        controller: tpmascEditCtrl
-      });
 
     //MASCOTA
     $stateProvider.

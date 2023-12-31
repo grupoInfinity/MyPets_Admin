@@ -15,7 +15,8 @@
     </div>	
 	<div class="box-body" ng-controller="MunisTableCtrl as showCase">
 		<em ng-show="showCase.munis.length == 0">No existen datos de Municipios</em>
-        <table datatable="ng" id="munisTable" dt-options="showCase.dtOptions" dt-columns="showCase.dtColumnsDefs" ng-hide="showCase.munis.length == 0" class="table table-bordered table-striped">
+        <table datatable="ng" id="munisTable" dt-options="showCase.dtOptions" dt-columns="showCase.dtColumnsDefs" 
+        ng-hide="showCase.munis.length == 0" class="table table-bordered table-striped">
             <thead>
                 <tr>
                 	<th>ID</th>

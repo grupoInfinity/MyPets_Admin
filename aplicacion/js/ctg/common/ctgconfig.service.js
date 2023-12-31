@@ -15,6 +15,7 @@ factory('Depts', function($http, URL_API){
 
     function activar(deptId, usuario, callback){
             $http.post(URL_API + '/servicios/ctg/ctg_depto.php?accion=A&id=' + deptId + '&user=' + usuario, deptId).
+            console.log(url);
             then(function(response) {
                callback(response);
             });
@@ -25,6 +26,7 @@ factory('Depts', function($http, URL_API){
     function findAll(callback){
     	var url = URL_API + '/servicios/ctg/ctg_depto.php?accion=C';
     	$http.get(url).
+        console.log(url);
         then(function(response) {
            callback(response);
         });
@@ -33,6 +35,7 @@ factory('Depts', function($http, URL_API){
     function findAllByFilters(filtro, callback){
     	var url = URL_API + '/servicios/ctg/ctg_depto.php?accion=C&estado='+filtro.estado;
     	$http.get(url).
+        console.log(url);
         then(function(response) {
            callback(response);
         });
@@ -40,6 +43,7 @@ factory('Depts', function($http, URL_API){
 
     function findById(deptId, callback){
         $http.get(URL_API + '/servicios/ctg/ctg_depto.php?accion=C&id=' + deptId).
+        console.log(url);
         then(function(response) {
            callback(response);
         });
@@ -47,6 +51,7 @@ factory('Depts', function($http, URL_API){
 
     function borrar(deptId, usuario, callback){
         $http.post(URL_API + '/servicios/ctg/ctg_depto.php?accion=D&id=' + deptId + '&user=' + usuario, deptId).
+        console.log(url);
         then(function(response) {
            callback(response);
         });
@@ -54,6 +59,7 @@ factory('Depts', function($http, URL_API){
 
     function insertar(dept, callback){
         $http.post(URL_API + '/servicios/ctg/ctg_depto.php?accion=I&desc=' + dept.descripcion + '&user=' + dept.usuario ,dept).
+        console.log(url);
         then(function(response) {
             callback(response);
          });
@@ -100,6 +106,7 @@ factory('Munis', function($http, URL_API){
 
     function activar(munisId, usuario, callback){
             $http.post(URL_API + '/servicios/ctg/ctg_muni.php?accion=A&id=' + munisId + '&user=' + usuario, munisId).
+            console.log(url);
             then(function(response) {
                callback(response);
             });
@@ -109,6 +116,7 @@ factory('Munis', function($http, URL_API){
 
     function findAll(callback){
 		var url = URL_API + '/servicios/ctg/ctg_muni.php?accion=C';
+        console.log(url);
         $http.get(url).
         then(function(response) {
            callback(response);
@@ -137,7 +145,7 @@ factory('Munis', function($http, URL_API){
 	function findByIdDepto(deptsId, callback){
 		var url = URL_API  + '/servicios/ctg/ctg_muni.php?accion=C&idDepto=' + deptsId+ '&estado=A';
 		
-		//console.log(url);
+		console.log(url);
     	$http.get(url ).
         then(function(response) {
            callback(response);
@@ -146,6 +154,7 @@ factory('Munis', function($http, URL_API){
 	
     function findByIds(munisId, callback){
     	$http.get(URL_API + '/servicios/ctg/ctg_muni.php?accion=C&id=' + munisId ).
+        console.log(url);
         then(function(response) {
            callback(response);
         });
@@ -154,7 +163,7 @@ factory('Munis', function($http, URL_API){
     function borrar(munisId, deptsId,  usuario, callback){
 		var url = URL_API + '/servicios/ctg/ctg_muni.php?accion=D&idDepto=' + deptsId + '&id=' + munisId + '&user=' + usuario;
 		
-		//console.log(url);
+		console.log(url);
         $http.post(url, deptsId).
         then(function(response) {
            callback(response);
@@ -163,6 +172,7 @@ factory('Munis', function($http, URL_API){
 
     function insertar(munis, callback){
         $http.post(URL_API + '/servicios/ctg/ctg_muni.php?accion=I&idDepto=' + munis.id_depto + '&desc=' + munis.descripcion + '&user=' + munis.usuario, munis).
+        console.log(url);
         then(function(response) {
             callback(response);
          });
@@ -175,7 +185,7 @@ factory('Munis', function($http, URL_API){
 		'&desc=' + munis.descripcion + 
 		'&estado=' + (munis.estado?'A':'I') + 
 		'&user=' + munis.usuario;
-		//console.log(url);
+		console.log(url);
         $http.post(url ,munis).
         then(function(response) {
             callback(response);
@@ -191,7 +201,7 @@ factory('Munis', function($http, URL_API){
 });
 //TIPO VACUNA
 angular.module('tpvacService', []).
-factory('tpvac', function($http, URL_API){
+factory('Tpvac', function($http, URL_API){
 
     var service = {};
 
@@ -205,6 +215,7 @@ factory('tpvac', function($http, URL_API){
 
 
     function activar(tpvacId, usuario, callback){
+        console.log(url);
             $http.post(URL_API + '/servicios/ctg/ctg_tipovacuna.php?accion=A&id=' + tpvacId + 
             '&user=' + usuario, tpvacId).
             then(function(response) {
@@ -214,6 +225,7 @@ factory('tpvac', function($http, URL_API){
 
     function findAll(callback){
     	var url = URL_API + '/servicios/ctg/ctg_tipovacuna.php?accion=C';
+        console.log(url);
     	$http.get(url).
         then(function(response) {
            callback(response);
@@ -223,6 +235,7 @@ factory('tpvac', function($http, URL_API){
     function findAllByFilters(filtro, callback){
     	var url = URL_API + '/servicios/ctg/ctg_tipovacuna.php?accion=C&estado='+filtro.estado;
     	$http.get(url).
+        console.log(url);
         then(function(response) {
            callback(response);
         });
@@ -230,6 +243,7 @@ factory('tpvac', function($http, URL_API){
 
     function findById(deptId, callback){
         $http.get(URL_API + '/servicios/ctg/ctg_tipovacuna.php?accion=C&id=' + deptId).
+        console.log(url);
         then(function(response) {
            callback(response);
         });
@@ -237,6 +251,7 @@ factory('tpvac', function($http, URL_API){
 
     function borrar(deptId, usuario, callback){
         $http.post(URL_API + '/servicios/ctg/ctg_tipovacuna.php?accion=D&id=' + deptId + '&user=' + usuario, deptId).
+        console.log(url);
         then(function(response) {
            callback(response);
         });
@@ -245,6 +260,7 @@ factory('tpvac', function($http, URL_API){
     function insertar(dept, callback){
         $http.post(URL_API + '/servicios/ctg/ctg_tipovacuna.php?accion=I&desc=' + dept.descripcion + 
         '&user=' + dept.usuario ,dept).
+        console.log(url);
         then(function(response) {
             callback(response);
          });

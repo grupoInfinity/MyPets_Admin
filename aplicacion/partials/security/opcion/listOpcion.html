@@ -4,7 +4,8 @@
     </div>	
 	<div class="box-body" ng-controller="OpcionTableCtrl as showCase">
      	<em ng-show="opciones.length == 0">No existen opciones</em>
-        <table datatable="ng" id="opcionTable" dt-options="showCase.dtOptions" dt-columns="showCase.dtColumnsDefs" ng-hide="showCase.opciones.length == 0" class="table table-bordered table-striped">
+        <table datatable="ng" id="opcionTable" dt-options="showCase.dtOptions" 
+        dt-columns="showCase.dtColumnsDefs" ng-hide="showCase.opciones.length == 0" class="table table-bordered table-striped">
 			<thead>
                 <tr>
                     <th>Opcion Principal</th>
@@ -41,6 +42,6 @@
     </div>
     <div class="box-footer">
 	    <a ui-sref="menuMaster.home" class="btn btn-danger">Salir</a>
-    	<a ui-sref="menuMaster.addOpcion()" class="btn btn-info pull-right">Nuevo</a>
+    	<a ui-sref="menuMaster.addOpcion" class="btn btn-info pull-right">Nuevo</a>
     </div>
 </div>
