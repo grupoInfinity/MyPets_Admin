@@ -36,7 +36,6 @@ CREATE TABLE IF NOT EXISTS dbMyPet.sec_menu (   #SEC MENU
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de las opciones principales';
 
 
-
 LOCK TABLES `sec_menu` WRITE;
 
 insert  into `sec_menu`(`id_menu`,`descripcion`,`menu_icon`,`orden`,`acceso_directo`,`estado`,
@@ -47,8 +46,8 @@ insert  into `sec_menu`(`id_menu`,`descripcion`,`menu_icon`,`orden`,`acceso_dire
 
 UNLOCK TABLES;
 
-DROP TABLE IF EXISTS `sec_opcion`;
 DROP TABLE IF EXISTS `sec_opc_rol`;
+DROP TABLE IF EXISTS `sec_opcion`;
 SELECT * FROM `sec_menu`;
 SELECT * FROM `sec_opc_rol`;
 SELECT * FROM `sec_opcion`;
@@ -71,14 +70,11 @@ CREATE TABLE IF NOT EXISTS dbMyPet.sec_opcion (
   CONSTRAINT `FK_OPC_PRINCIPAL` FOREIGN KEY (`id_menu`) REFERENCES `sec_menu` (`id_menu`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de las opciones';
 
-
 LOCK TABLES `sec_opcion` WRITE;
 
-SELECT * FROM sec_menu
 
 insert  into `sec_opcion`(`id_opc`,`id_menu`,`id_opc_padre`,`padre`,`descripcion`,`url`,`estado`,
 `usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`,`orden`) 
-
     VALUES 
     #ADMINISTRACION
     #CATALOGOS
@@ -91,14 +87,22 @@ insert  into `sec_opcion`(`id_opc`,`id_menu`,`id_opc_padre`,`padre`,`descripcion
     (6,1,NULL,1,'Procedimientos','','A','admin','2018-11-09 15:29:05',NULL,NULL,2),#PADRE
     (7,1,6,NULL,'Mascotas','menuMaster.listMascota()','A',NULL,NULL,NULL,NULL,1),
     #SEGURIDAD
-    (8,2,NULL,1,'Usuario','menuMaster.listUsuario()','A','admin','2018-11-09 15:29:05',NULL,NULL,1),
-    (9,2,NULL,1,'Opción','menuMaster.listOpcion()','A','admin','2018-11-09 15:29:05','system','2023-12-03 00:00:00',2),
-    (10,2,NULL,1,'Rol','menuMaster.listRol()','A','admin','2018-11-09 15:29:05',NULL,NULL,3),
-    (11,2,NULL,1,'Opcion Principal','menuMaster.listOpcionPrincipal()','A','admin','2018-11-09 15:29:05',NULL,NULL,4),
-    (12,2,NULL,1,'Setup','menuMaster.listSetup()','I','admin','2021-08-07 18:12:47',NULL,NULL,5),
+    #REGISTROS
+    (8,2,NULL,1,'Registros','','A','admin','2018-11-09 15:29:05','nguerrero','2021-08-12 00:00:00',1),#PADRE
+    (9,2,8,NULL,'Usuario','menuMaster.listUsuario()','A','admin','2018-11-09 15:29:05',NULL,NULL,2),
+    #AUTORIZACION
+    (10,2,NULL,1,'Autorizacion','','A','admin','2018-11-09 15:29:05','nguerrero','2021-08-12 00:00:00',3),#PADRE
+    (11,2,10,NULL,'Opción','menuMaster.listOpcion()','A','admin','2018-11-09 15:29:05','system','2023-12-03 00:00:00',4),
+    (12,2,10,NULL,'Rol','menuMaster.listRol()','A','admin','2018-11-09 15:29:05',NULL,NULL,5),
+    (13,2,10,NULL,'Opcion Principal','menuMaster.listOpcionPrincipal()','A','admin','2018-11-09 15:29:05',NULL,NULL,6),
+    (14,2,10,NULL,'Setup','menuMaster.listSetup()','I','admin','2021-08-07 18:12:47',NULL,NULL,7),
     #PERFIL
-    (13,3,NULL,1,'Cuenta','','A','admin','2018-11-09 15:29:05',NULL,NULL,1);#PADRE
-   
+    (15,3,NULL,1,'Cuenta','','A','admin','2018-11-09 15:29:05',NULL,NULL,1);#PADRE
+
+
+SELECT * FROM sec_opc_rol
+
+
 
 UNLOCK TABLES;
 
@@ -143,13 +147,6 @@ CREATE TABLE IF NOT EXISTS dbMyPet.sec_usuario (
   PRIMARY KEY (`usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de usuario';
 
-ALTER TABLE sec_usuario
-DROP COLUMN tipo_usuario;
-
-SELECT DISTINCT A.usuario, A.clave, A.nombre, A.apellido,A.email, A.estado
-	FROM sec_usuario A
-	WHERE 1=1 AND A.usuario!='system'
-
 
 LOCK TABLES `sec_usuario` WRITE;
 
@@ -190,9 +187,6 @@ CREATE TABLE IF NOT EXISTS dbMyPet.sec_opc_rol (
   CONSTRAINT `FK_ROL2` FOREIGN KEY (`id_rol`) REFERENCES `sec_rol` (`id_rol`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de las opciones por rol';
 
-
-LOCK TABLES `sec_opc_rol` WRITE;
-
 insert  into `sec_opc_rol`(`id_menu`,`id_opc`,`id_rol`,`usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`) 
     values
     #ADMIN CATALOGO
@@ -207,16 +201,19 @@ insert  into `sec_opc_rol`(`id_menu`,`id_opc`,`id_rol`,`usuario_creacion`,`fecha
     (1,7,1,'admin','2018-11-09 15:29:01',NULL,NULL),#MASCOTA ADMIN
     (1,7,2,'admin','2018-11-09 15:29:01',NULL,NULL),#MASCOTA CLIENTE
     #SEGURIDAD
-    (2,8,1,'admin','2018-11-09 15:29:01',NULL,NULL),#USUARIOS
-    (2,9,1,'admin','2018-11-09 15:29:01',NULL,NULL),#OPCION
-    (2,10,1,'admin','2018-11-09 15:29:01',NULL,NULL),#ROL
-    (2,11,1,'admin','2018-11-09 15:29:01',NULL,NULL),#OPCION PRINCIPAL
-    (2,12,1,'admin','2018-11-09 15:29:01',NULL,NULL),#SETUP
-    #PERFIL
-    (3,13,1,'admin','2018-11-09 15:29:01',NULL,NULL),#SETUP
-    (3,13,2,'admin','2018-11-09 15:29:01',NULL,NULL);#SETUP
+    (2,8,1,'admin','2018-11-09 15:29:01',NULL,NULL),#
+    (2,9,1,'admin','2018-11-09 15:29:01',NULL,NULL),#
+    (2,10,1,'admin','2018-11-09 15:29:01',NULL,NULL),#
+    (2,11,1,'admin','2018-11-09 15:29:01',NULL,NULL),#
+    (2,12,1,'admin','2018-11-09 15:29:01',NULL,NULL),#
+    (2,13,1,'admin','2018-11-09 15:29:01',NULL,NULL),#
+    (2,14,1,'admin','2018-11-09 15:29:01',NULL,NULL),#
+	 #PERFIL
+    (3,15,1,'admin','2018-11-09 15:29:01',NULL,NULL),#SETUP
+    (3,15,2,'admin','2018-11-09 15:29:01',NULL,NULL);#SETUP 
 
-SELECT * from
+LOCK TABLES `sec_opc_rol` WRITE;
+
 
 UNLOCK TABLES;
 
@@ -314,7 +311,6 @@ CREATE TABLE IF NOT EXISTS dbMyPet.ctg_departamentos(
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de los roles por usuario';
 
 
-SELECT * from ctg_departamentos
 INSERT INTO ctg_departamentos (id_departamento, descripcion,estado,usuario_creacion,fecha_creacion,usuario_update,fecha_update) 
 VALUE(1,'San Salvador','A','admin','2021-08-11 16:15:48',NULL,NULL),
 (2,'San Vicente','A','admin','2021-08-11 16:15:48',NULL,NULL),
@@ -352,8 +348,6 @@ CREATE TABLE IF NOT EXISTS dbMyPet.ctg_municipios(
     -- DEPARTAMENTO A MUNICIPIO
     CONSTRAINT `fk_municipios_dep` FOREIGN KEY(`id_departamento`) REFERENCES `ctg_departamentos`(`id_departamento`)
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de los roles por usuario';
-
-SELECT * FROM ctg_municipios
 
 INSERT INTO ctg_municipios (id_municipio,id_departamento, descripcion,estado,usuario_creacion,fecha_creacion,usuario_update,fecha_update) 
 VALUE(1, 1, 'San Salvador Norte', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
@@ -491,8 +485,6 @@ CREATE TABLE IF NOT EXISTS dbMyPet.prc_vacunas(
     CONSTRAINT `fk_tipovac_vac` FOREIGN KEY(`id_tipovacuna`) REFERENCES `ctg_tipovacunas`(`id_tipovacuna`)
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de los roles por usuario';
 
-
-
 INSERT INTO prc_vacunas(id_vacuna,id_mascota,id_tipovacuna,usuario_creacion,fecha_creacion,usuario_update,fecha_update) 
 VALUE(1,1,1,'dnery','2021-08-11 16:15:48',NULL,NULL);
 
@@ -504,10 +496,5 @@ SELECT * from prc_mascotas
 LOCK TABLES `prc_vacunas` WRITE;
 USE dbmypet
 
- SELECT v.id_vacuna,v.id_mascota,v.id_tipovacuna,m.nombremascota,
- t.nombrevacuna,DATE(v.fecha_creacion) AS fecha_creacion,v.estado
- FROM prc_vacunas v, prc_mascotas m, ctg_tipovacunas t 
- WHERE v.id_mascota=m.id_mascota AND v.id_tipovacuna=t.id_tipovacuna
- AND v.id_mascota=1 AND v.estado='A'
  
 /*--------------------TABLAS SEGURIDAD-----------------------------*/
