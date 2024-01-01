@@ -107,6 +107,8 @@ SELECT A.id_opc, A.id_menu, A.id_opc_padre, A.padre,
 	FROM sec_opcion A
 
 UNLOCK TABLES;
+USE dbmypet;
+SELECT * FROM ctg_tipovacunas
 
 DROP TABLE IF EXISTS `sec_rol`;
 

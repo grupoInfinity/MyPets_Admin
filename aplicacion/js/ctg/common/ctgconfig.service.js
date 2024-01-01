@@ -22,7 +22,6 @@ angular.module('deptsService', []).
 
         function findAll(callback) {
             var url = URL_API + '/servicios/ctg/ctg_depto.php?accion=C';
-            console.log(url);
             $http.get(url).
                 then(function (response) {
                     callback(response);
@@ -31,8 +30,8 @@ angular.module('deptsService', []).
 
         function findAllByFilters(filtro, callback) {
             var url = URL_API + '/servicios/ctg/ctg_depto.php?accion=C&estado=' + filtro.estado;
+            console.log(url);
             $http.get(url).
-                console.log(url);
             then(function (response) {
                 callback(response);
             });
@@ -40,7 +39,6 @@ angular.module('deptsService', []).
 
         function findById(deptId, callback) {
             $http.get(URL_API + '/servicios/ctg/ctg_depto.php?accion=C&id=' + deptId).
-                console.log(url);
             then(function (response) {
                 callback(response);
             });
@@ -48,7 +46,6 @@ angular.module('deptsService', []).
 
         function borrar(deptId, usuario, callback) {
             $http.post(URL_API + '/servicios/ctg/ctg_depto.php?accion=D&id=' + deptId + '&user=' + usuario, deptId).
-                console.log(url);
             then(function (response) {
                 callback(response);
             });
@@ -56,7 +53,6 @@ angular.module('deptsService', []).
 
         function insertar(dept, callback) {
             $http.post(URL_API + '/servicios/ctg/ctg_depto.php?accion=I&desc=' + dept.descripcion + '&user=' + dept.usuario, dept).
-                console.log(url);
             then(function (response) {
                 callback(response);
             });
@@ -103,7 +99,6 @@ angular.module('munisService', []).
 
         function activar(munisId, usuario, callback) {
             $http.post(URL_API + '/servicios/ctg/ctg_muni.php?accion=A&id=' + munisId + '&user=' + usuario, munisId).
-                console.log(url);
             then(function (response) {
                 callback(response);
             });
@@ -122,7 +117,7 @@ angular.module('munisService', []).
 
         function findAllByFilters(filtro, callback) {
             var url = URL_API + '/servicios/ctg/ctg_muni.php?accion=C&estado=' + filtro.estado;
-
+            console.log(url);
             $http.get(url).
                 then(function (response) {
                     callback(response);
