@@ -132,11 +132,11 @@ function DeptsTableCtrl($scope, $rootScope, $state, $compile, $window,
 	vm.reloadData = reloadData;
 
 	vm.message = '';
-	vm.depts = {};
+	vm.depto = {};
 
 	Depts.findAll(function (response) {
-		if (response.data.status == 1) {
-			vm.depts = response.data.info;
+		if (response.data.status == 1) {		
+			vm.depto = response.data.info;
 		}
 	});
 
@@ -154,7 +154,7 @@ function DeptsTableCtrl($scope, $rootScope, $state, $compile, $window,
 	function listDepts() {
 		Depts.findAll(function (response) {
 			if (response.data.status == 1) {
-				vm.depts = response.data.info;
+				vm.depto = response.data.info;
 			}
 		});
 
@@ -609,7 +609,6 @@ function tpvacTableCtrl($scope, $rootScope, $state, $compile, $window,
 
 	Tpvac.findAll(function (response) {
 		if (response.data.status == 1) {
-			console.log(1);
 			vm.tpvac = response.data.info;
 		}
 	});

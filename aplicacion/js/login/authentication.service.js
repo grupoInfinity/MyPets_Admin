@@ -72,8 +72,6 @@ angular.module('authenticationService',[]).
 				}
 				, language: language
 			};
-			//console.log($rootScope.globals.gral_params);
-			//console.log($rootScope.globals.currentUser.ctg_almacen);
 
              // set default auth header for http requests
              $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;

@@ -40,7 +40,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
             while ($row = $result->fetch_assoc()) {
                 $results[] = array(
                     "id" => $row["id_tipovacuna"],
-                    'nombrevacuna' => utf8_decode($row["nombrevacuna"]),
+                    'descripcion' => utf8_decode($row["nombrevacuna"]),
                     'estado' => $row["estado"]
                 );
                 $json = array("status" => 1, "info" => $results);

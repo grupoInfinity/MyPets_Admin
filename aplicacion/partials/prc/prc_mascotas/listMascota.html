@@ -25,18 +25,18 @@
             </thead> 
             <!-- The table is built using the AngularJS repeat function, iterating over the members variable, and ordering by the property specified in the orderBy variable -->
             <tr ng-repeat="masc in showCase.masc">
-                <td>{{masc.mascota[0].id_mascota}}</td>
-                <td>{{masc.mascota[0].usuario}}</td>
-                <td>{{masc.mascota[0].nombremascota}}</td>
-                <td>{{masc.mascota[0].codigo}}</td>
+                <td>{{masc.mascota.id_mascota}}</td>
+                <td>{{masc.mascota.usuario}}</td>
+                <td>{{masc.mascota.nombremascota}}</td>
+                <td>{{masc.mascota.codigo}}</td>
                 <td align="center">
-					<label ng-if=" masc.estado=='A'"><font color="green"><i class="fa fa-check"></i></font></label>
-					<label ng-if=" masc.estado=='I'"><font color="red"><i class="fa fa-close"></i></font></label>
+					<label ng-if=" masc.mascota.estado=='A'"><font color="green"><i class="fa fa-check"></i></font></label>
+					<label ng-if=" masc.mascota.estado=='I'"><font color="red"><i class="fa fa-close"></i></font></label>
 				</td>
                 <td>
-            	<button class="btn btn-danger btn-xs"  ng-click="showCase.deleteMasc(masc.id_mascota)"><i class="fa fa-trash-o"></i></button>
-                <button class="btn btn-warning btn-xs" ng-click="showCase.editMasc(masc.id_mascota)"><i class="fa fa-edit"></i></button>
-				<button class="btn btn-primary btn-xs" ng-click="showCase.activateMasc(masc.id_mascota)"><i class="fa fa-check"></i></button>
+            	<button class="btn btn-danger btn-xs"  ng-click="showCase.deleteMasc(masc.mascota.id_mascota)"><i class="fa fa-trash-o"></i></button>
+                <button class="btn btn-warning btn-xs" ng-click="showCase.editMasc(masc.mascota.id_mascota)"><i class="fa fa-edit"></i></button>
+				<button class="btn btn-primary btn-xs" ng-click="showCase.activateMasc(masc.mascota.id_mascota)"><i class="fa fa-check"></i></button>
                 </td>
              </tr>
         </table>

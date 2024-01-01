@@ -38,7 +38,8 @@ app.config(['$qProvider', function ($qProvider) {
 }]);
 
 angular.module('aplicacion')
-  .config(['$httpProvider', '$stateProvider', '$urlRouterProvider', function ($httpProvider, $stateProvider, $urlRouterProvider) {
+  .config(['$httpProvider', '$stateProvider', '$urlRouterProvider', 
+  function ($httpProvider, $stateProvider, $urlRouterProvider) {
     /*
      * Use a HTTP interceptor to add a nonce to every request to prevent MSIE from caching responses.
      */

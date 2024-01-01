@@ -39,7 +39,8 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
 	if (!empty($result))
 		if($result->num_rows > 0) {
 			while($row = $result->fetch_assoc()) {
-				$results[] = array("id" => $row["id_departamento"], 
+				$results[] = array(
+				'id' => $row["id_departamento"], 
 				'descripcion' => utf8_encode($row["descripcion"]), 
 				'estado'=>$row["estado"]);
 				$json = array("status"=>1, "info"=>$results);

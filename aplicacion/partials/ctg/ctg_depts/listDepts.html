@@ -20,9 +20,9 @@
     	<h3 class="box-title">Listado de Departamentos</h3>
     </div>	
 	<div class="box-body" ng-controller="DeptsTableCtrl as showCase">
-		<em ng-show="showCase.depts.length == 0">No existen datos de departamentos</em>
+		<em ng-show="showCase.depto.length == 0">No existen datos de departamentos</em>
         <table datatable="ng" id="deptTable" dt-options="showCase.dtOptions" dt-columns="showCase.dtColumnsDefs" 
-        ng-hide="showCase.depts.length == 0" class="table table-bordered table-striped">
+        ng-hide="showCase.depto.length == 0" class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -32,17 +32,17 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="dept in showCase.depts">
-                    <td>{{ dept.id }}</td>
-                    <td>{{ dept.descripcion }}</td>
+                <tr ng-repeat="depto in showCase.depto">
+                    <td>{{ depto.id }}</td>
+                    <td>{{ depto.descripcion }}</td>
                      <td align="center">
-						<label ng-if=" dept.estado=='A'"><font color="green"><i class="fa fa-check"></i></font></label>
-						<label ng-if=" dept.estado=='I'"><font color="red"><i class="fa fa-close"></i></font></label>
+						<label ng-if=" depto.estado=='A'"><font color="green"><i class="fa fa-check"></i></font></label>
+						<label ng-if=" depto.estado=='I'"><font color="red"><i class="fa fa-close"></i></font></label>
 					</td>
                     <td>
-                        <button class="btn btn-danger btn-xs" ng-click="showCase.deleteDept(dept.id)"><i class="fa fa-trash-o"></i></button>
-                        <button class="btn btn-warning btn-xs" ng-click="showCase.editDept(dept.id)"><i class="fa fa-edit"></i></button>
-                        <button class="btn btn-primary btn-xs" ng-click="showCase.activateDept(dept.id)"><i class="fa fa-check"></i></button>
+                        <button class="btn btn-danger btn-xs" ng-click="showCase.deleteDept(depto.id)"><i class="fa fa-trash-o"></i></button>
+                        <button class="btn btn-warning btn-xs" ng-click="showCase.editDept(depto.id)"><i class="fa fa-edit"></i></button>
+                        <button class="btn btn-primary btn-xs" ng-click="showCase.activateDept(depto.id)"><i class="fa fa-check"></i></button>
                         
                     </td>
                 </tr>

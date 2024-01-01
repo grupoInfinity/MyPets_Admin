@@ -100,9 +100,11 @@ insert  into `sec_opcion`(`id_opc`,`id_menu`,`id_opc_padre`,`padre`,`descripcion
     (15,3,NULL,1,'Cuenta','','A','admin','2018-11-09 15:29:05',NULL,NULL,1);#PADRE
 
 
-SELECT * FROM sec_opc_rol
+SELECT * FROM sec_opcion
 
-
+SELECT A.id_opc, A.id_menu, A.id_opc_padre, A.padre, 
+    A.descripcion, A.url, A.estado, A.id_empresa, A.orden
+	FROM sec_opcion A
 
 UNLOCK TABLES;
 
