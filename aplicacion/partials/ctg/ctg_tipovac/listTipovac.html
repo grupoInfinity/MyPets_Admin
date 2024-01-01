@@ -20,9 +20,7 @@
     	<h3 class="box-title">Listado de tipo de vacunas</h3>
     </div>	
 	<div class="box-body" ng-controller="tpvacTableCtrl as showCase">
-        <em ng-show="showCase.munis.length == 0">No existen datos de Municipios</em>
-        <table datatable="ng" id="munisTable" dt-options="showCase.dtOptions" dt-columns="showCase.dtColumnsDefs" 
-        ng-hide="showCase.munis.length == 0" class="table table-bordered table-striped">
+        
         
 		<em ng-show="showCase.tpvac.length == 0">No existen datos de tipos de vacunas</em>
         <table datatable="ng" id="tpvacTable" dt-options="showCase.dtOptions" 

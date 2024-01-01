@@ -38,7 +38,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
             while ($row = $result->fetch_assoc()) {
                 $results[] = array(
                     "id" => $row["id_tipomascota"],
-                    'tipomascota' => utf8_decode($row["tipomascota"]),
+                    'descripcion' => utf8_decode($row["tipomascota"]),
                     'estado' => $row["estado"]
                 );
                 $json = array("status" => 1, "info" => $results);
@@ -85,7 +85,7 @@ else {
         $user = ", usuario_update='" . $user . "'";
         $date = ", fecha_update='" . date('Y-m-d H:i:s') . "'";
 
-        $sql = "UPDATE $bd.$tabla SET $tipomascota $estado $user $date WHERE id = $id";
+        $sql = "UPDATE $bd.$tabla SET $tipomascota $estado $user $date WHERE id_tipomascota = $id";
 
         if ($conn->query($sql) === TRUE) {
             $json = array("status" => 1, "info" => "Registro actualizado exitosamente.");
@@ -97,7 +97,7 @@ else {
         $user = ", usuario_update='" . $user . "'";
         $date = ", fecha_update='" . date('Y-m-d H:i:s') . "'";
 
-        $sql = "UPDATE $bd.$tabla set estado='I' $user $date WHERE id = $id";
+        $sql = "UPDATE $bd.$tabla set estado='I' $user $date WHERE id_tipomascota = $id";
 
         if ($conn->query($sql) === TRUE) {
             $json = array("status" => 1, "info" => "Registro eliminado exitosamente.");
@@ -109,7 +109,7 @@ else {
         $user = ", usuario_update='" . $user . "'";
         $date = ", fecha_update='" . date('Y-m-d H:i:s') . "'";
 
-        $sql = "UPDATE $bd.$tabla set estado='A' $user $date WHERE id = $id";
+        $sql = "UPDATE $bd.$tabla set estado='A' $user $date WHERE id_tipomascota = $id";
 
         if ($conn->query($sql) === TRUE) {
             $json = array("status" => 1, "info" => "Registro eliminado exitosamente.");

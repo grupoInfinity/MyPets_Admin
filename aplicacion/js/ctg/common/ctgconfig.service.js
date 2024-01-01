@@ -22,6 +22,7 @@ angular.module('deptsService', []).
 
         function findAll(callback) {
             var url = URL_API + '/servicios/ctg/ctg_depto.php?accion=C';
+            console.log(url);
             $http.get(url).
                 then(function (response) {
                     callback(response);
@@ -30,7 +31,6 @@ angular.module('deptsService', []).
 
         function findAllByFilters(filtro, callback) {
             var url = URL_API + '/servicios/ctg/ctg_depto.php?accion=C&estado=' + filtro.estado;
-            console.log(url);
             $http.get(url).
             then(function (response) {
                 callback(response);
@@ -226,33 +226,33 @@ angular.module('tpvacService', []).
 
         function findAllByFilters(filtro, callback) {
             var url = URL_API + '/servicios/ctg/ctg_tipovacuna.php?accion=C&estado=' + filtro.estado;
+            console.log(url);
             $http.get(url).
-                console.log(url);
             then(function (response) {
                 callback(response);
             });
         };
 
         function findById(deptId, callback) {
+            console.log(1);
             $http.get(URL_API + '/servicios/ctg/ctg_tipovacuna.php?accion=C&id=' + deptId).
-                console.log(url);
             then(function (response) {
                 callback(response);
             });
         };
 
         function borrar(deptId, usuario, callback) {
+            console.log(url);
             $http.post(URL_API + '/servicios/ctg/ctg_tipovacuna.php?accion=D&id=' + deptId + '&user=' + usuario, deptId).
-                console.log(url);
             then(function (response) {
                 callback(response);
             });
         };
 
         function insertar(dept, callback) {
+            console.log(url);
             $http.post(URL_API + '/servicios/ctg/ctg_tipovacuna.php?accion=I&desc=' + dept.descripcion +
                 '&user=' + dept.usuario, dept).
-                console.log(url);
             then(function (response) {
                 callback(response);
             });
@@ -305,6 +305,7 @@ angular.module('tpmascService', []).
 
         function findAll(callback) {
             var url = URL_API + '/servicios/ctg/ctg_tipomascota.php?accion=C';
+            console.log(url);
             $http.get(url).
                 then(function (response) {
                     callback(response);
@@ -327,7 +328,7 @@ angular.module('tpmascService', []).
         };
 
         function borrar(deptId, usuario, callback) {
-            $http.post(URL_API + '/servicios/ctg/ctg_ctg_tipomascota.php?accion=D&id=' + deptId +
+            $http.post(URL_API + '/servicios/ctg/ctg_tipomascota.php?accion=D&id=' + deptId +
                 '&user=' + usuario, deptId).
                 then(function (response) {
                     callback(response);
@@ -335,7 +336,7 @@ angular.module('tpmascService', []).
         };
 
         function insertar(dept, callback) {
-            $http.post(URL_API + '/servicios/ctg/ctg_tipovacuna.php?accion=I&desc=' + dept.descripcion +
+            $http.post(URL_API + '/servicios/ctg/ctg_tipomascota.php?accion=I&desc=' + dept.descripcion +
                 '&user=' + dept.usuario, dept).
                 then(function (response) {
                     callback(response);
@@ -343,7 +344,7 @@ angular.module('tpmascService', []).
         };
 
         function actualizar(dept, callback) {
-            var url = URL_API + '/servicios/ctg/ctg_tipovacuna.php?accion=U' +
+            var url = URL_API + '/servicios/ctg/ctg_tipomascota.php?accion=U' +
                 '&id=' + dept.id +
                 '&desc=' + dept.descripcion +
                 '&estado=' + (dept.estado ? 'A' : 'I') +

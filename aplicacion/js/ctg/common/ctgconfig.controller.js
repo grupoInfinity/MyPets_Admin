@@ -565,7 +565,7 @@ function tpvacEditCtrl($rootScope, $scope, $filter, $state, $stateParams, Tpvac)
 					showConfirmButton: false,
 					timer: 2000
 				});
-				$state.go('menuMaster.listTpvac');
+				$state.go('menuMaster.listTipovac');
 			},
 			function (result) {
 				if ((result.status == 409)
@@ -784,9 +784,7 @@ function tpmascEditCtrl($rootScope, $scope, $filter, $state, $stateParams,tpmasc
 
 		$scope.newtpmasc.usuario = tpmascObj.usuario;
 
-		tpmasc.actualizar(
-			$scope.newtpmasc,
-			function (response) {
+		tpmasc.actualizar($scope.newtpmasc,function (response) {
 				$scope.successMessages = ['Tipo de mascota Actualizado correctamente'];
 				Swal.fire({
 					toast: true,
@@ -830,7 +828,7 @@ function tpmascEditCtrl($rootScope, $scope, $filter, $state, $stateParams,tpmasc
 };
 
 function tpmascTableCtrl($scope, $rootScope, $state, $compile, $window,
-	popupService, DTOptionsBuilder, DTColumnDefBuilder, Tpmasc, URL_API) {
+	popupService, DTOptionsBuilder, DTColumnDefBuilder, tpmasc, URL_API) {
 	var vm = this;
 
 	vm.listTpmasc = listTpmasc;
@@ -839,7 +837,7 @@ function tpmascTableCtrl($scope, $rootScope, $state, $compile, $window,
 	vm.message = '';
 	vm.tpmasc = {};
 
-	Tpmasc.findAll(function (response) {
+	tpmasc.findAll(function (response) {
 		if (response.data.status == 1) {
 			vm.tpmasc = response.data.info;
 		}
@@ -857,7 +855,7 @@ function tpmascTableCtrl($scope, $rootScope, $state, $compile, $window,
 	vm.activateTpmasc = activateTpmasc;
 
 	function listTpmasc() {
-		Tpmasc.findAll(function (response) {
+		tpmasc.findAll(function (response) {
 			if (response.data.status == 1) {
 				vm.tpmasc = response.data.info;
 			}
@@ -867,7 +865,7 @@ function tpmascTableCtrl($scope, $rootScope, $state, $compile, $window,
 	;
 
 	function reloadData() {
-		Tpmasc.findAll(function (response) {
+		tpmasc.findAll(function (response) {
 			if (response.data.status == 1) {
 				vm.tpmasc = response.data.info;
 			}
@@ -887,7 +885,7 @@ function tpmascTableCtrl($scope, $rootScope, $state, $compile, $window,
 			confirmButtonText: 'Si, inactivar!'
 		}).then((result) => {
 			if (result.value) {
-				Tpmasc.borrar(tpmascId, $rootScope.globals.currentUser.username,
+				tpmasc.borrar(tpmascId, $rootScope.globals.currentUser.username,
 					function (response) {
 						reloadData();
 					});
@@ -924,7 +922,7 @@ function tpmascTableCtrl($scope, $rootScope, $state, $compile, $window,
 
 	function activateTpmasc(tpmascId) {
 
-		Tpmasc.activar(tpmascId, $rootScope.globals.currentUser.username,
+		tpmasc.activar(tpmascId, $rootScope.globals.currentUser.username,
 			function (response) {
 				reloadData();
 			}
