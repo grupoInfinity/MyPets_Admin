@@ -27,13 +27,13 @@ $json = "no has seteado nada.";
 
 if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 	if (!empty($id_opc)) $id_opc = "AND A.id_opc=$id_opc";
-	else $id_opc = "";
+	else $id_opc = "1=1";
 	if (!empty($id_padre)) $id_padre = "AND C.id_opc=$id_padre";
 	else $id_padre = "";
-	if (!empty($id_opc_ppal)) $id_opc_ppal = " A.id_opc_ppal=$id_opc_ppal";
-	else $id_opc_ppal = " 1=1";
+	if (!empty($id_opc_ppal)) $id_opc_ppal = "AND A.id_menu=$id_opc_ppal";
+	else $id_opc_ppal = "";
 	if (!empty($id_rol)) $id_rol = "AND A.id_rol = $id_rol";
-	else $id_rol = "AND 1=1";
+	else $id_rol = "";
 	if (!empty($id_empresa)) $id_empresa = "AND A.id_empresa = $id_empresa ";
 	else $id_empresa = "";
 
@@ -48,7 +48,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 	FROM $bd.sec_opc_rol A
 	INNER JOIN $bd.sec_menu B ON B.id_menu = A.id_menu
 	INNER JOIN $bd.sec_opcion C ON C.id_menu = A.id_menu AND C.id_opc = A.id_opc 
-	WHERE $id_opc $id_menu $id_rol $id_padre 
+	WHERE $id_opc $id_opc_ppal $id_rol $id_padre 
 	ORDER BY CAST(B.orden AS DECIMAL) ASC";
 
 	//echo $sql;
@@ -90,7 +90,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 				/*****************************************************************************************/
 
 				$sql2 = "
-				SELECT A.id_menu,, A.descripcion, A.estado
+				SELECT A.id_menu,A.descripcion, A.estado
 				FROM $bd.sec_menu A
 				WHERE A.id_menu = $id_opc_ppal ";
 

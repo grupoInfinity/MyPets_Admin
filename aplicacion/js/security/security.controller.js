@@ -1127,8 +1127,8 @@ function UsuarioListCtrl($scope, $rootScope, $state, $compile, $window, popupSer
 	DTOptionsBuilder, DTColumnDefBuilder, Usr, URL_API) {
 	var vm = this;
 
-	vm.listUsuario = listUsuario;
-	vm.reloadData = reloadData;
+	/*vm.listUsuario = listUsuario;
+	vm.reloadData = reloadData;*/
 
 	vm.message = '';
 	vm.usuario = {};
@@ -1395,7 +1395,10 @@ function OpcionRolCtrl($scope, $rootScope, $http, $filter, $state, DTOptionsBuil
 		$scope.formTypeOpcion = "ADD";
 		var date = new Date();
 
-		$scope.opcion = { id_opc: "", id_opc_ppal: "", usuario: $rootScope.globals.currentUser.username };
+		$scope.opcion = { 
+			id_opc: "", 
+			id_opc_ppal: "", 
+			usuario: $rootScope.globals.currentUser.username };
 
 		$scope.opcion.id_rol = $scope.newRol;
 		//$scope.opcion.id_opc = $scope.opcion.id.id_opc;
