@@ -47,9 +47,9 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
     else $usuario = "";
     if (!empty($nombremasc)) $nombremasc = "AND m.nombremascota LIKE '%'$nombremasc%'";
     else $nombremasc = "";
-    if (!empty($estado)) $estado = "AND A.estado='$estado'";
+    if (!empty($estado)) $estado = "AND m.estado='$estado'";
     else $estado = "";
-    if (!empty($codigo)) $codigo= "AND A.codigo='$codigo'";
+    if (!empty($codigo)) $codigo= "AND m.codigo='$codigo'";
     else $codigo = "";
 
 

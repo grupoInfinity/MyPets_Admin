@@ -1,7 +1,7 @@
 angular.module('opcionService', []).
 factory('Opcion', function($http, URL_API){
 
-    var service = {};
+    var service = {}; 
 
     service.findAll = findAll;
 	service.findAllPadre = findAllPadre;
