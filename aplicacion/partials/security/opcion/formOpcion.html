@@ -73,7 +73,8 @@
 					<span ng-bind="$select.selected.descripcion"></span>
 				</ui-select-match>
 				<ui-select-choices
-					repeat="opces.id.id as opces in (opces | propsFilter: {descripcion: $select.search}) track by opces.id.id">
+					repeat="opces.id.id as opces 
+					in (opces | propsFilter: {descripcion: $select.search}) track by opces.id.id">
 					<div ng-bind-html="opces.descripcion | highlight: $select.search"></div>
 				</ui-select-choices>
 			</ui-select>

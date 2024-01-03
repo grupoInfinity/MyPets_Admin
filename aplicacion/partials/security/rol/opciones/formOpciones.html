@@ -15,7 +15,6 @@
 		ng-hide="opcionesrol.length == 0" class="table table-bordered table-striped">
 		<thead>
 			<tr>
-				<th>Empresa</th>
 				<th>Opci&oacute;n Principal</th>
 				<!-- <th>Opci&oacute;n Padre</th>-->
 				<th>Opci&oacute;n</th>
@@ -26,7 +25,6 @@
 		<!-- The table is built using the AngularJS repeat function, iterating over the members variable, and ordering by the property specified in the orderBy variable -->
 		<tbody>
 			<tr ng-repeat="opcrol in opcionesrol">
-				<td>{{opcrol.ctgEmpresa.descripcion}}</td>
 				<td>{{opcrol.secOpcPpal.descripcion}}</td>
 				<!--<td>{{opcrol.secOpcPadre.desc_opc_padre}}</td>-->
 				<td>{{opcrol.secOpc.descripcion}}</td>

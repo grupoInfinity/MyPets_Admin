@@ -228,10 +228,13 @@ function OpcionEditCtrl($scope, $rootScope, $rootScope, $filter, $state, $stateP
 			if (response.data.status == 1)
 				$scope.newOpcion = response.data.info[0];
 			$scope.newOpcion.id_opc_ppal = response.data.info[0].id.id_opc_principal;
+			//console.log($scope.newOpcion.id_opc_ppal);
+			$scope.loadOpcPadre();
 			$scope.newOpcion.id = response.data.info[0].id.id;
 			if ($scope.newOpcion.estado == 'A') {
 				$scope.newOpcion.estado = true;
 			}
+
 		});
 	};
 
@@ -247,15 +250,14 @@ function OpcionEditCtrl($scope, $rootScope, $rootScope, $filter, $state, $stateP
 
 	$scope.listOpcPpal();
 
-	$scope.opcppales = null;
+	/*$scope.opcppales = null;
 	$scope.loadOpcPpal = function () {
 		$scope.opcppales = [];
 
 		$scope.newOpcion.id_opc_ppal = "";
 		if ($scope.newOpcion.id_opc_ppal == null) $scope.newOpcion.id_opc_ppal = "";
 
-	};
-
+	};*/
 
 	$scope.loadOpcPadre = function () {
 		Opcion.findAllPadre($scope.newOpcion.id_opc_ppal, function (response) {
@@ -265,7 +267,6 @@ function OpcionEditCtrl($scope, $rootScope, $rootScope, $filter, $state, $stateP
 		});
 	};
 
-	//$scope.loadOpcPadre();
 };
 
 /*************************** OPCION PRINCIPAL CONTROLLER ***********************************/
