@@ -1,5 +1,9 @@
 <input type="button" ng-click="resetOpcion()" name="resetOpcion" id="resetOpcion" value="Nueva Opci&oacute;n"
 	class="btn btn-primary" data-toggle="modal" data-target="#myOpcionModal" />
+
+	<input type="button" ng-click="resetRol()" name="resetRol" id="resetRol" value="Nuevo Rol" class="btn btn-primary"
+	data-toggle="modal" data-target="#myRolModal" />
+<em ng-show="rolesusr.length == 0">No existen datos de Roles.</em>
 <!--<em ng-show="opcionesrol.length == 0">No existen datos de Opciones.</em>
 
 							<div class="box-body table-responsive no-padding">

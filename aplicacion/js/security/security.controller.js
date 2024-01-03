@@ -1366,7 +1366,9 @@ function RolUsuarioCtrl($scope, $rootScope, $filter, $state, $stateParams, $comp
 	});
 };
 
-function OpcionRolCtrl($scope, $rootScope, $http, $filter, $state, DTOptionsBuilder, DTColumnDefBuilder, $stateParams, $compile, $window, popupService, OpcRol, OpcPpal, Opcion, Empresa, URL_API) {
+function OpcionRolCtrl($scope, $rootScope, $http, $filter, $state,
+	DTOptionsBuilder, DTColumnDefBuilder, $stateParams, $compile, $window,
+	popupService, OpcRol, OpcPpal, Opcion, URL_API) {
 
 	$scope.clearMessages = function () {
 
@@ -1395,10 +1397,11 @@ function OpcionRolCtrl($scope, $rootScope, $http, $filter, $state, DTOptionsBuil
 		$scope.formTypeOpcion = "ADD";
 		var date = new Date();
 
-		$scope.opcion = { 
-			id_opc: "", 
-			id_opc_ppal: "", 
-			usuario: $rootScope.globals.currentUser.username };
+		$scope.opcion = {
+			id_opc: "",
+			id_opc_ppal: "",
+			usuario: $rootScope.globals.currentUser.username
+		};
 
 		$scope.opcion.id_rol = $scope.newRol;
 		//$scope.opcion.id_opc = $scope.opcion.id.id_opc;
@@ -1471,7 +1474,6 @@ function OpcionRolCtrl($scope, $rootScope, $http, $filter, $state, DTOptionsBuil
 	$scope.loadOpcionesPpal();
 
 	$scope.updateOpcPpal = function () {
-		var id_empresa = 0;
 		//var opcppal = 0;		
 		$scope.opcppales = null;
 		$scope.opc = null;
@@ -1521,6 +1523,7 @@ function OpcionRolCtrl($scope, $rootScope, $http, $filter, $state, DTOptionsBuil
 		OpcRol.findByRol(idRol, function (response) {
 			if (response.data.status == 1)
 				$scope.opcionesrol = response.data.info;
+			else $scope.rolesusr = [];
 		});
 
 	};

@@ -9,7 +9,6 @@
 			<thead>
                 <tr>
                     <th>Opcion Principal</th>
-					<th>Empresa</th>
                     <th>Opcion</th>
 					<th>Padre?</th>
                     <th>Estado</th>
@@ -18,9 +17,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="opc in opciones">
-                   
                     <td>{{ opc.sec_opc_principal.descripcion }}</td>
-					<td>{{ opc.ctg_empresa.descripcion }}</td> 
                     <td>{{ opc.descripcion }}</td>
 					<td align="center">
 						<label ng-if=" opc.padre==1"><font color="green"><i class="fa fa-check-square-o"></i></font></label>
