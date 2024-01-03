@@ -16,7 +16,6 @@ $accion = isset($_GET['accion']) ? $_GET['accion'] : '';
 $id_opc = isset($_GET['id']) ? $_GET['id'] : '';
 $id_opc_ppal = isset($_GET['id_opc_ppal']) ? $_GET['id_opc_ppal'] : '';
 $id_opc_padre = isset($_GET['id_opc_padre']) ? $_GET['id_opc_padre'] : '';
-$id_empresa = isset($_GET['id_empresa']) ? $_GET['id_empresa'] : '';
 $padre = isset($_GET['padre']) ? $_GET['padre'] : '';
 
 $desc = utf8_encode(isset($_GET['desc']) ? $_GET['desc'] : '');
@@ -29,7 +28,7 @@ $user = (isset($_GET['user']) ? $_GET['user'] : '');
 $json = "no has seteado nada.";
 
 if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
-    if(!empty($id_opc)) $id_opc="A.id='$id_opc'";
+    if(!empty($id_opc)) $id_opc="A.id_opc='$id_opc'";
     else $id_opc="1=1";
     if(!empty($id_opc_ppal)) $id_opc_ppal="and A.id_menu='$id_opc_ppal'";
     else $id_opc_ppal="and 1=1";

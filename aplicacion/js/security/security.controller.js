@@ -180,7 +180,7 @@ function OpcionAddCtrl($scope, $rootScope, $filter, $http, $state, Opcion, OpcPp
 	$scope.opcppales = null;
 	$scope.loadOpcPpal = function () {
 		$scope.opcppales = [];
-
+		
 		$scope.newOpcion.id_opc_ppal = "";
 		if ($scope.newOpcion.id_opc_ppal == null) $scope.newOpcion.id_opc_ppal = "";
 
@@ -244,8 +244,8 @@ function OpcionEditCtrl($scope, $rootScope, $rootScope, $filter, $state, $stateP
 				$scope.opcppales = response.data.info;
 		});
 	};
-	$scope.listOpcPpal();
 
+	$scope.listOpcPpal();
 
 	$scope.opcppales = null;
 	$scope.loadOpcPpal = function () {
@@ -255,6 +255,7 @@ function OpcionEditCtrl($scope, $rootScope, $rootScope, $filter, $state, $stateP
 		if ($scope.newOpcion.id_opc_ppal == null) $scope.newOpcion.id_opc_ppal = "";
 
 	};
+
 
 	$scope.loadOpcPadre = function () {
 		Opcion.findAllPadre($scope.newOpcion.id_opc_ppal, function (response) {

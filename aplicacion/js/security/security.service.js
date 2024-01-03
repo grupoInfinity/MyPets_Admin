@@ -142,7 +142,7 @@ factory('OpcPpal', function($http, URL_API){
 
     function findAll(callback){
 		var url = URL_API + '/servicios/sec/sec_menu.php?accion=C';
-		//console.log(url);
+		console.log(url);
         $http.get(url).
         then(function(response) {
            callback(response);

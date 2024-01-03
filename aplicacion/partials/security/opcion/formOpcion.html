@@ -21,9 +21,11 @@
 					<span ng-bind="$select.selected.descripcion"></span>
 				</ui-select-match>
 				<ui-select-choices
-					repeat="opcppales.id.id as opcppales in (opcppales | propsFilter: {descripcion: $select.search}) track by opcppales.id.id">
+					repeat="opcppales.id as opcppales 
+					in (opcppales | propsFilter: {descripcion: $select.search}) track by opcppales.id">
 					<div ng-bind-html="opcppales.descripcion | highlight: $select.search"></div>
 				</ui-select-choices>
+				
 			</ui-select>
 			<span class="error help-block" ng-show="regForm.idOpcPpal.$error.required">Requerido</span>
 			<span class="error help-block" ng-show="errors.idOpcPpal">{{errors.idOpcPpal}}</span>

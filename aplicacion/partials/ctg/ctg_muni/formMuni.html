@@ -33,7 +33,8 @@
 						<ui-select-match placeholder="Departamento" autofocus>
 							<span ng-bind="$select.selected.descripcion"></span>
 						</ui-select-match>
-						<ui-select-choices repeat="depts.id as depts in (depts | propsFilter: {descripcion: $select.search}) track by depts.id" >
+						<ui-select-choices repeat="depts.id as depts in 
+						(depts | propsFilter: {descripcion: $select.search}) track by depts.id" >
 							<div ng-bind-html="depts.descripcion | highlight: $select.search"></div>
 						</ui-select-choices>
 					</ui-select>
