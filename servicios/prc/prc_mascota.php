@@ -55,7 +55,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
     else $codigo = "";
 
 
-    $sql = "SELECT m.id_mascota,m.id_tipomascota,m.id_municipio, u.usuario, u.email,
+    $sql = "SELECT m.id_mascota,m.id_tipomascota,d.id_departamento,m.id_municipio, u.usuario, u.email,
     u.telefono,m.nombremascota,m.estado,t.tipomascota,
     d.descripcion as depto,mu.descripcion as muni,m.direccion,m.estado_direc,m.codigo,m.nacimiento 
     FROM $bd.prc_mascotas m, $bd.ctg_tipomascotas t, $bd.ctg_municipios mu,
@@ -76,15 +76,16 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 
                 $mascota[] = array(
                     'idmasc' => $row["id_mascota"],
-                    'tpmascota' => $row["id_tipomascota"],
-                    'muni' => $row["id_municipio"],
+                    'idtpmasc' => $row["id_tipomascota"],
+                    'idmuni' => $row["id_municipio"],
+                    'iddepto' => $row["id_departamento"],
+                    'depto' => ($row["depto"]),
+                    'muni' => ($row["muni"]),
                     'dueno'  => $row["usuario"],
                     'mail' => ($row["email"]),
                     'telefono' => ($row["telefono"]),
                     'nmasc' => ($row["nombremascota"]),
-                    'tipomascota' => ($row["tipomascota"]),
-                    'depto' => ($row["depto"]),
-                    'muni' => ($row["muni"]),
+                    'tipomasc' => ($row["tipomascota"]),
                     'direccion' => ($row["direccion"]),
                     'estadodir' => ($row["estado_direc"]),
                     'nacim' => $row["nacimiento"],

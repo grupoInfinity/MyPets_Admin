@@ -228,7 +228,6 @@ function OpcionEditCtrl($scope, $rootScope, $rootScope, $filter, $state, $stateP
 			if (response.data.status == 1)
 				$scope.newOpcion = response.data.info[0];
 			$scope.newOpcion.id_opc_ppal = response.data.info[0].id.id_opc_principal;
-			//console.log($scope.newOpcion.id_opc_ppal);
 			$scope.loadOpcPadre();
 			$scope.newOpcion.id = response.data.info[0].id.id;
 			if ($scope.newOpcion.estado == 'A') {

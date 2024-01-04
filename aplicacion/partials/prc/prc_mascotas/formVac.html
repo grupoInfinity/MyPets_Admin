@@ -7,14 +7,15 @@
 		<thead>
 			<tr>
 				<th>Vacuna</th>
-				<th>Fecha</th>
+				<th>Fecha colocada</th>
+				<th></th>
 			</tr>
 		</thead>
 		<!-- The table is built using the AngularJS repeat function, iterating over the members variable, and ordering by the property specified in the orderBy variable -->
 		<tbody>
 			<tr ng-repeat="vacmasc in vacmasc">
 				<td>{{vacmasc.nombrevacuna}}</td>
-				<td>{{vacmasc.fecha_creacion}}</td>
+				<td>{{vacmasc.fechacr}}</td>
 				<td>
 					<button class="btn btn-danger btn-xs" ng-click="deleteVac(vacmasc.id_vacuna)">
 						<i class="fa fa-trash-o"></i></button>

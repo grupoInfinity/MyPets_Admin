@@ -56,69 +56,6 @@
 			<!-- /.box-header -->
 			<div class="box-body">
 
-				 <!--<div class="form-group" ng-class="{ 'has-error': regForm.estado.$error.required }">
-					<label for="empresa" class="col-sm-2 control-label">Empresa:</label>
-					<div class="col-sm-2">
-						<ui-select ng-model="newUsuario.id_empresa" name="idempresa" id="idempresa" ng-required="true"
-							ng-change="updateAlmacen()" autofocus>
-							<ui-select-match allow-clear="true">
-								<span ng-bind="$select.selected.descripcion"></span>
-							</ui-select-match>
-							<ui-select-choices
-								repeat="empresa.id.id as empresa in (empresa | propsFilter: {descripcion: $select.search}) track by empresa.id.id">
-								<div ng-bind-html="empresa.descripcion | highlight: $select.search"></div>
-							</ui-select-choices>
-						</ui-select>
-						<span class="error help-block" ng-show="regForm.idempresa.$error.required">Requerido</span>
-						<span class="error help-block" ng-show="errors.idempresa">{{errors.idempresa}}</span>
-					</div>
-
-
-					<label for="almacen" class="col-sm-2 control-label">Almacen:</label>
-					<div class="col-sm-2">
-						<ui-select ng-model="newUsuario.id_almacen" name="idalmacen" id="idalmacen" ng-required="true"
-							ng-change="loadEmpleados()">
-							<ui-select-match allow-clear="true">
-								<span ng-bind="$select.selected.descripcion"></span>
-							</ui-select-match>
-							<ui-select-choices
-								repeat="almacen.id.id as almacen in (almacen | propsFilter: {descripcion: $select.search}) track by almacen.id.id">
-								<div ng-bind-html="almacen.descripcion | highlight: $select.search"></div>
-							</ui-select-choices>
-						</ui-select>
-						<span class="error help-block" ng-show="regForm.idalmacen.$error.required">Requerido</span>
-						<span class="error help-block" ng-show="errors.idalmacen">{{errors.idalmacen}}</span>
-					</div>
-				</div>
-				<div class="form-group" ng-class="{ 'has-error': regForm.clave.$error.required }">
-					<label for="empleado" class="col-sm-2 control-label">Empleado:</label>
-					<div class="col-sm-2">
-						<ui-select ng-model="newUsuario.id_empleado" name="empleado" id="empleado" ng-required="true">
-							<ui-select-match allow-clear="true">
-								<span ng-bind="$select.selected.nombre"></span>
-							</ui-select-match>
-							<ui-select-choices
-								repeat="empleado.id.id as empleado in (empleado | propsFilter: {nombre: $select.search}) track by empleado.id.id">
-								<div ng-bind-html="empleado.nombre | highlight: $select.search"></div>
-							</ui-select-choices>
-						</ui-select>
-						<span class="error help-block" ng-show="regForm.empleado.$error.required">Requerido</span>
-						<span class="error help-block" ng-show="errors.empleado">{{errors.empleado}}</span>
-					</div>
-
-
-					<label for="tipo_usuario" class="col-sm-2 control-label">Tipo:</label>
-					<div class="col-sm-2">
-						<select class="form-control" name="tipo_usuario" id="tipo_usuario"
-							ng-model="newUsuario.tipo_usuario" style="width: 100%;" required>
-							<option value="1">Empleado</option>
-							<option value="2">Externo</option>
-						</select>
-						<span class="error help-block" ng-show="regForm.tipo_usuario.$error.required">Requerido</span>
-						<span class="error help-block" ng-show="errors.tipo_usuario">{{errors.tipo_usuario}}</span>
-					</div>
-				</div>-->
-
 				<div class="form-group" ng-class="{ 'has-error': regForm.nombre.$error.required }">
 
 

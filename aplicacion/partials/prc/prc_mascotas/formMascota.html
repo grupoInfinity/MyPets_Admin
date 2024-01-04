@@ -71,20 +71,21 @@
 					</div>
 				</div>
 
-				<div class="form-group" ng-class="{ 'has-error': regForm.tpmascota.$error.required }">
-					<label for="tpmascota" class="col-sm-2 control-label">Tipo de mascota:</label>
+				<div class="form-group" ng-class="{ 'has-error': regForm.idtpmasc.$error.required }">
+					<label for="idtpmasc" class="col-sm-2 control-label">Tipo de mascota:</label>
 					<div class="col-sm-2">
-						<ui-select ng-model="newMasc.tpmascota" name="tpmascota" id="tpmascota" ng-required="true">
+						<ui-select ng-model="newMasc.idtpmasc" name="idtpmasc" id="idtpmasc" ng-required="true">
 							<ui-select-match allow-clear="true">
-								<span ng-bind="$select.selected.nombre"></span>
+								<span ng-bind="$select.selected.descripcion"></span>
 							</ui-select-match>
-							<ui-select-choices repeat="tpmasc.id.id as tpmasc in (tpmasc| propsFilter: {nombre: $select.search})
-								 track by tpmasc.id.id">
-								<div ng-bind-html="tpmasc.nombre | highlight: $select.search"></div>
+							<ui-select-choices repeat="ltpmasc.id as ltpmasc in 
+							(ltpmasc| propsFilter: {descripcion: $select.search})
+								 track by ltpmasc.id">
+								<div ng-bind-html="ltpmasc.descripcion | highlight: $select.search"></div>
 							</ui-select-choices>
 						</ui-select>
-						<span class="error help-block" ng-show="regForm.tpmasc.$error.required">Requerido</span>
-						<span class="error help-block" ng-show="errors.tpmasc">{{errors.empleado}}</span>
+						<span class="error help-block" ng-show="regForm.idtpmasc.$error.required">Requerido</span>
+						<span class="error help-block" ng-show="errors.idtpmasc">{{errors.empleado}}</span>
 					</div>
 				</div>
 
@@ -108,48 +109,50 @@
 					</div>
 				</div>
 
-				<div class="form-group" ng-class="{ 'has-error': regForm.depto.$error.required }">
-					<label for="depto" class="col-sm-2 control-label">Departamento:</label>
-					<div class="col-sm-2">
-						<ui-select ng-model="newMasc.depto" name="depto" id="depto" ng-required="true"
+				<div class="form-group" ng-class="{ 'has-error': regForm.iddepto.$error.required }">
+					<label for="iddepto" class="col-sm-2 control-label">Departamento:</label>
+					<div class="col-sm-3">
+						<ui-select ng-model="newMasc.iddepto" name="iddepto" id="iddepto" ng-required="true"
 							ng-change="loadMunis()">
 							<ui-select-match allow-clear="true">
 								<span ng-bind="$select.selected.descripcion"></span>
 							</ui-select-match>
 							<ui-select-choices
-								repeat="dept.id.id as dept in (dept | propsFilter: {descripcion: $select.search}) track by dept.id.id">
+								repeat="dept.id as dept in 
+								(dept | propsFilter: {descripcion: $select.search}) track by dept.id">
 								<div ng-bind-html="dept.descripcion | highlight: $select.search"></div>
 							</ui-select-choices>
 						</ui-select>
-						<span class="error help-block" ng-show="regForm.id.$error.required">Requerido</span>
-						<span class="error help-block" ng-show="errors.id">{{errors.id}}</span>
+						<span class="error help-block" ng-show="regForm.iddepto.$error.required">Requerido</span>
+						<span class="error help-block" ng-show="errors.iddepto">{{errors.iddepto}}</span>
 					</div>
 				</div>
 
-				<div class="form-group" ng-class="{ 'has-error': regForm.muni.$error.required }">
-					<label for="empleado" class="col-sm-2 control-label">Municipio:</label>
-					<div class="col-sm-2">
-						<ui-select ng-model="newMasc.id_empleado" name="empleado" id="empleado" ng-required="true">
+				<div class="form-group" ng-class="{ 'has-error': regForm.idmuni.$error.required }">
+					<label for="idmuni" class="col-sm-2 control-label">Municipio:</label>
+					<div class="col-sm-3">
+						<ui-select ng-model="newMasc.idmuni" name="idmuni" id="idmuni" ng-required="true">
 							<ui-select-match allow-clear="true">
-								<span ng-bind="$select.selected.nombre"></span>
+								<span ng-bind="$select.selected.descripcion"></span>
 							</ui-select-match>
 							<ui-select-choices
-								repeat="empleado.id.id as empleado in (empleado | propsFilter: {nombre: $select.search}) track by empleado.id.id">
-								<div ng-bind-html="empleado.nombre | highlight: $select.search"></div>
+								repeat="muni.id.id as muni in 
+								(muni | propsFilter: {descripcion: $select.search}) track by muni.id.id">
+								<div ng-bind-html="muni.descripcion | highlight: $select.search"></div>
 							</ui-select-choices>
 						</ui-select>
-						<span class="error help-block" ng-show="regForm.empleado.$error.required">Requerido</span>
-						<span class="error help-block" ng-show="errors.empleado">{{errors.empleado}}</span>
+						<span class="error help-block" ng-show="regForm.idmuni.$error.required">Requerido</span>
+						<span class="error help-block" ng-show="errors.idmuni">{{errors.idmuni}}</span>
 					</div>
 				</div>
 
-				<div class="form-group" ng-class="{ 'has-error': regForm.usr.$error.required }">
-					<label for="usr" class="col-sm-2 control-label">Direccion:</label>
+				<div class="form-group" ng-class="{ 'has-error': regForm.direccion.$error.required }">
+					<label for="direccion" class="col-sm-2 control-label">Direccion:</label>
 					<div class="col-sm-4">
-						<input type="text" class="form-control" name="usr" id="usr" ng-model="newUsuario.usr"
+						<input type="text" class="form-control" name="direccion" id="direccion" ng-model="newMasc.direccion"
 							placeholder="Direccion" required autocomplete="nope" />
-						<span class="error help-block" ng-show="regForm.usr.$error.required">Requerido</span>
-						<span class="error help-block" ng-show="errors.usr">{{errors.usr}}</span>
+						<span class="error help-block" ng-show="regForm.direccion.$error.required">Requerido</span>
+						<span class="error help-block" ng-show="errors.direccion">{{errors.direccion}}</span>
 					</div>
 				</div>
 
@@ -202,6 +205,7 @@
 					</div>
 				</div>
 
+
 			</div>
 			<div class="box-footer">
 				<input type="submit" ng-disabled="regForm.$invalid" id="guardar" value="Guardar"
@@ -220,11 +224,10 @@
 				</button>
 			</div>
 		</div>
-		<!-- /.box-header -->
 		<div class="box-body" ng-controller="VacunaCtrl">
 			<div ng-include="'partials/prc/prc_mascotas/formVac.html'"></div>
 		</div>
-		<!-- /.box-body -->
 	</div>
+
 
 </fieldset>

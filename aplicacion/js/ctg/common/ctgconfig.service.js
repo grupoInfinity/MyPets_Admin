@@ -314,6 +314,7 @@ angular.module('tpmascService', []).
 
         function findAllByFilters(filtro, callback) {
             var url = URL_API + '/servicios/ctg/ctg_tipomascota.php?accion=C&estado=' + filtro.estado;
+            console.log(url);
             $http.get(url).
                 then(function (response) {
                     callback(response);

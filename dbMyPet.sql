@@ -430,7 +430,7 @@ CREATE TABLE IF NOT EXISTS dbMyPet.prc_mascotas(
     `direccion` VARCHAR(255),
     `estado_direc` VARCHAR(1),
     `nombremascota` VARCHAR(255),
-    `codigo` VARCHAR(255),
+    `codigo` VARCHAR(255) UNIQUE,
     `nacimiento` date,
     `foto` LONGTEXT,
     `estado` VARCHAR(1),
@@ -450,8 +450,7 @@ CREATE TABLE IF NOT EXISTS dbMyPet.prc_mascotas(
 INSERT INTO prc_mascotas(id_mascota,id_tipomascota,id_municipio,usuario,direccion,estado_direc,nombremascota,
 codigo,nacimiento,foto,estado,usuario_creacion,fecha_creacion,usuario_update,fecha_update) 
 VALUE(1,1,1,'dnery','Avenida','A','Charly','239022','2019-03-02',NULL,'A','dnery','2021-08-11 16:15:48',NULL,NULL),
-(2,2,1,'dnery','Avenida Hulin','A','Mily','200022','2019-03-02',NULL,'A','dnery','2021-08-11 16:15:48',NULL,NULL);
-
+(2,2,6,'dnery','Avenida Hulin','A','Mily','200022','2019-03-02',NULL,'A','dnery','2021-08-11 16:15:48',NULL,NULL);
 
 SELECT * FROM ctg_departamentos;SELECT * FROM ctg_municipios
 

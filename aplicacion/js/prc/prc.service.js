@@ -100,6 +100,9 @@ factory('Masc', function($http, URL_API){
     service.findById = findById;
     service.findAllA = findAllA; 
     service.activar = activar;
+    service.findAllTpmasc = findAllTpmasc;
+    service.findAllDept = findAllDept;
+    service.findMuni = findMuni;
 
     function findAlls(callback){
     	var url = URL_API + '/servicios/prc/prc_mascota.php?accion=C';
@@ -127,6 +130,30 @@ factory('Masc', function($http, URL_API){
         then(function(response) {
            callback(response);
         });
+    };
+    function findAllTpmasc( callback) {
+        var url = URL_API + '/servicios/ctg/ctg_tipomascota.php?accion=C&estado=A' ;
+        console.log(url);
+        $http.get(url).
+            then(function (response) {
+                callback(response);
+            });
+    };
+    function findAllDept( callback) {
+        var url = URL_API + '/servicios/ctg/ctg_depto.php?accion=C&estado=A' ;
+        console.log(url);
+        $http.get(url).
+            then(function (response) {
+                callback(response);
+            });
+    };
+    function findMuni(deptsId,callback) {
+        var url = URL_API + '/servicios/ctg/ctg_muni.php?accion=C&idDepto=' + deptsId + '&estado=A' ;
+        console.log(url);
+        $http.get(url).
+            then(function (response) {
+                callback(response);
+            });
     };
 
     function findByCo(mascId, callback){
