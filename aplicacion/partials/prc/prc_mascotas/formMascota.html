@@ -204,30 +204,7 @@
 					</div>
 				</div>
 
-
-
-				<!--  <div class="form-group" ng-class="{ 'has-error': regForm.estudiante.$error.required }">
-		             	<label for="estudiante" class="col-sm-2 control-label">Seleccionar Estudiante:</label>
-						<div class="col-sm-4">			                
-							<ui-select ng-model="newUsuario.estudiante" name="estudiante" id="estudiante" >
-							    <ui-select-match>
-							        <span ng-bind="$select.selected.p_nombre"></span>
-							    </ui-select-match>
-							    <ui-select-choices repeat="est in (estudiantes | propsFilter: {p_nombre: $select.search, s_nombre: $select.search, p_apellido: $select.search}) track by est.id.id">
-							        <div ng-bind-html="est.p_nombre | highlight: $select.search"></div>
-							        <small>
-							        	<span ng-bind-html="''+est.s_nombre | highlight: $select.search"></span>
-							        	<span ng-bind-html="''+est.p_apellido | highlight: $select.search"></span>
-							        </small>
-							    </ui-select-choices>
-							</ui-select>
-		                    <span class="error help-block" ng-show="regForm.estudiante.$error.required">Requerido</span>
-	    	                <span class="error help-block" ng-show="errors.estudiante">{{errors.estudiante}}</span>
-					    </div>
-		            </div>   -->
-
 			</div>
-			<!-- /.box-body -->
 			<div class="box-footer">
 				<input type="submit" ng-disabled="regForm.$invalid" id="guardar" value="Guardar"
 					class="btn btn-primary pull-right" />
@@ -236,7 +213,6 @@
 		</div>
 
 	</form>
-	<!-- VACUNAS -->
 
 	<div id="vacunasMasc" ng-show="isVisibleAfterUsuario" class="box box-default collapsed-box box-solid">
 		<div class="box-header with-border">
@@ -245,7 +221,6 @@
 				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
 				</button>
 			</div>
-			<!-- /.box-tools -->
 		</div>
 		<!-- /.box-header -->
 		<div class="box-body" ng-controller="VacunaCtrl">

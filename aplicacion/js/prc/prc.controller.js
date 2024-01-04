@@ -363,6 +363,7 @@ function MascotaListCtrl($scope, $rootScope, $state, $compile, $window, popupSer
 	;
 
 	function reloadData() {
+		
 		Masc.findAlls(function (response) {
 			if (response.data.estado == 1) {
 				vm.masc = response.data.info;
@@ -415,9 +416,7 @@ function MascotaListCtrl($scope, $rootScope, $state, $compile, $window, popupSer
 			confirmButtonText: 'Si, activar!'
 		}).then((result) => {
 			if (result.value) {
-				Masc.activar(
-					mascId,
-					$rootScope.globals.currentUser.username, function (response) {
+				Masc.activar(mascId,$rootScope.globals.currentUser.username, function (response) {
 						reloadData();
 					});
 

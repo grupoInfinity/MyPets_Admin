@@ -7,9 +7,9 @@ factory('Vacuna', function($http, URL_API){
     service.findById = findById;
 	service.findByMasc = findByMasc;
     service.borrar = borrar;
-    service.activar = activar;
     service.insertar = insertar;
     service.actualizar = actualizar;
+    service.activar = activar;
 
     function findAll(callback){
         $http.get(URL_API + '/servicios/prc/prc_vacuna.php?accion=C').
@@ -43,12 +43,12 @@ factory('Vacuna', function($http, URL_API){
         });
     };
 	
-	/*function activar(id, usuario, callback){
+	function activar(id, usuario, callback){
         $http.post(URL_API + '/servicios/prc/prc_vacuna.php?accion=A&id=' + id + '&user=' + usuario, id).
         then(function(response) {
            callback(response);
         });
-    };*/
+    };
 
     function insertar(vacuna, callback){
 		
@@ -94,23 +94,12 @@ factory('Masc', function($http, URL_API){
 
     service.findAlls = findAlls;
     service.borrar = borrar;
-    service.activar = activar;
     service.insertar = insertar;
     service.actualizar = actualizar;
     service.findByCo = findByCo;
     service.findById = findById;
     service.findAllA = findAllA; 
-    /*    service.getUser = getUser;
-
-   function getUser(usuario, callback) {
-
-        $http.get(URL_API + '/servicios/usuario.php?accion=C&usr=' + usuario).
-        then(function(response) {
-           
-            callback(response);
-        });
-    
-    };*/
+    service.activar = activar;
 
     function findAlls(callback){
     	var url = URL_API + '/servicios/prc/prc_mascota.php?accion=C';
@@ -164,7 +153,6 @@ factory('Masc', function($http, URL_API){
 	function activar(mascId, usuario, callback){
 		var url = URL_API + '/servicios/prc/prc_mascota.php?accion=A&id=' + mascId
         +'&user='+usuario;
-		
 		//console.log(url);
         $http.post(url, mascId).
         then(function(response) {
