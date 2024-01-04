@@ -2,7 +2,7 @@
 /*************************** MASCOTA CONTROLLER ***********************************/
 
 function MascotaAddCtrl($rootScope, $stateParams, $scope,
-	URL_API, $filter, $http, $state, Masc, Depto, Muni, Tipom) {
+	URL_API, $filter, $http, $state, Masc, Depts, Munis, tpmasc) {
 
 
 	$scope.formType = 'ADD';
@@ -64,8 +64,6 @@ function MascotaAddCtrl($rootScope, $stateParams, $scope,
 				Masc.findById($scope.newMasc.idmasc, function (response) {
 					if (response.data.status == 1)
 						$scope.newMasc = response.data.info[0];
-					// $scope.newUsuario.id_empleado = response.data.info[0].id_empleado;
-					// $scope.newUsuario.usr = response.data.info[0].usr;
 				});
 
 				//$scope.successMessages = [ 'Usuario Registrado correctamente' ];
@@ -134,7 +132,7 @@ function MascotaAddCtrl($rootScope, $stateParams, $scope,
 
 		$scope.dept = [];
 		if ($scope.newMasc.estado==null) $scope.newMasc.estado = "A";
-		Depto.findAllByFilters($scope.newMasc.estado,function (response) {
+		Depts.findAllByFilters($scope.newMasc.estado,function (response) {
 			if (response.data.status == 1)
 				$scope.dept = response.data.info;
 			else $scope.dept = [];
@@ -145,7 +143,7 @@ function MascotaAddCtrl($rootScope, $stateParams, $scope,
 	$scope.loadMunis = function () {
 		$scope.muni = [];
 		if ($scope.newMasc.depto != "") {
-			Muni.findByIdDepto($scope.newMasc.depto, function (response) {
+			Munis.findByIdDepto($scope.newMasc.depto, function (response) {
 				if (response.data.status == 1)
 					$scope.muni = response.data.muni;
 				else $scope.muni = [];
@@ -157,7 +155,7 @@ function MascotaAddCtrl($rootScope, $stateParams, $scope,
 	$scope.loadTpmascota = function () {
 		$scope.tpmasc = [];
 		if ($scope.newMasc.estado==null) $scope.newMasc.estado = "A";
-		Tipom.findAllByFilters($scope.newMasc.estado, function (response) {
+		tpmasc.findAllByFilters($scope.newMasc.estado, function (response) {
 			if (response.data.status == 1)
 				$scope.tpmasc = response.data.tpmasc;
 			else $scope.tpmasc = [];
@@ -167,7 +165,7 @@ function MascotaAddCtrl($rootScope, $stateParams, $scope,
 };
 
 function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
-	URL_API, Masc, Depto, Muni, Tipom) {
+	URL_API, Masc, Depts, Munis, tpmasc) {
 
 	$scope.isVisibleAfterUsuario = true;
 
@@ -297,7 +295,7 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 
 		$scope.dept = [];
 		if ($scope.newMasc.estado==null) $scope.newMasc.estado = "A";
-		Depto.findAllByFilters($scope.newMasc.estado,function (response) {
+		Depts.findAllByFilters($scope.newMasc.estado,function (response) {
 			if (response.data.status == 1)
 				$scope.dept = response.data.info;
 			else $scope.dept = [];
@@ -308,7 +306,7 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 	$scope.loadMunis = function () {
 		$scope.muni = [];
 		if ($scope.newMasc.depto != "") {
-			Muni.findByIdDepto($scope.newMasc.depto, function (response) {
+			Munis.findByIdDepto($scope.newMasc.depto, function (response) {
 				if (response.data.status == 1)
 					$scope.muni = response.data.muni;
 				else $scope.muni = [];
@@ -320,7 +318,7 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 	$scope.loadTpmascota = function () {
 		$scope.tpmasc = [];
 		if ($scope.newMasc.estado==null) $scope.newMasc.estado = "A";
-		Tipom.findAllByFilters($scope.newMasc.estado, function (response) {
+		tpmasc.findAllByFilters($scope.newMasc.estado, function (response) {
 			if (response.data.status == 1)
 				$scope.tpmasc = response.data.tpmasc;
 			else $scope.tpmasc = [];
