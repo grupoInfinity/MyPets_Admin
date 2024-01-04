@@ -37,8 +37,10 @@ function MascotaAddCtrl($rootScope, $stateParams, $scope,
 			idmasc: "",
 			dueno: "",
 			tpmascota: "",
+			depto: "",
 			muni: "",
 			direccion: "",
+			estado: "",
 			estadodir: "",
 			nmasc: "",
 			codigo: "",
@@ -131,8 +133,8 @@ function MascotaAddCtrl($rootScope, $stateParams, $scope,
 	$scope.loadDept = function () {
 
 		$scope.dept = [];
-		if ($scope.newMasc.estado==null) $scope.newMasc.estado = "A";
-		Depts.findAllByFilters($scope.newMasc.estado,function (response) {
+		if ($scope.newMasc.estado == null) $scope.newMasc.estado = "A";
+		Depts.findAllByFilters($scope.newMasc.estado, function (response) {
 			if (response.data.status == 1)
 				$scope.dept = response.data.info;
 			else $scope.dept = [];
@@ -154,7 +156,7 @@ function MascotaAddCtrl($rootScope, $stateParams, $scope,
 	$scope.tpmasc = null;
 	$scope.loadTpmascota = function () {
 		$scope.tpmasc = [];
-		if ($scope.newMasc.estado==null) $scope.newMasc.estado = "A";
+		if ($scope.newMasc.estado == null) $scope.newMasc.estado = "A";
 		tpmasc.findAllByFilters($scope.newMasc.estado, function (response) {
 			if (response.data.status == 1)
 				$scope.tpmasc = response.data.tpmasc;
@@ -195,6 +197,7 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 			depto: "",
 			muni: "",
 			direccion: "",
+			estad: "",
 			estadodir: "",
 			nmasc: "",
 			codigo: "",
@@ -219,11 +222,6 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 				Masc.findById($scope.newMasc.idmasc, function (response) {
 					if (response.data.status == 1)
 						$scope.newMasc = response.data.info[0];
-					/*$scope.newUsuario.id_empleado = response.data.info[0].id_empleado;
-					$scope.newUsuario.id_empresa = response.data.info[0].id_empresa;
-					$scope.newUsuario.id_almacen = response.data.info[0].id_almacen;
-					$scope.newUsuario.tipo_usuario = response.data.info[0].tipo_usuario;
-					$scope.newUsuario.usr = response.data.info[0].usr;*/
 				});
 
 				Swal.fire({
@@ -278,12 +276,43 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 	$scope.onlyLetters = "/^[a-zA-Z.\-\s\Ññ\_\]+$/i/";
 
 	$scope.loadMasc = function () {
+		Masc.findById($stateParams.idMasc, function (response) {
+			if (response.data.status == 1)
+				$scope.newMasc = response.data.info[0].mascota;
+				$scope.newMasc.nacim= new Date(response.data.info[0].mascota.nacim);
+				/*$scope.newMasc.idmasc= response.data.info[0].mascota.id_mascota;
+				$scope.newMasc.dueno= response.data.info[0].mascota.usuario;
+				$scope.newMasc.tpmascota= response.data.info[0].mascota.id_tipomascota;
+				$scope.newMasc.depto= response.data.info[0].mascota.depto;
+				$scope.newMasc.muni= response.data.info[0].mascota.id_municipio;
+				$scope.newMasc.direccion= response.data.info[0].mascota.direccion;
+				$scope.newMasc.estado= response.data.info[0].mascota.estado;
+				$scope.newMasc.estadodir= response.data.info[0].mascota.estado_direc;
+				$scope.newMasc.nmasc=response.data.info[0].mascota.nombremascota;
+				$scope.newMasc.codigo= response.data.info[0].mascota.codigo;
+				$scope.newMasc.nacim= new Date(response.data.info[0].mascota.nacim);
+				$scope.newMasc.foto= response.data.info[0].mascota.foto;*/
+				/*$scope.newMasc = {
+					id_mascota: "",
+					dueno: "",
+					tpmascota: "",
+					depto: "",
+					muni: "",
+					direccion: "",
+					estado: "",
+					estadodir: "",
+					nmasc: "",
+					codigo: "",
+					nacim: "",
+					foto: "",
+					usuario: $rootScope.globals.currentUser.username
+				};*/
 
-		Masc.findById($stateParams.idmasc, function (response) {
-			//if(response.data.status==1)
-			$scope.newMasc = response.data.info[0];
 			if ($scope.newMasc.estado == 'A') {
 				$scope.newMasc.estado = true;
+			}
+			if ($scope.newMasc.estadodir == 'A') {
+				$scope.newMasc.estadodir = true;
 			}
 		});
 	};
@@ -294,8 +323,8 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 	$scope.loadDept = function () {
 
 		$scope.dept = [];
-		if ($scope.newMasc.estado==null) $scope.newMasc.estado = "A";
-		Depts.findAllByFilters($scope.newMasc.estado,function (response) {
+		if ($scope.newMasc.estado == null) $scope.newMasc.estado = "A";
+		Depts.findAllByFilters($scope.newMasc.estado, function (response) {
 			if (response.data.status == 1)
 				$scope.dept = response.data.info;
 			else $scope.dept = [];
@@ -317,7 +346,7 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 	$scope.tpmasc = null;
 	$scope.loadTpmascota = function () {
 		$scope.tpmasc = [];
-		if ($scope.newMasc.estado==null) $scope.newMasc.estado = "A";
+		if ($scope.newMasc.estado == null) $scope.newMasc.estado = "A";
 		tpmasc.findAllByFilters($scope.newMasc.estado, function (response) {
 			if (response.data.status == 1)
 				$scope.tpmasc = response.data.tpmasc;
@@ -363,7 +392,7 @@ function MascotaListCtrl($scope, $rootScope, $state, $compile, $window, popupSer
 	;
 
 	function reloadData() {
-		
+
 		Masc.findAlls(function (response) {
 			if (response.data.estado == 1) {
 				vm.masc = response.data.info;
@@ -416,9 +445,9 @@ function MascotaListCtrl($scope, $rootScope, $state, $compile, $window, popupSer
 			confirmButtonText: 'Si, activar!'
 		}).then((result) => {
 			if (result.value) {
-				Masc.activar(mascId,$rootScope.globals.currentUser.username, function (response) {
-						reloadData();
-					});
+				Masc.activar(mascId, $rootScope.globals.currentUser.username, function (response) {
+					reloadData();
+				});
 
 				Swal.fire({
 					toast: true,
@@ -445,7 +474,8 @@ function MascotaListCtrl($scope, $rootScope, $state, $compile, $window, popupSer
 };
 //////////////////VACUNAS CONTROLLER /////////////////
 
-function VacunaCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile, $window, popupService, Vacuna, Masc,tpvac) {
+function VacunaCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile,
+	$window, popupService, Vacuna, Masc, Tpvac) {
 
 	$scope.clearMessages = function () {
 
@@ -464,7 +494,8 @@ function VacunaCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile,
 		var date = new Date();
 
 		$scope.vac = {
-			 usuario: $rootScope.globals.currentUser.username };
+			usuario: $rootScope.globals.currentUser.username
+		};
 
 		$scope.vac.id_mascota = $scope.newMasc;
 		$scope.vac.id_tpvacuna = $scope.newtpvac;
@@ -512,9 +543,9 @@ function VacunaCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile,
 	$scope.resetVac();
 
 	$scope.loadTPVacunas = function () {
-		tpvac.findAllByFilters('A',function (response) {
+		Tpvac.findAllByFilters('A', function (response) {
 			if (response.data.status == 1)
-				$scope.tpvacs= response.data.info;
+				$scope.tpvacs = response.data.info;
 			else $scope.tpvacs = [];
 		});
 	};
@@ -541,7 +572,7 @@ function VacunaCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile,
 		$('#myVacModal').modal('show');
 		$scope.formTypeVac = "UPD";
 
-		Vacuna.findById(idVac,function (response) {
+		Vacuna.findById(idVac, function (response) {
 
 			if (response.data.status == 1) {
 				$scope.vac = response.data.info[0];

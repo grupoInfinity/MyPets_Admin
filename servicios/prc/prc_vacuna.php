@@ -38,11 +38,9 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
 	else $nombremasc="";
 	if(!empty($nombrevac)) $nombrevac="AND t.nombrevacuna LIKE '%'$nombrevac%'";
 	else $nombrevac="";
-    if (!empty($estado)) $estado = "AND v.estado='$estado'";
-    else $estado = "";
 		
 	$sql = "SELECT v.id_vacuna,v.id_mascota,v.id_tipovacuna,m.nombremascota,
-	t.nombrevacuna,DATE(v.fecha_creacion) AS fecha_creacion,v.estado
+	t.nombrevacuna,DATE(v.fecha_creacion) AS fecha_creacion 
 	FROM $bd.prc_vacunas v, $bd.prc_mascotas m, $bd.ctg_tipovacunas t 
 	WHERE $id_vacuna $id_mascota $id_tipovac $nombrevac $nombremasc $estado AND
 	v.id_mascota=m.id_mascota AND v.id_tipovacuna=t.id_tipovacuna ";
@@ -58,7 +56,6 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
 				,"id_tipovacuna" => $row["id_tipovacuna"]
 				, 'nombremascota' => utf8_decode($row["nombremascota"])
                 , 'nombrevacuna' => utf8_decode($row["nombrevacuna"])
-                , 'estado' => utf8_decode($row["estado"])
                 , 'fechacr' => utf8_decode($row["fecha_creacion"])
 				);
 				$json = array("status"=>1, "info"=>$results);

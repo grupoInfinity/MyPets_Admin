@@ -122,7 +122,7 @@ factory('Masc', function($http, URL_API){
     };
     function findById(mascId, callback){
 		var url = URL_API + '/servicios/prc/prc_mascota.php?accion=C&id=' + mascId ;
-		
+		console.log(url);
         $http.get(url).
         then(function(response) {
            callback(response);

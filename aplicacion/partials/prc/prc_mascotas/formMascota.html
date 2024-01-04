@@ -62,7 +62,7 @@
 				<!--///////////////////////////////////////////////////////////////////////////////////-->
 
 				<div class="form-group" ng-class="{ 'has-error': regForm.dueno.$error.required }">
-					<label for="dueno" class="col-sm-2 control-label">Usuario del encargado:</label>
+					<label for="dueno" class="col-sm-2 control-label">Usuario del dueño:</label>
 					<div class="col-sm-4">
 						<input type="text" class="form-control" name="dueno" id="dueno" ng-model="newMasc.dueno"
 							placeholder="Encargado" required autocomplete="nope" />
@@ -78,8 +78,7 @@
 							<ui-select-match allow-clear="true">
 								<span ng-bind="$select.selected.nombre"></span>
 							</ui-select-match>
-							<ui-select-choices
-								repeat="tpmasc.id.id as tpmasc in (tpmasc| propsFilter: {nombre: $select.search})
+							<ui-select-choices repeat="tpmasc.id.id as tpmasc in (tpmasc| propsFilter: {nombre: $select.search})
 								 track by tpmasc.id.id">
 								<div ng-bind-html="tpmasc.nombre | highlight: $select.search"></div>
 							</ui-select-choices>
@@ -173,10 +172,9 @@
 				<div class="form-group" ng-class="{ 'has-error': regForm.nacim.$error.required }">
 					<label for="nacim" class="col-sm-1 control-label">Fecha de Nacimiento:</label>
 					<div class="col-sm-4">
-						<input type="date" class="form-control" name="nacim" id="nacim"
-							ng-model="newMasc.nacim" required />
-						<span class="error help-block"
-							ng-show="regForm.nacim.$error.required">Requerido</span>
+						<input type="date" class="form-control" name="nacim" id="nacim" ng-model="newMasc.nacim"
+							required />
+						<span class="error help-block" ng-show="regForm.nacim.$error.required">Requerido</span>
 					</div>
 				</div>
 
