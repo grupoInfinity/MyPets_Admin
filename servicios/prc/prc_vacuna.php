@@ -116,7 +116,7 @@ else{
 		/*$user = ", usuario_update='".$user."'";
 		$date = ", fecha_update='".date('Y-m-d H:i:s')."'";*/
 		
-		$sql = "DELETE $bd.$tabla WHERE id_vacuna = $id_vacuna ";
+		$sql = "DELETE FROM $bd.prc_vacunas WHERE id_vacuna = $id_vacuna ";
 		
 		if ($conn->query($sql) === TRUE) {
 			$json = array("status"=>1, "info"=>"Registro eliminado exitosamente.");

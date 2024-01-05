@@ -176,7 +176,7 @@
 					<label for="nacim" class="col-sm-1 control-label">Fecha de Nacimiento:</label>
 					<div class="col-sm-4">
 						<input type="date" class="form-control" name="nacim" id="nacim" ng-model="newMasc.nacim"
-							required />
+							   required max="{{ getMaxDate() }}" />
 						<span class="error help-block" ng-show="regForm.nacim.$error.required">Requerido</span>
 					</div>
 				</div>

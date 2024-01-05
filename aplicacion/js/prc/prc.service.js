@@ -37,9 +37,10 @@ factory('Vacuna', function($http, URL_API){
         });
     };
 
-    function findById(id, callback){
-		var url = URL_API + '/servicios/prc/prc_vacuna.php?accion=C&id=' + id;
-
+    function findById(idMasc,idTpvac, callback){
+		var url = URL_API + '/servicios/prc/prc_vacuna.php?accion=C&idmasc=' + idMasc
+        +'&idtpvac=' + idTpvac;
+        console.log(url);
         $http.get(url).
         then(function(response) {
            callback(response);
@@ -47,7 +48,7 @@ factory('Vacuna', function($http, URL_API){
     };
 
     function borrar(id, callback){
-        $http.post(URL_API + '/servicios/prc/prc_vacuna.php?accion=D&id=' + id, id).
+        $http.post(URL_API + '/servicios/prc/prc_vacuna.php?accion=D&id=' + id).
         then(function(response) {
            callback(response);
         });
@@ -140,6 +141,7 @@ factory('Masc', function($http, URL_API){
            callback(response);
         });
     };
+
     function findAllTpmasc( callback) {
         var url = URL_API + '/servicios/ctg/ctg_tipomascota.php?accion=C&estado=A' ;
         console.log(url);

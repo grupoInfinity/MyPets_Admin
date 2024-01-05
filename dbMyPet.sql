@@ -463,7 +463,7 @@ SELECT m.id_mascota, u.usuario, u.email,u.telefono,m.nombremascota,
     AND m.id_municipio=mu.id_municipio AND mu.id_departamento=d.id_departamento
 
 
-SELECT * FROM prc_mascotas 
+SELECT * FROM sec_rol_usuario
 LOCK TABLES `prc_mascotas` WRITE;
 /*
  SELECT m.id_mascota, u.id_usuario, u.mail,u.telefono,m.nombremascota,

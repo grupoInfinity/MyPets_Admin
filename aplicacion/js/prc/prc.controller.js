@@ -5,7 +5,17 @@ function MascotaAddCtrl($rootScope, $stateParams, $scope,
 	URL_API, $filter, $http, $state, Masc) {
 
 
-	$scope.formType = 'ADD';
+	    $scope.getMaxDate = function() {
+			var today = new Date();
+			var year = today.getFullYear();
+			var month = today.getMonth() + 1; // Agrega 1 ya que en JavaScript los meses comienzan desde 0
+			var day = today.getDate();
+	
+			// Formatea la fecha como YYYY-MM-DD (formato que utiliza el input type="date")
+			var maxDate = year + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
+	
+			return maxDate;
+		};
 
 	$scope.isNew = function (value) {
 
@@ -120,49 +130,44 @@ function MascotaAddCtrl($rootScope, $stateParams, $scope,
 
 	$scope.onlyLetters = "/^[a-zA-Z.\-\s\Ññ\_\]+$/i/";
 
-	$scope.loadDept = function () {
-		Masc.findAllByEmpresaA($scope.newUsuario.id_empresa, function (response) {
-			if (response.data.status == 1)
-				$scope.dept = response.data.info;
-			else $scope.dept = [];
-		});
-	};
-
-
 	$scope.dept = null;
 	$scope.loadDept = function () {
 
 		$scope.dept = [];
-		if ($scope.newMasc.estado == null) $scope.newMasc.estado = "A";
-		Depts.findAllByFilters($scope.newMasc.estado, function (response) {
-			if (response.data.status == 1)
+		Masc.findAllDept(function (response) {
+			if (response.data.status == 1) {
 				$scope.dept = response.data.info;
+				$scope.loadMunis();
+			}
 			else $scope.dept = [];
 		});
 	};
+	$scope.loadDept();
 
 	$scope.muni = null;
 	$scope.loadMunis = function () {
 		$scope.muni = [];
-		if ($scope.newMasc.depto != "") {
-			Munis.findByIdDepto($scope.newMasc.depto, function (response) {
-				if (response.data.status == 1)
-					$scope.muni = response.data.muni;
-				else $scope.muni = [];
-			});
-		}
+		//if ($scope.newMasc.depto != "") {
+		Masc.findMuni($scope.newMasc.iddepto, function (response) {
+			if (response.data.status == 1) {
+				$scope.muni = response.data.info;
+			}
+			else $scope.muni = [];
+		});
+		//}
 	};
 
-	$scope.tpmasc = null;
+	$scope.ltpmasc = null;
 	$scope.loadTpmascota = function () {
-		$scope.tpmasc = [];
-		if ($scope.newMasc.estado == null) $scope.newMasc.estado = "A";
-		tpmasc.findAllByFilters($scope.newMasc.estado, function (response) {
-			if (response.data.status == 1)
-				$scope.tpmasc = response.data.tpmasc;
-			else $scope.tpmasc = [];
+		$scope.ltpmasc = [];
+		Masc.findAllTpmasc(function (response) {
+			if (response.data.status == 1) {
+				$scope.ltpmasc = response.data.info;
+			}
+			else $scope.ltpmasc = [];
 		});
 	};
+	$scope.loadTpmascota();
 
 };
 
@@ -478,9 +483,7 @@ function VacunaCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile,
 			id_tipovacuna: "",
 			usuario: $rootScope.globals.currentUser.username
 		};
-		//console.log($stateParams.idMasc);
 		$scope.newvac.id_mascota = $stateParams.idMasc;
-		//console.log($scope.newtpvac.id);
 
 		$scope.clearMessages();
 	};
@@ -488,40 +491,37 @@ function VacunaCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile,
 	$scope.guardarVac = function (value) {
 		$scope.clearMessages();
 		if (value == "ADD") {
-			console.log(102);
-			//console.log($scope.newvac.id_mascota,$scope.newvac.id_tipovacuna,$scope.newvac.usuario);
-			Vacuna.insertar($scope.newvac, function (data) {
-				console.log(103);
-				$scope.formTypeVac = "UPD";
-				$scope.refreshVac($scope.newMasc.idmasc);
-				$scope.resetVac();
-				$scope.successMessagesChild = ['Vacuna Registrada correctamente'];
-
-			}, function (result) {
-				if ((result.status == 409) || (result.status == 400)) {
-					$scope.errorsChild = result.data;
-				} else {
-					$scope.errorMessagesChild = ['Unknown error de servidor'];
+			//VERIFICAR SI LA MASCOTA YA TIENE ESTA VACUNA
+			//console.log('Hola'+$scope.newvac.id_tipovacuna);
+			Vacuna.findById($stateParams.idMasc, $scope.newvac.id_tipovacuna, function (response) {
+				if (response.data.status == 1) {
+					$scope.errorMessagesChild = ['Ya tiene esta vacuna'];
 				}
+				else Vacuna.insertar($scope.newvac, function (data) {
+					console.log(103);
+					$scope.formTypeVac = "UPD";
+					$scope.refreshVac($stateParams.idMasc);
+					$scope.resetVac();
+					Swal.fire({
+						toast: true,
+						position: 'top-end',
+						type: 'success',
+						title: 'Vacuna registrada correctamente',
+						showConfirmButton: false,
+						timer: 1000
+					})
+
+				}, function (result) {
+					if ((result.status == 409) || (result.status == 400)) {
+						$scope.errorsChild = result.data;
+					} else {
+						$scope.errorMessagesChild = ['Unknown error de servidor'];
+					}
+				});
+
 			});
 
-		}/* else {
-			var date = new Date();
-			var vacObj = { usuario: $rootScope.globals.currentUser.username };
-
-			$scope.vac.usuario = vacObj.usuario;
-
-			Vacuna.actualizar($scope.vac, function (data) {
-				$scope.refreshVac($scope.newMasc.idmasc);
-				$scope.successMessagesChild = ['Vacuna Actualizada correctamente'];
-			}, function (result) {
-				if ((result.status == 409) || (result.status == 400)) {
-					$scope.errorsChild = result.data;
-				} else {
-					$scope.errorMessagesChild = ['Unknown error de servidor'];
-				}
-			});
-		}*/
+		}
 	};
 
 	$scope.resetVac();
@@ -539,6 +539,7 @@ function VacunaCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile,
 	$scope.loadTPVacunas();
 
 	//LISTA
+	$scope.vacmasc = null;
 	$scope.refreshVac = function (idMasc) {
 		Vacuna.findByMasc(idMasc, function (response) {
 			if (response.data.status == 1) {
@@ -554,32 +555,40 @@ function VacunaCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile,
 		$scope.refreshVac($stateParams.idMasc);
 	}
 
-	/*$scope.modifyVac = function (idVac) {
-		$scope.clearMessages();
-		$('#myVacModal').modal('show');
-		$scope.formTypeVac = "UPD";
-
-		Vacuna.findById(idVac, function (response) {
-
-			if (response.data.status == 1) {
-				$scope.vac = response.data.info[0];
-				//$scope.vac. = response.data.info[0].id.id_rol;
-			}
-			else {
-				$scope.vac = [];
-				//$scope.rol.id_rol = $rootScope.globals.currentUser.id_rol;
-			}
-		});
-
-	};*/
-
 	$scope.deleteVac = function (idVac) {
 
-		if (popupService.showPopup('Esta seguro de borrar este registro?')) {
+		Swal.fire({
+			title: 'Esta seguro de eliminar este registro?',
+			text: "",
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Si, eliminar!'
+		}).then((result) => {
+			if (result.value) {
+				Vacuna.borrar(idVac, function (response) {
+					Swal.fire({
+						toast: true,
+						position: 'top-end',
+						type: 'success',
+						title: 'Registro eliminado',
+						showConfirmButton: false,
+						timer: 1000
+					})
+					$scope.refreshVac($stateParams.idMasc);
+				});
+
+
+			}
+		})
+		/*if (popupService.showPopup('Esta seguro de borrar este registro?')) {
+			//console.log(idVac+' + '+$stateParams.idMasc);
+
 			Vacuna.borrar(idVac, function (response) {
-				$scope.refreshVac();
+			   $scope.refreshVac($stateParams.idMasc);
 			});
-		}
+		}*/
 	};
 
 	$rootScope.$on("refreshVacs", function (event, data) {
