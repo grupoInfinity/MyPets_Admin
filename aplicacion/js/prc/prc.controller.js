@@ -476,7 +476,6 @@ function VacunaCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile,
 			id_vacuna: "",
 			id_mascota: "",
 			id_tipovacuna: "",
-			nvac: "",
 			usuario: $rootScope.globals.currentUser.username
 		};
 		//console.log($stateParams.idMasc);
@@ -488,9 +487,9 @@ function VacunaCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile,
 
 	$scope.guardarVac = function (value) {
 		$scope.clearMessages();
-		console.log(101);
 		if (value == "ADD") {
 			console.log(102);
+			//console.log($scope.newvac.id_mascota,$scope.newvac.id_tipovacuna,$scope.newvac.usuario);
 			Vacuna.insertar($scope.newvac, function (data) {
 				console.log(103);
 				$scope.formTypeVac = "UPD";

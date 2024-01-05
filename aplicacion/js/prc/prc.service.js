@@ -66,7 +66,6 @@ factory('Vacuna', function($http, URL_API){
 		'&idmasc=' + vacuna.id_mascota + 
         '&idtpvac=' + vacuna.id_tipovacuna +       
         '&user=' + vacuna.usuario;
-		
         $http.post(url ,vacuna).
         then(function(response) {
             callback(response);
