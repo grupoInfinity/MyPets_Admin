@@ -473,34 +473,38 @@ function VacunaCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile,
 		var date = new Date();
 
 		$scope.newvac = {
+			id_vacuna: "",
 			id_mascota: "",
 			id_tipovacuna: "",
 			nvac: "",
 			usuario: $rootScope.globals.currentUser.username
 		};
-		//$scope.vac.id_mascota = $scope.newMasc.idmasc;
-		//$scope.vac.id_tpvacuna = $scope.newtpvac;*/
+		//console.log($stateParams.idMasc);
+		$scope.newvac.id_mascota = $stateParams.idMasc;
+		//console.log($scope.newtpvac.id);
 
 		$scope.clearMessages();
 	};
 
 	$scope.guardarVac = function (value) {
 		$scope.clearMessages();
-
+		console.log(101);
 		if (value == "ADD") {
-		Vacuna.insertar($scope.newvac, function (data) {
-			$scope.formTypeVac = "UPD";
-			$scope.refreshVac($scope.newMasc.idmasc);
-			$scope.resetVac();
-			$scope.successMessagesChild = ['Vacuna Registrada correctamente'];
+			console.log(102);
+			Vacuna.insertar($scope.newvac, function (data) {
+				console.log(103);
+				$scope.formTypeVac = "UPD";
+				$scope.refreshVac($scope.newMasc.idmasc);
+				$scope.resetVac();
+				$scope.successMessagesChild = ['Vacuna Registrada correctamente'];
 
-		}, function (result) {
-			if ((result.status == 409) || (result.status == 400)) {
-				$scope.errorsChild = result.data;
-			} else {
-				$scope.errorMessagesChild = ['Unknown error de servidor'];
-			}
-		});
+			}, function (result) {
+				if ((result.status == 409) || (result.status == 400)) {
+					$scope.errorsChild = result.data;
+				} else {
+					$scope.errorMessagesChild = ['Unknown error de servidor'];
+				}
+			});
 
 		}/* else {
 			var date = new Date();
@@ -538,9 +542,9 @@ function VacunaCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile,
 	//LISTA
 	$scope.refreshVac = function (idMasc) {
 		Vacuna.findByMasc(idMasc, function (response) {
-			if (response.data.status == 1)
+			if (response.data.status == 1) {
 				$scope.vacmasc = response.data.info;
-
+			}
 			else $scope.vacmasc = [];
 		});
 	};

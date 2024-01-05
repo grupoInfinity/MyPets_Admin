@@ -36,38 +36,46 @@
 					<h4 class="modal-title">Ingrese un nueva vacuna</h4>
 				</div>
 				<div class="modal-body">
+
+					<div class="form-group">
+						<input type="hidden" name="formTypeVac" id="formTypeVac" ng-model="formTypeVac" />
+						<input type="hidden" name="mascvac" id="mascvac" ng-model="vacmasc.id_vacuna" />
+					</div>
+
 					<div class="form-group" ng-class="{ 'has-error': vacForm.id_tipovacuna.$error.required }">
 						<label for="id_tipovacuna" class="col-sm-2 control-label">Tipo de vacuna:</label>
 						<div class="col-md-3">
-							<ui-select ng-model="newvac.id_tipovacuna" name="id_tipovacuna" id="id_tipovacuna" ng-required="true"  >
+							<ui-select ng-model="newvac.id_tipovacuna" name="id_tipovacuna" id="id_tipovacuna"
+								ng-required="true">
 								<ui-select-match placeholder="Tipo de vacuna" autofocus>
 									<span ng-bind="$select.selected.descripcion"></span>
 								</ui-select-match>
 								<ui-select-choices repeat="tpv.id as tpv in 
-								(tpv | propsFilter: {descripcion: $select.search}) track by tpv.id" >
+								(tpv | propsFilter: {descripcion: $select.search}) track by tpv.id">
 									<div ng-bind-html="tpv.descripcion | highlight: $select.search"></div>
 								</ui-select-choices>
 							</ui-select>
-							<span class="error help-block" ng-show="regForm.id_tipovacuna.$error.required">Requerido</span>
-							<span class="error help-block" ng-show="errors.id_tipovacuna">{{errors.id_tipovacuna}}</span>
-						</div>
+							<span class="error help-block"
+								ng-show="regForm.id_tipovacuna.$error.required">Requerido</span>
+							<span class="error help-block"
+								ng-show="errors.id_tipovacuna">{{errors.id_tipovacuna}}</span>
 						</div>
 					</div>
-
-					<!-- We output a list of success messages (appropriately styled!) for the form. -->
-					<ul ng-hide="!successMessagesChild" class="success">
-						<li ng-repeat="message in successMessagesChild">{{message}}</li>
-					</ul>
-
-					<!-- Output the list of error messages if any. -->
-					<ul ng-hide="!errorMessagesChild" class="error">
-						<li ng-repeat="message in errorMessagesChild">{{message}}</li>
-					</ul>
-
 				</div>
+
+				<!-- We output a list of success messages (appropriately styled!) for the form. -->
+				<ul ng-hide="!successMessagesChild" class="success">
+					<li ng-repeat="message in successMessagesChild">{{message}}</li>
+				</ul>
+
+				<!-- Output the list of error messages if any. -->
+				<ul ng-hide="!errorMessagesChild" class="error">
+					<li ng-repeat="message in errorMessagesChild">{{message}}</li>
+				</ul>
+
 				<div class="modal-footer">
 					<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cerrar</button>
-					
+
 					<input type="submit" ng-disabled="vacForm.$invalid" id="guardarVac" value="Guardar cambios"
 						class="btn btn-primary pull-right" />
 					<!--  <input type="button" ng-click="resetRol()" name="resetRol" id="resetRol" value="Nuevo Rol" class="btn btn-default" />-->

@@ -63,8 +63,8 @@ factory('Vacuna', function($http, URL_API){
     function insertar(vacuna, callback){
 		
 		var url=URL_API + '/servicios/prc/prc_vacuna.php?accion=I'+
-		'&idmasc=' + vacuna.idmasc + 
-        '&idtpvac=' + vacuna.idtpvac +       
+		'&idmasc=' + vacuna.id_mascota + 
+        '&idtpvac=' + vacuna.id_tipovacuna +       
         '&user=' + vacuna.usuario;
 		
         $http.post(url ,vacuna).
