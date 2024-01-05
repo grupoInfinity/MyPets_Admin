@@ -36,27 +36,21 @@
 					<h4 class="modal-title">Ingrese un nueva vacuna</h4>
 				</div>
 				<div class="modal-body">
-
-					<div class="form-group">
-						<input type="hidden" name="formTypeVac" id="formTypeVac" ng-model="formTypeVac" />
-						<input type="hidden" name="" id="mascVac" ng-model="vac.id_tpvacuna" />
-					</div>
-
-					<div class="form-group" ng-class="{ 'has-error': vacForm.id_tpvacuna.$error.required }">
-						<label for="id_tpvacuna" class="col-sm-2 control-label">Tipo de vacuna:</label>
-						<div class="col-sm-4">
-							<ui-select ng-model="vac.id_tpvacuna" id="id_tpvacuna" name="id_tpvacuna" ng-required="true"
-								autofocus>
-								<ui-select-match>
+					<div class="form-group" ng-class="{ 'has-error': vacForm.id_tipovacuna.$error.required }">
+						<label for="id_tipovacuna" class="col-sm-2 control-label">Tipo de vacuna:</label>
+						<div class="col-md-3">
+							<ui-select ng-model="newvac.id_tipovacuna" name="id_tipovacuna" id="id_tipovacuna" ng-required="true"  >
+								<ui-select-match placeholder="Tipo de vacuna" autofocus>
 									<span ng-bind="$select.selected.descripcion"></span>
 								</ui-select-match>
-								<ui-select-choices
-									repeat="tpv in (tpvac | propsFilter: {descripcion: $select.search}) track by tpv.id">
+								<ui-select-choices repeat="tpv.id as tpv in 
+								(tpv | propsFilter: {descripcion: $select.search}) track by tpv.id" >
 									<div ng-bind-html="tpv.descripcion | highlight: $select.search"></div>
 								</ui-select-choices>
-								<span class="error help-block" ng-show="vacForm.vac.$error.required">Requerido</span>
-								<span class="error help-block" ng-show="errors.vac">{{errors.rol}}</span>
 							</ui-select>
+							<span class="error help-block" ng-show="regForm.id_tipovacuna.$error.required">Requerido</span>
+							<span class="error help-block" ng-show="errors.id_tipovacuna">{{errors.id_tipovacuna}}</span>
+						</div>
 						</div>
 					</div>
 
@@ -73,6 +67,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cerrar</button>
+					
 					<input type="submit" ng-disabled="vacForm.$invalid" id="guardarVac" value="Guardar cambios"
 						class="btn btn-primary pull-right" />
 					<!--  <input type="button" ng-click="resetRol()" name="resetRol" id="resetRol" value="Nuevo Rol" class="btn btn-default" />-->

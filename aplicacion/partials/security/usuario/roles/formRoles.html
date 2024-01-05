@@ -15,7 +15,7 @@
 			<tr ng-repeat="rolusr in rolesusr">
 				<td>{{rolusr.ctgRol.descripcion}}</td>
 				<td>
-					<button class="btn btn-danger btn-xs" ng-click="deleteRol(rolusr.id.usr, rolusr.id.rol)"><i
+					<button class="btn btn-danger btn-xs" ng-click="deleteRol(rolusr.ctgUsr.usr, rolusr.ctgRol.id)"><i
 							class="fa fa-trash-o"></i></button>
 					<!--   <button class="btn btn-warning btn-xs" ng-click="modifyRol(rolusr.id.usr, rolusr.id.rol)"><i class="fa fa-edit"></i></button>  -->
 				</td>

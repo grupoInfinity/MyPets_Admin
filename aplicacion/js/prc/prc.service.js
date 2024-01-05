@@ -10,6 +10,16 @@ factory('Vacuna', function($http, URL_API){
     service.insertar = insertar;
     service.actualizar = actualizar;
     service.activar = activar;
+    service.findAllTpvac=findAllTpvac;
+
+    function findAllTpvac(callback) {
+        var url = URL_API + '/servicios/ctg/ctg_tipovacuna.php?accion=C&estado=A';
+        console.log(url);
+        $http.get(url).
+        then(function (response) {
+            callback(response);
+        });
+    };
 
     function findAll(callback){
         $http.get(URL_API + '/servicios/prc/prc_vacuna.php?accion=C').

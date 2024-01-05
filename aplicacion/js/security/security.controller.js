@@ -1241,7 +1241,8 @@ function UsuarioListCtrl($scope, $rootScope, $state, $compile, $window, popupSer
 
 
 
-function RolUsuarioCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile, $window, popupService, RolUsuario, Rol) {
+function RolUsuarioCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile, $window, 
+	popupService, RolUsuario, Rol) {
 
 	$scope.clearMessages = function () {
 
@@ -1356,7 +1357,7 @@ function RolUsuarioCtrl($scope, $rootScope, $filter, $state, $stateParams, $comp
 	$scope.deleteRol = function (usuario, idRol) {
 
 		if (popupService.showPopup('Esta seguro de borrar este registro?')) {
-			RolUsuario.borrar(usuario, idRol, $rootScope.globals.currentUser.username, function (response) {
+			RolUsuario.borrar(usuario, idRol, /*$rootScope.globals.currentUser.username,*/ function (response) {
 				$scope.refreshRol(usuario);
 			});
 		}

@@ -313,12 +313,12 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 	$scope.loadMunis = function () {
 		$scope.muni = [];
 		//if ($scope.newMasc.depto != "") {
-			Masc.findMuni($scope.newMasc.iddepto,function (response) {
-				if (response.data.status == 1){
-					$scope.muni = response.data.info;
-				}
-				else $scope.muni = [];
-			});
+		Masc.findMuni($scope.newMasc.iddepto, function (response) {
+			if (response.data.status == 1) {
+				$scope.muni = response.data.info;
+			}
+			else $scope.muni = [];
+		});
 		//}
 	};
 
@@ -333,7 +333,7 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 		});
 	};
 	$scope.loadTpmascota();
-	
+
 };
 
 function MascotaListCtrl($scope, $rootScope, $state, $compile, $window, popupService,
@@ -454,7 +454,7 @@ function MascotaListCtrl($scope, $rootScope, $state, $compile, $window, popupSer
 //////////////////VACUNAS CONTROLLER /////////////////
 
 function VacunaCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile,
-	$window, popupService, Vacuna, Masc, Tpvac) {
+	$window, popupService, Vacuna) {
 
 	$scope.clearMessages = function () {
 
@@ -472,12 +472,14 @@ function VacunaCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile,
 		$scope.formTypeVac = "ADD";
 		var date = new Date();
 
-		$scope.vac = {
+		$scope.newvac = {
+			id_mascota: "",
+			id_tipovacuna: "",
+			nvac: "",
 			usuario: $rootScope.globals.currentUser.username
 		};
-
-		$scope.vac.id_mascota = $scope.newMasc;
-		$scope.vac.id_tpvacuna = $scope.newtpvac;
+		//$scope.vac.id_mascota = $scope.newMasc.idmasc;
+		//$scope.vac.id_tpvacuna = $scope.newtpvac;*/
 
 		$scope.clearMessages();
 	};
@@ -486,21 +488,21 @@ function VacunaCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile,
 		$scope.clearMessages();
 
 		if (value == "ADD") {
-			Vacuna.insertar($scope.vac, function (data) {
-				$scope.formTypeVac = "UPD";
-				$scope.refreshVac($scope.newMasc.idmasc);
-				$scope.resetVac();
-				$scope.successMessagesChild = ['Vacuna Registrada correctamente'];
+		Vacuna.insertar($scope.newvac, function (data) {
+			$scope.formTypeVac = "UPD";
+			$scope.refreshVac($scope.newMasc.idmasc);
+			$scope.resetVac();
+			$scope.successMessagesChild = ['Vacuna Registrada correctamente'];
 
-			}, function (result) {
-				if ((result.status == 409) || (result.status == 400)) {
-					$scope.errorsChild = result.data;
-				} else {
-					$scope.errorMessagesChild = ['Unknown error de servidor'];
-				}
-			});
+		}, function (result) {
+			if ((result.status == 409) || (result.status == 400)) {
+				$scope.errorsChild = result.data;
+			} else {
+				$scope.errorMessagesChild = ['Unknown error de servidor'];
+			}
+		});
 
-		} else {
+		}/* else {
 			var date = new Date();
 			var vacObj = { usuario: $rootScope.globals.currentUser.username };
 
@@ -516,16 +518,18 @@ function VacunaCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile,
 					$scope.errorMessagesChild = ['Unknown error de servidor'];
 				}
 			});
-		}
+		}*/
 	};
 
 	$scope.resetVac();
 
 	$scope.loadTPVacunas = function () {
-		Vacuna.findAllTpvac('A', function (response) {
-			if (response.data.status == 1)
-				$scope.tpvacs = response.data.info;
-			else $scope.tpvacs = [];
+		Vacuna.findAllTpvac(function (response) {
+			if (response.data.status == 1) {
+				console.log(response.data.info);
+				$scope.tpv = response.data.info;
+			}
+			else $scope.tpv = [];
 		});
 	};
 
@@ -536,6 +540,7 @@ function VacunaCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile,
 		Vacuna.findByMasc(idMasc, function (response) {
 			if (response.data.status == 1)
 				$scope.vacmasc = response.data.info;
+
 			else $scope.vacmasc = [];
 		});
 	};
@@ -546,7 +551,7 @@ function VacunaCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile,
 		$scope.refreshVac($stateParams.idMasc);
 	}
 
-	$scope.modifyVac = function (idVac) {
+	/*$scope.modifyVac = function (idVac) {
 		$scope.clearMessages();
 		$('#myVacModal').modal('show');
 		$scope.formTypeVac = "UPD";
@@ -563,13 +568,13 @@ function VacunaCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile,
 			}
 		});
 
-	};
+	};*/
 
 	$scope.deleteVac = function (idVac) {
 
 		if (popupService.showPopup('Esta seguro de borrar este registro?')) {
 			Vacuna.borrar(idVac, function (response) {
-				$scope.refreshRol(usuario);
+				$scope.refreshVac();
 			});
 		}
 	};

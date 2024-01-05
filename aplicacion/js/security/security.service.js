@@ -438,10 +438,9 @@ factory('RolUsuario', function($http, URL_API){
         });
     };
 
-    function borrar(idUsuario, IdRol, usuario, callback){
+    function borrar(idUsuario, IdRol, callback){
         $http.post(URL_API + '/servicios/sec/sec_rol_usuario.php?accion=D&usr=' + idUsuario + 
-        '&rol=' + IdRol +
-        '&user=' + usuario, idUsuario).
+        '&rol=' + IdRol).
         then(function(response) {
            callback(response);
         });
