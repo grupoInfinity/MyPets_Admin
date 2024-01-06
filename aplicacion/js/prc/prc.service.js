@@ -114,8 +114,14 @@ factory('Masc', function($http, URL_API){
     service.findAllDept = findAllDept;
     service.findMuni = findMuni;
 
-    function findAlls(callback){
-    	var url = URL_API + '/servicios/prc/prc_mascota.php?accion=C';
+    function findAlls(idRol,dueno,callback){
+        var url="";
+        if(idRol == 1){//ADMIN
+            url = URL_API + '/servicios/prc/prc_mascota.php?accion=C';
+        }
+        if(idRol == 2){//CLIENTE
+            url = URL_API + '/servicios/prc/prc_mascota.php?accion=C&dueno='+dueno;
+        }
 		
 		//console.log(url);
     	$http.get(url).

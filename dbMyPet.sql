@@ -3,6 +3,7 @@ DROP DATABASE IF EXISTS `dbMyPet`;
 CREATE DATABASE IF NOT EXISTS `dbMyPet`;
 
 USE `dbMyPet`;
+SELECT * FROM sec_opc_rol
 /*
 SELECT DISTINCT opc.*  
 		FROM sec_rol_usuario rs
@@ -450,7 +451,8 @@ CREATE TABLE IF NOT EXISTS dbMyPet.prc_mascotas(
 INSERT INTO prc_mascotas(id_mascota,id_tipomascota,id_municipio,usuario,direccion,estado_direc,nombremascota,
 codigo,nacimiento,foto,estado,usuario_creacion,fecha_creacion,usuario_update,fecha_update) 
 VALUE(1,1,1,'dnery','Avenida','A','Charly','239022','2019-03-02',NULL,'A','dnery','2021-08-11 16:15:48',NULL,NULL),
-(2,2,6,'dnery','Avenida Hulin','A','Mily','200022','2019-03-02',NULL,'A','dnery','2021-08-11 16:15:48',NULL,NULL);
+(2,2,6,'dnery','Avenida Hulin','A','Mily','200022','2019-03-02',NULL,'A','dnery','2021-08-11 16:15:48',NULL,NULL),
+(3,2,1,'nmunoz','Colonia San Martin','A','Jilly','300221','2019-03-02',NULL,'A','dnery','2021-08-11 16:15:48',NULL,NULL);
 
 SELECT * FROM ctg_departamentos;SELECT * FROM ctg_municipios
 
@@ -493,6 +495,8 @@ VALUE(1,1,1,'dnery','2021-08-11 16:15:48',NULL,NULL);
 
 INSERT INTO prc_vacunas(id_vacuna,id_mascota,id_tipovacuna,usuario_creacion,fecha_creacion,usuario_update,fecha_update) 
 VALUE(2,2,2,'dnery','2021-08-11 16:15:48',NULL,NULL);
+
+
 
 SELECT * from prc_mascotas
 

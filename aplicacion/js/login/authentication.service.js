@@ -1,111 +1,103 @@
 
-angular.module('authenticationService',[]).
-    factory('Authentication', function($http, $cookies, $rootScope, URL_API){
-    	
-    	 var service = {};
-    	 
-         service.Login = Login;
-         service.Login2 = Login2;
-         service.SetCredentials = SetCredentials;
-         service.ClearCredentials = ClearCredentials;
-    	 
-         
-         function Login(secUsuario, callback) {
-			var url = URL_API + '/servicios/sec/sec_usuario.php?accion=LP&usr=' + secUsuario.usr + '&clave=' + secUsuario.clave + '&estado=A';
-			console.log(url);
-			$http.post(url, secUsuario).
-			then(function(response) {
-				callback(response);
-			});
-         };
-		 
-		 function Login2(secUsuario, callback) {
-        	 var url = URL_API + '/servicios/sec/sec_usuario.php?accion=LP2&usr=' + secUsuario.usr + '&estado=A';
-			 //console.log(url);
-        	 $http.post(url, secUsuario).
-        	 then(function(response) {
-                 callback(response);
-             });
-         };
-         
-         function SetCredentials(username, /*idUser,*/ password, /*isRolAdmin, isRolSupervisor, isRolCajero,*/
-           sec_rol) {
-             var authdata = Base64.encode(username + ':' + password);
-             var language = {
-                    "sProcessing":     "Procesando...",
-                    "sLengthMenu":     "Mostrar _MENU_ registros",
-                    "sZeroRecords":    "No se encontraron resultados",
-                    "sEmptyTable":     "Ning&uacute;n dato disponible en esta tabla",
-                    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-                    "sInfoPostFix":    "",
-                    "sSearch":         "Buscar:",
-                    "sUrl":            "",
-                    "sInfoThousands":  ",",
-                    "sLoadingRecords": "Cargando...",
-                    "oPaginate": {
-                        "sFirst":    "Primero",
-                        "sLast":     "&Uacute;ltimo",
-                        "sNext":     "Siguiente",
-                        "sPrevious": "Anterior"
-                    },
-                    "oAria": {
-                        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                    }
+angular.module('authenticationService', []).
+    factory('Authentication', function ($http, $cookies, $rootScope, URL_API) {
+
+        var service = {};
+
+        service.Login = Login;
+        service.Login2 = Login2;
+        service.SetCredentials = SetCredentials;
+        service.ClearCredentials = ClearCredentials;
+
+
+        function Login(secUsuario, callback) {
+            var url = URL_API + '/servicios/sec/sec_usuario.php?accion=LP&usr=' + secUsuario.usr + '&clave=' + secUsuario.clave + '&estado=A';
+            console.log(url);
+            $http.post(url, secUsuario).
+                then(function (response) {
+                    callback(response);
+                });
+        };
+
+        function Login2(secUsuario, callback) {
+            var url = URL_API + '/servicios/sec/sec_usuario.php?accion=LP2&usr=' + secUsuario.usr + '&estado=A';
+            //console.log(url);
+            $http.post(url, secUsuario).
+                then(function (response) {
+                    callback(response);
+                });
+        };
+
+        function SetCredentials(username, /*idUser,*/ password, /*isRolAdmin, isRolSupervisor, isRolCajero,*/
+            sec_rol) {
+            var authdata = Base64.encode(username + ':' + password);
+            var language = {
+                "sProcessing": "Procesando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ning&uacute;n dato disponible en esta tabla",
+                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "&Uacute;ltimo",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                 }
-				
-			//console.log(empresa);
-			//console.log(ctg_empresa);
-			//console.log(ctg_almacen);
-			//console.log(gral_params);
-			$rootScope.globals = {
-				currentUser: {
-					username: username,
-					//idUser: idUser,
-					authdata: authdata,
-					/*isRolAdmin: isRolAdmin,
-					isRolSupervisor: isRolSupervisor,
-					isRolCajero: isRolCajero,*/
-					sec_rol: sec_rol
-				}
-				, language: language
-			};
+            }
 
-             // set default auth header for http requests
-             $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
+            $rootScope.globals = {
+                currentUser: {
+                    username: username,
+                    authdata: authdata,
+                    sec_rol: sec_rol
+                }
+                , language: language
+            };
 
-             // store user details in globals cookie that keeps user logged in for 1 week (or until they logout)
-             var cookieExp = new Date();
-             cookieExp.setDate(cookieExp.getDate() + 7);
-             $cookies.putObject('globals', $rootScope.globals, { expires: cookieExp });
-         };
+            // set default auth header for http requests
+            $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
 
-         function ClearCredentials() {
-             
-			 
-			 //DESLOGEEO
-			/*if($rootScope.globals.currentUser!=undefined){
-				var url = URL_API + '/servicios/sec/sec_usuario.php?accion=LO'+
-				'&usr=' + $rootScope.globals.currentUser.username + 
-				'&idUser=' + $rootScope.globals.currentUser.idUser
-				;
-				//console.log(url);
-				$http.post(url).
-					then(function(response) {
-				});
-			}*/
-			 
-			$rootScope.globals = {};
-			$cookies.remove('globals');
+            // store user details in globals cookie that keeps user logged in for 1 week (or until they logout)
+            var cookieExp = new Date();
+            cookieExp.setDate(cookieExp.getDate() + 7);
+            $cookies.putObject('globals', $rootScope.globals, { expires: cookieExp });
+        };
+
+        function ClearCredentials() {
+
+
+            //DESLOGEEO
+            /*if($rootScope.globals.currentUser!=undefined){
+                var url = URL_API + '/servicios/sec/sec_usuario.php?accion=LO'+
+                '&usr=' + $rootScope.globals.currentUser.username + 
+                '&idUser=' + $rootScope.globals.currentUser.idUser
+                ;
+                //console.log(url);
+                $http.post(url).
+                    then(function(response) {
+                });
+            }*/
+
+            $rootScope.globals = {};
+            $cookies.remove('globals');
             $http.defaults.headers.common.Authorization = 'Basic';
-         };
-         
-    	 return service;
+        };
 
-    	 
-});
+        return service;
+
+
+    });
 
 //Base64 encoding service used by AuthenticationService
 var Base64 = {

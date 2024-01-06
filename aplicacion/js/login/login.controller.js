@@ -27,16 +27,12 @@ function LoginController($scope, $state, $stateParams, Authentication, Flash)
 				if (response.data.status == '1') {
 					Authentication.SetCredentials(
 						vm.secUsuario.usr, 
-						//response.data.info[0].idUser,
 						vm.secUsuario.clave,
-						/*response.data.info[0].isRolAdmin,
-						response.data.info[0].isRolSupervisor,
-						response.data.info[0].isRolCajero,*/
-						// vm.secUsuario.clave,
 						response.data.info[0].sec_rol
 					);
-					
+					//console.log(response.data.info[0].sec_rol[0].id);
 					$state.go('menuMaster.home');
+					
 				} else {
 					//console.log(response.data.info);
 					//Flash.Error(response.data.info);

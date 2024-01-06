@@ -351,7 +351,12 @@ function MascotaListCtrl($scope, $rootScope, $state, $compile, $window, popupSer
 	vm.message = '';
 	vm.masc = {};
 
-	Masc.findAlls(function (response) {
+	
+
+	Masc.findAlls(
+		$rootScope.globals.currentUser.sec_rol[0].id,
+		$rootScope.globals.currentUser.username,
+		function (response) {
 		vm.masc = response.data.info;
 	});
 
@@ -367,6 +372,7 @@ function MascotaListCtrl($scope, $rootScope, $state, $compile, $window, popupSer
 	vm.editMasc = editMasc;
 
 	function listMasc() {
+
 		Masc.findAlls(function (response) {
 			if (response.data.status == 1)
 				vm.masc = response.data.info;
