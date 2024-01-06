@@ -374,8 +374,8 @@ factory('OpcRol', function($http, URL_API){
     function insertar(opcRol, callback){
         $http.post(URL_API + '/servicios/sec/sec_opc_rol.php?accion=I&id_opc_ppal=' + opcRol.id_opc_ppal +
         '&id_opc=' + opcRol.id_opc +
-        '&id_rol=' + opcRol.id_rol.id +
-        '&user=' + opcRol.usuario, opcRol).
+        '&id_rol=' + opcRol.id_rol +
+        '&user=' + opcRol.usuario).
         then(function(response) {
             callback(response);
          });

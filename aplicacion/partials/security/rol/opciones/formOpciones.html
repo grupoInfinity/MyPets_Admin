@@ -1,13 +1,6 @@
 <input type="button" ng-click="resetOpcion()" name="resetOpcion" id="resetOpcion" value="Nueva Opci&oacute;n"
 	class="btn btn-primary" data-toggle="modal" data-target="#myOpcionModal" />
 
-	<input type="button" ng-click="resetRol()" name="resetRol" id="resetRol" value="Nuevo Rol" class="btn btn-primary"
-	data-toggle="modal" data-target="#myRolModal" />
-<em ng-show="rolesusr.length == 0">No existen datos de Roles.</em>
-<!--<em ng-show="opcionesrol.length == 0">No existen datos de Opciones.</em>
-
-							<div class="box-body table-responsive no-padding">
-						        <table ng-hide="opcionesrol.length == 0" class="table table-hover">-->
 
 <em ng-show="opcionesrol.length == 0">No existen datos de Opciones por Rol</em>
 <div class="box-body table-responsive no-padding">
@@ -54,45 +47,6 @@
 						<input type="hidden" name="id_rol" id="id_rol" ng-model="opcion.id_rol" />
 					</div>
 
-					<!--<div class="form-group" ng-class="{ 'has-error': opcionForm.id_empresa.$error.required }">
-											<label for="id_empresa" class="col-sm-2 control-label">Empresa:</label>
-											<div class="col-sm-4">
-										   <ui-select ng-model="opcion.id_empresa" name="ide_mpresa" id="id_empresa" ng-required="true"  ng-required="true" ng-change="updateOpcPpal()" autofocus>
-												   <ui-select-match allow-clear="true">
-													   <span ng-bind="$select.selected.descripcion"></span>
-												   </ui-select-match>
-												   <ui-select-choices repeat="empresa.id.id as empresa in (empresa | propsFilter: {descripcion: $select.search}) track by empresa.id.id">
-													   <div ng-bind-html="empresa.descripcion | highlight: $select.search"></div>
-												   </ui-select-choices>
-											   </ui-select>
-											   <span class="error help-block" ng-show="opcionForm.id_empresa.$error.required">Requerido</span>
-													<span class="error help-block" ng-show="errors.id_empresa">{{errors.id_opc_ppal}}</span>
-									   </div>									
-									   </div>	-->
-
-
-
-
-					<div class="form-group" ng-class="{ 'has-error': opcionForm.id_empresa.$error.required }">
-
-						<label for="id_empresa" class="col-sm-2 control-label">Empresa:</label>
-						<div class="col-sm-4">
-							<ui-select id="id_empresa" name="id_empresa" ng-model="opcion.id_empresa"
-								ng-change="updateOpcPpal()" ng-required="true" autofocus>
-								<ui-select-match>
-									<span ng-bind="$select.selected.descripcion"></span>
-								</ui-select-match>
-								<ui-select-choices
-									repeat="empresa.id.id as empresa in (empresa | propsFilter: {descripcion: $select.search}) track by empresa.id.id">
-									<div ng-bind-html="empresa.descripcion | highlight: $select.search"></div>
-								</ui-select-choices>
-							</ui-select>
-							<span class="error help-block"
-								ng-show="opcionForm.id_empresa.$error.required">Requerido</span>
-							<span class="error help-block" ng-show="errors.id_empresa">{{errors.id_empresa}}</span>
-						</div>
-					</div>
-
 
 					<div class="form-group" ng-class="{ 'has-error': opcionForm.id_opc_ppal.$error.required }">
 
@@ -104,7 +58,8 @@
 									<span ng-bind="$select.selected.descripcion"></span>
 								</ui-select-match>
 								<ui-select-choices
-									repeat="opcppal.id.id as opcppal in (opcppales | propsFilter: {descripcion: $select.search}) track by opcppal.id.id">
+									repeat="opcppal.id as opcppal in 
+									(opcppal | propsFilter: {descripcion: $select.search}) track by opcppal.id">
 									<div ng-bind-html="opcppal.descripcion | highlight: $select.search"></div>
 								</ui-select-choices>
 							</ui-select>

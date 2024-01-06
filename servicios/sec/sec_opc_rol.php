@@ -16,8 +16,6 @@ $accion = isset($_GET['accion']) ? $_GET['accion'] : '';
 $id_opc_ppal = isset($_GET['id_opc_ppal']) ? $_GET['id_opc_ppal'] : '';
 $id_opc = (isset($_GET['id_opc']) ? $_GET['id_opc'] : '');
 $id_padre = (isset($_GET['id_opc_padre']) ? $_GET['id_opc_padre'] : '');
-//$nid_opc_ppal = isset($_GET['nid_opc_ppal']) ? $_GET['nid_opc_ppal'] : '';
-//$nid_opc = (isset($_GET['nid_opc']) ? $_GET['nid_opc'] : '');
 $id_rol = (isset($_GET['id_rol']) ? $_GET['id_rol'] : '');
 $id_empresa = isset($_GET['id_empresa']) ? $_GET['id_empresa'] : '';
 

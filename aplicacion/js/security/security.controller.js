@@ -180,7 +180,7 @@ function OpcionAddCtrl($scope, $rootScope, $filter, $http, $state, Opcion, OpcPp
 	$scope.opcppales = null;
 	$scope.loadOpcPpal = function () {
 		$scope.opcppales = [];
-		
+
 		$scope.newOpcion.id_opc_ppal = "";
 		if ($scope.newOpcion.id_opc_ppal == null) $scope.newOpcion.id_opc_ppal = "";
 
@@ -1241,7 +1241,7 @@ function UsuarioListCtrl($scope, $rootScope, $state, $compile, $window, popupSer
 
 
 
-function RolUsuarioCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile, $window, 
+function RolUsuarioCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile, $window,
 	popupService, RolUsuario, Rol) {
 
 	$scope.clearMessages = function () {
@@ -1390,8 +1390,6 @@ function OpcionRolCtrl($scope, $rootScope, $http, $filter, $state,
 
 
 	$scope.resetOpcion = function () {
-
-		// Sets the form to it's pristine state
 		if ($scope.opcionForm) {
 			$scope.opcionForm.$setPristine();
 		}
@@ -1405,8 +1403,9 @@ function OpcionRolCtrl($scope, $rootScope, $http, $filter, $state,
 			usuario: $rootScope.globals.currentUser.username
 		};
 
-		$scope.opcion.id_rol = $scope.newRol;
-		//$scope.opcion.id_opc = $scope.opcion.id.id_opc;
+		$scope.opcion.id_rol = $stateParams.idRol;
+		console.log($scope.opcion.id_rol);
+		//$scope.opcion.id_opc = $scope.opcion.id.id_opc;opcppal
 		//$scope.opcion.id_opc_ppal = $scope.opcion.id.id_opc_ppal;
 
 		$scope.clearMessages();
@@ -1416,11 +1415,14 @@ function OpcionRolCtrl($scope, $rootScope, $http, $filter, $state,
 		$scope.clearMessages();
 
 		if (value == "ADD") {
-
+			//console.log($scope.opcion.id_opc_ppal,$scope.opcion.id_opc,$scope.opcion.id_rol);
 			OpcRol.insertar($scope.opcion, function (data) {
 				$scope.formTypeOpcion = "UPD";
-				$scope.refreshOpcion($scope.newRol.id);
+				console.log(1);
+				$scope.refreshOpcion($stateParams.idRol);
+				console.log(2);
 				$scope.resetOpcion();
+				console.log(3);
 				$scope.successMessagesChild = ['Opcion Registrada correctamente'];
 
 			}, function (result) {
@@ -1432,74 +1434,54 @@ function OpcionRolCtrl($scope, $rootScope, $http, $filter, $state,
 			});
 
 		}
-		else {
-
-			var date = new Date();
-			var opcionObj = { usuario: $rootScope.globals.currentUser.username };
-
-			$scope.opcion.usuario = opcionObj.usuario;
-
-			OpcRol.actualizar($scope.opcion, function (data) {
-				$scope.refreshOpcion($scope.newRol.id);
-				//$scope.modifyOpcion($scope.opcion.id_opc, $scope.opcion.id_opc_ppal);
-				$scope.successMessagesChild = ['Opcion Actualizada correctamente'];
-			}, function (result) {
-				if ((result.status == 409) || (result.status == 400)) {
-					$scope.errorsChild = result.data;
-				} else {
-					$scope.errorMessagesChild = ['Unknown error de servidor'];
-				}
-			});
-		}
 	};
 
 	$scope.resetOpcion();
 
-	$scope.loadOpciones = function () {
-
-		Opcion.findAll(function (response) {
-			if (response.data.status == 1)
-				$scope.opces = response.data.info;
-		});
-
-	};
-
-
 	$scope.loadOpcionesPpal = function () {
 		OpcPpal.findAll(function (response) {
-			if (response.data.status == 1)
-				$scope.opcppales = response.data.info;
+			if (response.data.status == 1) {
+				$scope.opcppal = response.data.info;
+			}
 		});
 
 	};
-	$scope.loadOpciones();
 	$scope.loadOpcionesPpal();
-
-	$scope.updateOpcPpal = function () {
-		//var opcppal = 0;		
-		$scope.opcppales = null;
-		$scope.opc = null;
-		$scope.opcion.id_opc_ppal = "";
-		$scope.opcion.id_opc = "";
-
-		if ($scope.opcion.id_opc == null) $scope.opcion.id_opc = "";
-		if ($scope.opcion.id_opc_ppal == null) $scope.opcion.id_opc_ppal = "";
-
-
-		$http.get(URL_API + '/servicios/sec/sec_opc_principal.php?accion=C').
-			then(function (response) {
-				if (response.data.status == 1) {
-					$scope.opcppales = response.data.info;
-					delete $scope.opcppales.id;
-				}
+	/*
+		$scope.loadOpciones = function () {
+			Opcion.findAll(function (response) {
+				if (response.data.status == 1)
+					$scope.opces = response.data.info;
 			});
-
-	};
+	
+		};
+		$scope.loadOpciones();
+	
+		$scope.updateOpcPpal = function () {
+			//var opcppal = 0;		
+			$scope.opcppales = null;
+			$scope.opc = null;
+			$scope.opcion.id_opc_ppal = "";
+			$scope.opcion.id_opc = "";
+	
+			if ($scope.opcion.id_opc == null) $scope.opcion.id_opc = "";
+			if ($scope.opcion.id_opc_ppal == null) $scope.opcion.id_opc_ppal = "";
+	
+	
+			$http.get(URL_API + '/servicios/sec/sec_opc_principal.php?accion=C').
+				then(function (response) {
+					if (response.data.status == 1) {
+						$scope.opcppales = response.data.info;
+						delete $scope.opcppales.id;
+					}
+				});
+	
+		};*/
 
 
 
 	$scope.updateOpciones = function () {
-		var opcppal = 0;
+		//var opcppal = 0;
 		$scope.opc = null;
 		$scope.opcion.id_opc = "";
 		if ($scope.opcion.id_opc == null) $scope.opcion.id_opc = "";
@@ -1515,7 +1497,7 @@ function OpcionRolCtrl($scope, $rootScope, $http, $filter, $state,
 			then(function (response) {
 				if (response.data.status == 1)
 					$scope.opc = response.data.info;
-				delete $scope.opc.id;
+				//delete $scope.opc.id;
 			});
 
 	};
