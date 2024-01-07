@@ -165,7 +165,7 @@ function OpcionAddCtrl($scope, $rootScope, $filter, $http, $state, Opcion, OpcPp
 	};
 
 	$scope.reset();
-
+/*
 
 	$scope.loadOpcPadre = function () {
 		Opcion.findAllPadre($scope.newOpcion.id_opc_ppal, function (response) {
@@ -184,6 +184,36 @@ function OpcionAddCtrl($scope, $rootScope, $filter, $http, $state, Opcion, OpcPp
 		$scope.newOpcion.id_opc_ppal = "";
 		if ($scope.newOpcion.id_opc_ppal == null) $scope.newOpcion.id_opc_ppal = "";
 
+	};*/
+
+
+
+
+	$scope.opcppales = {};
+	$scope.listOpcPpal = function () {
+		OpcPpal.findAllA(function (response) {
+			if (response.data.status == 1) $scope.opcppales = response.data.info;
+			else $scope.opcppales =[];
+		});
+	};
+	$scope.listOpcPpal();
+	
+	
+	$scope.opcppales = {};
+	$scope.listOpcPpal = function () {
+		OpcPpal.findAll(function (response) {
+			if (response.data.status == 1)
+				$scope.opcppales = response.data.info;
+		});
+	};
+
+	$scope.listOpcPpal();
+	
+	$scope.loadOpcPadre = function () {
+		Opcion.findAllPadre($scope.newOpcion.id_opc_ppal, function (response) {
+			if (response.data.status == 1) $scope.opces = response.data.info;
+			else $scope.opces = [];
+		});
 	};
 
 };
@@ -256,16 +286,6 @@ function OpcionEditCtrl($scope, $rootScope, $rootScope, $filter, $state, $stateP
 	};
 
 	$scope.listOpcPpal();
-
-	/*
-	$scope.opcppales = null;
-
-	$scope.loadOpcPpal = function () {
-		$scope.opcppales = [];
-
-		$scope.newOpcion.id_opc_ppal = "";
-		if ($scope.newOpcion.id_opc_ppal == null) $scope.newOpcion.id_opc_ppal = "";
-	};*/
 
 	
 	$scope.loadOpcPadre = function () {
