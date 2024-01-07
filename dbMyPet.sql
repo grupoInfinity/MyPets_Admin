@@ -117,8 +117,6 @@ CREATE TABLE IF NOT EXISTS dbMyPet.sec_opcion (
   CONSTRAINT `FK_OPC_PRINCIPAL` FOREIGN KEY (`id_menu`) REFERENCES `sec_menu` (`id_menu`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de seguridad para manejo de las opciones';
 
-LOCK TABLES `sec_opcion` WRITE;
-
 
 insert  into `sec_opcion`(`id_opc`,`id_menu`,`id_opc_padre`,`padre`,`descripcion`,`url`,`estado`,
 `usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`,`orden`) 
@@ -126,25 +124,25 @@ insert  into `sec_opcion`(`id_opc`,`id_menu`,`id_opc_padre`,`padre`,`descripcion
     #ADMINISTRACION
     #CATALOGOS
     #(1,1,NULL,1,'Catalogos','','A','admin','2018-11-09 15:29:05','nguerrero','2021-08-12 00:00:00',1),#PADRE
-    (2,1,1,NULL,'Departamentos','menuMaster.listDepts()','A',NULL,NULL,NULL,NULL,1),
-    (3,1,1,NULL,'Municipios','menuMaster.listMuni()','A',NULL,NULL,NULL,NULL,2),
-    (4,1,1,NULL,'Tipos mascotas','menuMaster.listTPmascota()','A',NULL,NULL,NULL,NULL,3),
-    (5,1,1,NULL,'Tipos vacunas','menuMaster.listTipovac()','A',NULL,NULL,NULL,NULL,4),
+    (1,1,1,NULL,'Departamentos','menuMaster.listDepts()','A',NULL,NULL,NULL,NULL,1),
+    (2,1,1,NULL,'Municipios','menuMaster.listMuni()','A',NULL,NULL,NULL,NULL,2),
+    (3,1,1,NULL,'Tipos mascotas','menuMaster.listTPmascota()','A',NULL,NULL,NULL,NULL,3),
+    (4,1,1,NULL,'Tipos vacunas','menuMaster.listTipovac()','A',NULL,NULL,NULL,NULL,4),
     #PROCEDIMIENTOS
     #(6,1,NULL,1,'Procedimientos','','A','admin','2018-11-09 15:29:05',NULL,NULL,2),#PADRE
-    (7,1,NULL,NULL,'Mascotas','menuMaster.listMascota()','A',NULL,NULL,NULL,NULL,1),
+    (5,1,NULL,NULL,'Mascotas','menuMaster.listMascota()','A',NULL,NULL,NULL,NULL,1),
     #SEGURIDAD
     #REGISTROS
     #(8,2,NULL,1,'Registros','','A','admin','2018-11-09 15:29:05','nguerrero','2021-08-12 00:00:00',1),#PADRE
-    (9,2,NULL,NULL,'Usuario','menuMaster.listUsuario()','A','admin','2018-11-09 15:29:05',NULL,NULL,2),
+    (6,2,NULL,NULL,'Usuario','menuMaster.listUsuario()','A','admin','2018-11-09 15:29:05',NULL,NULL,2),
     #AUTORIZACION
     #(10,2,NULL,1,'Autorizacion','','A','admin','2018-11-09 15:29:05','nguerrero','2021-08-12 00:00:00',3),#PADRE
-    (11,2,NULL,NULL,'Opción','menuMaster.listOpcion()','A','admin','2018-11-09 15:29:05','system','2023-12-03 00:00:00',4),
-    (12,2,NULL,NULL,'Rol','menuMaster.listRol()','A','admin','2018-11-09 15:29:05',NULL,NULL,5),
-    (13,2,NULL,NULL,'Opcion Principal','menuMaster.listOpcionPrincipal()','A','admin','2018-11-09 15:29:05',NULL,NULL,6),
-    (14,2,NULL,NULL,'Setup','menuMaster.listSetup()','I','admin','2021-08-07 18:12:47',NULL,NULL,7),
+    (7,2,NULL,NULL,'Opción','menuMaster.listOpcion()','A','admin','2018-11-09 15:29:05','system','2023-12-03 00:00:00',4),
+    (8,2,NULL,NULL,'Rol','menuMaster.listRol()','A','admin','2018-11-09 15:29:05',NULL,NULL,5),
+    (9,2,NULL,NULL,'Opcion Principal','menuMaster.listOpcionPrincipal()','A','admin','2018-11-09 15:29:05',NULL,NULL,6),
+    (10,2,NULL,NULL,'Setup','menuMaster.listSetup()','I','admin','2021-08-07 18:12:47',NULL,NULL,7),
     #PERFIL
-    #(15,3,NULL,1,'Cuenta','','A','admin','2018-11-09 15:29:05',NULL,NULL,1);#PADRE
+    (11,3,NULL,NULL,'Cuenta','','A','admin','2018-11-09 15:29:05',NULL,NULL,1);#PADRE
 
 
 DROP TABLE IF EXISTS `sec_opc_rol`;
@@ -169,27 +167,27 @@ CREATE TABLE IF NOT EXISTS dbMyPet.sec_opc_rol (
 insert  into `sec_opc_rol`(`id_menu`,`id_opc`,`id_rol`,`usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`) 
     values
     #ADMIN CATALOGO
-	 (1,1,1,'admin','2018-11-09 15:29:01',NULL,NULL),
-    (1,2,1,'admin','2018-11-09 15:29:01',NULL,NULL),#DEPARTAMENTOS
-    (1,3,1,'admin','2018-11-09 15:29:01',NULL,NULL),#MUNICIPIOS
-    (1,4,1,'admin','2018-11-09 15:29:01',NULL,NULL),#TIPO MASCOTAS
-    (1,5,1,'admin','2018-11-09 15:29:01',NULL,NULL),#TIPO VACUNAS
+	 #(1,1,1,'admin','2018-11-09 15:29:01',NULL,NULL),
+    (1,1,1,'admin','2018-11-09 15:29:01',NULL,NULL),#DEPARTAMENTOS
+    (1,2,1,'admin','2018-11-09 15:29:01',NULL,NULL),#MUNICIPIOS
+    (1,3,1,'admin','2018-11-09 15:29:01',NULL,NULL),#TIPO MASCOTAS
+    (1,4,1,'admin','2018-11-09 15:29:01',NULL,NULL),#TIPO VACUNAS
     #ADMIN PROCEDIMIENTOS
     #(1,6,1,'admin','2018-11-09 15:29:01',NULL,NULL),
     #(1,6,2,'admin','2018-11-09 15:29:01',NULL,NULL),
-    (1,7,1,'admin','2018-11-09 15:29:01',NULL,NULL),#MASCOTA ADMIN
-    (1,7,2,'admin','2018-11-09 15:29:01',NULL,NULL),#MASCOTA CLIENTE
+    (1,5,1,'admin','2018-11-09 15:29:01',NULL,NULL),#MASCOTA ADMIN
+    (1,5,2,'admin','2018-11-09 15:29:01',NULL,NULL),#MASCOTA CLIENTE
     #SEGURIDAD
     #(2,8,1,'admin','2018-11-09 15:29:01',NULL,NULL),#
+    (2,6,1,'admin','2018-11-09 15:29:01',NULL,NULL),#
+    #(2,10,1,'admin','2018-11-09 15:29:01',NULL,NULL),#
+    (2,7,1,'admin','2018-11-09 15:29:01',NULL,NULL),#
+    (2,8,1,'admin','2018-11-09 15:29:01',NULL,NULL),#
     (2,9,1,'admin','2018-11-09 15:29:01',NULL,NULL),#
     (2,10,1,'admin','2018-11-09 15:29:01',NULL,NULL),#
-    (2,11,1,'admin','2018-11-09 15:29:01',NULL,NULL),#
-    (2,12,1,'admin','2018-11-09 15:29:01',NULL,NULL),#
-    (2,13,1,'admin','2018-11-09 15:29:01',NULL,NULL),#
-    (2,14,1,'admin','2018-11-09 15:29:01',NULL,NULL),#
 	 #PERFIL
-    #(3,15,1,'admin','2018-11-09 15:29:01',NULL,NULL),#SETUP
-    #(3,15,2,'admin','2018-11-09 15:29:01',NULL,NULL);#SETUP 
+    (3,1,1,'admin','2018-11-09 15:29:01',NULL,NULL),#SETUP
+    (3,11,2,'admin','2018-11-09 15:29:01',NULL,NULL);#SETUP 
 
 LOCK TABLES `sec_opc_rol` WRITE;
 
