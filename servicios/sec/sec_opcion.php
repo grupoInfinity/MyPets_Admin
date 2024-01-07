@@ -31,9 +31,9 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
     if(!empty($id_opc)) $id_opc="A.id_opc='$id_opc'";
     else $id_opc="1=1";
     if(!empty($id_opc_ppal)) $id_opc_ppal="and A.id_menu='$id_opc_ppal'";
-    else $id_opc_ppal="and 1=1";
+    else $id_opc_ppal="";
     if(!empty($id_opc_padre)) $id_opc_padre="and A.id_opc_padre='$id_opc_padre'";
-    else $id_opc_padre="and 1=1";
+    else $id_opc_padre="";
     
     if(!empty($desc)) $desc="AND A.descripcion LIKE '%$desc%'";
     else $desc="";
@@ -44,7 +44,7 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
     
     $sql = "SELECT A.id_opc, A.id_menu, A.id_opc_padre, A.padre, 
     A.descripcion, A.url, A.estado, A.orden
-	FROM $bd.sec_opcion A
+	FROM $bd.$tabla A
     WHERE $id_opc $id_opc_ppal $id_opc_padre $desc $estado $padre
     ORDER BY CAST(A.orden AS DECIMAL) DESC ";
 

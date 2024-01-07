@@ -134,7 +134,6 @@
       <!-- style=" height:640px;  overflow: hidden; overflow-y: scroll;" -->
       <ul class="sidebar-menu">
         <li class="header" style="text-align:center;">NAVEGACION PRINCIPAL</li>
-
         <li class="treeview" ng-repeat="opcppal in opcionesPpal track by opcppal.id_menu">
           <a style="cursor: pointer;">
             <i class="glyphicon {{opcppal.menu_icon}}"></i>
@@ -162,7 +161,7 @@
                 </li>
               </ul>
             </li>
-            <li ng-show="opch.id_menu == opcppal.id_menu && opch.id_opc_padre!=''" ng-repeat="opch in opciones_hijo">
+            <li ng-show="opch.id_opc_principal == opcppal.id_menu && opch.id_opc_padre!=''" ng-repeat="opch in opciones_hijo">
               <a ui-sref="{{opch.url}}">
                 <i ng-class="opch.padre? 'fa fa-share' : 'fa fa-circle-o'"></i><label
                   style="font-size:14px">{{opch.descripcion}}</label>

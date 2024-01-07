@@ -14,6 +14,7 @@ function HomeController($scope, $rootScope, $location, $stateParams, $state, Usu
 		
 		Authorization.GetOpcionesPpal($rootScope.globals.currentUser.username, function(response){
 			$scope.opcionesPpal = response.data.info;
+			//console.log($scope.opcionesPpal);
 		});
 		
 		Authorization.GetOpciones($rootScope.globals.currentUser.username, function(response){

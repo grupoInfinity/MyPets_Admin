@@ -12,7 +12,9 @@ factory('Opcion', function($http, URL_API){
     service.findById = findById;
 
     function findAll(callback){
-        $http.get(URL_API + '/servicios/sec/sec_opcion.php?accion=C').
+		var url = URL_API + '/servicios/sec/sec_opcion.php?accion=C';
+		//console.log(url);
+        $http.get(url).
         then(function(response) {
            callback(response);
         });
@@ -20,7 +22,7 @@ factory('Opcion', function($http, URL_API){
 	
 	function findAllPadre(id_opc_ppal, callback){
 		var url =URL_API + '/servicios/sec/sec_opcion.php?accion=C&padre=1&estado=A&id_opc_ppal='+id_opc_ppal;
-		console.log(url);
+		//console.log(url);
         $http.get(url).
         then(function(response) {
            callback(response);
@@ -29,7 +31,7 @@ factory('Opcion', function($http, URL_API){
 
     function findById(idOpcion, callback){
 		var url = URL_API + '/servicios/sec/sec_opcion.php?accion=C&id=' + idOpcion;
-
+		//console.log(url);
         $http.get(url).
         then(function(response) {
            callback(response);
@@ -142,7 +144,7 @@ factory('OpcPpal', function($http, URL_API){
 
     function findAll(callback){
 		var url = URL_API + '/servicios/sec/sec_menu.php?accion=C';
-		console.log(url);
+		//console.log(url);
         $http.get(url).
         then(function(response) {
            callback(response);
@@ -150,7 +152,7 @@ factory('OpcPpal', function($http, URL_API){
     };
 	function findAllA(callback){
 		var url = URL_API + '/servicios/sec/sec_menu.php?accion=C&estado=A';
-		
+		//console.log(url);
         $http.get(url).
         then(function(response) {
            callback(response);
@@ -313,7 +315,7 @@ factory('OpcRol', function($http, URL_API){
 
     function findByRol(idRol, callback){
 		var url=URL_API + '/servicios/sec/sec_opc_rol.php?accion=C&id_rol=' + idRol;
-		
+		//console.log(url);
         $http.get(url).
         then(function(response) {
            callback(response);
@@ -326,8 +328,6 @@ factory('OpcRol', function($http, URL_API){
            callback(response);
         });
     };
-
-
 
     function findById(idOpc, IdRol, callback){
         $http.get(URL_API + '/servicios/sec/sec_opc_rol.php?accion=C&id_opc=' + idOpc +
@@ -504,7 +504,7 @@ factory('Usr', function($http, URL_API){
     function findAlls(callback){
     	var url = URL_API + '/servicios/sec/sec_usuario.php?accion=C';
 		
-		console.log(url);
+		//console.log(url);
     	$http.get(url).
         then(function(response) {
            callback(response);
@@ -564,7 +564,7 @@ factory('Usr', function($http, URL_API){
 		'&email=' + usuario.email + 
 		'&estado=' + usuario.estado +
 		'&user=' + usuario.usuario ;
-		
+		console.log(url);
         $http.post(url, usuario).
         then(function(response) {
             callback(response);

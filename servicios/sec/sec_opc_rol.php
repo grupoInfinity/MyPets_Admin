@@ -17,23 +17,20 @@ $id_opc_ppal = isset($_GET['id_opc_ppal']) ? $_GET['id_opc_ppal'] : '';
 $id_opc = (isset($_GET['id_opc']) ? $_GET['id_opc'] : '');
 $id_padre = (isset($_GET['id_opc_padre']) ? $_GET['id_opc_padre'] : '');
 $id_rol = (isset($_GET['id_rol']) ? $_GET['id_rol'] : '');
-$id_empresa = isset($_GET['id_empresa']) ? $_GET['id_empresa'] : '';
 
 $user = (isset($_GET['user']) ? $_GET['user'] : '');
 
 $json = "no has seteado nada.";
 
 if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
-	if (!empty($id_opc)) $id_opc = "AND A.id_opc=$id_opc";
+	if (!empty($id_opc)) $id_opc = "A.id_opc=$id_opc";
 	else $id_opc = "1=1";
 	if (!empty($id_padre)) $id_padre = "AND C.id_opc=$id_padre";
 	else $id_padre = "";
-	if (!empty($id_opc_ppal)) $id_opc_ppal = "AND A.id_menu=$id_opc_ppal";
-	else $id_opc_ppal = "";
+	if (!empty($id_menu)) $id_menu = " A.id_opc_ppal=$id_opc_ppal";
+	else $id_menu = "";
 	if (!empty($id_rol)) $id_rol = "AND A.id_rol = $id_rol";
 	else $id_rol = "";
-	if (!empty($id_empresa)) $id_empresa = "AND A.id_empresa = $id_empresa ";
-	else $id_empresa = "";
 
 	/*$sql = " SELECT A.id_opc_ppal, A.id_empresa, A.id_opc, A.id_rol, B.orden, B.acceso_directo, C.padre, ifnull(C.id_opc_padre, 0) AS id_opc_padre
 	FROM $bd.$tabla A
@@ -88,11 +85,11 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 				/*****************************************************************************************/
 
 				$sql2 = "
-				SELECT A.id_menu,A.descripcion, A.estado
+				SELECT A.id_menu, A.descripcion, A.estado
 				FROM $bd.sec_menu A
 				WHERE A.id_menu = $id_opc_ppal ";
 
-				// echo $sql2;
+				//echo $sql2;
 				$result2 = $conn->query($sql2);
 
 				if (!empty($result2))

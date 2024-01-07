@@ -222,11 +222,19 @@ function OpcionEditCtrl($scope, $rootScope, $rootScope, $filter, $state, $stateP
 			$('#notificacionesModal').modal('show');
 		});
 	};
-
+	
+	$scope.opcppales = {};
+	$scope.listOpcPpal = function () {
+		OpcPpal.findAllA(function (response) {
+			if (response.data.status == 1) $scope.opcppales = response.data.info;
+			else $scope.opcppales =[];
+		});
+	};
+	$scope.listOpcPpal();
+	
 	$scope.loadOpcion = function () {
 		Opcion.findById($stateParams.idOpcion, function (response) {
-			if (response.data.status == 1)
-				$scope.newOpcion = response.data.info[0];
+			if (response.data.status == 1) $scope.newOpcion = response.data.info[0];
 			$scope.newOpcion.id_opc_ppal = response.data.info[0].id.id_opc_principal;
 			$scope.loadOpcPadre();
 			$scope.newOpcion.id = response.data.info[0].id.id;
@@ -238,7 +246,7 @@ function OpcionEditCtrl($scope, $rootScope, $rootScope, $filter, $state, $stateP
 	};
 
 	$scope.loadOpcion();
-
+	
 	$scope.opcppales = {};
 	$scope.listOpcPpal = function () {
 		OpcPpal.findAll(function (response) {
@@ -249,20 +257,21 @@ function OpcionEditCtrl($scope, $rootScope, $rootScope, $filter, $state, $stateP
 
 	$scope.listOpcPpal();
 
-	/*$scope.opcppales = null;
+	/*
+	$scope.opcppales = null;
+
 	$scope.loadOpcPpal = function () {
 		$scope.opcppales = [];
 
 		$scope.newOpcion.id_opc_ppal = "";
 		if ($scope.newOpcion.id_opc_ppal == null) $scope.newOpcion.id_opc_ppal = "";
-
 	};*/
 
+	
 	$scope.loadOpcPadre = function () {
 		Opcion.findAllPadre($scope.newOpcion.id_opc_ppal, function (response) {
-			if (response.data.status == 1)
-				$scope.opces = response.data.info;
-			else $scope.opces = {};
+			if (response.data.status == 1) $scope.opces = response.data.info;
+			else $scope.opces = [];
 		});
 	};
 
@@ -948,7 +957,6 @@ function UsuarioAddCtrl($rootScope, $stateParams, $scope, URL_API, $filter, $htt
 				Usr.findByUsr($scope.newUsuario.usr, function (response) {
 					if (response.data.status == 1)
 						$scope.newUsuario = response.data.info[0];
-					// $scope.newUsuario.id_empleado = response.data.info[0].id_empleado;
 					// $scope.newUsuario.usr = response.data.info[0].usr;
 				});
 
@@ -1048,13 +1056,8 @@ function UsuarioEditCtrl($rootScope, $scope, $filter, $state, $stateParams, URL_
 				$scope.formType = "UPD";
 
 				Usr.findByUsr($scope.newUsuario.usr, function (response) {
-					if (response.data.status == 1)
-						$scope.newUsuario = response.data.info[0];
-					/*$scope.newUsuario.id_empleado = response.data.info[0].id_empleado;
-					$scope.newUsuario.id_empresa = response.data.info[0].id_empresa;
-					$scope.newUsuario.id_almacen = response.data.info[0].id_almacen;
-					$scope.newUsuario.tipo_usuario = response.data.info[0].tipo_usuario;
-					$scope.newUsuario.usr = response.data.info[0].usr;*/
+					if (response.data.status == 1) $scope.newUsuario = response.data.info[0];
+					else $scope.newUsuario = [];
 				});
 
 				Swal.fire({
@@ -1124,8 +1127,8 @@ function UsuarioEditCtrl($rootScope, $scope, $filter, $state, $stateParams, URL_
 
 };
 
-function UsuarioListCtrl($scope, $rootScope, $state, $compile, $window, popupService,
-	DTOptionsBuilder, DTColumnDefBuilder, Usr, URL_API) {
+function UsuarioListCtrl($scope, $rootScope, $state, $compile, $window, popupService, DTOptionsBuilder, DTColumnDefBuilder, Usr, URL_API) {
+
 	var vm = this;
 
 	/*vm.listUsuario = listUsuario;
@@ -1135,11 +1138,15 @@ function UsuarioListCtrl($scope, $rootScope, $state, $compile, $window, popupSer
 	vm.usuario = {};
 
 	Usr.findAlls(function (response) {
+
 		vm.usuario = response.data.info;
+
+		if(response.data.status==1) vm.usuario = response.data.info;
+		else vm.usuario = [];
+		
 	});
 
-	vm.dtOptions = DTOptionsBuilder.newOptions().withPaginationType(
-		'full_numbers').withLanguage($rootScope.globals.language);
+	vm.dtOptions = DTOptionsBuilder.newOptions().withPaginationType('full_numbers').withLanguage($rootScope.globals.language);
 	vm.dtColumnDefs = [DTColumnDefBuilder.newColumnDef(0),
 	DTColumnDefBuilder.newColumnDef(1),
 	DTColumnDefBuilder.newColumnDef(2),
@@ -1149,18 +1156,17 @@ function UsuarioListCtrl($scope, $rootScope, $state, $compile, $window, popupSer
 	vm.activateUsuario = activateUsuario;
 	vm.editUsuario = editUsuario;
 
-	/*function listUsuario() {
-		Usr.findByEmpresa($rootScope.globals.currentUser.id_empresa, function(response) {
-			if(response.data.status==1)
-			vm.usuario = response.data.info;
+	function listUsuario() {
+		Usr.findAlls(function(response) {
+			if(response.data.status==1) vm.usuario = response.data.info;
 		});
 
 	}
 	;
 
-	function reloadData(id_empresa) {
-		Usr.findByEmpresa(id_empresa, function(response) {
-			if(response.data.estado==1){
+	function reloadData() {
+		Usr.findAlls(function(response) {
+			if(response.data.status==1){
 				vm.usuario = response.data.info;
 			}
 			else{
@@ -1168,8 +1174,7 @@ function UsuarioListCtrl($scope, $rootScope, $state, $compile, $window, popupSer
 			}
 				
 		});
-
-	}*/
+	};
 
 
 	function deleteUsuario(usuarioId) {
@@ -1184,7 +1189,7 @@ function UsuarioListCtrl($scope, $rootScope, $state, $compile, $window, popupSer
 		}).then((result) => {
 			if (result.value) {
 				Usr.borrar(usuarioId, $rootScope.globals.currentUser.username, function (response) {
-					//reloadData(id_empresa);
+					reloadData();
 				});
 
 				Swal.fire({
@@ -1211,7 +1216,7 @@ function UsuarioListCtrl($scope, $rootScope, $state, $compile, $window, popupSer
 		}).then((result) => {
 			if (result.value) {
 				Usr.activar(usuarioId, $rootScope.globals.currentUser.username, function (response) {
-					//reloadData(id_empresa);
+					reloadData();
 				});
 
 				Swal.fire({
@@ -1368,9 +1373,7 @@ function RolUsuarioCtrl($scope, $rootScope, $filter, $state, $stateParams, $comp
 	});
 };
 
-function OpcionRolCtrl($scope, $rootScope, $http, $filter, $state,
-	DTOptionsBuilder, DTColumnDefBuilder, $stateParams, $compile, $window,
-	popupService, OpcRol, OpcPpal, Opcion, URL_API) {
+function OpcionRolCtrl($scope, $rootScope, $http, $filter, $state, DTOptionsBuilder, DTColumnDefBuilder, $stateParams, $compile, $window, popupService, OpcRol, OpcPpal, Opcion, URL_API) {
 
 	$scope.clearMessages = function () {
 
@@ -1381,8 +1384,7 @@ function OpcionRolCtrl($scope, $rootScope, $http, $filter, $state,
 
 	var vm = this;
 
-	vm.dtOptions = DTOptionsBuilder.newOptions().withPaginationType(
-		'full_numbers').withLanguage($rootScope.globals.language);
+	vm.dtOptions = DTOptionsBuilder.newOptions().withPaginationType('full_numbers').withLanguage($rootScope.globals.language);
 	vm.dtColumnDefs = [DTColumnDefBuilder.newColumnDef(0),
 	DTColumnDefBuilder.newColumnDef(1),
 	DTColumnDefBuilder.newColumnDef(2),
@@ -1404,7 +1406,7 @@ function OpcionRolCtrl($scope, $rootScope, $http, $filter, $state,
 		};
 
 		$scope.opcion.id_rol = $stateParams.idRol;
-		console.log($scope.opcion.id_rol);
+		//console.log($scope.opcion.id_rol);
 		//$scope.opcion.id_opc = $scope.opcion.id.id_opc;opcppal
 		//$scope.opcion.id_opc_ppal = $scope.opcion.id.id_opc_ppal;
 
@@ -1439,21 +1441,19 @@ function OpcionRolCtrl($scope, $rootScope, $http, $filter, $state,
 	$scope.resetOpcion();
 
 	$scope.loadOpcionesPpal = function () {
-		OpcPpal.findAll(function (response) {
-			if (response.data.status == 1) {
-				$scope.opcppal = response.data.info;
-			}
+		OpcPpal.findAllA(function (response) {
+			if (response.data.status == 1) $scope.opcppales = response.data.info;
+			else $scope.opcppales =[];
 		});
 
 	};
 	$scope.loadOpcionesPpal();
+
 	/*
 		$scope.loadOpciones = function () {
 			Opcion.findAll(function (response) {
 				if (response.data.status == 1)
 					$scope.opces = response.data.info;
-			});
-	
 		};
 		$scope.loadOpciones();
 	
@@ -1476,7 +1476,7 @@ function OpcionRolCtrl($scope, $rootScope, $http, $filter, $state,
 					}
 				});
 	
-		};*/
+		};//*/
 
 
 
@@ -1495,9 +1495,9 @@ function OpcionRolCtrl($scope, $rootScope, $http, $filter, $state,
 
 		$http.get(URL_API + '/servicios/sec/sec_opcion.php?accion=C&id_opc_ppal=' + opcppal).
 			then(function (response) {
-				if (response.data.status == 1)
-					$scope.opc = response.data.info;
-				//delete $scope.opc.id;
+				if (response.data.status == 1) $scope.opc = response.data.info;
+				else $scope.opc = [];
+				delete $scope.opc.id;
 			});
 
 	};
@@ -1508,6 +1508,10 @@ function OpcionRolCtrl($scope, $rootScope, $http, $filter, $state,
 			if (response.data.status == 1)
 				$scope.opcionesrol = response.data.info;
 			else $scope.rolesusr = [];
+
+			if (response.data.status == 1) $scope.opcionesrol = response.data.info;
+			else $scope.opcionesrol = [];
+
 		});
 
 	};
@@ -1517,8 +1521,6 @@ function OpcionRolCtrl($scope, $rootScope, $http, $filter, $state,
 	} else {
 		$scope.refreshOpcion($stateParams.idRol);
 	}
-
-
 
 
 	$scope.modifyOpcion = function (idRol, idOpcion) {
@@ -1583,8 +1585,6 @@ function RolUsuarioCtrl($scope, $rootScope, $filter, $state, $stateParams, $comp
 		$scope.rol = { usuario: $rootScope.globals.currentUser.username };
 
 		$scope.rol.usr = $scope.newUsuario;
-		$scope.rol.id_empresa = $scope.newUsuario;
-
 		$scope.clearMessages();
 	};
 

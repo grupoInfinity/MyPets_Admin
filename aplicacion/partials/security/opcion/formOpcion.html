@@ -14,15 +14,12 @@
 	<div class="form-group">
 
 		<div class="col-md-4">
-			<label for="idOpcPpal" class="control-label">Opci&oacute;n Principal: </label>
-			<ui-select ng-model="newOpcion.id_opc_ppal" name="idOpcPpal" id="idOpcPpal" ng-required="true"
-				ng-change="loadOpcPadre()">
+			<label for="idOpcPpal" class="control-label">Opci&oacute;n Principal:</label>
+			<ui-select ng-model="newOpcion.id_opc_ppal" name="idOpcPpal" id="idOpcPpal" ng-required="true" ng-change="loadOpcPadre()">
 				<ui-select-match allow-clear="true">
 					<span ng-bind="$select.selected.descripcion"></span>
 				</ui-select-match>
-				<ui-select-choices
-					repeat="opcppales.id as opcppales 
-					in (opcppales | propsFilter: {descripcion: $select.search}) track by opcppales.id">
+				<ui-select-choices repeat="opcppales.id as opcppales in (opcppales | propsFilter: {descripcion: $select.search}) track by opcppales.id">
 					<div ng-bind-html="opcppales.descripcion | highlight: $select.search"></div>
 				</ui-select-choices>
 				

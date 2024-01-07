@@ -85,7 +85,8 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 			$json = array("status" => 0, "info" => "No existe información con ese criterio.");
 		}
 	else $json = array("status" => 0, "info" => "No existe información.");
-} else {
+} 
+else {
 	if (strtoupper($accion) == 'I') { // VERIFICACION SI LA ACCION ES INSERCION
 
 		$date = date('Y-m-d H:i:s');
@@ -100,7 +101,8 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 		} else {
 			$json = array("status" => 0, "info" => $conn->error);
 		}
-	} else if (strtoupper($accion) == 'U') { // VERIFICACION SI LA ACCION ES MODIFICACION
+	} 
+	else if (strtoupper($accion) == 'U') { // VERIFICACION SI LA ACCION ES MODIFICACION
 
 		if (!empty($clave)) $clave = "clave='" . ($clave) . "'";
 		else $clave = "clave=clave";
@@ -127,7 +129,8 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 		} else {
 			$json = array("status" => 0, "error" => $conn->error);
 		}
-	} else if (strtoupper($accion) == 'D') { // VERIFICACION SI LA ACCION ES INACTIVACION
+	}
+	else if (strtoupper($accion) == 'D') { // VERIFICACION SI LA ACCION ES INACTIVACION
 		$user = ", usuario_update='" . $user . "'";
 		$date = ", fecha_update='" . date('Y-m-d H:i:s') . "'";
 
@@ -140,7 +143,8 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 		} else {
 			$json = array("status" => 0, "error" => $conn->error);
 		}
-	} else if (strtoupper($accion) == 'A') { // VERIFICACION SI LA ACCION ES ACTIVACION
+	} 
+	else if (strtoupper($accion) == 'A') { // VERIFICACION SI LA ACCION ES ACTIVACION
 		$user = ", usuario_update='" . $user . "'";
 		$date = ", fecha_update='" . date('Y-m-d H:i:s') . "'";
 
@@ -153,7 +157,8 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 		} else {
 			$json = array("status" => 0, "error" => $conn->error);
 		}
-	} else if (strtoupper($accion) == 'LU') { //VERIFICACION SI LA ACCION ES CONSULTA DEL LOGIN
+	} 
+	else if (strtoupper($accion) == 'LU') { //VERIFICACION SI LA ACCION ES CONSULTA DEL LOGIN
 		if (!empty($usr)) $usr = "A.usuario='$usr'";
 		else $usr = " A.usuario = null";
 		if (!empty($estado)) $estado = "AND A.estado='A'";
@@ -177,7 +182,8 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 				$json = array("status" => 0, "info" => "No existe información con ese criterio.");
 			}
 		else $json = array("status" => 0, "info" => "No existe información.");
-	} else if (strtoupper($accion) == 'LP') { //VERIFICACION SI LA ACCION ES CONSULTA DEL PASSWORD
+	} 
+	else if (strtoupper($accion) == 'LP') { //VERIFICACION SI LA ACCION ES CONSULTA DEL PASSWORD
 		$usrAux = $usr;
 		if (!empty($usr)) $usr = "A.usuario='$usr'";
 		else $usr = "A.usuario = null";
@@ -240,7 +246,8 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 				$json = array("status" => 0, "info" => "No existe información con ese criterio.");
 			}
 		else $json = array("status" => 0, "info" => "No existe información.");
-	} else if (strtoupper($accion) == 'LP2') { //VERIFICACION SI LA ACCION ES CONSULTA DEL LOGIN SIN PASSWORD
+	} 
+	else if (strtoupper($accion) == 'LP2') { //VERIFICACION SI LA ACCION ES CONSULTA DEL LOGIN SIN PASSWORD
 		$usrAux = $usr;
 		if (!empty($usr)) $usr = "A.usuario='$usr'";
 		else $usr = "";
@@ -305,7 +312,8 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 			}
 		else $json = array("status" => 0, "info" => "No existe información.");
 		//echo $json;
-	} else if (strtoupper($accion) == 'UP') { // VERIFICACION SI LA ACCION ES MODIFICACION DE CLAVE
+	} 
+	else if (strtoupper($accion) == 'UP') { // VERIFICACION SI LA ACCION ES MODIFICACION DE CLAVE
 
 		$user = ", usuario_update='" . $user . "'";
 		$date = ", fecha_update='" . date('Y-m-d H:i:s') . "'";
