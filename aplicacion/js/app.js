@@ -1,5 +1,5 @@
-var app = angular.module('aplicacion', ['ui.router', 'ngRoute', 'ngCookies', 'ngSanitize', 
-'ui.select', 'datatables', 'datatables.bootstrap'
+var app = angular.module('aplicacion', ['ui.router', 'ngRoute', 'ngCookies', 'ngSanitize',
+  'ui.select', 'datatables', 'datatables.bootstrap'
   //CATALOGOS
   , 'munisService', 'deptsService', 'tpvacService', 'tpmascService'
   //PRC
@@ -38,182 +38,186 @@ app.config(['$qProvider', function ($qProvider) {
 }]);
 
 angular.module('aplicacion')
-  .config(['$httpProvider', '$stateProvider', '$urlRouterProvider', 
-  function ($httpProvider, $stateProvider, $urlRouterProvider) {
-    /*
-     * Use a HTTP interceptor to add a nonce to every request to prevent MSIE from caching responses.
-     */
-    $httpProvider.interceptors.push('ajaxNonceInterceptor');
-    //SEGURIDAD
+  .config(['$httpProvider', '$stateProvider', '$urlRouterProvider',
+    function ($httpProvider, $stateProvider, $urlRouterProvider) {
+      /*
+       * Use a HTTP interceptor to add a nonce to every request to prevent MSIE from caching responses.
+       */
+      $httpProvider.interceptors.push('ajaxNonceInterceptor');
+      //SEGURIDAD
 
-    //USUARIO
-    $stateProvider.
-      state('menuMaster.addUsuario', {
-        url: '/addUsuario',
-        templateUrl: 'partials/security/usuario/addUsuario.html',
-        controller: UsuarioAddCtrl
-      }).state('menuMaster.listUsuario', {
-        url: '/listUsuario',
-        templateUrl: 'partials/security/usuario/listUsuario.html'
-      }).state('menuMaster.editUsuario', {
-        url: '/:idUsuario/editUsuario',
-        templateUrl: 'partials/security/usuario/editUsuario.html',
-        controller: UsuarioEditCtrl
-      });
+      //USUARIO
+      $stateProvider.
+        state('menuMaster.addUsuario', {
+          url: '/addUsuario',
+          templateUrl: 'partials/security/usuario/addUsuario.html',
+          controller: UsuarioAddCtrl
+        }).state('menuMaster.listUsuario', {
+          url: '/listUsuario',
+          templateUrl: 'partials/security/usuario/listUsuario.html'
+        }).state('menuMaster.editUsuario', {
+          url: '/:idUsuario/editUsuario',
+          templateUrl: 'partials/security/usuario/editUsuario.html',
+          controller: UsuarioEditCtrl
+        });
 
-    //ROL
-    $stateProvider.
-      state('menuMaster.addRol', {
-        url: '/addRol',
-        templateUrl: 'partials/security/rol/addRol.html',
-        controller: RolAddCtrl
-      }).state('menuMaster.listRol', {
-        url: '/listRol',
-        templateUrl: 'partials/security/rol/listRol.html',
-        controller: RolListCtrl
-      }).state('menuMaster.editRol', {
-        url: '/:idRol/editRol',
-        templateUrl: 'partials/security/rol/editRol.html',
-        controller: RolEditCtrl
-      });
+      //ROL
+      $stateProvider.
+        state('menuMaster.addRol', {
+          url: '/addRol',
+          templateUrl: 'partials/security/rol/addRol.html',
+          controller: RolAddCtrl
+        }).state('menuMaster.listRol', {
+          url: '/listRol',
+          templateUrl: 'partials/security/rol/listRol.html',
+          controller: RolListCtrl
+        }).state('menuMaster.editRol', {
+          url: '/:idRol/editRol',
+          templateUrl: 'partials/security/rol/editRol.html',
+          controller: RolEditCtrl
+        });
 
-    //OPCION
-    $stateProvider.
-      state('menuMaster.addOpcion', {
-        url: '/addOpcion',
-        templateUrl: 'partials/security/opcion/addOpcion.html',
-        controller: OpcionAddCtrl
-      }).state('menuMaster.listOpcion', {
-        url: '/listOpcion',
-        templateUrl: 'partials/security/opcion/listOpcion.html'
+      //OPCION
+      $stateProvider.
+        state('menuMaster.addOpcion', {
+          url: '/addOpcion',
+          templateUrl: 'partials/security/opcion/addOpcion.html',
+          controller: OpcionAddCtrl
+        }).state('menuMaster.listOpcion', {
+          url: '/listOpcion',
+          templateUrl: 'partials/security/opcion/listOpcion.html'
 
-      }).state('menuMaster.editOpcion', {
-        url: '/:idOpcion/editOpcion',
-        templateUrl: 'partials/security/opcion/editOpcion.html',
-        controller: OpcionEditCtrl
-      });
+        }).state('menuMaster.editOpcion', {
+          url: '/:idOpcion/editOpcion',
+          templateUrl: 'partials/security/opcion/editOpcion.html',
+          controller: OpcionEditCtrl
+        });
 
-    //OPCION PRINCIPAL
-    $stateProvider.
-      state('menuMaster.addOpcionPrincipal', {
-        url: '/addOpcionPrincipal',
-        templateUrl: 'partials/security/menu/addOpcionPrincipal.html',
-        controller: OpcionPrincipalAddCtrl
-      }).state('menuMaster.listOpcionPrincipal', {
-        url: '/listOpcionPrincipal',
-        templateUrl: 'partials/security/menu/listOpcionPrincipal.html'
-      }).state('menuMaster.editOpcionPrincipal', {
-        url: '/:idOpcPpal/editOpcionPrincipal',
-        templateUrl: 'partials/security/menu/editOpcionPrincipal.html',
-        controller: OpcionPrincipalEditCtrl
-      });
+      //OPCION PRINCIPAL
+      $stateProvider.
+        state('menuMaster.addOpcionPrincipal', {
+          url: '/addOpcionPrincipal',
+          templateUrl: 'partials/security/menu/addOpcionPrincipal.html',
+          controller: OpcionPrincipalAddCtrl
+        }).state('menuMaster.listOpcionPrincipal', {
+          url: '/listOpcionPrincipal',
+          templateUrl: 'partials/security/menu/listOpcionPrincipal.html'
+        }).state('menuMaster.editOpcionPrincipal', {
+          url: '/:idOpcPpal/editOpcionPrincipal',
+          templateUrl: 'partials/security/menu/editOpcionPrincipal.html',
+          controller: OpcionPrincipalEditCtrl
+        });
 
-    //CATALOGOS
-    //DEPTS CRUD
-    $stateProvider.
-      state('menuMaster.addDepts', {
-        url: '/addDepts',
-        templateUrl: 'partials/ctg/ctg_depts/addDepts.html',
-        controller: DeptsAddCtrl
-      }).state('menuMaster.listDepts', {
-        url: '/listDepts',
-        templateUrl: 'partials/ctg/ctg_depts/listDepts.html'
-      }).state('menuMaster.editDepts', {
-        url: '/:idDepts/editDepts',
-        templateUrl: 'partials/ctg/ctg_depts/editDepts.html',
-        controller: DeptsEditCtrl
-      });
+      //CATALOGOS
+      //DEPTS CRUD
+      $stateProvider.
+        state('menuMaster.addDepts', {
+          url: '/addDepts',
+          templateUrl: 'partials/ctg/ctg_depts/addDepts.html',
+          controller: DeptsAddCtrl
+        }).state('menuMaster.listDepts', {
+          url: '/listDepts',
+          templateUrl: 'partials/ctg/ctg_depts/listDepts.html'
+        }).state('menuMaster.editDepts', {
+          url: '/:idDepts/editDepts',
+          templateUrl: 'partials/ctg/ctg_depts/editDepts.html',
+          controller: DeptsEditCtrl
+        });
 
-    //MUNICIPIO
-    $stateProvider.
-      state('menuMaster.addMuni', {
-        url: '/addMuni',
-        templateUrl: 'partials/ctg/ctg_muni/addMuni.html',
-        controller: MunisAddCtrl
-      }).state('menuMaster.listMuni', {
-        url: '/listMuni',
-        templateUrl: 'partials/ctg/ctg_muni/listMuni.html'
-      }).state('menuMaster.editMunis', {
-        url: '/:idDepto/:idMunis/editMuni',
-        templateUrl: 'partials/ctg/ctg_muni/editMuni.html',
-        controller: MunisEditCtrl
-      });
+      //MUNICIPIO
+      $stateProvider.
+        state('menuMaster.addMuni', {
+          url: '/addMuni',
+          templateUrl: 'partials/ctg/ctg_muni/addMuni.html',
+          controller: MunisAddCtrl
+        }).state('menuMaster.listMuni', {
+          url: '/listMuni',
+          templateUrl: 'partials/ctg/ctg_muni/listMuni.html'
+        }).state('menuMaster.editMunis', {
+          url: '/:idDepto/:idMunis/editMuni',
+          templateUrl: 'partials/ctg/ctg_muni/editMuni.html',
+          controller: MunisEditCtrl
+        });
 
-    //TIPO MASCOTA
-    $stateProvider.
-      state('menuMaster.addTPmascota', {
-        url: '/addTPmascota',
-        templateUrl: 'partials/ctg/ctg_tpmascota/addTPmascota.html',
-        controller: tpmascAddCtrl
-      }).state('menuMaster.listTPmascota', {
-        url: '/listTPmascota',
-        templateUrl: 'partials/ctg/ctg_tpmascota/listTPmascota.html'
-      }).state('menuMaster.editTPmascota', {
-        url: '/:idtpmasc/editTPmascota',
-        templateUrl: 'partials/ctg/ctg_tpmascota/editTPmascota.html',
-        controller: tpmascEditCtrl
-      });
+      //TIPO MASCOTA
+      $stateProvider.
+        state('menuMaster.addTPmascota', {
+          url: '/addTPmascota',
+          templateUrl: 'partials/ctg/ctg_tpmascota/addTPmascota.html',
+          controller: tpmascAddCtrl
+        }).state('menuMaster.listTPmascota', {
+          url: '/listTPmascota',
+          templateUrl: 'partials/ctg/ctg_tpmascota/listTPmascota.html'
+        }).state('menuMaster.editTPmascota', {
+          url: '/:idtpmasc/editTPmascota',
+          templateUrl: 'partials/ctg/ctg_tpmascota/editTPmascota.html',
+          controller: tpmascEditCtrl
+        });
 
-    //TIPO VACUNA
-    $stateProvider.
-      state('menuMaster.addTipovac', {
-        url: '/addTipovac',
-        templateUrl: 'partials/ctg/ctg_tipovac/addTipovac.html',
-        controller: tpvacAddCtrl
-      }).state('menuMaster.listTipovac', {
-        url: '/listTipovac',
-        templateUrl: 'partials/ctg/ctg_tipovac/listTipovac.html'
-      }).state('menuMaster.editTipovac', {
-        url: '/:idtpvac/editTipovac',
-        templateUrl: 'partials/ctg/ctg_tipovac/editTipovac.html',
-        controller: tpvacEditCtrl
-      });
+      //TIPO VACUNA
+      $stateProvider.
+        state('menuMaster.addTipovac', {
+          url: '/addTipovac',
+          templateUrl: 'partials/ctg/ctg_tipovac/addTipovac.html',
+          controller: tpvacAddCtrl
+        }).state('menuMaster.listTipovac', {
+          url: '/listTipovac',
+          templateUrl: 'partials/ctg/ctg_tipovac/listTipovac.html'
+        }).state('menuMaster.editTipovac', {
+          url: '/:idtpvac/editTipovac',
+          templateUrl: 'partials/ctg/ctg_tipovac/editTipovac.html',
+          controller: tpvacEditCtrl
+        });
 
 
-    //MASCOTA
-    $stateProvider.
-      state('menuMaster.addMascota', {
-        url: '/addMascota',
-        templateUrl: 'partials/prc/prc_mascotas/addMascota.html',
-        controller: MascotaAddCtrl
-      }).state('menuMaster.listMascota', {
-        url: '/listMascota',
-        templateUrl: 'partials/prc/prc_mascotas/listMascota.html'
-      }).state('menuMaster.editMascota', {
-        url: '/:idMasc/editMascota',
-        templateUrl: 'partials/prc/prc_mascotas/editMascota.html',
-        controller: MascotaEditCtrl
-      });
+      //MASCOTA
+      $stateProvider.
+        state('menuMaster.addMascota', {
+          url: '/addMascota',
+          templateUrl: 'partials/prc/prc_mascotas/addMascota.html',
+          controller: MascotaAddCtrl
+        }).state('menuMaster.listMascota', {
+          url: '/listMascota',
+          templateUrl: 'partials/prc/prc_mascotas/listMascota.html'
+        }).state('menuMaster.editMascota', {
+          url: '/:idMasc/editMascota',
+          templateUrl: 'partials/prc/prc_mascotas/editMascota.html',
+          controller: MascotaEditCtrl
+        });
 
-    // MENU Y LOGIN
-    $stateProvider
-      .state('menuMaster', {
-        abstract: true,
-        templateUrl: 'partials/menuMaster.html'
-      })
-      .state('menuMaster.home', {
-        url: '/home',
-        templateUrl: 'partials/security/home/home.html'
-      })
-      .state('menuMaster.home2', {
-        url: '/home2',
-        templateUrl: 'partials/security/home/home2.html'
-      })
-      .state('menuMaster.homeMenu', {
-        url: '/homeMenu',
-        templateUrl: 'partials/security/home/homeMenu.html'
-      })
-      .state('login', {
-        url: '/login',
-        controller: LoginController,
-        templateUrl: 'partials/security/login/login.html',
-        controllerAs: 'vm'
-      })
-      ;
+      // MENU Y LOGIN
+      $stateProvider
+        .state('registroMain', {
+          url: '/registro',
+          templateUrl: 'partials/registroMain.html'
+        })
+        .state('menuMaster', {
+          abstract: true,
+          templateUrl: 'partials/menuMaster.html'
+        })
+        .state('menuMaster.home', {
+          url: '/home',
+          templateUrl: 'partials/security/home/home.html'
+        })
+        .state('menuMaster.home2', {
+          url: '/home2',
+          templateUrl: 'partials/security/home/home2.html'
+        })
+        .state('menuMaster.homeMenu', {
+          url: '/homeMenu',
+          templateUrl: 'partials/security/home/homeMenu.html'
+        })
+        .state('login', {
+          url: '/login',
+          controller: LoginController,
+          templateUrl: 'partials/security/login/login.html',
+          controllerAs: 'vm'
+        })
+        ;
 
-    $urlRouterProvider.otherwise('/home');
+      $urlRouterProvider.otherwise('/home');
 
-  }])
+    }])
   .factory('ajaxNonceInterceptor', function () {
     // This interceptor is equivalent to the behavior induced by $.ajaxSetup({cache:false});
 

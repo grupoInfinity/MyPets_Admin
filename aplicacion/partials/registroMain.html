@@ -1,0 +1,142 @@
+
+
+<!--<fieldset>
+
+	<div class="modal fade modal-primary" id="notificacionesModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">Notificaciones</h4>
+				</div>
+				<div class="modal-body">
+					<ul ng-hide="!successMessages" class="success">
+						<li ng-repeat="message in successMessages">{{message}}</li>
+					</ul>
+					<ul ng-hide="!errorMessages" class="error">
+						<li ng-repeat="message in errorMessages">{{message}}</li>
+					</ul>
+
+				</div>
+				<div class="modal-footer">
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<form name="regForm" class="form-horizontal" ng-submit="registerUsuario(formType)">
+		<div ng-show="isNew(formType)">
+			<legend>Ingrese un nuevo Usuario</legend>
+		</div>
+
+		<div ng-show="!isNew(formType)">
+			<legend>Modificaci&oacute;n del Usuario</legend>
+		</div>
+
+		<div class="form-group">
+			<input type="hidden" name="formType" id="formType" ng-model="formType" />
+		</div>
+
+		<div class="box box-default box-solid">
+			<div class="box-header with-border">
+				<h3 class="box-title">Usuarios</h3>
+				<div class="box-tools pull-right">
+					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+					</button>
+				</div>
+			</div>
+			<div class="box-body">
+
+				<div class="form-group" ng-class="{ 'has-error': regForm.nombre.$error.required }">
+
+
+					<label for="nombre" class="col-sm-2 control-label">Nombre:</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" name="nombre" id="nombre" ng-model="newUsuario.nombre"
+							placeholder="Nombre del Usuario" required autocomplete="nope" />
+						<span class="error help-block" ng-show="regForm.nombre.$error.required">Requerido</span>
+						<span class="error help-block" ng-show="errors.nombre">{{errors.nombre}}</span>
+					</div>
+
+					<label for="apellido" class="col-sm-1 control-label">Apellido:</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" name="apellido" id="apellido"
+							ng-model="newUsuario.apellido" placeholder="Apellido del Usuario" required
+							autocomplete="nope" />
+						<span class="error help-block" ng-show="regForm.apellido.$error.required">Requerido</span>
+						<span class="error help-block" ng-show="errors.apellido">{{errors.apellido}}</span>
+					</div>
+				</div>
+				<div class="form-group" ng-class="{ 'has-error': regForm.usr.$error.required }">
+					<label for="usr" class="col-sm-2 control-label">Usuario:</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" name="usr" id="usr" ng-model="newUsuario.usr"
+							placeholder="Usuario" required autocomplete="nope" />
+						<span class="error help-block" ng-show="regForm.usr.$error.required">Requerido</span>
+						<span class="error help-block" ng-show="errors.usr">{{errors.usr}}</span>
+					</div>
+
+					<label for="clave" class="col-sm-1 control-label">Contrase&ntilde;a:</label>
+					<div class="col-sm-2">
+						<input type="password" class="form-control" name="clave" id="clave" autocomplete="new-password"
+							ng-model="newUsuario.clave" placeholder="Contrase&ntilde;a del usuario" required />
+						<span class="error help-block" ng-show="regForm.clave.$error.required">Requerido</span>
+						<span class="error help-block" ng-show="errors.clave">{{errors.clave}}</span>
+					</div>
+				</div>
+
+				<div class="form-group" ng-class="{ 'has-error': regForm.email.$error.required }">
+					<label for="email" class="col-sm-2 control-label">Correo Electronico:</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" name="email" id="email" ng-model="newUsuario.email"
+							placeholder="Correo electr&oacute;nico del usuario" autocomplete="nope" />
+						<span class="error help-block" ng-show="regForm.email.$error.required">Requerido</span>
+						<span class="error help-block" ng-show="errors.email">{{errors.email}}</span>
+					</div>
+				</div>
+
+
+
+
+				<div class="form-group" ng-class="{ 'has-error': regForm.clave.$error.required }">
+					<label for="estado" class="col-sm-2 control-label">Estado:</label>
+					<div class="col-sm-2">
+						<label class="switch">
+							<input type="checkbox" name="estado" id="estado" ng-model="newUsuario.estado">
+							<div class="slider round">
+								<span class="on">Activo</span>
+								<span class="off">Inactivo</span>
+							</div>
+						</label>
+						<span class="error help-block" ng-show="regForm.estado.$error.required">Requerido</span>
+						<span class="error help-block" ng-show="errors.estado">{{errors.estado}}</span>
+					</div>
+				</div>
+			</div>
+			<div class="box-footer">
+				<input type="submit" ng-disabled="regForm.$invalid" id="guardar" value="Guardar"
+					class="btn btn-primary pull-right" />
+			</div>
+
+		</div>
+
+	</form>
+
+	<div id="rolesUsuario" ng-show="isVisibleAfterUsuario" class="box box-default collapsed-box box-solid">
+		<div class="box-header with-border">
+			<h3 class="box-title">Roles por Usuario</h3>
+			<div class="box-tools pull-right">
+				<button type="button" class="btn btn-box-tool" data-widget="collapse">
+					<i class="fa fa-plus"></i>
+				</button>
+			</div>
+		</div>
+		<div class="box-body" ng-controller="RolUsuarioCtrl">
+			<div ng-include="'partials/security/usuario/roles/formRoles.html'"></div>
+		</div>
+	</div>
+
+</fieldset>-->

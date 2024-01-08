@@ -80,11 +80,6 @@
 
 					<div class="row">
 						<div class="col-xs-4">
-							<!--div class="checkbox icheck">
-								<label>
-									<input type="checkbox"> Remember Me>
-								</label>
-							</div -->
 							&nbsp;
 						</div>
 						<div class="col-xs-8">
@@ -96,6 +91,144 @@
 						</div>
 					</div>
 				</form>
+<!--
+				<input type="button" ng-click="resetVac()" name="resetVac" id="resetVac" value="Nueva vacuna"
+					class="btn btn-primary" data-toggle="modal" data-target="#myVacModal" />
+				
+				<form ng-submit="vm.registro()" role="form">
+					<div class="row">
+						<div class="col-xs-4">
+							&nbsp;
+						</div>
+						<div class="col-xs-8">
+							<button type="submit" class="btn btn-primary btn-block btn-sm pull-right">Crear cuenta <i
+									class="fa fa-sign-in"></i></button>
+						</div>
+					</div>
+				</form>-->
+
+
+				<!--<div class="modal fade modal-primary" id="myVacModal" tabindex="-1" role="dialog">
+					<div class="modal-dialog modal-lg" role="document">
+						<div class="modal-content">
+							<form name="vacForm" class="form-horizontal" ng-submit="guardarVac(formTypeVac)">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span></button>
+									<h4 class="modal-title">Ingrese un nueva vacuna</h4>
+								</div>
+								<form name="regForm" class="form-horizontal" ng-submit="registerUsuario(formType)">
+							
+									<div class="form-group">
+										<input type="hidden" name="formType" id="formType" ng-model="formType" />
+									</div>
+							
+									<div class="box box-default box-solid">
+										<div class="box-header with-border">
+											<h3 class="box-title">Usuarios</h3>
+											<div class="box-tools pull-right">
+												<button type="button" class="btn btn-box-tool" data-widget="collapse">
+													<i class="fa fa-minus"></i>
+												</button>
+											</div>
+										</div>
+										<div class="box-body">
+							
+											<div class="form-group" ng-class="{ 'has-error': regForm.nombre.$error.required }">
+							
+							
+												<label for="nombre" class="col-sm-2 control-label">Nombre:</label>
+												<div class="col-sm-4">
+													<input type="text" class="form-control" name="nombre" id="nombre" ng-model="newUsuario.nombre"
+														placeholder="Nombre del Usuario" required autocomplete="nope" />
+													<span class="error help-block" ng-show="regForm.nombre.$error.required">Requerido</span>
+													<span class="error help-block" ng-show="errors.nombre">{{errors.nombre}}</span>
+												</div>
+							
+												<label for="apellido" class="col-sm-1 control-label">Apellido:</label>
+												<div class="col-sm-4">
+													<input type="text" class="form-control" name="apellido" id="apellido"
+														ng-model="newUsuario.apellido" placeholder="Apellido del Usuario" required
+														autocomplete="nope" />
+													<span class="error help-block" ng-show="regForm.apellido.$error.required">Requerido</span>
+													<span class="error help-block" ng-show="errors.apellido">{{errors.apellido}}</span>
+												</div>
+											</div>
+											<div class="form-group" ng-class="{ 'has-error': regForm.usr.$error.required }">
+												<label for="usr" class="col-sm-2 control-label">Usuario:</label>
+												<div class="col-sm-4">
+													<input type="text" class="form-control" name="usr" id="usr" ng-model="newUsuario.usr"
+														placeholder="Usuario" required autocomplete="nope" />
+													<span class="error help-block" ng-show="regForm.usr.$error.required">Requerido</span>
+													<span class="error help-block" ng-show="errors.usr">{{errors.usr}}</span>
+												</div>
+							
+												<label for="clave" class="col-sm-1 control-label">Contrase&ntilde;a:</label>
+												<div class="col-sm-2">
+													<input type="password" class="form-control" name="clave" id="clave" autocomplete="new-password"
+														ng-model="newUsuario.clave" placeholder="Contrase&ntilde;a del usuario" required />
+													<span class="error help-block" ng-show="regForm.clave.$error.required">Requerido</span>
+													<span class="error help-block" ng-show="errors.clave">{{errors.clave}}</span>
+												</div>
+											</div>
+							
+											<div class="form-group" ng-class="{ 'has-error': regForm.email.$error.required }">
+												<label for="email" class="col-sm-2 control-label">Correo Electronico:</label>
+												<div class="col-sm-4">
+													<input type="text" class="form-control" name="email" id="email" ng-model="newUsuario.email"
+														placeholder="Correo electr&oacute;nico del usuario" autocomplete="nope" />
+													<span class="error help-block" ng-show="regForm.email.$error.required">Requerido</span>
+													<span class="error help-block" ng-show="errors.email">{{errors.email}}</span>
+												</div>
+											</div>
+							
+							
+							
+							
+											<div class="form-group" ng-class="{ 'has-error': regForm.clave.$error.required }">
+												<label for="estado" class="col-sm-2 control-label">Estado:</label>
+												<div class="col-sm-2">
+													<label class="switch">
+														<input type="checkbox" name="estado" id="estado" ng-model="newUsuario.estado">
+														<div class="slider round">
+															<span class="on">Activo</span>
+															<span class="off">Inactivo</span>
+														</div>
+													</label>
+													<span class="error help-block" ng-show="regForm.estado.$error.required">Requerido</span>
+													<span class="error help-block" ng-show="errors.estado">{{errors.estado}}</span>
+												</div>
+											</div>
+										</div>
+										<div class="box-footer">
+											<input type="submit" ng-disabled="regForm.$invalid" id="guardar" value="Guardar"
+												class="btn btn-primary pull-right" />
+										</div>
+							
+									</div>
+							
+								</form>
+
+								<ul ng-hide="!successMessagesChild" class="success">
+									<li ng-repeat="message in successMessagesChild">{{message}}</li>
+								</ul>
+
+								<ul ng-hide="!errorMessagesChild" class="error">
+									<li ng-repeat="message in errorMessagesChild">{{message}}</li>
+								</ul>
+
+								<div class="modal-footer">
+									<button type="button" class="btn btn-danger pull-left"
+										data-dismiss="modal">Cerrar</button>
+
+									<input type="submit" ng-disabled="vacForm.$invalid" id="guardarVac"
+										value="Guardar cambios" class="btn btn-primary pull-right" />
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>-->
+
 				<div class="row">
 					<div class="form-group">
 						<div class="col-xs-12">
@@ -112,17 +245,6 @@
 						</div>
 					</div>
 				</div>
-				<!--div class="social-auth-links text-center">
-			  <p>- OR -</p>
-			  <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using
-				Facebook</a>
-			  <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using
-				Google+</a>
-			</div -->
-				<!-- /.social-auth-links -->
-
-				<!--a>Olvid&eacute; mi clave</a><br -->
-				<!--a href="register.html" class="text-center">Register a new membership</a -->
 			</div>
 		</div>
 	</div>
