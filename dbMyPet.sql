@@ -428,7 +428,8 @@ VALUE(1,1,1,'dnery','Avenida','A','Charly','239022','2019-03-02','
 (2,2,6,'dnery','Avenida Hulin','A','Mily','200022','2019-03-02',NULL,'A','dnery','2021-08-11 16:15:48',NULL,NULL),
 (3,2,1,'nmunoz','Colonia San Martin','A','Jilly','300221','2019-03-02',NULL,'A','dnery','2021-08-11 16:15:48',NULL,NULL);
 
-SELECT * FROM ctg_departamentos;SELECT * FROM ctg_municipios
+SELECT * FROM prc_mascotas;
+SELECT * FROM ctg_municipios
 
 SELECT m.id_mascota, u.usuario, u.email,u.telefono,m.nombremascota,
     d.descripcion as depto,mu.descripcion as muni,m.direccion,m.estado_direc,m.codigo,m.nacimiento 
