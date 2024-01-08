@@ -169,30 +169,19 @@ function MascotaAddCtrl($rootScope, $stateParams, $scope,
 	};
 	$scope.loadTpmascota();
 
-	/*$scope.storedFiles = [];
+	$scope.loadImage = function (input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
 
-	$scope.mostrarImagen = function () {
-		console.log(1);
-		var files = document.getElementById('fileInput').files;
-		var filesArr = Array.prototype.slice.call(files);
+            reader.onload = function (e) {
+                $scope.$apply(function () {
+                    $scope.imageUrl = e.target.result;
+                });
+            };
 
-		filesArr.forEach(function (f) {
-			if (!f.type.match("image.*")) {
-				return;
-			}
-
-			var reader = new FileReader();
-			reader.onload = function (e) {
-				$scope.$apply(function () {
-					$scope.storedFiles.push({
-						name: f.name,
-						dataUrl: e.target.result
-					});
-				});
-			};
-			reader.readAsDataURL(f);
-		});
-	};*/
+            reader.readAsDataURL(input.files[0]);
+        }
+    };
 
 };
 
@@ -365,6 +354,19 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 	};
 	$scope.loadTpmascota();
 
+	$scope.loadImage = function (input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $scope.$apply(function () {
+                    $scope.newMasc.foto = e.target.result;
+                });
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    };
 };
 
 function MascotaListCtrl($scope, $rootScope, $state, $compile, $window, popupService,
