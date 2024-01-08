@@ -35,12 +35,12 @@ $estado = isset($_GET['estado']) ? $_GET['estado'] : '';
 $user = isset($_GET['user']) ? $_GET['user'] : '';
 
 $json = "no has seteado nada.";
-function imageToBase64($imagePath)
+/*function imageToBase64($imagePath)
 {
     $imageData = file_get_contents($imagePath);
     $base64 = base64_encode($imageData);
     return $base64;
-}
+}*/
 
 if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
     if (!empty($id_mascota)) $id_mascota = "m.id_mascota='$id_mascota'";
@@ -56,7 +56,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 
 
     $sql = "SELECT m.id_mascota,m.id_tipomascota,d.id_departamento,m.id_municipio, u.usuario, u.email,
-    u.telefono,m.nombremascota,m.estado,t.tipomascota,
+    u.telefono,m.nombremascota,m.estado,t.tipomascota,m.foto,
     d.descripcion as depto,mu.descripcion as muni,m.direccion,m.estado_direc,m.codigo,m.nacimiento 
     FROM $bd.prc_mascotas m, $bd.ctg_tipomascotas t, $bd.ctg_municipios mu,
     $bd.sec_usuario u, $bd.ctg_departamentos d 
@@ -71,8 +71,8 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
             $i = 0;
             while ($row = $result->fetch_assoc()) {
                 $idm = $row["id_mascota"];
-                if (!empty($row["foto"])) $foto = imageToBase64($row["foto"]);
-                else $foto = "";
+                /*if (!empty($row["foto"])) $foto = ($row["foto"]);
+                else $foto = "";*/
 
                 $mascota[] = array(
                     'idmasc' => $row["id_mascota"],
@@ -89,7 +89,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
                     'direccion' => ($row["direccion"]),
                     'estadodir' => ($row["estado_direc"]),
                     'nacim' => $row["nacimiento"],
-                    'foto' =>  $foto,
+                    'foto' =>  $row["foto"],
                     'codigo' => $row["codigo"],
                     'estado' => $row["estado"]
                 );

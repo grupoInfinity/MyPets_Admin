@@ -117,8 +117,7 @@
 							<ui-select-match allow-clear="true">
 								<span ng-bind="$select.selected.descripcion"></span>
 							</ui-select-match>
-							<ui-select-choices
-								repeat="dept.id as dept in 
+							<ui-select-choices repeat="dept.id as dept in 
 								(dept | propsFilter: {descripcion: $select.search}) track by dept.id">
 								<div ng-bind-html="dept.descripcion | highlight: $select.search"></div>
 							</ui-select-choices>
@@ -135,8 +134,7 @@
 							<ui-select-match allow-clear="true">
 								<span ng-bind="$select.selected.descripcion"></span>
 							</ui-select-match>
-							<ui-select-choices
-								repeat="muni.id.id as muni in 
+							<ui-select-choices repeat="muni.id.id as muni in 
 								(muni | propsFilter: {descripcion: $select.search}) track by muni.id.id">
 								<div ng-bind-html="muni.descripcion | highlight: $select.search"></div>
 							</ui-select-choices>
@@ -149,8 +147,8 @@
 				<div class="form-group" ng-class="{ 'has-error': regForm.direccion.$error.required }">
 					<label for="direccion" class="col-sm-2 control-label">Direccion:</label>
 					<div class="col-sm-4">
-						<input type="text" class="form-control" name="direccion" id="direccion" ng-model="newMasc.direccion"
-							placeholder="Direccion" required autocomplete="nope" />
+						<input type="text" class="form-control" name="direccion" id="direccion"
+							ng-model="newMasc.direccion" placeholder="Direccion" required autocomplete="nope" />
 						<span class="error help-block" ng-show="regForm.direccion.$error.required">Requerido</span>
 						<span class="error help-block" ng-show="errors.direccion">{{errors.direccion}}</span>
 					</div>
@@ -176,18 +174,40 @@
 					<label for="nacim" class="col-sm-1 control-label">Fecha de Nacimiento:</label>
 					<div class="col-sm-4">
 						<input type="date" class="form-control" name="nacim" id="nacim" ng-model="newMasc.nacim"
-							   required max="{{ getMaxDate() }}" />
+							required max="{{ getMaxDate() }}" />
 						<span class="error help-block" ng-show="regForm.nacim.$error.required">Requerido</span>
 					</div>
 				</div>
 
-				<div class="form-group" ng-class="{ 'has-error': regForm.foto.$error.required }">
+				<!--<div class="form-group" ng-class="{ 'has-error': regForm.foto.$error.required }">
 					<label for="foto" class="col-sm-1 control-label">Foto de la mascota:</label>
 					<div class="col-sm-4">
-						<input type="file" name="foto" id="foto" accept="image/*" ng-model="newMasc.foto" required />
+						<input type="file" id="fileInput" ng-model="newMasc.foto" ng-change="console.log('ng-change event triggered'); mostrarImagen()">
 						<span class="error help-block" ng-show="regForm.foto.$error.required">Requerido</span>
 					</div>
 				</div>
+								<div class="form-group">
+					<label for="foto" class="col-sm-2 control-label">Foto:</label>
+					<div class="col-sm-2">
+						<img ng-src="{{ newMasc.foto }}" alt="Imagen seleccionada" style="max-width: 100px; max-height: 100px;">
+					</div>
+				</div>
+			-->
+			<form name="regForm">
+				<div class="form-group" ng-class="{ 'has-error': regForm.foto.$error.required }">
+					<label for="foto" class="col-sm-1 control-label">Foto de la mascota:</label>
+					<div class="col-sm-4">
+						<input type="file" id="fileInput" ng-model="newMasc.foto" ng-change="mostrarImagen()" required>
+						<span class="error help-block" ng-show="regForm.foto.$error.required">Requerido</span>
+					</div>
+				</div>
+			</form>
+			<div class="form-group">
+				<label for="foto" class="col-sm-2 control-label">Foto:</label>
+				<div class="col-sm-2">
+					<img ng-src="data:image/jpeg;base64,{{ newMasc.foto }}" alt="Foto de la mascota" class="avatar rounded lg" height="200px" width="200px">
+				</div>
+			</div>
 
 
 				<div class="form-group" ng-class="{ 'has-error': regForm.estado.$error.required }">

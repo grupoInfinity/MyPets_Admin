@@ -5,17 +5,17 @@ function MascotaAddCtrl($rootScope, $stateParams, $scope,
 	URL_API, $filter, $http, $state, Masc) {
 
 
-	    $scope.getMaxDate = function() {
-			var today = new Date();
-			var year = today.getFullYear();
-			var month = today.getMonth() + 1; // Agrega 1 ya que en JavaScript los meses comienzan desde 0
-			var day = today.getDate();
-	
-			// Formatea la fecha como YYYY-MM-DD (formato que utiliza el input type="date")
-			var maxDate = year + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
-	
-			return maxDate;
-		};
+	$scope.getMaxDate = function () {
+		var today = new Date();
+		var year = today.getFullYear();
+		var month = today.getMonth() + 1; // Agrega 1 ya que en JavaScript los meses comienzan desde 0
+		var day = today.getDate();
+
+		// Formatea la fecha como YYYY-MM-DD (formato que utiliza el input type="date")
+		var maxDate = year + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
+
+		return maxDate;
+	};
 
 	$scope.isNew = function (value) {
 
@@ -169,6 +169,31 @@ function MascotaAddCtrl($rootScope, $stateParams, $scope,
 	};
 	$scope.loadTpmascota();
 
+	/*$scope.storedFiles = [];
+
+	$scope.mostrarImagen = function () {
+		console.log(1);
+		var files = document.getElementById('fileInput').files;
+		var filesArr = Array.prototype.slice.call(files);
+
+		filesArr.forEach(function (f) {
+			if (!f.type.match("image.*")) {
+				return;
+			}
+
+			var reader = new FileReader();
+			reader.onload = function (e) {
+				$scope.$apply(function () {
+					$scope.storedFiles.push({
+						name: f.name,
+						dataUrl: e.target.result
+					});
+				});
+			};
+			reader.readAsDataURL(f);
+		});
+	};*/
+
 };
 
 function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
@@ -289,6 +314,7 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 				$scope.newMasc = response.data.info[0].mascota;
 			$scope.newMasc.nacim = new Date(response.data.info[0].mascota.nacim);
 			$scope.newMasc.iddepto = response.data.info[0].mascota.iddepto;
+			console.log(response.data.info[0].mascota.foto);
 			if ($scope.newMasc.estado == 'A') {
 				$scope.newMasc.estado = true;
 			}
@@ -351,14 +377,14 @@ function MascotaListCtrl($scope, $rootScope, $state, $compile, $window, popupSer
 	vm.message = '';
 	vm.masc = {};
 
-	
+
 
 	Masc.findAlls(
 		$rootScope.globals.currentUser.sec_rol[0].id,
 		$rootScope.globals.currentUser.username,
 		function (response) {
-		vm.masc = response.data.info;
-	});
+			vm.masc = response.data.info;
+		});
 
 	vm.dtOptions = DTOptionsBuilder.newOptions().withPaginationType(
 		'full_numbers').withLanguage($rootScope.globals.language);
