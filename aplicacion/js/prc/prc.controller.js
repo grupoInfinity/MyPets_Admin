@@ -196,23 +196,12 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 	$scope.getMaxDate = function () {
 		var today = new Date();
 		var year = today.getFullYear();
-		var month = today.getMonth() + 1; // Agrega 1 ya que en JavaScript los meses comienzan desde 0
+		var month = today.getMonth() + 1;
 		var day = today.getDate();
-
-		// Formatea la fecha como YYYY-MM-DD (formato que utiliza el input type="date")
 		var maxDate = year + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
 
 		return maxDate;
 	};
-
-	/*	$scope.formatoFecha = function (fecha) {
-			var year = fecha.getFullYear();
-			var mes = ("0" + (fecha.getMonth() + 1)).slice(-2); 
-			var dia = ("0" + fecha.getDate()).slice(-2);
-			var fechaFormateada = year + "-" + mes + "-" + dia;
-	
-			return fechaFormateada;
-		};*/
 
 	$scope.clearMessages = function () {
 
@@ -296,8 +285,7 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 			var date = new Date();
 			var MascObj = { usuario: $rootScope.globals.currentUser.username };
 			$scope.newMasc.usuario = MascObj.usuario;
-			console.log($scope.newMasc.foto);
-			
+
 			Masc.actualizar($scope.newMasc, function (data) {
 				//$scope.successMessages = [ 'Usuario Actualizado correctamente' ];
 				Swal.fire({
@@ -334,6 +322,7 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 			var nuevaFecha = new Date(fechaO);
 			nuevaFecha.setDate(fechaO.getDate() + 1);
 			$scope.newMasc.nacim = nuevaFecha;
+			
 
 			if ($scope.newMasc.estado == 'A') {
 				$scope.newMasc.estado = true;
@@ -386,15 +375,14 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 	$scope.loadTpmascota();
 
 	$scope.loadImage = function (input) {
+		
 		if (input.files && input.files[0]) {
 			var reader = new FileReader();
-
 			reader.onload = function (e) {
 				$scope.$apply(function () {
 					$scope.newMasc.foto = e.target.result;
 				});
 			};
-
 			reader.readAsDataURL(input.files[0]);
 		}
 	};

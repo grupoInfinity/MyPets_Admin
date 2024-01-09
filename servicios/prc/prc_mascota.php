@@ -7,11 +7,15 @@ header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Conte
 header("Access-Control-Allow-Methods: GET,PUT,POST,DELETE,PATCH,OPTIONS");
 header("Allow: GET, POST, OPTIONS, PUT, DELETE");
 
-
 $method = $_SERVER['REQUEST_METHOD'];
 if ($method == "OPTIONS") {
     die();
 }
+
+// Obtener datos del cuerpo de la solicitud POST
+$input = json_decode(file_get_contents('php://input'), true);
+
+
 $tabla = "prc_mascotas";
 $tabla2 = "ctg_vacunas";
 $tabla3 = "ctg_tipovacunas";
@@ -35,12 +39,7 @@ $estado = isset($_GET['estado']) ? $_GET['estado'] : '';
 $user = isset($_GET['user']) ? $_GET['user'] : '';
 
 $json = "no has seteado nada.";
-/*function imageToBase64($imagePath)
-{
-    $imageData = file_get_contents($imagePath);
-    $base64 = base64_encode($imageData);
-    return $base64;
-}*/
+
 
 if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
     if (!empty($id_mascota)) $id_mascota = "m.id_mascota='$id_mascota'";
@@ -165,7 +164,8 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         } else {
             $json = array("status" => 0, "info" => $conn->error);
         }
-    } else if (strtoupper($accion) == 'U') { // VERIFICACION SI LA ACCION ES ACTUALIZACION
+    } else if (strtoupper($accion) == 'U') {
+ // VERIFICACION SI LA ACCION ES ACTUALIZACION
         $id_tipomascota = " id_tipomascota=" . $id_tipomascota;
         $id_mun = " ,id_municipio=" . $id_mun;
         $direccion = ",direccion='" . $direccion . "'";
@@ -176,6 +176,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         $estado = ",estado='" . $estado . "'";
         $user = ", usuario_update='" . $user . "'";
         $date = ", fecha_update='" . date('Y-m-d H:i:s') . "'";
+        //$foto = ",foto='" . ($foto) . "'";
         if (!empty($foto)) $foto = ",foto='" . ($foto) . "'";
         else $foto = ",foto=foto";
 
