@@ -175,18 +175,13 @@
 					</div>
 				</div>
 
-				<div class="form-group" ng-class="{ 'has-error': regForm.foto.$error.required  }">
+				<div class="form-group" >
 					<label for="foto" class="col-sm-2 control-label">Foto de la mascota:</label>
 					<div class="col-sm-4">
 						<input type="file" id="fileInput" ng-model="newMasc.foto"
-							onchange="angular.element(this).scope().loadImage(this)" required>
-						<span class="error help-block" ng-show="regForm.foto.$error.required">Requerido</span>
-						<span class="error help-block" ng-show="errors.foto">{{errors.foto}}</span>
+							onchange="angular.element(this).scope().loadImage(this)" >
 					</div>
 				</div>
-
-				
-
 				<div class="form-group">
 					<img ng-src="{{newMasc.foto }}" class="avatar rounded lg" height="300px" width="400px" alt=" " />
 					<img ng-src="data:image/jpeg;base64,{{ newMasc.foto }}" class="avatar rounded lg" height="300px"

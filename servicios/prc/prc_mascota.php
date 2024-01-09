@@ -151,7 +151,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         } else $id_mascota = 1;
 
         $date = date('Y-m-d H:i:s');
-        $nacim = date_create_from_format('Y-m-d', $nacim);
+        //$nacim = date_create_from_format('Y-m-d', $nacim);
 
 
         $sql = "INSERT INTO 
@@ -166,7 +166,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
             $json = array("status" => 0, "info" => $conn->error);
         }
     } else if (strtoupper($accion) == 'U') { // VERIFICACION SI LA ACCION ES ACTUALIZACION
-        $id_tipomascota = " ,id_tipomascota=" . $id_tipomascota;
+        $id_tipomascota = " id_tipomascota=" . $id_tipomascota;
         $id_mun = " ,id_municipio=" . $id_mun;
         $direccion = ",direccion='" . $direccion . "'";
         $estado_direc = ",estado_direc='" . $estado_direc . "'";
@@ -177,7 +177,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         $user = ", usuario_update='" . $user . "'";
         $date = ", fecha_update='" . date('Y-m-d H:i:s') . "'";
         if (!empty($foto)) $foto = ",foto='" . ($foto) . "'";
-        else $foto = "foto=foto";
+        else $foto = ",foto=foto";
 
         $sql = "UPDATE $bd.$tabla SET $id_tipomascota $id_mun $direccion 
         $estado_direc $nombremasc $codigo $nacim $foto $estado $user $date 

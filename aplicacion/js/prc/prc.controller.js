@@ -16,6 +16,9 @@ function MascotaAddCtrl($rootScope, $stateParams, $scope,
 
 		return maxDate;
 	};
+	$scope.formatoFecha = function (fecha) {
+		return $filter('date')(fecha, 'yyyy-MM-dd');
+	};
 
 	$scope.isNew = function (value) {
 
@@ -170,18 +173,18 @@ function MascotaAddCtrl($rootScope, $stateParams, $scope,
 	$scope.loadTpmascota();
 
 	$scope.loadImage = function (input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
 
-            reader.onload = function (e) {
-                $scope.$apply(function () {
-                    $scope.imageUrl = e.target.result;
-                });
-            };
+			reader.onload = function (e) {
+				$scope.$apply(function () {
+					$scope.imageUrl = e.target.result;
+				});
+			};
 
-            reader.readAsDataURL(input.files[0]);
-        }
-    };
+			reader.readAsDataURL(input.files[0]);
+		}
+	};
 
 };
 
@@ -189,6 +192,27 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 	URL_API, Masc) {
 
 	$scope.isVisibleAfterUsuario = true;
+
+	$scope.getMaxDate = function () {
+		var today = new Date();
+		var year = today.getFullYear();
+		var month = today.getMonth() + 1; // Agrega 1 ya que en JavaScript los meses comienzan desde 0
+		var day = today.getDate();
+
+		// Formatea la fecha como YYYY-MM-DD (formato que utiliza el input type="date")
+		var maxDate = year + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
+
+		return maxDate;
+	};
+
+	/*	$scope.formatoFecha = function (fecha) {
+			var year = fecha.getFullYear();
+			var mes = ("0" + (fecha.getMonth() + 1)).slice(-2); 
+			var dia = ("0" + fecha.getDate()).slice(-2);
+			var fechaFormateada = year + "-" + mes + "-" + dia;
+	
+			return fechaFormateada;
+		};*/
 
 	$scope.clearMessages = function () {
 
@@ -224,9 +248,11 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 			nmasc: "",
 			codigo: "",
 			nacim: "",
+			//nacimf: "",
 			foto: "",
 			usuario: $rootScope.globals.currentUser.username
 		};
+
 
 		$scope.clearMessages();
 	};
@@ -236,6 +262,7 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 		$scope.clearMessages();
 
 		if (value == "ADD") {
+			$scope.newMasc.nacim = $scope.formatoFecha($scope.newMasc.nacim);
 			Masc.insertar($scope.newMasc, function (data) {
 
 				$scope.isVisibleAfterUsuario = $scope.isVisibleAfterUsuario ? false : true;
@@ -268,9 +295,9 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 
 			var date = new Date();
 			var MascObj = { usuario: $rootScope.globals.currentUser.username };
-
 			$scope.newMasc.usuario = MascObj.usuario;
-
+			console.log($scope.newMasc.foto);
+			
 			Masc.actualizar($scope.newMasc, function (data) {
 				//$scope.successMessages = [ 'Usuario Actualizado correctamente' ];
 				Swal.fire({
@@ -301,9 +328,13 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 		Masc.findById($stateParams.idMasc, function (response) {
 			if (response.data.status == 1)
 				$scope.newMasc = response.data.info[0].mascota;
-			$scope.newMasc.nacim = new Date(response.data.info[0].mascota.nacim);
 			$scope.newMasc.iddepto = response.data.info[0].mascota.iddepto;
-			console.log(response.data.info[0].mascota.foto);
+
+			var fechaO = new Date(response.data.info[0].mascota.nacim);
+			var nuevaFecha = new Date(fechaO);
+			nuevaFecha.setDate(fechaO.getDate() + 1);
+			$scope.newMasc.nacim = nuevaFecha;
+
 			if ($scope.newMasc.estado == 'A') {
 				$scope.newMasc.estado = true;
 			}
@@ -355,18 +386,18 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 	$scope.loadTpmascota();
 
 	$scope.loadImage = function (input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
 
-            reader.onload = function (e) {
-                $scope.$apply(function () {
-                    $scope.newMasc.foto = e.target.result;
-                });
-            };
+			reader.onload = function (e) {
+				$scope.$apply(function () {
+					$scope.newMasc.foto = e.target.result;
+				});
+			};
 
-            reader.readAsDataURL(input.files[0]);
-        }
-    };
+			reader.readAsDataURL(input.files[0]);
+		}
+	};
 };
 
 function MascotaListCtrl($scope, $rootScope, $state, $compile, $window, popupService,

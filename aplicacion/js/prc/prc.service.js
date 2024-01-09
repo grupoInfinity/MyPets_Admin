@@ -204,19 +204,28 @@ factory('Masc', function($http, URL_API){
         });
     };
 
+    function formatoFecha (fecha) {
+        var year = fecha.getFullYear();
+        var mes = ("0" + (fecha.getMonth() + 1)).slice(-2); 
+        var dia = ("0" + fecha.getDate()).slice(-2);
+        var fechaFormateada = year + "-" + mes + "-" + dia;
+
+        return fechaFormateada;
+    };
+
     function insertar(usuario, callback){
 		var url = URL_API + '/servicios/prc/prc_mascota.php?accion=I'+
 		'&dueno=' + usuario.dueno + 
-		'&tpmascota=' + usuario.tpmascota + 
-		'&muni=' + usuario.muni + 
+		'&tpmascota=' + usuario.idtpmasc + 
+		'&muni=' + usuario.idmuni + 
 		'&direccion=' + usuario.direccion + 
         '&estadodir=' + usuario.estadodir + 
         '&nmasc=' + usuario.nmasc + 
         '&codigo=' + usuario.codigo + 
-        '&nacim=' + usuario.nacim + 
-        '&foto=' + usuario.foto + 
+        '&nacim=' + formatoFecha(usuario.nacim) +
 		'&estado=' + usuario.estado +
-		'&user=' + usuario.usuario ;
+		'&user=' + usuario.usuario 
+        '&foto=' + usuario.foto ;
 		
         console.log(url);
 
@@ -227,20 +236,23 @@ factory('Masc', function($http, URL_API){
     };
 
     function actualizar(usuario, callback){
+
 		var url = URL_API + '/servicios/prc/prc_mascota.php?accion=U'+
-		'&id=' + usuario.id +
-		'&tpmascota=' + usuario.tpmascota + 
-		'&muni=' + usuario.muni + 
+		'&id=' + usuario.idmasc +
+		'&tpmascota=' + usuario.idtpmasc + 
+		'&muni=' + usuario.idmuni + 
 		'&direccion=' + usuario.direccion + 
-        '&estadodir=' + usuario.estadodir + 
+        '&estadodir=' + (usuario.estadodir ? 'A' : 'I')+ 
         '&nmasc=' + usuario.nmasc + 
         '&codigo=' + usuario.codigo + 
-        '&nacim=' + usuario.nacim + 
-        '&foto=' + usuario.foto + 
-		'&estado=' + usuario.estado +
-		'&user=' + usuario.usuario ;
+		'&estado=' + (usuario.estado ? 'A' : 'I') +
+		'&user=' + usuario.usuario +
+        '&nacim=' + formatoFecha(usuario.nacim)/*+usuario.nacim +*/
+        '&foto=' + usuario.foto ;
+
+        console.log(usuario.nacim);
 		
-		//console.log(url);
+		console.log(url);
         $http.post(url, usuario).
         then(function(response) {
             callback(response);
