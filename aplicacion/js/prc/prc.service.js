@@ -106,7 +106,7 @@ angular.module('mascService', []).
         service.borrar = borrar;
         service.insertar = insertar;
         service.actualizar = actualizar;
-        service.actualizarFoto = actualizarFoto;
+        //service.actualizarFoto = actualizarFoto;
         service.findByCo = findByCo;
         service.findById = findById;
         service.findAllA = findAllA;
@@ -237,11 +237,10 @@ angular.module('mascService', []).
         };
 
         function actualizar(usuario, callback) {
-            var fileInput = document.getElementById('fileInput');
-            var file = fileInput.files[0];
+            
         
             var formData = new FormData();
-            formData.append('foto', file);
+            //formData.append('foto', file);
             formData.append('id', usuario.idmasc);
             formData.append('tpmascota', usuario.idtpmasc);
             formData.append('muni', usuario.idmuni);
@@ -255,15 +254,15 @@ angular.module('mascService', []).
         
             var url = URL_API + '/servicios/prc/prc_mascota.php?accion=U';
         
-            console.log("FormData:", formData);
+            //console.log(usuario);
         
             $http.post(url, formData, {
                 transformRequest: angular.identity,
                 headers: { 'Content-Type': undefined }
             })
             .then(function(response) {
-                // Manejo de éxito
-                console.log("Respuesta de la API:", response.data);
+                console.log("FormData:", formData);
+                //console.log("Respuesta de la API:", response.data);
                 callback(response.data);
             })
             .catch(function(error) {

@@ -285,6 +285,8 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 			var date = new Date();
 			var MascObj = { usuario: $rootScope.globals.currentUser.username };
 			$scope.newMasc.usuario = MascObj.usuario;
+			var fileInput = document.getElementById('fileInput');
+            $scope.newMasc.foto = fileInput.files[0];
 
 			Masc.actualizar($scope.newMasc, function (data) {
 				//$scope.successMessages = [ 'Usuario Actualizado correctamente' ];
