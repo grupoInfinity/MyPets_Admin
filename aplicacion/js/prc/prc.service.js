@@ -106,7 +106,7 @@ angular.module('mascService', []).
         service.borrar = borrar;
         service.insertar = insertar;
         service.actualizar = actualizar;
-        //service.actualizarFoto = actualizarFoto;
+        service.actualizarFoto = actualizarFoto;
         service.findByCo = findByCo;
         service.findById = findById;
         service.findAllA = findAllA;
@@ -235,12 +235,10 @@ angular.module('mascService', []).
                     callback(response);
                 });
         };
-
-        function actualizar(usuario, callback) {
-            
+        /*function actualizar(usuario, callback) {
+            var url = URL_API + '/servicios/prc/prc_mascota.php?accion=U';
         
             var formData = new FormData();
-            //formData.append('foto', file);
             formData.append('id', usuario.idmasc);
             formData.append('tpmascota', usuario.idtpmasc);
             formData.append('muni', usuario.idmuni);
@@ -251,30 +249,21 @@ angular.module('mascService', []).
             formData.append('estado', usuario.estado ? 'A' : 'I');
             formData.append('user', usuario.usuario);
             formData.append('nacim', formatoFecha(usuario.nacim));
+            //formData.append('foto', file);
         
-            var url = URL_API + '/servicios/prc/prc_mascota.php?accion=U';
-        
-            //console.log(usuario);
+            console.log(url);
         
             $http.post(url, formData, {
-                transformRequest: angular.identity,
-                headers: { 'Content-Type': undefined }
-            })
-            .then(function(response) {
-                console.log("FormData:", formData);
-                //console.log("Respuesta de la API:", response.data);
-                callback(response.data);
-            })
-            .catch(function(error) {
-                // Manejo de error
-                console.error("Error actualizando la mascota:", error);
-                var errorMessage = error.data ? error.data : "Error updating pet";
-                callback({ status: 0, info: errorMessage });
+                headers: {
+                    'Content-Type': undefined  // Set to undefined to let Angular set the correct content type
+                },
+            }).then(function(response) {
+                callback(response);
             });
-        };
+        }*/
         
 
-        /*function actualizar(usuario, callback){
+        function actualizar(usuario, callback){
             var url = URL_API + '/servicios/prc/prc_mascota.php?accion=U'+
             '&id=' + usuario.idmasc +
             '&tpmascota=' + usuario.idtpmasc + 
@@ -294,32 +283,22 @@ angular.module('mascService', []).
                 callback(response);
              });
         };
-        function actualizarFoto(callback){
-            var fileInput = document.getElementById('fileInput');
-            var file = fileInput.files[0];
-        
+        function actualizarFoto(idMascota, nuevaFoto, callback) {
             var formData = new FormData();
-            formData.append('foto', file);
-            var url = URL_API + '/servicios/prc/prc_mascota.php?accion=U';
+            formData.append('accion', 'U');
+            formData.append('id', idMascota);
+            formData.append('foto', nuevaFoto);
         
-            console.log("FormData:", formData);
+            var url = URL_API + '/servicios/prc/prc_mascota.php';
         
             $http.post(url, formData, {
-                transformRequest: angular.identity,
-                headers: { 'Content-Type': undefined }
-            })
-            .then(function(response) {
-                // Manejo de éxito
-                console.log("Respuesta de la API:", response.data);
-                callback(response.data);
-            })
-            .catch(function(error) {
-                // Manejo de error
-                console.error("Error actualizando la mascota:", error);
-                var errorMessage = error.data ? error.data : "Error updating pet";
-                callback({ status: 0, info: errorMessage });
+                headers: {
+                    'Content-Type': undefined
+                },
+            }).then(function(response) {
+                callback(response);
             });
-        };*/
+        };
 
 
 

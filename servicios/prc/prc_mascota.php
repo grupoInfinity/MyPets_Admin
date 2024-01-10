@@ -165,24 +165,26 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
             $json = array("status" => 0, "info" => $conn->error);
         }
     } else if (strtoupper($accion) == 'U') {
-        // VERIFICACION SI LA ACCION ES ACTUALIZACION
-        $id_tipomascota = " id_tipomascota=" . $id_tipomascota;
-        $id_mun = " ,id_municipio=" . $id_mun;
-        $direccion = ",direccion='" . $direccion . "'";
-        $estado_direc = ",estado_direc='" . $estado_direc . "'";
-        $nombremasc = ",nombremascota='" . $nombremasc . "'";
-        $codigo = ",codigo='" . $codigo . "'";
-        $nacim = ",nacimiento='" . $nacim . "'";
-        $estado = ",estado='" . $estado . "'";
+        if (!empty($id_tipomascota)) $id_tipomascota = "id_tipomascota=" . $id_tipomascota;
+        else $id_tipomascota = "id_tipomascota=id_tipomascota";
+        if (!empty($id_mun)) $id_mun = ",id_municipio=" . $id_mun;
+        else $id_mun = ",id_municipio=id_municipio";
+        if (!empty($direccion)) $direccion = ",direccion='" . $direccion . "'";
+        else $direccion = ",direccion=direccion";
+        if (!empty($estado_direc)) $estado_direc = ",estado_direc='" . $estado_direc . "'";
+        else $estado_direc = ",estado_direc=estado_direc";
+        if (!empty($nombremasc)) $nombremasc = ",nombremascota='" . $nombremasc . "'";
+        else $nombremasc = ",nombremascota=nombremascota";
+        if (!empty($codigo)) $codigo = ",codigo='" . $codigo . "'";
+        else $codigo = ",codigo=codigo";
+        if (!empty($nacim)) $nacim = ",nacimiento='" . $nacim . "'";
+        else $nacim = ",nacimiento=nacimiento";
+        if (!empty($estado)) $estado = ",estado='" . $estado . "'";
+        else $estado = ",estado=estado";
         $user = ", usuario_update='" . $user . "'";
         $date = ", fecha_update='" . date('Y-m-d H:i:s') . "'";
-
-
-        if (!empty($_GET['foto'])) {
-            $foto = ", foto='" . cBase64($_GET['foto']). "'";
-        } else {
-            $foto = ", foto=foto";
-        }
+        if (!empty($foto)) $foto = ",foto='" . cBase64($foto). "'";
+        else $foto = ",foto=foto";
 
         $sql = "UPDATE $bd.$tabla SET $id_tipomascota $id_mun $direccion 
         $estado_direc $nombremasc $codigo $nacim $foto $estado $user $date 
