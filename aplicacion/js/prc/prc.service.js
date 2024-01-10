@@ -275,6 +275,7 @@ angular.module('mascService', []).
             '&estado=' + (usuario.estado ? 'A' : 'I') +
             '&user=' + usuario.usuario +
             '&nacim=' + formatoFecha(usuario.nacim);
+            
 
             console.log(url);
             $http.post(url).
@@ -292,11 +293,10 @@ angular.module('mascService', []).
             var url = URL_API + '/servicios/prc/mascotafoto.php';
         
             $http.post(url, formData, {
-                headers: {
-                    'Content-Type': undefined
-                },
             }).then(function(response) {
                 callback(response);
+                console.log(response);
+                console.log(url,formData);
             });
         };
 

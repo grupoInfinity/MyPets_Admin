@@ -289,26 +289,9 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 			var fileInput = document.getElementById('fileInput');
             $scope.newMasc.foto = fileInput.files[0];
 
-			Masc.actualizar($scope.newMasc, function (data) {
-				//$scope.successMessages = [ 'Usuario Actualizado correctamente' ];
-				Swal.fire({
-					toast: true,
-					position: 'top-end',
-					type: 'success',
-					title: 'Registro actualizado correctamente',
-					showConfirmButton: false,
-					timer: 1000
-				})
-			}, function (result) {
-				if ((result.status == 409) || (result.status == 400)) {
-					$scope.errors = result.data;
-				} else {
-					$scope.errorMessages = ['Unknown error de servidor'];
-				}
-				$('#notificacionesModal').modal('show');
-			});
 
 			Masc.actualizarFoto($scope.newMasc,function (data) {
+				console.log($scope.newMasc.foto);
 				//$scope.successMessages = [ 'Usuario Actualizado correctamente' ];
 				Swal.fire({
 					toast: true,
@@ -327,8 +310,25 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 				$('#notificacionesModal').modal('show');
 			});
 
-			
+			/*Masc.actualizar($scope.newMasc, function (data) {
+				//$scope.successMessages = [ 'Usuario Actualizado correctamente' ];
+				Swal.fire({
+					toast: true,
+					position: 'top-end',
+					type: 'success',
+					title: 'Registro actualizado correctamente',
+					showConfirmButton: false,
+					timer: 1000
+				})
+			}, function (result) {
+				if ((result.status == 409) || (result.status == 400)) {
+					$scope.errors = result.data;
 
+				} else {
+					$scope.errorMessages = ['Unknown error de servidor'];
+				}
+				$('#notificacionesModal').modal('show');
+			});*/
 
 		}
 

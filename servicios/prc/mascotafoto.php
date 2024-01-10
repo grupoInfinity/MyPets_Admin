@@ -1,7 +1,7 @@
 <?php
 include_once('../config.php');
 
-header('Content-type: application/json; charset=UTF-8');
+header('Content-type:undefined');
 header('Access-Control-Allow-Origin: *');
 header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization");
 header("Access-Control-Allow-Methods: GET,PUT,POST,DELETE,PATCH,OPTIONS");
@@ -18,6 +18,9 @@ $accion = isset($_POST['accion']) ? $_POST['accion'] : '';
 $id_mascota = isset($_POST['id']) ? $_POST['id'] : '';
 $user = isset($_POST['user']) ? $_POST['user'] : '';
 $foto = isset($_POST['foto']) ? $_POST['foto'] : '';
+
+echo "Valores del POST:\n";
+var_dump($_POST);
 
 $json = "no has seteado nada.";
 
