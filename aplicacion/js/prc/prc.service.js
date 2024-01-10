@@ -274,8 +274,7 @@ angular.module('mascService', []).
             '&codigo=' + usuario.codigo + 
             '&estado=' + (usuario.estado ? 'A' : 'I') +
             '&user=' + usuario.usuario +
-            '&nacim=' + formatoFecha(usuario.nacim)+
-            '&foto=' + encodeURIComponent(file);
+            '&nacim=' + formatoFecha(usuario.nacim);
 
             console.log(url);
             $http.post(url).
@@ -283,13 +282,14 @@ angular.module('mascService', []).
                 callback(response);
              });
         };
-        function actualizarFoto(idMascota, nuevaFoto, callback) {
+        function actualizarFoto(masc, callback) {
             var formData = new FormData();
             formData.append('accion', 'U');
-            formData.append('id', idMascota);
-            formData.append('foto', nuevaFoto);
+            formData.append('id', masc.idmasc);
+            formData.append('user', masc.usuario);
+            formData.append('foto', masc.foto);
         
-            var url = URL_API + '/servicios/prc/prc_mascota.php';
+            var url = URL_API + '/servicios/prc/mascotafoto.php';
         
             $http.post(url, formData, {
                 headers: {
