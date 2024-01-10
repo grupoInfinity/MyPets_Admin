@@ -314,7 +314,7 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 					toast: true,
 					position: 'top-end',
 					type: 'success',
-					title: 'Registro actualizado correctamente',
+					title: 'Foto actualizado correctamente',
 					showConfirmButton: false,
 					timer: 1000
 				})
