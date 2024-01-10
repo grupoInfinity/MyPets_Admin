@@ -305,7 +305,7 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 				$('#notificacionesModal').modal('show');
 			});
 
-			Masc.actualizarFoto(function (data) {
+			/*Masc.actualizarFoto(function (data) {
 				//$scope.successMessages = [ 'Usuario Actualizado correctamente' ];
 				Swal.fire({
 					toast: true,
@@ -322,7 +322,7 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 					$scope.errorMessages = ['Unknown error de servidor'];
 				}
 				$('#notificacionesModal').modal('show');
-			});
+			});*/
 
 			
 

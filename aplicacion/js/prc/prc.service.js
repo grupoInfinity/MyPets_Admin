@@ -236,7 +236,7 @@ angular.module('mascService', []).
                 });
         };
 
-        /*function actualizar(usuario, callback) {
+        function actualizar(usuario, callback) {
             var fileInput = document.getElementById('fileInput');
             var file = fileInput.files[0];
         
@@ -272,13 +272,10 @@ angular.module('mascService', []).
                 var errorMessage = error.data ? error.data : "Error updating pet";
                 callback({ status: 0, info: errorMessage });
             });
-        };*/
+        };
         
 
-        function actualizar(usuario, callback){
-            /* var fileInput = document.getElementById('fileInput');
-            var file = fileInput.files[0];*/
-            //var basefoto = usuario.foto.split(',')[1];
+        /*function actualizar(usuario, callback){
             var url = URL_API + '/servicios/prc/prc_mascota.php?accion=U'+
             '&id=' + usuario.idmasc +
             '&tpmascota=' + usuario.idtpmasc + 
@@ -289,10 +286,9 @@ angular.module('mascService', []).
             '&codigo=' + usuario.codigo + 
             '&estado=' + (usuario.estado ? 'A' : 'I') +
             '&user=' + usuario.usuario +
-            '&nacim=' + formatoFecha(usuario.nacim)/*+
-            '&foto=' + encodeURIComponent(file)*/;
-        	
-            //console.log(encodeURIComponent(file));
+            '&nacim=' + formatoFecha(usuario.nacim)+
+            '&foto=' + encodeURIComponent(file);
+
             console.log(url);
             $http.post(url).
             then(function(response) {
@@ -324,7 +320,7 @@ angular.module('mascService', []).
                 var errorMessage = error.data ? error.data : "Error updating pet";
                 callback({ status: 0, info: errorMessage });
             });
-        };
+        };*/
 
 
 
