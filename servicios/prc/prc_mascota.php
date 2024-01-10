@@ -12,10 +12,6 @@ if ($method == "OPTIONS") {
     die();
 }
 
-// Obtener datos del cuerpo de la solicitud POST
-$input = json_decode(file_get_contents('php://input'), true);
-
-
 $tabla = "prc_mascotas";
 $tabla2 = "ctg_vacunas";
 $tabla3 = "ctg_tipovacunas";
@@ -39,7 +35,11 @@ $estado = isset($_GET['estado']) ? $_GET['estado'] : '';
 $user = isset($_GET['user']) ? $_GET['user'] : '';
 
 $json = "no has seteado nada.";
-
+function cBase64($imagen)
+{
+    $imagenBase64 = base64_encode(file_get_contents($imagen));
+    return $imagenBase64;
+}
 
 if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
     if (!empty($id_mascota)) $id_mascota = "m.id_mascota='$id_mascota'";
@@ -50,7 +50,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
     else $nombremasc = "";
     if (!empty($estado)) $estado = "AND m.estado='$estado'";
     else $estado = "";
-    if (!empty($codigo)) $codigo= "AND m.codigo='$codigo'";
+    if (!empty($codigo)) $codigo = "AND m.codigo='$codigo'";
     else $codigo = "";
 
 
@@ -165,7 +165,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
             $json = array("status" => 0, "info" => $conn->error);
         }
     } else if (strtoupper($accion) == 'U') {
- // VERIFICACION SI LA ACCION ES ACTUALIZACION
+        // VERIFICACION SI LA ACCION ES ACTUALIZACION
         $id_tipomascota = " id_tipomascota=" . $id_tipomascota;
         $id_mun = " ,id_municipio=" . $id_mun;
         $direccion = ",direccion='" . $direccion . "'";
@@ -176,9 +176,13 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         $estado = ",estado='" . $estado . "'";
         $user = ", usuario_update='" . $user . "'";
         $date = ", fecha_update='" . date('Y-m-d H:i:s') . "'";
-        //$foto = ",foto='" . ($foto) . "'";
-        if (!empty($foto)) $foto = ",foto='" . ($foto) . "'";
-        else $foto = ",foto=foto";
+
+
+        if (!empty($_GET['foto'])) {
+            $foto = ", foto='" . cBase64($_GET['foto']). "'";
+        } else {
+            $foto = ", foto=foto";
+        }
 
         $sql = "UPDATE $bd.$tabla SET $id_tipomascota $id_mun $direccion 
         $estado_direc $nombremasc $codigo $nacim $foto $estado $user $date 
@@ -190,7 +194,27 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         } else {
             $json = array("status" => 0, "error" => $conn->error);
         }
-    } else if (strtoupper($accion) == 'D') { // VERIFICACION SI LA ACCION ES ELIMINACION
+    }
+    /*else if (strtoupper($accion) == 'UF') {
+        // VERIFICACION SI LA ACCION ES ACTUALIZACION
+        if (!empty($_GET['foto'])) {
+            $foto_base64 = base64_encode(file_get_contents($_GET['foto']));
+            $foto = ", foto='" . $foto_base64 . "'";
+        } else {
+            $foto = ", foto=foto";
+        }
+
+        $sql = "UPDATE $bd.$tabla SET $foto
+         WHERE id_mascota = $id_mascota ";
+
+        echo $sql;
+        if ($conn->query($sql) === TRUE) {
+            $json = array("status" => 1, "info" => "Registro actualizado exitosamente.");
+        } else {
+            $json = array("status" => 0, "error" => $conn->error);
+        }
+        
+    }*/ else if (strtoupper($accion) == 'D') { // VERIFICACION SI LA ACCION ES ELIMINACION
         $user = ", usuario_update='" . $user . "'";
         $date = ", fecha_update='" . date('Y-m-d H:i:s') . "'";
 

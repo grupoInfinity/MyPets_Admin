@@ -237,8 +237,8 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 			nmasc: "",
 			codigo: "",
 			nacim: "",
-			//nacimf: "",
 			foto: "",
+			fotol: "",
 			usuario: $rootScope.globals.currentUser.username
 		};
 
@@ -304,6 +304,27 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 				}
 				$('#notificacionesModal').modal('show');
 			});
+
+			Masc.actualizarFoto(function (data) {
+				//$scope.successMessages = [ 'Usuario Actualizado correctamente' ];
+				Swal.fire({
+					toast: true,
+					position: 'top-end',
+					type: 'success',
+					title: 'Registro actualizado correctamente',
+					showConfirmButton: false,
+					timer: 1000
+				})
+			}, function (result) {
+				if ((result.status == 409) || (result.status == 400)) {
+					$scope.errors = result.data;
+				} else {
+					$scope.errorMessages = ['Unknown error de servidor'];
+				}
+				$('#notificacionesModal').modal('show');
+			});
+
+			
 
 
 		}

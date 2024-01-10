@@ -106,6 +106,7 @@ angular.module('mascService', []).
         service.borrar = borrar;
         service.insertar = insertar;
         service.actualizar = actualizar;
+        service.actualizarFoto = actualizarFoto;
         service.findByCo = findByCo;
         service.findById = findById;
         service.findAllA = findAllA;
@@ -235,69 +236,12 @@ angular.module('mascService', []).
                 });
         };
 
-        function actualizar(usuario, callback){
-            var basefoto = usuario.foto.split(',')[1];
-            var url = URL_API + '/servicios/prc/prc_mascota.php?accion=U'+
-            '&id=' + usuario.idmasc +
-            '&tpmascota=' + usuario.idtpmasc + 
-            '&muni=' + usuario.idmuni + 
-            '&direccion=' + usuario.direccion + 
-            '&estadodir=' + (usuario.estadodir ? 'A' : 'I')+ 
-            '&nmasc=' + usuario.nmasc + 
-            '&codigo=' + usuario.codigo + 
-            '&estado=' + (usuario.estado ? 'A' : 'I') +
-            '&user=' + usuario.usuario +
-            '&nacim=' + formatoFecha(usuario.nacim)+
-            '&foto=' + basefoto ;
-        	
-            console.log(url);
-            $http.post(url).
-            then(function(response) {
-                callback(response);
-             });
-        };
-
         /*function actualizar(usuario, callback) {
-            var basefoto = usuario.foto.split(',')[1];
-            
-            var data = {
-                accion: 'U',
-                id: usuario.idmasc,
-                tpmascota: usuario.idtpmasc,
-                muni: usuario.idmuni,
-                direccion: usuario.direccion,
-                estadodir: usuario.estadodir ? 'A' : 'I',
-                nmasc: usuario.nmasc,
-                codigo: usuario.codigo,
-                estado: usuario.estado ? 'A' : 'I',
-                user: usuario.usuario,
-                nacim: formatoFecha(usuario.nacim),
-                foto: basefoto
-            };
-           // console.log(basefoto);
+            var fileInput = document.getElementById('fileInput');
+            var file = fileInput.files[0];
         
-            $http({
-                method: 'POST',
-                url: URL_API + '/servicios/prc/prc_mascota.php',
-                data: data,
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then(function (response) {
-                callback(response.data); // Devuelve solo la propiedad 'data' de la respuesta
-            }).catch(function (error) {
-                console.error('Error en la solicitud POST:', error);
-            });
-        }*/
-
-
-        /*function actualizar(usuario, callback) {
-            // Obtener la base de datos de la imagen
-            var basefoto = usuario.foto.split(',')[1];
-        
-            // Crear un objeto FormData para enviar la imagen como parte del cuerpo de la solicitud
             var formData = new FormData();
-            formData.append('accion', 'U');
+            formData.append('foto', file);
             formData.append('id', usuario.idmasc);
             formData.append('tpmascota', usuario.idtpmasc);
             formData.append('muni', usuario.idmuni);
@@ -308,20 +252,81 @@ angular.module('mascService', []).
             formData.append('estado', usuario.estado ? 'A' : 'I');
             formData.append('user', usuario.usuario);
             formData.append('nacim', formatoFecha(usuario.nacim));
-            formData.append('foto', basefoto);
         
-            // Construir la URL de la API (sin parámetros en la URL)
-            var url = URL_API + '/servicios/prc/prc_mascota.php';
+            var url = URL_API + '/servicios/prc/prc_mascota.php?accion=U';
+        
+            console.log("FormData:", formData);
+        
             $http.post(url, formData, {
-                headers: {
-                    'Content-Type': undefined // Dejar que AngularJS configure automáticamente el encabezado Content-Type
-                }
-            }).then(function(response) {
-                console.log(response);
-                callback(response);
-                
+                transformRequest: angular.identity,
+                headers: { 'Content-Type': undefined }
+            })
+            .then(function(response) {
+                // Manejo de éxito
+                console.log("Respuesta de la API:", response.data);
+                callback(response.data);
+            })
+            .catch(function(error) {
+                // Manejo de error
+                console.error("Error actualizando la mascota:", error);
+                var errorMessage = error.data ? error.data : "Error updating pet";
+                callback({ status: 0, info: errorMessage });
             });
         };*/
+        
+
+        function actualizar(usuario, callback){
+            /* var fileInput = document.getElementById('fileInput');
+            var file = fileInput.files[0];*/
+            //var basefoto = usuario.foto.split(',')[1];
+            var url = URL_API + '/servicios/prc/prc_mascota.php?accion=U'+
+            '&id=' + usuario.idmasc +
+            '&tpmascota=' + usuario.idtpmasc + 
+            '&muni=' + usuario.idmuni + 
+            '&direccion=' + usuario.direccion + 
+            '&estadodir=' + (usuario.estadodir ? 'A' : 'I')+ 
+            '&nmasc=' + usuario.nmasc + 
+            '&codigo=' + usuario.codigo + 
+            '&estado=' + (usuario.estado ? 'A' : 'I') +
+            '&user=' + usuario.usuario +
+            '&nacim=' + formatoFecha(usuario.nacim)/*+
+            '&foto=' + encodeURIComponent(file)*/;
+        	
+            //console.log(encodeURIComponent(file));
+            console.log(url);
+            $http.post(url).
+            then(function(response) {
+                callback(response);
+             });
+        };
+        function actualizarFoto(callback){
+            var fileInput = document.getElementById('fileInput');
+            var file = fileInput.files[0];
+        
+            var formData = new FormData();
+            formData.append('foto', file);
+            var url = URL_API + '/servicios/prc/prc_mascota.php?accion=U';
+        
+            console.log("FormData:", formData);
+        
+            $http.post(url, formData, {
+                transformRequest: angular.identity,
+                headers: { 'Content-Type': undefined }
+            })
+            .then(function(response) {
+                // Manejo de éxito
+                console.log("Respuesta de la API:", response.data);
+                callback(response.data);
+            })
+            .catch(function(error) {
+                // Manejo de error
+                console.error("Error actualizando la mascota:", error);
+                var errorMessage = error.data ? error.data : "Error updating pet";
+                callback({ status: 0, info: errorMessage });
+            });
+        };
+
+
 
 
         return service;
