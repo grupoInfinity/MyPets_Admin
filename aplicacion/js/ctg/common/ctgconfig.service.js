@@ -164,7 +164,6 @@ angular.module('munisService', []).
 
         function insertar(munis, callback) {
             $http.post(URL_API + '/servicios/ctg/ctg_muni.php?accion=I&idDepto=' + munis.id_depto + '&desc=' + munis.descripcion + '&user=' + munis.usuario, munis).
-                console.log(url);
             then(function (response) {
                 callback(response);
             });

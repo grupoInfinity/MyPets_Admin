@@ -432,16 +432,7 @@ USE dbmypet
 SELECT * FROM prc_mascotas;
 SELECT * FROM ctg_municipios
 
-SELECT m.id_mascota, u.usuario, u.email,u.telefono,m.nombremascota,
-    d.descripcion as depto,mu.descripcion as muni,m.direccion,m.estado_direc,m.codigo,m.nacimiento 
-    FROM prc_mascotas m, ctg_tipomascotas t, ctg_municipios mu,
-    sec_usuario u, ctg_departamentos d 
-    WHERE #$id_mascota $usuario $nombremasc $estado AND 
-	 m.id_tipomascota=t.id_tipomascota AND m.usuario=u.usuario 
-    AND m.id_municipio=mu.id_municipio AND mu.id_departamento=d.id_departamento
 
-
-SELECT * FROM sec_rol_usuario
 LOCK TABLES `prc_mascotas` WRITE;
 /*
  SELECT m.id_mascota, u.id_usuario, u.mail,u.telefono,m.nombremascota,
