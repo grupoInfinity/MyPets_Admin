@@ -1,5 +1,3 @@
-
-
 <fieldset>
 
 	<div class="modal fade modal-primary" id="notificacionesModal" tabindex="-1" role="dialog">
@@ -12,9 +10,13 @@
 					<h4 class="modal-title">Notificaciones</h4>
 				</div>
 				<div class="modal-body">
+
+					<!-- We output a list of success messages (appropriately styled!) for the form. -->
 					<ul ng-hide="!successMessages" class="success">
 						<li ng-repeat="message in successMessages">{{message}}</li>
 					</ul>
+
+					<!-- Output the list of error messages if any. -->
 					<ul ng-hide="!errorMessages" class="error">
 						<li ng-repeat="message in errorMessages">{{message}}</li>
 					</ul>
@@ -24,12 +26,14 @@
 
 				</div>
 			</div>
+			<!-- /.modal-content -->
 		</div>
+		<!-- /.modal-dialog -->
 	</div>
 
 	<form name="regForm" class="form-horizontal" ng-submit="registerUsuario(formType)">
 		<div ng-show="isNew(formType)">
-			<legend>Ingrese un nuevo Usuario</legend>
+			<legend class="center">Ingrese un nuevo Usuario</legend>
 		</div>
 
 		<div ng-show="!isNew(formType)">
@@ -47,7 +51,9 @@
 					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
 					</button>
 				</div>
+				<!-- /.box-tools -->
 			</div>
+			<!-- /.box-header -->
 			<div class="box-body">
 
 				<div class="form-group" ng-class="{ 'has-error': regForm.nombre.$error.required }">
@@ -61,6 +67,8 @@
 						<span class="error help-block" ng-show="errors.nombre">{{errors.nombre}}</span>
 					</div>
 
+
+					<!--  <div class="form-group" ng-class="{ 'has-error': regForm.apellido.$error.required }">-->
 					<label for="apellido" class="col-sm-1 control-label">Apellido:</label>
 					<div class="col-sm-4">
 						<input type="text" class="form-control" name="apellido" id="apellido"
@@ -70,6 +78,7 @@
 						<span class="error help-block" ng-show="errors.apellido">{{errors.apellido}}</span>
 					</div>
 				</div>
+
 				<div class="form-group" ng-class="{ 'has-error': regForm.usr.$error.required }">
 					<label for="usr" class="col-sm-2 control-label">Usuario:</label>
 					<div class="col-sm-4">
@@ -79,6 +88,7 @@
 						<span class="error help-block" ng-show="errors.usr">{{errors.usr}}</span>
 					</div>
 
+					<!-- <div class="form-group" ng-class="{ 'has-error': regForm.clave.$error.required }">-->
 					<label for="clave" class="col-sm-1 control-label">Contrase&ntilde;a:</label>
 					<div class="col-sm-2">
 						<input type="password" class="form-control" name="clave" id="clave" autocomplete="new-password"
@@ -92,13 +102,22 @@
 					<label for="email" class="col-sm-2 control-label">Correo Electronico:</label>
 					<div class="col-sm-4">
 						<input type="text" class="form-control" name="email" id="email" ng-model="newUsuario.email"
-							placeholder="Correo electr&oacute;nico del usuario" autocomplete="nope" />
+							placeholder="Correo electr&oacute;nico del usuario" autocomplete="nope" required/>
 						<span class="error help-block" ng-show="regForm.email.$error.required">Requerido</span>
 						<span class="error help-block" ng-show="errors.email">{{errors.email}}</span>
 					</div>
+
+					<label for="email" class="col-sm-1 control-label">Tel&eacute;fono:</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" name="tel" id="tel" ng-model="newUsuario.tel"
+							placeholder="Tel&eacute;fono del usuario" autocomplete="nope" required/>
+						<span class="error help-block" ng-show="regForm.tel.$error.required">Requerido</span>
+						<span class="error help-block" ng-show="errors.tel">{{errors.tel}}</span>
+					</div>
+					
 				</div>
 
-
+				
 
 
 				<div class="form-group" ng-class="{ 'has-error': regForm.clave.$error.required }">
@@ -115,6 +134,8 @@
 						<span class="error help-block" ng-show="errors.estado">{{errors.estado}}</span>
 					</div>
 				</div>
+
+
 			</div>
 			<div class="box-footer">
 				<input type="submit" ng-disabled="regForm.$invalid" id="guardar" value="Guardar"
@@ -125,18 +146,6 @@
 
 	</form>
 
-	<div id="rolesUsuario" ng-show="isVisibleAfterUsuario" class="box box-default collapsed-box box-solid">
-		<div class="box-header with-border">
-			<h3 class="box-title">Roles por Usuario</h3>
-			<div class="box-tools pull-right">
-				<button type="button" class="btn btn-box-tool" data-widget="collapse">
-					<i class="fa fa-plus"></i>
-				</button>
-			</div>
-		</div>
-		<div class="box-body" ng-controller="RolUsuarioCtrl">
-			<div ng-include="'partials/security/usuario/roles/formRoles.html'"></div>
-		</div>
-	</div>
+	
 
 </fieldset>

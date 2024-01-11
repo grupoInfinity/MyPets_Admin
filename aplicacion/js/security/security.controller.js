@@ -1270,6 +1270,100 @@ function UsuarioListCtrl($scope, $rootScope, $state, $compile, $window, popupSer
 
 
 };
+//////REGISTRO MAIN
+function RegistroMainCtrl($rootScope, $stateParams, $scope, URL_API, $filter, $http, $state, Usr) {
+	$scope.formType = 'ADD';
+
+	$scope.isNew = function (value) {
+
+		if (value == 'ADD')
+			return true;
+		else
+			return false;
+	};
+
+	$scope.clearMessages = function () {
+
+		$scope.successMessages = '';
+		$scope.errorMessages = '';
+		$scope.errors = {};
+	};
+
+	$scope.reset = function () {
+
+		// Sets the form to it's pristine state
+		if ($scope.regForm) {
+			$scope.regForm.$setPristine();
+		}
+
+		$scope.isVisibleAfterUsuario = false;
+		$scope.formType = 'ADD';
+
+		var date = new Date();
+		$scope.newUsuario = {
+			usr: "",
+			clave: "",
+			nombre: "",
+			apellido: "",
+			tel: "",
+			pin: "",
+			email: "",
+			estado: "",
+			usuario: ""
+		};
+
+
+		$scope.clearMessages();
+	};
+
+	$scope.registerUsuario = function (value) {
+		$scope.clearMessages();
+		$scope.newUsuario.usuario=$scope.newUsuario.usr;
+		console.log($scope.newUsuario.usuario);
+
+		if (value == "ADD") {
+
+			Usr.insertar($scope.newUsuario, function (data) {
+
+				$scope.isVisibleAfterUsuario = $scope.isVisibleAfterUsuario ? false : true;
+
+				$scope.formType = "UPD";
+
+				Usr.findByUsr($scope.newUsuario.usr, function (response) {
+					if (response.data.status == 1)
+						$scope.newUsuario = response.data.info[0];
+					// $scope.newUsuario.usr = response.data.info[0].usr;
+				});
+				Usr.insertarRol($scope.newUsuario.usr,2, function (data) {
+				});
+
+				//$scope.successMessages = [ 'Usuario Registrado correctamente' ];
+				Swal.fire({
+					toast: true,
+					position: 'top-end',
+					type: 'success',
+					title: 'Registro ingresado correctamente',
+					showConfirmButton: false,
+					timer: 1000
+				});
+				$state.go('login');
+			}, function (result) {
+				if ((result.status == 409) || (result.status == 400)) {
+					$scope.errors = result.data;
+				} else {
+					$scope.errorMessages = ['Unknown error de servidor'];
+				}
+				$('#notificacionesModal').modal('show');
+			});
+		}
+
+	};
+
+	$scope.reset();
+
+	$scope.onlyLetters = "/^[a-zA-Z.\-\s\Ññ\_\]+$/i/";
+
+};
 
 /*************************** OPCION ROL CONTROLLER ***********************************/
 
@@ -1298,7 +1392,6 @@ function RolUsuarioCtrl($scope, $rootScope, $filter, $state, $stateParams, $comp
 		$scope.rol = { usuario: $rootScope.globals.currentUser.username };
 
 		$scope.rol.usr = $scope.newUsuario;
-		$scope.rol.id_empresa = $scope.newUsuario;
 
 		$scope.clearMessages();
 	};

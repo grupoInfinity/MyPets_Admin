@@ -31,6 +31,9 @@ var app = angular.module('aplicacion', ['ui.router', 'ngRoute', 'ngCookies', 'ng
   .controller('OpcionTableCtrl', OpcionTableCtrl)
   .controller('OpcionRolCtrl', OpcionRolCtrl)
 
+  //REGISTRO PRINCIPAL
+  //.controller('RegistroMainCtrl', RegistroMainCtrl)
+
   ;
 
 app.config(['$qProvider', function ($qProvider) {
@@ -185,11 +188,12 @@ angular.module('aplicacion')
           controller: MascotaEditCtrl
         });
 
-      // MENU Y LOGIN
+      // MENU, -LOGIN - REGISTRO - RECUP
       $stateProvider
         .state('registroMain', {
-          url: '/registro',
-          templateUrl: 'partials/registroMain.html'
+          url: '/registroMain',
+          controller: RegistroMainCtrl,
+          templateUrl: 'partials/security/login/registroMain.html'
         })
         .state('menuMaster', {
           abstract: true,

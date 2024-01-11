@@ -489,6 +489,7 @@ factory('Usr', function($http, URL_API){
     service.actualizar = actualizar;
     service.findByUsr = findByUsr;
     service.findAllA = findAllA; 
+    service.insertarRol=insertarRol;
     /*    service.getUser = getUser;
 
    function getUser(usuario, callback) {
@@ -559,13 +560,21 @@ factory('Usr', function($http, URL_API){
 		'&clave=' + usuario.clave + 
 		'&nombre=' + usuario.nombre + 
 		'&apellido=' + usuario.apellido + 
-        '&tel=' + usuario.tel+ 
-        '&pin=' + usuario.pin + 
+        '&tel=' + usuario.tel/*+ 
+        '&pin=' + usuario.pin + */
 		'&email=' + usuario.email + 
 		'&estado=' + usuario.estado +
 		'&user=' + usuario.usuario ;
 		console.log(url);
         $http.post(url, usuario).
+        then(function(response) {
+            callback(response);
+         });
+    };
+    function insertarRol(usr,idrol, callback){
+        $http.post(URL_API + '/servicios/sec/sec_rol_usuario.php?accion=I&usr=' + usr +
+        '&rol=' + idrol +
+        '&user=' + usr).
         then(function(response) {
             callback(response);
          });
@@ -577,8 +586,8 @@ factory('Usr', function($http, URL_API){
 		'&clave=' + usuario.clave + 
 		'&nombre=' + usuario.nombre + 
 		'&apellido=' + usuario.apellido + 
-        '&tel=' + usuario.tel+
-        '&pin=' + usuario.pin + 
+        '&tel=' + usuario.tel/*+
+        '&pin=' + usuario.pin */+ 
 		'&email=' + usuario.email + 
 		'&estado=' + (usuario.estado?'A':'I') +
 		'&user=' + usuario.usuario;
