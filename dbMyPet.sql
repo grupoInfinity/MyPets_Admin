@@ -429,7 +429,7 @@ VALUE(1,1,1,'dnery','Avenida','A','Charly','239022','2019-03-02','
 (3,2,1,'nmunoz','Colonia San Martin','A','Jilly','300221','2019-03-02',NULL,'A','dnery','2021-08-11 16:15:48',NULL,NULL);
  
 USE dbmypet
-SELECT * FROM prc_mascotas;
+SELECT * FROM sec_usuario;
 SELECT * FROM ctg_municipios
 
 
