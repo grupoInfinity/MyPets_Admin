@@ -583,7 +583,7 @@ factory('Usr', function($http, URL_API){
 		'&estado=' + (usuario.estado?'A':'I') +
 		'&user=' + usuario.usuario;
 		
-		//console.log(url);
+		console.log(url);
         $http.post(url, usuario).
         then(function(response) {
             callback(response);

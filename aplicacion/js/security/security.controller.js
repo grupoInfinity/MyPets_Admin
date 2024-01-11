@@ -1059,6 +1059,13 @@ function UsuarioEditCtrl($rootScope, $scope, $filter, $state, $stateParams, URL_
 		var date = new Date();
 		$scope.newUsuario = {
 			usr: "",
+			clave: "",
+			nombre: "",
+			apellido: "",
+			tel: "",
+			pin: "",
+			email: "",
+			estado: "",
 			usuario: $rootScope.globals.currentUser.username
 		};
 
@@ -1087,7 +1094,8 @@ function UsuarioEditCtrl($rootScope, $scope, $filter, $state, $stateParams, URL_
 					title: 'Registro actualizado correctamente',
 					showConfirmButton: false,
 					timer: 1000
-				})
+				});
+				$state.go('menuMaster.listUsuario');
 
 			}, function (result) {
 				if ((result.status == 409) || (result.status == 400)) {
@@ -1106,7 +1114,7 @@ function UsuarioEditCtrl($rootScope, $scope, $filter, $state, $stateParams, URL_
 			$scope.newUsuario.usuario = usuarioObj.usuario;
 
 			Usr.actualizar($scope.newUsuario, function (data) {
-				//$scope.successMessages = [ 'Usuario Actualizado correctamente' ];
+				$scope.successMessages = [ 'Usuario Actualizado correctamente' ];
 				Swal.fire({
 					toast: true,
 					position: 'top-end',
@@ -1114,7 +1122,8 @@ function UsuarioEditCtrl($rootScope, $scope, $filter, $state, $stateParams, URL_
 					title: 'Registro actualizado correctamente',
 					showConfirmButton: false,
 					timer: 1000
-				})
+				});
+				$state.go('menuMaster.listUsuario');
 			}, function (result) {
 				if ((result.status == 409) || (result.status == 400)) {
 					$scope.errors = result.data;

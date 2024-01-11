@@ -241,7 +241,6 @@ angular.module('tpvacService', []).
         };
 
         function borrar(deptId, usuario, callback) {
-            console.log(url);
             $http.post(URL_API + '/servicios/ctg/ctg_tipovacuna.php?accion=D&id=' + deptId + '&user=' + usuario, deptId).
             then(function (response) {
                 callback(response);
@@ -249,7 +248,6 @@ angular.module('tpvacService', []).
         };
 
         function insertar(dept, callback) {
-            console.log(url);
             $http.post(URL_API + '/servicios/ctg/ctg_tipovacuna.php?accion=I&desc=' + dept.descripcion +
                 '&user=' + dept.usuario, dept).
             then(function (response) {
@@ -333,7 +331,7 @@ angular.module('tpmascService', []).
                 then(function (response) {
                     callback(response);
                 });
-        };
+        }; 
 
         function insertar(dept, callback) {
             $http.post(URL_API + '/servicios/ctg/ctg_tipomascota.php?accion=I&desc=' + dept.descripcion +

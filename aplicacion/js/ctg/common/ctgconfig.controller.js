@@ -28,9 +28,9 @@ function DeptsAddCtrl($rootScope, $scope, $filter, $http, $state, Depts) {
 
 		var date = new Date();
 		$scope.newDepts = {
-			id:"",
+			id: "",
 			descripcion: "",
-			estado:"",
+			estado: "",
 			usuario: $rootScope.globals.currentUser.username
 		};
 
@@ -135,7 +135,7 @@ function DeptsTableCtrl($scope, $rootScope, $state, $compile, $window,
 	vm.depto = {};
 
 	Depts.findAll(function (response) {
-		if (response.data.status == 1) {		
+		if (response.data.status == 1) {
 			vm.depto = response.data.info;
 		}
 	});
@@ -259,10 +259,10 @@ function MunisAddCtrl($rootScope, $scope, $filter, $http, $state, Munis, Depts) 
 
 		var date = new Date();
 		$scope.newMunis = {
-			id: "", 
+			id: "",
 			descripcion: "",
 			id_depto: "",
-			estado:"",
+			estado: "",
 			usuario: $rootScope.globals.currentUser.username
 		};
 
@@ -503,7 +503,7 @@ function tpvacAddCtrl($rootScope, $scope, $filter, $http, $state, Tpvac) {
 		$scope.newtpvac = {
 			id: "",
 			descripcion: "",
-			estado:"",
+			estado: "",
 			usuario: $rootScope.globals.currentUser.username
 		};
 
@@ -513,26 +513,21 @@ function tpvacAddCtrl($rootScope, $scope, $filter, $http, $state, Tpvac) {
 	$scope.registerTpvac = function () {
 		$scope.clearMessages();
 
-		Tpvac
-			.insertar(
-				$scope.newtpvac,
-				function (response) {
+		Tpvac.insertar($scope.newtpvac, function (response) {
+			$scope.reset();
+			$scope.successMessages = ['Tipo de vacuna Registrado correctamente'];
 
-					$scope.reset();
-
-					$scope.successMessages = ['Tipo de vacuna Registrado correctamente'];
-
-				},
-				function (result) {
-					if ((result.status == 409)
-						|| (result.status == 400)) {
-						$scope.errors = result.data;
-					} else {
-						$scope.errorMessages = ['Unknown error de servidor'];
-					}
-				});
+		},
+			function (result) {
+				if ((result.status == 409)
+					|| (result.status == 400)) {
+					$scope.errors = result.data;
+				} else {
+					$scope.errorMessages = ['Unknown error de servidor'];
+				}
+			});
 		//$('#notificacionesModal').modal('show');
-		$state.go('menuMaster.listTpvac');
+		$state.go('menuMaster.listTipovac');
 
 	};
 
@@ -733,9 +728,9 @@ function tpmascAddCtrl($rootScope, $scope, $filter, $http, $state, tpmasc) {
 
 		var date = new Date();
 		$scope.newtpmasc = {
-			id:"",
+			id: "",
 			descripcion: "",
-			estado:"",
+			estado: "",
 			usuario: $rootScope.globals.currentUser.username
 		};
 
@@ -773,7 +768,7 @@ function tpmascAddCtrl($rootScope, $scope, $filter, $http, $state, tpmasc) {
 	$scope.onlyLetters = "/^[a-zA-Z.\-\s\Ññ\_\]+$/i/";
 };
 
-function tpmascEditCtrl($rootScope, $scope, $filter, $state, $stateParams,tpmasc) {
+function tpmascEditCtrl($rootScope, $scope, $filter, $state, $stateParams, tpmasc) {
 
 	$scope.updateTpmasc = function () {
 
@@ -784,19 +779,19 @@ function tpmascEditCtrl($rootScope, $scope, $filter, $state, $stateParams,tpmasc
 
 		$scope.newtpmasc.usuario = tpmascObj.usuario;
 
-		tpmasc.actualizar($scope.newtpmasc,function (response) {
-				$scope.successMessages = ['Tipo de mascota Actualizado correctamente'];
-				Swal.fire({
-					toast: true,
-					position: 'top-end',
-					type: 'success',
-					title: 'Exito',
-					text: "Registro actualizado correctamente",
-					showConfirmButton: false,
-					timer: 2000
-				});
-				$state.go('menuMaster.listTPmascota');
-			},
+		tpmasc.actualizar($scope.newtpmasc, function (response) {
+			$scope.successMessages = ['Tipo de mascota Actualizado correctamente'];
+			Swal.fire({
+				toast: true,
+				position: 'top-end',
+				type: 'success',
+				title: 'Exito',
+				text: "Registro actualizado correctamente",
+				showConfirmButton: false,
+				timer: 2000
+			});
+			$state.go('menuMaster.listTPmascota');
+		},
 			function (result) {
 				if ((result.status == 409)
 					|| (result.status == 400)) {

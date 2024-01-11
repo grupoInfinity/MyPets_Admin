@@ -78,6 +78,7 @@
 						<span class="error help-block" ng-show="errors.apellido">{{errors.apellido}}</span>
 					</div>
 				</div>
+
 				<div class="form-group" ng-class="{ 'has-error': regForm.usr.$error.required }">
 					<label for="usr" class="col-sm-2 control-label">Usuario:</label>
 					<div class="col-sm-4">
@@ -101,13 +102,22 @@
 					<label for="email" class="col-sm-2 control-label">Correo Electronico:</label>
 					<div class="col-sm-4">
 						<input type="text" class="form-control" name="email" id="email" ng-model="newUsuario.email"
-							placeholder="Correo electr&oacute;nico del usuario" autocomplete="nope" />
+							placeholder="Correo electr&oacute;nico del usuario" autocomplete="nope" required/>
 						<span class="error help-block" ng-show="regForm.email.$error.required">Requerido</span>
 						<span class="error help-block" ng-show="errors.email">{{errors.email}}</span>
 					</div>
+
+					<label for="email" class="col-sm-1 control-label">Tel&eacute;fono:</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" name="tel" id="tel" ng-model="newUsuario.tel"
+							placeholder="Tel&eacute;fono del usuario" autocomplete="nope" required/>
+						<span class="error help-block" ng-show="regForm.tel.$error.required">Requerido</span>
+						<span class="error help-block" ng-show="errors.tel">{{errors.tel}}</span>
+					</div>
+					
 				</div>
 
-
+				
 
 
 				<div class="form-group" ng-class="{ 'has-error': regForm.clave.$error.required }">

@@ -107,13 +107,15 @@ else {
 		if (!empty($clave)) $clave = "clave='" . ($clave) . "'";
 		else $clave = "clave=clave";
 		if (!empty($nombre)) $nombre = ", nombre='" . ($nombre) . "'";
-		else $nombre = "nombre=nombre";
+		else $nombre = ",nombre=nombre";
 		if (!empty($apellido)) $apellido = ", apellido='" . ($apellido) . "'";
-		else $apellido = "apellido=apellido";
+		else $apellido = ",apellido=apellido";
+		if (!empty($tel)) $tel = ", telefono='" . ($tel) . "'";
+		else $tel = ",telefono=telefono";
 		if (!empty($email)) $email = ", email='" . ($email) . "'";
-		else $email = "email=email";
+		else $email = ",email=email";
 		if (!empty($pin)) $pin = ",pin='" . generarPin() . "'";
-		else $pin = "pin=pin";
+		else $pin = ",pin=pin";
 
 		$estado = ", estado='" . strtoupper($estado) . "'";
 		$user = ", usuario_update='" . $user . "'";
