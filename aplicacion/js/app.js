@@ -200,6 +200,11 @@ angular.module('aplicacion')
           controller: RecupMainCtrl,
           templateUrl: 'partials/security/login/recupMain.html'
         })
+        .state('insertPin', {
+          url: '/insertPin',
+          controller: RecupMainCtrl,
+          templateUrl: 'partials/security/login/insertPin.html'
+        })
         .state('menuMaster', {
           abstract: true,
           templateUrl: 'partials/menuMaster.html'
