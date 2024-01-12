@@ -1,0 +1,34 @@
+<fieldset>
+
+	<div class="login-box col-md-4 col-md-offset-4 ">
+		<!-- /.login-logo -->
+		<div class="login-box-body text-center ">
+			<div>
+				<img src="img/kraken_morado.png" alt="Powered by Grupo Infinity" width="95px" height="95px">
+			</div>
+			<p class="login-box-msg"> <label style="color:#0CA5CD;font-size:24px;">Recuperacion de clave</label></p>
+			<p style="color:#888;">Ingrese su usuario </p>
+			<div class="col-sm-8 col-sm-offset-2">
+				<div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }"
+					ng-if="flash" ng-bind="flash.message"></div>
+			</div>
+			<form ng-submit="findUsr()" role="form">
+				<div class="form-group has-feedback">
+					<input type="text" name="username" id="username" ng-model="recupUsr.usr" required
+						class="form-control" placeholder="Usuario">
+					<span class="glyphicon glyphicon-user form-control-feedback"></span>
+					<span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Usuario
+						es requerido</span>
+				</div>
+
+				<div class="row ">
+					<div class="col-md-4 col-md-offset-4">
+						<button type="submit" 
+							class="btn btn-primary btn-block btn-sm pull-right">Confirmar <i
+								class="fa fa-sign-in"></i></button>
+						</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</fieldset>

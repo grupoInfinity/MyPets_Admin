@@ -5,6 +5,7 @@ function LoginController($scope, $state, $stateParams, Authentication, Flash) {
 	vm.login = login;
 	vm.registro = registro;
 	vm.recup = recup;
+	vm.insertC = insertC;
 
 	vm.secUsuario = {
 		usr: ""
@@ -41,7 +42,7 @@ function LoginController($scope, $state, $stateParams, Authentication, Flash) {
 						//toast:true,
 						position: 'center',
 						type: 'error',
-						title: response.data.info,
+						title: response.data.info + 'elpepe',
 						showConfirmButton: false,
 						timer: 3500
 					});
@@ -67,6 +68,10 @@ function LoginController($scope, $state, $stateParams, Authentication, Flash) {
 	function recup() {
 		console.log(2);
 		$state.go('recupMain');
+	};
+	function insertC() {
+		console.log(2);
+		$state.go('insertCode');
 	};
 
 };

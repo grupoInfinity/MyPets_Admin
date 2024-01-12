@@ -1375,13 +1375,17 @@ function RecupMainCtrl($scope, $rootScope, $filter, $state, $stateParams, $compi
 		email: ""
 	};
 
-	$scope.findUsr = function (usr) {
-		Usr.findByUsr(usr, function (response) {
+	$scope.findUsr = function () {
+		Usr.findByUsr($scope.recupUsr.usr, function (response) {
 			if (response.data.status == 1) {
-				$scope.recupUs = response.data.info;
-				console.log(response.data.info);
+				$scope.recupUs = response.data.info[0];
 
-				Swal.fire({
+				$state.go("insertCode", {
+							usr: $scope.recupUs.usr,
+							pin: $scope.recupUs.pin
+						});
+				
+				/*Swal.fire({
 					title: 'Revise su bandeja de correos',
 					text: "",
 					type: 'info',
@@ -1391,84 +1395,31 @@ function RecupMainCtrl($scope, $rootScope, $filter, $state, $stateParams, $compi
 					confirmButtonText: 'OK'
 				}).then((result) => {
 					if (result.value) {
-						$state.go('insertCode', {
+						$state.go("recupMain.insertCode", {
 							usr: $scope.recupUs.usr,
 							pin: $scope.recupUs.pin
 						});
 					}
-				})
+				})*/
 				
 			}
 			else {
-
+				Swal.fire({
+					//toast:true,
+					position: 'center',
+					type: 'error',
+					title: response.data.info,
+					showConfirmButton: false,
+					timer: 3500
+				});
 			};
 		});
 	};
+};
+function insertCodeCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile, $window,
+	popupService, Usr) {
 
-	/*$scope.clearMessages = function () {
-		$scope.successMessagesChild = '';
-		$scope.errorMessagesChild = '';
-		$scope.errorsChild = {};
-	};
-
-	$scope.resetRol = function () {
-
-		// Sets the form to it's pristine state
-		if ($scope.rolForm) {
-			$scope.rolForm.$setPristine();
-		}
-
-		$scope.formRecup = "ADD";
-		var date = new Date();
-
-		$scope.recup = {
-			usr: "",
-			pin: "",
-			email: ""
-		};
-
-		$scope.clearMessages();
-	};
-
-	$scope.actualizarData = function (value) {
-		$scope.clearMessages();
-
-		if (value == "ADD") {
-			RolUsuario.insertar($scope.rol, function (data) {
-				$scope.formTypeRol = "UPD";
-				$scope.refreshRol($scope.newUsuario.usr);
-				$scope.resetRol();
-				$scope.successMessagesChild = ['Rol Registrado correctamente'];
-
-			}, function (result) {
-				if ((result.status == 409) || (result.status == 400)) {
-					$scope.errorsChild = result.data;
-				} else {
-					$scope.errorMessagesChild = ['Unknown error de servidor'];
-				}
-			});
-		}
-	};
-
-	//$scope.resetRol();*/
-
-	//$scope.loadRoles();
-
-	//LISTA
-	/*$scope.refreshRol = function (usuario) {
-		RolUsuario.findByUsuario(usuario, function (response) {
-			if (response.data.status == 1)
-				$scope.rolesusr = response.data.info;
-			else $scope.rolesusr = [];
-		});
-	};*/
-
-	/*if ($scope.formType == "ADD") {
-		$scope.refreshRol("NADA");
-	} else {
-		$scope.refreshRol($stateParams.idUsuario);
-	}*/
-
+	
 };
 
 /*************************** ROLUSUARIO CONTROLLER ***********************************/

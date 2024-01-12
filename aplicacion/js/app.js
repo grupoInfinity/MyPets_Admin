@@ -199,18 +199,24 @@ angular.module('aplicacion')
         .state('recupMain', {
           url: '/recupMain',
           controller: RecupMainCtrl,
-          templateUrl: 'partials/security/login/recupMain.html',
-          controllerAs: 'rm'
+          templateUrl: 'partials/recupMain.html'/*,
+          controllerAs: 'rm'*/
         })
         .state('insertCode', {
-          url: '/:usr/:pin/insertCode',
-          controller: RecupMainCtrl,
-          templateUrl: 'partials/security/login/insertCode.html'
+          //url: '/:usr/:pin/insertCode',
+          url: '/insertCode',
+          templateUrl: 'partials/security/recup/insertCode.html',
+          controller: insertCodeCtrl
         })
+        /*.state('menuMaster.editMunis', {
+          url: '/:idDepto/:idMunis/editMuni',
+          templateUrl: 'partials/ctg/ctg_muni/editMuni.html',
+          controller: MunisEditCtrl
+        })*/
         .state('editClave', {
           url: '/editClave',
           controller: RecupMainCtrl,
-          templateUrl: 'partials/security/login/editClave.html'
+          templateUrl: 'partials/security/recup/editClave.html'
         })
         //MENU
         .state('menuMaster', {
@@ -263,7 +269,7 @@ angular.module('aplicacion')
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
       // redirect to login page if not logged in and trying to access a restricted page
-      var restrictedPage = $.inArray($location.path(), ['/login', '/registroMain','/recupMain']) === -1;
+      var restrictedPage = $.inArray($location.path(), ['/login', '/registroMain','/recupMain'/*,'/insertCode'*/]) === -1;
       var loggedIn = $rootScope.globals.currentUser;
 
       if (restrictedPage && !loggedIn) {
