@@ -203,7 +203,7 @@ angular.module('aplicacion')
           controllerAs: 'rm'
         })
         .state('insertCode', {
-          url: '/insertCode',
+          url: '/:usr/:pin/insertCode',
           controller: RecupMainCtrl,
           templateUrl: 'partials/security/login/insertCode.html'
         })

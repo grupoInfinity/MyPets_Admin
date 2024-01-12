@@ -52,8 +52,6 @@ LOCK TABLES `sec_rol` WRITE;
 insert  into `sec_rol`(`id_rol`,`descripcion`,`estado`,`usuario_creacion`,`fecha_creacion`,`usuario_update`,`fecha_update`)
   VALUE(1,'Administrador','A','admin','2021-08-11 16:15:48','admin','2019-02-11 00:00:00'),
  (2,'Cliente','A','admin','2021-08-11 16:15:48',NULL,NULL);
- 
- SELECT * FROM sec_rol
 
 UNLOCK TABLES;
 
@@ -191,7 +189,7 @@ insert  into `sec_opc_rol`(`id_menu`,`id_opc`,`id_rol`,`usuario_creacion`,`fecha
 
 LOCK TABLES `sec_opc_rol` WRITE;
 
-
+USE dbmypet
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `sec_rol_usuario`;

@@ -1366,9 +1366,46 @@ function RegistroMainCtrl($rootScope, $stateParams, $scope, URL_API, $filter, $h
 };
 ///RECUPERACION DE CONTRASEÑA
 function RecupMainCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile, $window,
-	popupService, RolUsuario, Rol) {
+	popupService, Usr) {
 
-	$scope.clearMessages = function () {
+	//var rm = this;
+	$scope.recupUs = {
+		usr: "",
+		pin: "",
+		email: ""
+	};
+
+	$scope.findUsr = function (usr) {
+		Usr.findByUsr(usr, function (response) {
+			if (response.data.status == 1) {
+				$scope.recupUs = response.data.info;
+				console.log(response.data.info);
+
+				Swal.fire({
+					title: 'Revise su bandeja de correos',
+					text: "",
+					type: 'info',
+					//showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					//cancelButtonColor: '#d33',
+					confirmButtonText: 'OK'
+				}).then((result) => {
+					if (result.value) {
+						$state.go('insertCode', {
+							usr: $scope.recupUs.usr,
+							pin: $scope.recupUs.pin
+						});
+					}
+				})
+				
+			}
+			else {
+
+			};
+		});
+	};
+
+	/*$scope.clearMessages = function () {
 		$scope.successMessagesChild = '';
 		$scope.errorMessagesChild = '';
 		$scope.errorsChild = {};
@@ -1385,7 +1422,7 @@ function RecupMainCtrl($scope, $rootScope, $filter, $state, $stateParams, $compi
 		var date = new Date();
 
 		$scope.recup = {
-			usuario: "",
+			usr: "",
 			pin: "",
 			email: ""
 		};
@@ -1413,32 +1450,24 @@ function RecupMainCtrl($scope, $rootScope, $filter, $state, $stateParams, $compi
 		}
 	};
 
-	$scope.resetRol();
+	//$scope.resetRol();*/
 
-	$scope.loadRoles = function () {
-		Rol.findAll(function (response) {
-			if (response.data.status == 1)
-				$scope.roles = response.data.info;
-			else $scope.roles = [];
-		});
-	};
-
-	$scope.loadRoles();
+	//$scope.loadRoles();
 
 	//LISTA
-	$scope.refreshRol = function (usuario) {
+	/*$scope.refreshRol = function (usuario) {
 		RolUsuario.findByUsuario(usuario, function (response) {
 			if (response.data.status == 1)
 				$scope.rolesusr = response.data.info;
 			else $scope.rolesusr = [];
 		});
-	};
+	};*/
 
-	if ($scope.formType == "ADD") {
+	/*if ($scope.formType == "ADD") {
 		$scope.refreshRol("NADA");
 	} else {
 		$scope.refreshRol($stateParams.idUsuario);
-	}
+	}*/
 
 };
 
