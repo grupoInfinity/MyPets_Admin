@@ -1,35 +1,6 @@
 <fieldset>
 
-	<div class="modal fade modal-primary" id="notificacionesModal" tabindex="-1" role="dialog">
-		<div class="modal-dialog modal-sm" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title">Notificaciones</h4>
-				</div>
-				<div class="modal-body">
-
-					<!-- We output a list of success messages (appropriately styled!) for the form. -->
-					<ul ng-hide="!successMessages" class="success">
-						<li ng-repeat="message in successMessages">{{message}}</li>
-					</ul>
-
-					<!-- Output the list of error messages if any. -->
-					<ul ng-hide="!errorMessages" class="error">
-						<li ng-repeat="message in errorMessages">{{message}}</li>
-					</ul>
-
-				</div>
-				<div class="modal-footer">
-
-				</div>
-			</div>
-			<!-- /.modal-content -->
-		</div>
-		<!-- /.modal-dialog -->
-	</div>
+	
 
 	<form name="regForm" class="form-horizontal" ng-submit="registerUsuario(formType)">
 		<div ng-show="isNew(formType)">

@@ -4,6 +4,7 @@ function LoginController($scope, $state, $stateParams, Authentication, Flash) {
 	$scope.skin = "skin-blue";
 	vm.login = login;
 	vm.registro = registro;
+	vm.recup = recup;
 
 	vm.secUsuario = {
 		usr: ""
@@ -62,6 +63,10 @@ function LoginController($scope, $state, $stateParams, Authentication, Flash) {
 	function registro() {
 		console.log(1);
 		$state.go('registroMain');
+	};
+	function recup() {
+		console.log(2);
+		$state.go('recupMain');
 	};
 
 };

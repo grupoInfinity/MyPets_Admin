@@ -1,0 +1,64 @@
+<fieldset>
+
+	<form name="regForm" class="form-horizontal" ng-submit="registerUsuario(formType)">
+		<div ng-show="isNew(formType)">
+			<legend class="center">RECUPERACION DE CLAVE</legend>
+		</div>
+
+		<div ng-show="!isNew(formType)">
+			<legend>Modificaci&oacute;n del Usuario</legend>
+		</div>
+
+		<div class="form-group">
+			<input type="hidden" name="formType" id="formType" ng-model="formType" />
+		</div>
+
+		<div class="box box-default box-solid">
+			<div class="box-header with-border">
+				<h3 class="box-title">Usuarios</h3>
+				<div class="box-tools pull-right">
+					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+					</button>
+				</div>
+				<!-- /.box-tools -->
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body">
+
+				<div class="form-group" ng-class="{ 'has-error': regForm.nombre.$error.required }">
+
+
+					<label for="nombre" class="col-sm-2 control-label">Usuario:</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" name="nombre" id="nombre" ng-model="newUsuario.nombre"
+							placeholder="Nombre del Usuario" required autocomplete="nope" />
+						<span class="error help-block" ng-show="regForm.nombre.$error.required">Requerido</span>
+						<span class="error help-block" ng-show="errors.nombre">{{errors.nombre}}</span>
+					</div>
+
+
+					<!--  <div class="form-group" ng-class="{ 'has-error': regForm.apellido.$error.required }">-->
+					<label for="apellido" class="col-sm-1 control-label">Apellido:</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" name="apellido" id="apellido"
+							ng-model="newUsuario.apellido" placeholder="Apellido del Usuario" required
+							autocomplete="nope" />
+						<span class="error help-block" ng-show="regForm.apellido.$error.required">Requerido</span>
+						<span class="error help-block" ng-show="errors.apellido">{{errors.apellido}}</span>
+					</div>
+				</div>
+
+
+			</div>
+			<div class="box-footer">
+				<input type="submit" ng-disabled="regForm.$invalid" id="guardar" value="Guardar"
+					class="btn btn-primary pull-right" />
+			</div>
+
+		</div>
+
+	</form>
+
+	
+
+</fieldset>

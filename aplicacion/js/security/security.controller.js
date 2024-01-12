@@ -1415,7 +1415,7 @@ function RecupMainCtrl($scope, $rootScope, $filter, $state, $stateParams, $compi
 
 	$scope.resetRol();
 
-	/*$scope.loadRoles = function () {
+	$scope.loadRoles = function () {
 		Rol.findAll(function (response) {
 			if (response.data.status == 1)
 				$scope.roles = response.data.info;
@@ -1438,7 +1438,7 @@ function RecupMainCtrl($scope, $rootScope, $filter, $state, $stateParams, $compi
 		$scope.refreshRol("NADA");
 	} else {
 		$scope.refreshRol($stateParams.idUsuario);
-	}*/
+	}
 
 };
 
