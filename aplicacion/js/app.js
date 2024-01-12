@@ -195,16 +195,24 @@ angular.module('aplicacion')
           controller: RegistroMainCtrl,
           templateUrl: 'partials/security/login/registroMain.html'
         })
+        //RECUPERACION
         .state('recupMain', {
           url: '/recupMain',
           controller: RecupMainCtrl,
-          templateUrl: 'partials/security/login/recupMain.html'
+          templateUrl: 'partials/security/login/recupMain.html',
+          controllerAs: 'vm'
         })
-        .state('insertPin', {
-          url: '/insertPin',
+        .state('insertCode', {
+          url: '/insertCode',
           controller: RecupMainCtrl,
-          templateUrl: 'partials/security/login/insertPin.html'
+          templateUrl: 'partials/security/login/insertCode.html'
         })
+        .state('editClave', {
+          url: '/editClave',
+          controller: RecupMainCtrl,
+          templateUrl: 'partials/security/login/editClave.html'
+        })
+        //MENU
         .state('menuMaster', {
           abstract: true,
           templateUrl: 'partials/menuMaster.html'
