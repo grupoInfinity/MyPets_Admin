@@ -1364,11 +1364,123 @@ function RegistroMainCtrl($rootScope, $stateParams, $scope, URL_API, $filter, $h
 	$scope.onlyLetters = "/^[a-zA-Z.\-\s\Ññ\_\]+$/i/";
 
 };
+///RECUPERACION DE CONTRASEÑA
+function RecupMainCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile, $window,
+	popupService, RolUsuario, Rol) {
 
-/*************************** OPCION ROL CONTROLLER ***********************************/
+	$scope.clearMessages = function () {
+		$scope.successMessagesChild = '';
+		$scope.errorMessagesChild = '';
+		$scope.errorsChild = {};
+	};
 
+	$scope.resetRol = function () {
 
+		// Sets the form to it's pristine state
+		if ($scope.rolForm) {
+			$scope.rolForm.$setPristine();
+		}
 
+		$scope.formRecup = "ADD";
+		var date = new Date();
+
+		$scope.recup = { 
+			usuario: "",
+			pin: "",
+			email: ""};
+
+		$scope.rol.usr = $scope.newUsuario;
+
+		$scope.clearMessages();
+	};
+
+	$scope.guardarRol = function (value) {
+		$scope.clearMessages();
+
+		if (value == "ADD") {
+			RolUsuario.insertar($scope.rol, function (data) {
+				$scope.formTypeRol = "UPD";
+				$scope.refreshRol($scope.newUsuario.usr);
+				$scope.resetRol();
+				$scope.successMessagesChild = ['Rol Registrado correctamente'];
+
+			}, function (result) {
+				if ((result.status == 409) || (result.status == 400)) {
+					$scope.errorsChild = result.data;
+				} else {
+					$scope.errorMessagesChild = ['Unknown error de servidor'];
+				}
+			});
+
+		} else {
+			var date = new Date();
+			var rolObj = { usuario: $rootScope.globals.currentUser.username };
+
+			$scope.rol.usuario = rolObj.usuario;
+
+			RolUsuario.actualizar($scope.rol, function (data) {
+				$scope.refreshRol($scope.newUsuario.usr);
+				$scope.successMessagesChild = ['Rol Actualizado correctamente'];
+			}, function (result) {
+				if ((result.status == 409) || (result.status == 400)) {
+					$scope.errorsChild = result.data;
+				} else {
+					$scope.errorMessagesChild = ['Unknown error de servidor'];
+				}
+			});
+		}
+	};
+
+	$scope.resetRol();
+
+	$scope.loadRoles = function () {
+		Rol.findAll(function (response) {
+			if (response.data.status == 1)
+				$scope.roles = response.data.info;
+			else $scope.roles = [];
+		});
+	};
+
+	$scope.loadRoles();
+
+	//LISTA
+	$scope.refreshRol = function (usuario) {
+		RolUsuario.findByUsuario(usuario, function (response) {
+			if (response.data.status == 1)
+				$scope.rolesusr = response.data.info;
+			else $scope.rolesusr = [];
+		});
+	};
+
+	if ($scope.formType == "ADD") {
+		$scope.refreshRol("NADA");
+	} else {
+		$scope.refreshRol($stateParams.idUsuario);
+	}
+
+	$scope.modifyRol = function (usuario, idRol) {
+		$scope.clearMessages();
+		$('#myRecupModal').modal('show');
+		$scope.formTypeRol = "UPD";
+
+		RolUsuario.findById(usuario, idRol, function (response) {
+
+			if (response.data.status == 1) {
+				$scope.rol = response.data.info[0];
+				$scope.rol.id_empresa = response.data.info[0].id.id_empresa;
+				$scope.rol.id_rol = response.data.info[0].id.id_rol;
+			}
+			else {
+				$scope.rol = [];
+				$scope.rol.id_empresa = $rootScope.globals.currentUser.id_empresa;
+				$scope.rol.id_rol = $rootScope.globals.currentUser.id_rol;
+			}
+		});
+
+	};
+};
+
+/*************************** ROLUSUARIO CONTROLLER ***********************************/
 function RolUsuarioCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile, $window,
 	popupService, RolUsuario, Rol) {
 

@@ -195,6 +195,11 @@ angular.module('aplicacion')
           controller: RegistroMainCtrl,
           templateUrl: 'partials/security/login/registroMain.html'
         })
+        .state('recupMain', {
+          url: '/recupMain',
+          controller: RecupMainCtrl,
+          templateUrl: 'partials/security/login/recupMain.html'
+        })
         .state('menuMaster', {
           abstract: true,
           templateUrl: 'partials/menuMaster.html'
@@ -245,7 +250,7 @@ angular.module('aplicacion')
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
       // redirect to login page if not logged in and trying to access a restricted page
-      var restrictedPage = $.inArray($location.path(), ['/login', '/register']) === -1;
+      var restrictedPage = $.inArray($location.path(), ['/login', '/registroMain','recupMain']) === -1;
       var loggedIn = $rootScope.globals.currentUser;
 
       if (restrictedPage && !loggedIn) {
