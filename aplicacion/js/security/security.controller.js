@@ -1115,6 +1115,8 @@ function UsuarioEditCtrl($rootScope, $scope, $filter, $state, $stateParams, URL_
 
 			$scope.newUsuario.usuario = usuarioObj.usuario;
 			$scope.newUsuario.usorig = $stateParams.idUsuario;
+			//console.log($scope.newUsuario);
+			
 			Usr.actualizar($scope.newUsuario, function (data) {
 				$scope.successMessages = ['Usuario Actualizado correctamente'];
 				Swal.fire({
