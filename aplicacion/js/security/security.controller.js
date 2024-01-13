@@ -1365,7 +1365,7 @@ function RegistroMainCtrl($rootScope, $stateParams, $scope, URL_API, $filter, $h
 
 };
 ///RECUPERACION DE CONTRASEÑA
-function RecupMainCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile, $window,
+function RecupMainCtrl($scope, $rootScope, $cookies, $filter, $state, $stateParams, $compile, $window,
 	popupService, Usr) {
 
 	var rm = this;
@@ -1376,14 +1376,12 @@ function RecupMainCtrl($scope, $rootScope, $filter, $state, $stateParams, $compi
 		email: "",
 	};
 	function findUsr() {
-	//findUsr = function () {
+		//findUsr = function () {
 		Usr.findByUsr(rm.recupUsr.usr, function (response) {
 			if (response.data.status == 1) {
 				rm.recupUs = response.data.info[0];
 
-				$rootScope.user = rm.recupUs.usr;
-				$cookies.putObject('user', $rootScope.user, { expires: cookieExp });
-				
+
 				Swal.fire({
 					title: 'Revise su bandeja de correos',
 					text: "",
@@ -1394,12 +1392,17 @@ function RecupMainCtrl($scope, $rootScope, $filter, $state, $stateParams, $compi
 					confirmButtonText: 'OK'
 				}).then((result) => {
 					if (result.value) {
+						$rootScope.user = rm.recupUs.usr;
+						var cookieExp = new Date();
+						cookieExp.setDate(cookieExp.getDate() + 7);
+						$cookies.putObject('user', $rootScope.user, { expires: cookieExp });
+						
 						$state.go("insertCode", {
 							usr: rm.recupUs.usr/*,pin: rm.recupUs.pin*/
 						});
 					}
 				})
-				
+
 			}
 			else {
 				Swal.fire({
@@ -1417,7 +1420,8 @@ function RecupMainCtrl($scope, $rootScope, $filter, $state, $stateParams, $compi
 function insertCodeCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile, $window,
 	popupService, Usr) {
 
-	
+
+
 };
 
 /*************************** ROLUSUARIO CONTROLLER ***********************************/

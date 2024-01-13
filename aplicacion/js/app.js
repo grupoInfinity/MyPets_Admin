@@ -203,19 +203,14 @@ angular.module('aplicacion')
           controllerAs: 'rm'
         })
         .state('insertCode', {
-          url: '/:usr/:pin/insertCode',
+          url: '/:usr/insertCode',
           //url: '/insertCode',
           templateUrl: 'partials/security/recup/insertCode.html',
           controller: insertCodeCtrl
         })
-        /*.state('menuMaster.editMunis', {
-          url: '/:idDepto/:idMunis/editMuni',
-          templateUrl: 'partials/ctg/ctg_muni/editMuni.html',
-          controller: MunisEditCtrl
-        })*/
         .state('editClave', {
-          url: '/editClave',
-          controller: RecupMainCtrl,
+          url: '/:usr/editClave',
+          controller: editClaveCtrl,
           templateUrl: 'partials/security/recup/editClave.html'
         })
         //MENU
@@ -263,34 +258,36 @@ angular.module('aplicacion')
   })
   .run(function ($rootScope, $location, $cookieStore, $http) {
     $rootScope.globals = $cookieStore.get('globals') || {};
-    $rootScope.user = $cookieStore.get('user');
+    //$rootScope.user = $cookieStore.get('user');
     if ($rootScope.globals.currentUser) {
       $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
     }
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
       // redirect to login page if not logged in and trying to access a restricted page
-      var restrictedPage = $.inArray($location.path(), ['/login', '/registroMain', '/recupMain']) === -1;
+      function secCode(longitud) {
+        const caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_-+=[]{}|;:,.<>?";
+        let codigo = "";
+        for (let i = 0; i < longitud; i++) {
+          const indice = Math.floor(Math.random() * caracteres.length);
+          codigo += caracteres.charAt(indice);
+        }
+        return codigo;
+      }
+
       var loggedIn = $rootScope.globals.currentUser;
       var user = $rootScope.user;
-      console.log($rootScope.user);
+      var restrictedPage = $.inArray($location.path(), ['/login', '/registroMain', '/recupMain',
+      '/'+user+'/insertCode','/'+user+'/editClave']) === -1;
+      //console.log($rootScope.user);
 
 
-      if (restrictedPage ) {
+      if (restrictedPage) {
         if(!loggedIn){
-          if(user==null){
-            $location.path('/login');
-          }
-          
-        }
-        else{
-          
-        }
-       /* else if(!user){
           $location.path('/login');
-        }*/
-        
+        }     
       }
+      $rootScope.user=secCode(30);
       
 
     });
