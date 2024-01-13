@@ -5,7 +5,7 @@ function LoginController($scope, $state, $stateParams, Authentication, Flash) {
 	vm.login = login;
 	vm.registro = registro;
 	vm.recup = recup;
-	vm.insertC = insertC;
+	//vm.insertC = insertC;
 
 	vm.secUsuario = {
 		usr: ""
@@ -69,10 +69,10 @@ function LoginController($scope, $state, $stateParams, Authentication, Flash) {
 		console.log(2);
 		$state.go('recupMain');
 	};
-	function insertC() {
+	/*function insertC() {
 		console.log(2);
 		$state.go('insertCode');
-	};
+	};*/
 
 };
 

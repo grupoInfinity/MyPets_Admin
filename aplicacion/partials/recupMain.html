@@ -12,9 +12,9 @@
 				<div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }"
 					ng-if="flash" ng-bind="flash.message"></div>
 			</div>
-			<form ng-submit="findUsr()" role="form">
+			<form ng-submit="rm.findUsr()" role="form">
 				<div class="form-group has-feedback">
-					<input type="text" name="username" id="username" ng-model="recupUsr.usr" required
+					<input type="text" name="username" id="username" ng-model="rm.recupUsr.usr" required
 						class="form-control" placeholder="Usuario">
 					<span class="glyphicon glyphicon-user form-control-feedback"></span>
 					<span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Usuario

@@ -1368,24 +1368,23 @@ function RegistroMainCtrl($rootScope, $stateParams, $scope, URL_API, $filter, $h
 function RecupMainCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile, $window,
 	popupService, Usr) {
 
-	//var rm = this;
-	$scope.recupUs = {
+	var rm = this;
+	rm.findUsr = findUsr;
+	rm.recupUs = {
 		usr: "",
 		pin: "",
-		email: ""
+		email: "",
 	};
-
-	$scope.findUsr = function () {
-		Usr.findByUsr($scope.recupUsr.usr, function (response) {
+	function findUsr() {
+	//findUsr = function () {
+		Usr.findByUsr(rm.recupUsr.usr, function (response) {
 			if (response.data.status == 1) {
-				$scope.recupUs = response.data.info[0];
+				rm.recupUs = response.data.info[0];
 
-				$state.go("insertCode", {
-							usr: $scope.recupUs.usr,
-							pin: $scope.recupUs.pin
-						});
+				$rootScope.user = rm.recupUs.usr;
+				$cookies.putObject('user', $rootScope.user, { expires: cookieExp });
 				
-				/*Swal.fire({
+				Swal.fire({
 					title: 'Revise su bandeja de correos',
 					text: "",
 					type: 'info',
@@ -1395,12 +1394,11 @@ function RecupMainCtrl($scope, $rootScope, $filter, $state, $stateParams, $compi
 					confirmButtonText: 'OK'
 				}).then((result) => {
 					if (result.value) {
-						$state.go("recupMain.insertCode", {
-							usr: $scope.recupUs.usr,
-							pin: $scope.recupUs.pin
+						$state.go("insertCode", {
+							usr: rm.recupUs.usr/*,pin: rm.recupUs.pin*/
 						});
 					}
-				})*/
+				})
 				
 			}
 			else {
