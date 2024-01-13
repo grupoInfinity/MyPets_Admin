@@ -19,6 +19,7 @@ function generarPin(){
 
 $accion = isset($_GET['accion']) ? $_GET['accion'] : '';
 $usr = isset($_GET['usr']) ? $_GET['usr'] : '';
+$usorig = isset($_GET['usorig']) ? $_GET['usorig'] : '';
 $pin = isset($_GET['pin']) ? $_GET['pin'] : '';
 $clave = (isset($_GET['clave']) ? $_GET['clave'] : '');
 $nuevaClave = (isset($_GET['nuevaClave']) ? $_GET['nuevaClave'] : '');
@@ -123,11 +124,11 @@ else {
 
 
 		$sql = "UPDATE $bd.$tabla SET usuario='$usr' $clave $nombre $apellido $email $tel $pin $estado $user $date 
-		WHERE usuario = '$usr'";
+		WHERE usuario = '$usorig'";
 
 		//echo $sql;
 		if ($conn->query($sql) === TRUE) {
-			$json = array("status" => 1, "info" => "Registro actualizado exitosamente.");
+			$json = array("status" => 1, "info" => "Registro actualizado exitosamente .$sql");
 		} else {
 			$json = array("status" => 0, "error" => $conn->error);
 		}

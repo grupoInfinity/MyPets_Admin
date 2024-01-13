@@ -1066,8 +1066,10 @@ function UsuarioEditCtrl($rootScope, $scope, $filter, $state, $stateParams, URL_
 			pin: "",
 			email: "",
 			estado: "",
+			usorig: "",
 			usuario: $rootScope.globals.currentUser.username
 		};
+		//$scope.newUsuario.usorig=$stateParams.idUsuario;
 
 		$scope.clearMessages();
 	};
@@ -1112,7 +1114,7 @@ function UsuarioEditCtrl($rootScope, $scope, $filter, $state, $stateParams, URL_
 			var usuarioObj = { usuario: $rootScope.globals.currentUser.username };
 
 			$scope.newUsuario.usuario = usuarioObj.usuario;
-
+			$scope.newUsuario.usorig = $stateParams.idUsuario;
 			Usr.actualizar($scope.newUsuario, function (data) {
 				$scope.successMessages = ['Usuario Actualizado correctamente'];
 				Swal.fire({

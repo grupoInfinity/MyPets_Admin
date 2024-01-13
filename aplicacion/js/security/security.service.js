@@ -583,6 +583,7 @@ factory('Usr', function($http, URL_API){
 
     function actualizar(usuario, callback){
 		var url = URL_API + '/servicios/sec/sec_usuario.php?accion=U'+
+        '&usorig='+usuario.usorig;
 		'&usr=' + usuario.usr +
 		'&clave=' + usuario.clave + 
 		'&nombre=' + usuario.nombre + 
