@@ -1396,7 +1396,7 @@ function RecupMainCtrl($scope, $rootScope, $cookies, $filter, $state, $statePara
 						var cookieExp = new Date();
 						cookieExp.setDate(cookieExp.getDate() + 7);
 						$cookies.putObject('user', $rootScope.user, { expires: cookieExp });
-						
+
 						$state.go("insertCode", {
 							usr: rm.recupUs.usr/*,pin: rm.recupUs.pin*/
 						});
@@ -1418,6 +1418,12 @@ function RecupMainCtrl($scope, $rootScope, $cookies, $filter, $state, $statePara
 	};
 };
 function insertCodeCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile, $window,
+	popupService, Usr) {
+
+
+
+};
+function editClaveCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile, $window,
 	popupService, Usr) {
 
 

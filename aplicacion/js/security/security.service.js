@@ -490,6 +490,7 @@ factory('Usr', function($http, URL_API){
     service.findByUsr = findByUsr;
     service.findAllA = findAllA; 
     service.insertarRol=insertarRol;
+    service.actualizarPin = actualizarPin;
     /*    service.getUser = getUser;
 
    function getUser(usuario, callback) {
@@ -590,6 +591,17 @@ factory('Usr', function($http, URL_API){
         '&pin=' + usuario.pin */+ 
 		'&email=' + usuario.email + 
 		'&estado=' + (usuario.estado?'A':'I') +
+		'&user=' + usuario.usuario;
+		
+		console.log(url);
+        $http.post(url, usuario).
+        then(function(response) {
+            callback(response);
+         });
+    };
+    function actualizarPin(usuario, callback){
+		var url = URL_API + '/servicios/sec/sec_usuario.php?accion=U'+
+		'&usr=' + usuario.usr +
 		'&user=' + usuario.usuario;
 		
 		console.log(url);

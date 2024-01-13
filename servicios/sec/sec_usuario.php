@@ -103,9 +103,9 @@ else {
 		}
 	} 
 	else if (strtoupper($accion) == 'U') { // VERIFICACION SI LA ACCION ES MODIFICACION
-
-		if (!empty($clave)) $clave = "clave='" . ($clave) . "'";
-		else $clave = "clave=clave";
+		
+		if (!empty($clave)) $clave = ",clave='" . ($clave) . "'";
+		else $clave = ",clave=clave";
 		if (!empty($nombre)) $nombre = ", nombre='" . ($nombre) . "'";
 		else $nombre = ",nombre=nombre";
 		if (!empty($apellido)) $apellido = ", apellido='" . ($apellido) . "'";
@@ -122,7 +122,7 @@ else {
 		$date = ", fecha_update='" . date('Y-m-d H:i:s') . "'";
 
 
-		$sql = "UPDATE $bd.$tabla SET $clave $nombre $apellido $email $tel $pin $estado $user $date 
+		$sql = "UPDATE $bd.$tabla SET usuario='$usr' $clave $nombre $apellido $email $tel $pin $estado $user $date 
 		WHERE usuario = '$usr'";
 
 		//echo $sql;

@@ -462,6 +462,9 @@ INSERT INTO prc_vacunas(id_vacuna,id_mascota,id_tipovacuna,usuario_creacion,fech
 VALUE(2,2,2,'dnery','2021-08-11 16:15:48',NULL,NULL);
 
 
+SELECT * FROM sec_usuario
+UPDATE sec_usuario SET usuario='dbarrientosss' WHERE usuario='dbarrientos'
+
 
 SELECT * from prc_vacunas
 
