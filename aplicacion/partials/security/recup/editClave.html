@@ -12,12 +12,18 @@
 				<div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }"
 					ng-if="flash" ng-bind="flash.message"></div>
 			</div>
-			<form ng-submit="vm.login()" role="form">
+			<form ng-submit="editC()" role="form">
 				<div class="form-group has-feedback">
-					<input type="text" name="username" id="username" ng-model="rm.pinValid.pin" required
-						class="form-control" placeholder="PIN DE SEGURIDAD">
+					<input type="text" name="clave" id="clave" ng-model="newClave.clave" required
+						class="form-control" placeholder="Ingrese la clave que desea">
 					<span class="glyphicon glyphicon-user form-control-feedback"></span>
-					<span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Codigo requerido</span>
+					<span ng-show="form.clave.$dirty && form.clave.$error.required" class="help-block">Clave requerida</span>
+				</div>
+				<div class="form-group has-feedback">
+					<input type="text" name="claved" id="claved" ng-model="newClave.clavedos" required
+						class="form-control" placeholder="Digitela de nuevo">
+					<span class="glyphicon glyphicon-user form-control-feedback"></span>
+					<span ng-show="form.claved.$dirty && form.claved.$error.required" class="help-block">Clave requerida</span>
 				</div>
 
 				<div class="row ">

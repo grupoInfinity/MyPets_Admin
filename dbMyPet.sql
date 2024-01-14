@@ -463,7 +463,7 @@ VALUE(2,2,2,'dnery','2021-08-11 16:15:48',NULL,NULL);
 
 
 SELECT * FROM sec_usuario
-UPDATE sec_usuario SET usuario='dbarrientosss' WHERE usuario='dbarrientos'
+UPDATE sec_usuario SET usuario='dbarrientosss' WHERE usuario=''
 
 
 SELECT * from prc_vacunas
