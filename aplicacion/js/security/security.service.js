@@ -600,11 +600,10 @@ factory('Usr', function($http, URL_API){
             callback(response);
          });
     };
-    function actualizarPin(usuario, callback){
+    function actualizarPin(usr,usuario, callback){
 		var url = URL_API + '/servicios/sec/sec_usuario.php?accion=U'+
-        '&usorig='+usuario.usorig+
-		'&usr=' + usuario.usr +
-		'&user=' + usuario.usuario;
+		'&usr=' + usr +
+		'&user=' +usuario;
 		
 		console.log(url);
         $http.post(url, usuario).

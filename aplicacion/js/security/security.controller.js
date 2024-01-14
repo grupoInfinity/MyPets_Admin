@@ -1384,8 +1384,6 @@ function RecupMainCtrl($scope, $rootScope, $cookies, $filter, $state, $statePara
 		Usr.findByUsr(rm.recupUsr.usr, function (response) {
 			if (response.data.status == 1) {
 				rm.recupUs = response.data.info[0];
-
-
 				Swal.fire({
 					title: 'Revise su bandeja de correos',
 					text: "",
@@ -1401,9 +1399,15 @@ function RecupMainCtrl($scope, $rootScope, $cookies, $filter, $state, $statePara
 						cookieExp.setDate(cookieExp.getDate() + 7);
 						$cookies.putObject('user', $rootScope.user, { expires: cookieExp });
 
-						$state.go("insertCode", {
-							usr: rm.recupUs.usr/*,pin: rm.recupUs.pin*/
-						});
+						Usr.actualizarPin(rm.recupUsr.usr,rm.recupUsr.usr, function (response2) {
+							if(response2.data.status == 1){
+								
+								$state.go("insertCode", {
+									usr: rm.recupUs.usr/*,pin: rm.recupUs.pin*/
+								});
+							}
+							
+						})
 					}
 				})
 
