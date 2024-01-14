@@ -210,8 +210,8 @@ angular.module('aplicacion')
         })
         .state('editClave', {
           url: '/:usr/editClave',
-          controller: editClaveCtrl,
-          templateUrl: 'partials/security/recup/editClave.html'
+          templateUrl: 'partials/security/recup/editClave.html',
+          controller: editClaveCtrl
         })
         //MENU
         .state('menuMaster', {

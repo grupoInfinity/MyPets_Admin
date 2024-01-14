@@ -116,10 +116,11 @@ else {
 		else $tel = ",telefono=telefono";
 		if (!empty($email)) $email = ", email='" . ($email) . "'";
 		else $email = ",email=email";
-		if (!empty($pin)) $pin = ",pin='" . generarPin() . "'";
-		else $pin = ",pin=pin";
+		if (!empty($estado)) $estado = ", estado='" . strtoupper($estado) . "'";
+		else $estado = ",estado=estado";
+		
+		$pin = ",pin='" . generarPin() . "'";
 
-		$estado = ", estado='" . strtoupper($estado) . "'";
 		$user = ", usuario_update='" . $user . "'";
 		$date = ", fecha_update='" . date('Y-m-d H:i:s') . "'";
 

@@ -1116,7 +1116,7 @@ function UsuarioEditCtrl($rootScope, $scope, $filter, $state, $stateParams, URL_
 			$scope.newUsuario.usuario = usuarioObj.usuario;
 			$scope.newUsuario.usorig = $stateParams.idUsuario;
 			//console.log($scope.newUsuario);
-			
+
 			Usr.actualizar($scope.newUsuario, function (data) {
 				$scope.successMessages = ['Usuario Actualizado correctamente'];
 				Swal.fire({
@@ -1399,14 +1399,14 @@ function RecupMainCtrl($scope, $rootScope, $cookies, $filter, $state, $statePara
 						cookieExp.setDate(cookieExp.getDate() + 7);
 						$cookies.putObject('user', $rootScope.user, { expires: cookieExp });
 
-						Usr.actualizarPin(rm.recupUsr.usr,rm.recupUsr.usr, function (response2) {
-							if(response2.data.status == 1){
-								
+						Usr.actualizarPin(rm.recupUsr.usr, function (response2) {
+							if (response2.data.status == 1) {
+
 								$state.go("insertCode", {
 									usr: rm.recupUs.usr/*,pin: rm.recupUs.pin*/
 								});
 							}
-							
+
 						})
 					}
 				})
@@ -1427,7 +1427,40 @@ function RecupMainCtrl($scope, $rootScope, $cookies, $filter, $state, $statePara
 };
 function insertCodeCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile, $window,
 	popupService, Usr) {
+	//var ins = this;
+	$scope.findPin = findPin;
+	console.log($rootScope.user);
 
+	$scope.pinValid = {
+		pin: "",
+		usr: $rootScope.user
+	};
+
+
+	function findPin() {
+		Usr.findByPin($scope.pinValid, function (response) {
+
+			if (response.data.status == 1) {
+				$scope.pinValid = response.data.info[0];
+				$rootScope.user = $scope.pinValid.usr;
+
+				$state.go("editClave", {
+					usr: $scope.pinValid.usr/*,pin: rm.recupUs.pin*/
+				});
+
+			}
+			else {
+				Swal.fire({
+					//toast:true,
+					position: 'center',
+					type: 'error',
+					title: 'PIN Incorrecto',
+					showConfirmButton: false,
+					timer: 3500
+				});
+			};
+		});
+	};
 
 
 };

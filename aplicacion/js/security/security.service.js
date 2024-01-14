@@ -491,6 +491,7 @@ factory('Usr', function($http, URL_API){
     service.findAllA = findAllA; 
     service.insertarRol=insertarRol;
     service.actualizarPin = actualizarPin;
+    service.findByPin=findByPin;
     /*    service.getUser = getUser;
 
    function getUser(usuario, callback) {
@@ -502,6 +503,15 @@ factory('Usr', function($http, URL_API){
         });
     
     };*/
+    function findByPin(usr,callback){
+    	var url = URL_API + '/servicios/sec/sec_usuario.php?accion=C&usr='+usr.usr+
+        '&pin='+usr.pin;
+		console.log(url);
+    	$http.get(url).
+        then(function(response) {
+           callback(response);
+        });
+    };
 
     function findAlls(callback){
     	var url = URL_API + '/servicios/sec/sec_usuario.php?accion=C';
@@ -600,13 +610,13 @@ factory('Usr', function($http, URL_API){
             callback(response);
          });
     };
-    function actualizarPin(usr,usuario, callback){
+    function actualizarPin(usr, callback){
 		var url = URL_API + '/servicios/sec/sec_usuario.php?accion=U'+
-		'&usr=' + usr +
-		'&user=' +usuario;
+		'&usorig=' + usr +
+		'&user=' +usr;
 		
 		console.log(url);
-        $http.post(url, usuario).
+        $http.post(url).
         then(function(response) {
             callback(response);
          });

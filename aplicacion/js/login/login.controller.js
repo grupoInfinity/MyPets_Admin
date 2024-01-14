@@ -42,7 +42,7 @@ function LoginController($scope, $state, $stateParams, Authentication, Flash) {
 						//toast:true,
 						position: 'center',
 						type: 'error',
-						title: response.data.info + 'elpepe',
+						title: response.data.info ,
 						showConfirmButton: false,
 						timer: 3500
 					});
