@@ -1466,35 +1466,37 @@ function insertCodeCtrl($scope, $rootScope, $filter, $state, $stateParams, $comp
 };
 function editClaveCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile, $window,
 	popupService, Usr) {
-		$scope.editC = editC;
-		console.log($rootScope.user);
-	
-		$scope.newClave = {
-			clave: "",
-			clavedos: "",
-			usr: $rootScope.user
-		};
-	
-	
-		function editC() {
-			Usr.actualizarClave($scope.newClave, function (response) {
-	
-				Swal.fire({
-					title: 'Clave actualizada correctamente',
-					text: "",
-					type: 'info',
-					//showCancelButton: true,
-					confirmButtonColor: '#3085d6',
-					//cancelButtonColor: '#d33',
-					confirmButtonText: 'OK'
-				}).then((result) => {
-					if (result.value) {
-						$state.go("login", {
-						});
-					}
-				})
-			});
-		};
+	$scope.editC = editC;
+	console.log($rootScope.user);
+
+	$scope.newClave = {
+		clave: "",
+		clavedos: "",
+		usr: $rootScope.user
+	};
+	$scope.verificarClaves = function () {
+		$scope.clavesCoinciden = $scope.newClave.clave === $scope.newClave.clavedos;
+	};
+
+	function editC() {
+		Usr.actualizarClave($scope.newClave, function (response) {
+
+			Swal.fire({
+				title: 'Clave actualizada correctamente',
+				text: "",
+				type: 'info',
+				//showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				//cancelButtonColor: '#d33',
+				confirmButtonText: 'OK'
+			}).then((result) => {
+				if (result.value) {
+					$state.go("login", {
+					});
+				}
+			})
+		});
+	}
 };
 
 /*************************** ROLUSUARIO CONTROLLER ***********************************/
