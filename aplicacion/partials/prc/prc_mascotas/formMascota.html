@@ -175,20 +175,6 @@
 					</div>
 				</div>
 
-				<div class="form-group" >
-					<label for="foto" class="col-sm-2 control-label">Foto de la mascota:</label>
-					<div class="col-sm-4">
-						<input type="file" id="fileInput" ng-model="newMasc.foto"
-							onchange="angular.element(this).scope().loadImage(this)" >
-					</div>
-				</div>
-				<div class="form-group">
-					<!--<img ng-src="{{newMasc.foto }}" class="avatar rounded lg" height="300px" width="400px" alt=" " />
-					<img ng-src="data:image/jpeg;base64,{{ newMasc.fotol }}" class="avatar rounded lg" height="300px"
-						width="400px" alt=" ">-->
-				</div>
-
-
 				<div class="form-group" ng-class="{ 'has-error': regForm.estado.$error.required }">
 					<label for="estado" class="col-sm-2 control-label">Estado:</label>
 					<div class="col-sm-2">
@@ -204,6 +190,18 @@
 					</div>
 				</div>
 
+				<div class="form-group" >
+					<label for="foto" class="col-sm-2 control-label">Foto de la mascota:</label>
+					<div class="col-sm-4">
+						<input type="file" id="fileInput" ng-model="newMasc.foto"
+							onchange="angular.element(this).scope().loadImage(this)" >
+					</div>
+				</div>
+				<div class="form-group">
+					<img ng-src="{{newMasc.fotol }}" class="avatar rounded lg" height="300px" width="400px" alt=" " />
+					<img ng-src="data:image/jpeg;base64,{{ newMasc.fotol }}" class="avatar rounded lg" height="300px"
+						width="400px" alt=" ">
+				</div>
 
 			</div>
 			<div class="box-footer">

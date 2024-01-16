@@ -239,7 +239,7 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 			nacim: "",
 			foto: "",
 			fotol: "",
-			usuario: $rootScope.globals.currentUser.username
+			usuariom: $rootScope.globals.currentUser.username
 		};
 
 
@@ -284,33 +284,14 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 
 			var date = new Date();
 			var MascObj = { usuario: $rootScope.globals.currentUser.username };
-			$scope.newMasc.usuario = MascObj.usuario;
+			$scope.newMasc.usuariom = MascObj.usuario;
 
+			console.log( $scope.newMasc.foto);
 			var fileInput = document.getElementById('fileInput');
-            $scope.newMasc.foto = fileInput.files[0];
+			$scope.newMasc.foto = fileInput.files[0];
+			console.log($scope.newMasc.foto);
 
-
-			Masc.actualizarFoto($scope.newMasc,function (data) {
-				console.log($scope.newMasc.foto);
-				//$scope.successMessages = [ 'Usuario Actualizado correctamente' ];
-				Swal.fire({
-					toast: true,
-					position: 'top-end',
-					type: 'success',
-					title: 'Foto actualizado correctamente',
-					showConfirmButton: false,
-					timer: 1000
-				})
-			}, function (result) {
-				if ((result.status == 409) || (result.status == 400)) {
-					$scope.errors = result.data;
-				} else {
-					$scope.errorMessages = ['Unknown error de servidor'];
-				}
-				$('#notificacionesModal').modal('show');
-			});
-
-			/*Masc.actualizar($scope.newMasc, function (data) {
+			Masc.actualizar($scope.newMasc, function (data) {
 				//$scope.successMessages = [ 'Usuario Actualizado correctamente' ];
 				Swal.fire({
 					toast: true,
@@ -328,8 +309,27 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 					$scope.errorMessages = ['Unknown error de servidor'];
 				}
 				$('#notificacionesModal').modal('show');
-			});*/
+			});
 
+			/*Masc.actualizarFoto($scope.newMasc,function (data) {
+	console.log($scope.newMasc.foto);
+	//$scope.successMessages = [ 'Usuario Actualizado correctamente' ];
+	Swal.fire({
+		toast: true,
+		position: 'top-end',
+		type: 'success',
+		title: 'Foto actualizado correctamente',
+		showConfirmButton: false,
+		timer: 1000
+	})
+}, function (result) {
+	if ((result.status == 409) || (result.status == 400)) {
+		$scope.errors = result.data;
+	} else {
+		$scope.errorMessages = ['Unknown error de servidor'];
+	}
+	$('#notificacionesModal').modal('show');
+});*/
 		}
 
 	};
@@ -346,7 +346,8 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 			var nuevaFecha = new Date(fechaO);
 			nuevaFecha.setDate(fechaO.getDate() + 1);
 			$scope.newMasc.nacim = nuevaFecha;
-			
+			$scope.newMasc.fotol = response.data.info[0].mascota.foto;
+
 
 			if ($scope.newMasc.estado == 'A') {
 				$scope.newMasc.estado = true;
@@ -399,12 +400,13 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 	$scope.loadTpmascota();
 
 	$scope.loadImage = function (input) {
-		
+
 		if (input.files && input.files[0]) {
 			var reader = new FileReader();
 			reader.onload = function (e) {
 				$scope.$apply(function () {
 					$scope.newMasc.foto = e.target.result;
+					$scope.newMasc.fotol = e.target.result;
 				});
 			};
 			reader.readAsDataURL(input.files[0]);

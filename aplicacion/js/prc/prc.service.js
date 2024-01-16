@@ -106,7 +106,7 @@ angular.module('mascService', []).
         service.borrar = borrar;
         service.insertar = insertar;
         service.actualizar = actualizar;
-        service.actualizarFoto = actualizarFoto;
+        //service.actualizarFoto = actualizarFoto;
         service.findByCo = findByCo;
         service.findById = findById;
         service.findAllA = findAllA;
@@ -235,35 +235,60 @@ angular.module('mascService', []).
                     callback(response);
                 });
         };
+        function actualizar(usuario, callback) {
+            var url = URL_API + '/servicios/prc/prc_mascota.php';
+    
+            var data = {
+                accionr: 'U',
+                idr: usuario.idmasc,
+                tpmascotar: usuario.idtpmasc,
+                duenor: usuario.dueno,
+                munir: usuario.idmuni,
+                direccionr: usuario.direccion,
+                estadodirr: usuario.estadodir ? 'A' : 'I',
+                nmascr: usuario.nmasc,
+                codigor: usuario.codigo,
+                estador: usuario.estado ? 'A' : 'I',
+                userr: usuario.usuariom,
+                nacimr: formatoFecha(usuario.nacim),
+                fotor: usuario.foto ? usuario.foto : null  // Accede al base64 de la imagen
+            };
+    
+            $http.post(url, data).then(function(response) {
+                callback(response);
+            });
+        }
         /*function actualizar(usuario, callback) {
-            var url = URL_API + '/servicios/prc/prc_mascota.php?accion=U';
-        
+            var url = URL_API + '/servicios/prc/prc_mascota.php';
+            //var basefoto = usuario.foto.replace(/^data:image\/jpeg;base64,/, '');
+
             var formData = new FormData();
-            formData.append('id', usuario.idmasc);
-            formData.append('tpmascota', usuario.idtpmasc);
-            formData.append('muni', usuario.idmuni);
-            formData.append('direccion', usuario.direccion);
-            formData.append('estadodir', usuario.estadodir ? 'A' : 'I');
-            formData.append('nmasc', usuario.nmasc);
-            formData.append('codigo', usuario.codigo);
-            formData.append('estado', usuario.estado ? 'A' : 'I');
-            formData.append('user', usuario.usuario);
-            formData.append('nacim', formatoFecha(usuario.nacim));
-            //formData.append('foto', file);
+            formData.append('accionr', 'U');
+            formData.append('idr', usuario.idmasc);
+            formData.append('tpmascotar', usuario.idtpmasc);
+            formData.append('duenor', usuario.dueno);//ENCARGADO DE LA MASCOTA
+            formData.append('munir', usuario.idmuni);
+            formData.append('direccionr', usuario.direccion);
+            formData.append('estadodirr', usuario.estadodir ? 'A' : 'I');
+            formData.append('nmascr', usuario.nmasc);
+            formData.append('codigor', usuario.codigo);
+            formData.append('estador', usuario.estado ? 'A' : 'I');
+            formData.append('userr', usuario.usuariom);//USUARIO QUE LO MODIFICO
+            formData.append('nacimr', formatoFecha(usuario.nacim));
+            formData.append('fotor', usuario.foto);
         
-            console.log(url);
+            console.log(formData);
         
             $http.post(url, formData, {
-                headers: {
-                    'Content-Type': undefined  // Set to undefined to let Angular set the correct content type
-                },
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined}
             }).then(function(response) {
                 callback(response);
             });
-        }*/
+        };*/
         
 
-        function actualizar(usuario, callback){
+        /*function actualizar(usuario, callback){
             var url = URL_API + '/servicios/prc/prc_mascota.php?accion=U'+
             '&id=' + usuario.idmasc +
             '&tpmascota=' + usuario.idtpmasc + 
@@ -274,7 +299,8 @@ angular.module('mascService', []).
             '&codigo=' + usuario.codigo + 
             '&estado=' + (usuario.estado ? 'A' : 'I') +
             '&user=' + usuario.usuario +
-            '&nacim=' + formatoFecha(usuario.nacim);
+            '&nacim=' + formatoFecha(usuario.nacim)+
+            '&foto=' + usuario.foto;
             
 
             console.log(url);
@@ -282,8 +308,8 @@ angular.module('mascService', []).
             then(function(response) {
                 callback(response);
              });
-        };
-        function actualizarFoto(masc, callback) {
+        };*/
+        /*function actualizarFoto(masc, callback) {
             var formData = new FormData();
             formData.append('accion', 'U');
             formData.append('id', masc.idmasc);
@@ -298,7 +324,7 @@ angular.module('mascService', []).
                 console.log(response);
                 console.log(url,formData);
             });
-        };
+        };*/
 
 
 

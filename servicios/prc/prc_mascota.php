@@ -34,9 +34,28 @@ $foto = isset($_GET['foto']) ? $_GET['foto'] : '';
 $estado = isset($_GET['estado']) ? $_GET['estado'] : '';
 $user = isset($_GET['user']) ? $_GET['user'] : '';
 
+
+//POST --ACTUALIZAR O REGISTRAR
+$accionr = isset($_POST['accionr']) ? $_POST['accionr'] : '';
+$id_mascotar = isset($_POST['idr']) ? $_POST['idr'] : '';
+$id_tipomascotar = isset($_POST['tpmascotar']) ? $_POST['tpmascotar'] : '';
+$id_munr = isset($_POST['munir']) ? $_POST['munir'] : '';
+$usuarior = isset($_POST['duenor']) ? $_POST['duenor'] : '';
+$direccionr = isset($_POST['direccionr']) ? $_POST['direccionr'] : '';
+$estado_direcr = isset($_POST['estadodirr']) ? $_POST['estadodirr'] : '';
+$nombremascr = isset($_POST['nmascr']) ? $_POST['nmascr'] : '';
+$codigor = isset($_POST['codigor']) ? $_POST['codigor'] : '';
+$nacimr = isset($_POST['nacimr']) ? $_POST['nacimr'] : '';
+$fotor = isset($_POST['fotor']) ? $_POST['fotor'] : '';
+$estador = isset($_POST['estador']) ? $_POST['estador'] : '';
+$userr = isset($_POST['userr']) ? $_POST['userr'] : '';
+
+
 $json = "no has seteado nada.";
+
 function cBase64($imagen)
 {
+    log('php');
     $imagenBase64 = base64_encode(file_get_contents($imagen));
     return $imagenBase64;
 }
@@ -141,13 +160,13 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
             if ($result->num_rows > 0) {
 
                 while ($row = $result->fetch_assoc()) {
-                    if (!is_null($row["id"])) $id_mascota = $row["id"];
-                    else $id_mascota = 1;
+                    if (!is_null($row["id"])) $id_mascotar = $row["id"];
+                    else $id_mascotar = 1;
                 }
             } else {
-                $id_mascota = 1;
+                $id_mascotar = 1;
             }
-        } else $id_mascota = 1;
+        } else $id_mascotar = 1;
 
         $date = date('Y-m-d H:i:s');
         //$nacim = date_create_from_format('Y-m-d', $nacim);
@@ -156,39 +175,58 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         $sql = "INSERT INTO 
         $bd.$tabla(id_mascota, usuario,id_tipomascota,id_municipio,direccion,estado_direc,
         nombremascota, codigo,nacimiento,foto,estado,usuario_creacion, fecha_creacion) 
-		VALUE($id_mascota, $usuario,$id_tipomascota,$id_mun,'$direccion',
-        '$estado_direc','$nombremasc','$codigo','$nacim','$foto','A','$user', '$date')";
+		VALUE($id_mascotar, $usuarior,$id_tipomascotar,$id_munr,'$direccionr',
+        '$estado_direcr','$nombremascr','$codigor','$nacimr','$fotor','A','$userr', '$date')";
 
         if ($conn->query($sql) === TRUE) {
             $json = array("status" => 1, "info" => "Registro almacenado exitosamente.");
         } else {
             $json = array("status" => 0, "info" => $conn->error);
         }
-    } else if (strtoupper($accion) == 'U') {
-        if (!empty($id_tipomascota)) $id_tipomascota = "id_tipomascota=" . $id_tipomascota;
-        else $id_tipomascota = "id_tipomascota=id_tipomascota";
-        if (!empty($id_mun)) $id_mun = ",id_municipio=" . $id_mun;
-        else $id_mun = ",id_municipio=id_municipio";
-        if (!empty($direccion)) $direccion = ",direccion='" . $direccion . "'";
-        else $direccion = ",direccion=direccion";
-        if (!empty($estado_direc)) $estado_direc = ",estado_direc='" . $estado_direc . "'";
-        else $estado_direc = ",estado_direc=estado_direc";
-        if (!empty($nombremasc)) $nombremasc = ",nombremascota='" . $nombremasc . "'";
-        else $nombremasc = ",nombremascota=nombremascota";
-        if (!empty($codigo)) $codigo = ",codigo='" . $codigo . "'";
-        else $codigo = ",codigo=codigo";
-        if (!empty($nacim)) $nacim = ",nacimiento='" . $nacim . "'";
-        else $nacim = ",nacimiento=nacimiento";
-        if (!empty($estado)) $estado = ",estado='" . $estado . "'";
-        else $estado = ",estado=estado";
-        $user = ", usuario_update='" . $user . "'";
+    } else if (strtoupper($accionr) == 'U') {
+        if (!empty($usuarior)) $usuarior ="usuario='" . $usuarior . "'";
+        else $usuarior = "usuario=usuario";
+
+        /*if ($usuarior !== '') {
+            $usuarior ="usuario='" . $usuarior . "'";
+            echo 'El valor de duenor es: ' . $usuarior;
+        } else {
+            echo 'duenor no está presente en la solicitud POST o su valor es una cadena vacía.';
+        }*/
+
+
+        if (!empty($id_tipomascotar)) $id_tipomascotar = ",id_tipomascota=" . $id_tipomascotar;
+        else $id_tipomascotar = ",id_tipomascota=id_tipomascota";
+        if (!empty($id_munr)) $id_munr= ",id_municipio=" . $id_munr;
+        else $id_munr = ",id_municipio=id_municipio";
+        if (!empty($direccionr)) $direccionr = ",direccion='" . $direccionr . "'";
+        else $direccionr = ",direccion=direccion";
+        if (!empty($estado_direcr)) $estado_direcr = ",estado_direc='" . $estado_direcr . "'";
+        else $estado_direcr = ",estado_direc=estado_direc";
+        if (!empty($nombremascr)) $nombremascr = ",nombremascota='" . $nombremascr . "'";
+        else $nombremascr = ",nombremascota=nombremascota";
+        if (!empty($codigor)) $codigor = ",codigo='" . $codigor . "'";
+        else $codigor = ",codigo=codigo";
+        if (!empty($nacimr)) $nacimr = ",nacimiento='" . $nacimr . "'";
+        else $nacimr = ",nacimiento=nacimiento";
+        if (!empty($estador)) $estador = ",estado='" . $estador . "'";
+        else $estador = ",estado=estado";
+        $userr = ", usuario_update='" . $userr . "'";
         $date = ", fecha_update='" . date('Y-m-d H:i:s') . "'";
-        if (!empty($foto)) $foto = ",foto='" . cBase64($foto). "'";
-        else $foto = ",foto=foto";
 
-        $sql = "UPDATE $bd.$tabla SET $id_tipomascota $id_mun $direccion 
-        $estado_direc $nombremasc $codigo $nacim $foto $estado $user $date 
-         WHERE id_mascota = $id_mascota ";
+        if ($fotor !== '') {
+            $fotor = ",foto='" ./* cBase64(*/$fotor/*)*/. "'";
+            echo 'El valor de foto es: ' . $fotor;
+        } else {
+            echo ' foto no está presente en la solicitud POST o su valor es una cadena vacía.';
+        }
+
+        if (!empty($fotor)) $fotor = ",foto='" . cBase64($fotor). "'";
+        else $fotor = ",foto=foto";
+
+        $sql = "UPDATE $bd.$tabla SET $usuarior $id_tipomascotar $id_munr $direccionr 
+        $estado_direcr $nombremascr $codigor $nacimr $fotor $estador $userr $date 
+         WHERE id_mascota = $id_mascotar ";
 
         echo $sql;
         if ($conn->query($sql) === TRUE) {
@@ -196,27 +234,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         } else {
             $json = array("status" => 0, "error" => $conn->error);
         }
-    }
-    /*else if (strtoupper($accion) == 'UF') {
-        // VERIFICACION SI LA ACCION ES ACTUALIZACION
-        if (!empty($_GET['foto'])) {
-            $foto_base64 = base64_encode(file_get_contents($_GET['foto']));
-            $foto = ", foto='" . $foto_base64 . "'";
-        } else {
-            $foto = ", foto=foto";
-        }
-
-        $sql = "UPDATE $bd.$tabla SET $foto
-         WHERE id_mascota = $id_mascota ";
-
-        echo $sql;
-        if ($conn->query($sql) === TRUE) {
-            $json = array("status" => 1, "info" => "Registro actualizado exitosamente.");
-        } else {
-            $json = array("status" => 0, "error" => $conn->error);
-        }
-        
-    }*/ else if (strtoupper($accion) == 'D') { // VERIFICACION SI LA ACCION ES ELIMINACION
+    }else if (strtoupper($accion) == 'D') { // VERIFICACION SI LA ACCION ES ELIMINACION
         $user = ", usuario_update='" . $user . "'";
         $date = ", fecha_update='" . date('Y-m-d H:i:s') . "'";
 
