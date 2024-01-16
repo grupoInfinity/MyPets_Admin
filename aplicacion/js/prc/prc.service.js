@@ -215,25 +215,37 @@ angular.module('mascService', []).
         };
 
         function insertar(usuario, callback) {
-            var url = URL_API + '/servicios/prc/prc_mascota.php?accion=I' +
-                '&dueno=' + usuario.dueno +
-                '&tpmascota=' + usuario.idtpmasc +
-                '&muni=' + usuario.idmuni +
-                '&direccion=' + usuario.direccion +
-                '&estadodir=' + usuario.estadodir +
-                '&nmasc=' + usuario.nmasc +
-                '&codigo=' + usuario.codigo +
-                '&nacim=' + formatoFecha(usuario.nacim) +
-                '&estado=' + usuario.estado +
-                '&user=' + usuario.usuario+
-                '&foto=' + usuario.foto;
+            var url = URL_API + '/servicios/prc/prc_mascota.php';
 
-            console.log(url);
-
-            $http.post(url, usuario).
-                then(function (response) {
-                    callback(response);
-                });
+            var fileInput = document.getElementById('fileInput');//INPUT
+			var archivo= fileInput.files[0];
+            
+            var formData = new FormData();
+            formData.append('accionr', 'I');
+            //formData.append('idr', usuario.idmasc);
+            formData.append('tpmascotar', usuario.idtpmasc);
+            formData.append('duenor', usuario.dueno);//ENCARGADO DE LA MASCOTA
+            formData.append('munir', usuario.idmuni);
+            formData.append('direccionr', usuario.direccion);
+            formData.append('estadodirr', usuario.estadodir ? 'A' : 'I');
+            formData.append('nmascr', usuario.nmasc);
+            formData.append('codigor', usuario.codigo);
+            formData.append('estador', usuario.estado ? 'A' : 'I');
+            formData.append('userr', usuario.usuario);//USUARIO QUE LO MODIFICO
+            formData.append('nacimr', formatoFecha(usuario.nacim));
+            if(archivo!=null){
+                formData.append('fotor', archivo);
+            }
+        
+            //console.log(usuario,archivo);
+        
+            $http.post(url, formData, {
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined}
+            }).then(function(response) {
+                callback(response);
+                console.log(response);
+            });
         };
         function actualizar(usuario, callback) {
             var url = URL_API + '/servicios/prc/prc_mascota.php';
@@ -267,49 +279,6 @@ angular.module('mascService', []).
                 callback(response);
             });
         };
-        
-
-        /*function actualizar(usuario, callback){
-            var url = URL_API + '/servicios/prc/prc_mascota.php?accion=U'+
-            '&id=' + usuario.idmasc +
-            '&tpmascota=' + usuario.idtpmasc + 
-            '&muni=' + usuario.idmuni + 
-            '&direccion=' + usuario.direccion + 
-            '&estadodir=' + (usuario.estadodir ? 'A' : 'I')+ 
-            '&nmasc=' + usuario.nmasc + 
-            '&codigo=' + usuario.codigo + 
-            '&estado=' + (usuario.estado ? 'A' : 'I') +
-            '&user=' + usuario.usuario +
-            '&nacim=' + formatoFecha(usuario.nacim)+
-            '&foto=' + usuario.foto;
-            
-
-            console.log(url);
-            $http.post(url).
-            then(function(response) {
-                callback(response);
-             });
-        };*/
-        /*function actualizarFoto(masc, callback) {
-            var formData = new FormData();
-            formData.append('accion', 'U');
-            formData.append('id', masc.idmasc);
-            formData.append('user', masc.usuario);
-            formData.append('foto', masc.foto);
-        
-            var url = URL_API + '/servicios/prc/mascotafoto.php';
-        
-            $http.post(url, formData, {
-            }).then(function(response) {
-                callback(response);
-                console.log(response);
-                console.log(url,formData);
-            });
-        };*/
-
-
-
-
         return service;
 
     }).service('popupService', function ($window) {

@@ -147,7 +147,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         }
     else $json = array("status" => 0, "info" => "No existe información.");
 } else {
-    if (strtoupper($accion) == 'I') { // VERIFICACION SI LA ACCION ES INSERCION
+    if (strtoupper($accionr) == 'I') { // VERIFICACION SI LA ACCION ES INSERCION
         //AGREGAR ORDEN DE ID
         $sql = "
 		SELECT MAX(a.id_mascota) + 1 as id
@@ -159,23 +159,30 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
             if ($result->num_rows > 0) {
 
                 while ($row = $result->fetch_assoc()) {
-                    if (!is_null($row["id"])) $id_mascotar = $row["id"];
-                    else $id_mascotar = 1;
+                    if (!is_null($row["id"])) $id_mascotar2 = $row["id"];
+                    else $id_mascotar2 = 1;
                 }
             } else {
-                $id_mascotar = 1;
+                $id_mascotar2 = 1;
             }
-        } else $id_mascotar = 1;
+        } else $id_mascotar2 = 1;
 
         $date = date('Y-m-d H:i:s');
         //$nacim = date_create_from_format('Y-m-d', $nacim);
+        if (isset($_FILES['fotor']) && $_FILES['fotor']['error'] === UPLOAD_ERR_OK) {
+            $fotor = base64_encode(file_get_contents($_FILES['fotor']['tmp_name']));
+            //echo json_encode($fotor);
+        } else {
+            $fotor=null;
+            echo json_encode('Error al procesar la imagen.');
+        }
 
 
         $sql = "INSERT INTO 
-        $bd.$tabla(id_mascota, usuario,id_tipomascota,id_municipio,direccion,estado_direc,
+        $bd.$tabla (id_mascota, usuario,id_tipomascota,id_municipio,direccion,estado_direc,
         nombremascota, codigo,nacimiento,foto,estado,usuario_creacion, fecha_creacion) 
-		VALUE($id_mascotar, $usuarior,$id_tipomascotar,$id_munr,'$direccionr',
-        '$estado_direcr','$nombremascr','$codigor','$nacimr','$fotor','A','$userr', '$date')";
+		VALUE($id_mascotar2, '$usuarior',$id_tipomascotar,$id_munr,'$direccionr',
+        '$estado_direcr','$nombremascr','$codigor','$nacimr','$fotor','$estador','$userr', '$date')";
 
         if ($conn->query($sql) === TRUE) {
             $json = array("status" => 1, "info" => "Registro almacenado exitosamente.");
@@ -205,13 +212,9 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         $date = ", fecha_update='" . date('Y-m-d H:i:s') . "'";
 
         if (isset($_FILES['fotor']) && $_FILES['fotor']['error'] === UPLOAD_ERR_OK) {
-            // Obtiene el contenido de la imagen en base64
             $fotor = ",foto='".base64_encode(file_get_contents($_FILES['fotor']['tmp_name'])). "'";
-            /*echo json_encode($fotor);
-            echo json_encode('La imagen se ha procesado correctamente.') ;*/
         } else {
             $fotor=',foto=foto';
-           //echo json_encode('Error al procesar la imagen.');
         }
 
 

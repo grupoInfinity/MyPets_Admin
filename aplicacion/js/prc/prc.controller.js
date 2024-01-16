@@ -59,6 +59,7 @@ function MascotaAddCtrl($rootScope, $stateParams, $scope,
 			codigo: "",
 			nacim: "",
 			foto: "",
+			fotol: "",
 			usuario: $rootScope.globals.currentUser.username
 		};
 
@@ -69,7 +70,7 @@ function MascotaAddCtrl($rootScope, $stateParams, $scope,
 		$scope.clearMessages();
 
 		if (value == "ADD") {
-
+			console.log($scope.newMasc.idtpmasc);
 			Masc.insertar($scope.newMasc, function (data) {
 
 				$scope.isVisibleAfterUsuario = $scope.isVisibleAfterUsuario ? false : true;
@@ -90,6 +91,10 @@ function MascotaAddCtrl($rootScope, $stateParams, $scope,
 					showConfirmButton: false,
 					timer: 1000
 				})
+				$state.go('menuMaster.listMascota', {
+					
+				});
+
 			}, function (result) {
 				if ((result.status == 409) || (result.status == 400)) {
 					$scope.errors = result.data;
@@ -173,15 +178,15 @@ function MascotaAddCtrl($rootScope, $stateParams, $scope,
 	$scope.loadTpmascota();
 
 	$scope.loadImage = function (input) {
+
 		if (input.files && input.files[0]) {
 			var reader = new FileReader();
-
 			reader.onload = function (e) {
 				$scope.$apply(function () {
-					$scope.imageUrl = e.target.result;
+					$scope.newMasc.foto = e.target.result;
+					$scope.newMasc.fotol = e.target.result;
 				});
 			};
-
 			reader.readAsDataURL(input.files[0]);
 		}
 	};

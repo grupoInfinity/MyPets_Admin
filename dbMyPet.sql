@@ -439,6 +439,7 @@ LOCK TABLES `prc_mascotas` WRITE;
  WHERE m.id_tipomascota=t.id_tipomascota AND m.id_usuario=u.id_usuario AND mu.id_departamento=d.id_departamento 
  AND m.id_mascota=1;
  */
+
  DROP TABLE IF EXISTS `prc_vacunas`;
 CREATE TABLE IF NOT EXISTS dbMyPet.prc_vacunas(
     `id_vacuna` INT,

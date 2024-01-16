@@ -95,7 +95,7 @@
 					</div>
 				</div>
 
-				<div class="form-group" ng-class="{ 'has-error': regForm.apellido.$error.required }">
+				<div class="form-group" ng-class="{ 'has-error': regForm.codigo.$error.required }">
 					<label for="codigo" class="col-sm-2 control-label">Codigo de la mascota:</label>
 					<div class="col-sm-4">
 						<input type="text" class="form-control" name="codigo" id="codigo" ng-model="newMasc.codigo"
@@ -190,14 +190,14 @@
 					</div>
 				</div>
 
-				<div class="form-group" >
+				<div class="form-group"  ng-class="{ 'has-error': regForm.foto.$error.required }">
 					<label for="foto" class="col-sm-2 control-label">Foto de la mascota:</label>
 					<div class="col-sm-4">
 						<input type="file" id="fileInput" ng-model="newMasc.foto"
 							onchange="angular.element(this).scope().loadImage(this)" >
 					</div>
 				</div>
-				<div class="form-group">
+				<div class="form-group col-sm-12" >
 					<img ng-src="{{newMasc.fotol }}" class="avatar rounded lg" height="300px" width="400px" alt=" " />
 					<img ng-src="data:image/jpeg;base64,{{ newMasc.fotol }}" class="avatar rounded lg" height="300px"
 						width="400px" alt=" ">
