@@ -237,10 +237,9 @@ angular.module('mascService', []).
         };
         function actualizar(usuario, callback) {
             var url = URL_API + '/servicios/prc/prc_mascota.php';
-            //var basefoto = usuario.foto.replace(/^data:image\/jpeg;base64,/, '');
 
-            var fileInput = document.getElementById('fileInput');
-			var film= fileInput.files[0];
+            var fileInput = document.getElementById('fileInput');//INPUT
+			var archivo= fileInput.files[0];
             
             var formData = new FormData();
             formData.append('accionr', 'U');
@@ -255,9 +254,11 @@ angular.module('mascService', []).
             formData.append('estador', usuario.estado ? 'A' : 'I');
             formData.append('userr', usuario.usuariom);//USUARIO QUE LO MODIFICO
             formData.append('nacimr', formatoFecha(usuario.nacim));
-            formData.append('fotor', film);
+            if(archivo!=null){
+                formData.append('fotor', archivo);
+            }
         
-            //console.log(film);
+            console.log(archivo);
         
             $http.post(url, formData, {
                 transformRequest: angular.identity,

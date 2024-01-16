@@ -1,11 +1,10 @@
 <?php
 include_once('../config.php');
-
-header('Content-type: application/json; charset=UTF-8');
+//header('Content-type: application/json; charset=UTF-8');
 header('Access-Control-Allow-Origin: *');
 header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization");
 header("Access-Control-Allow-Methods: GET,PUT,POST,DELETE,PATCH,OPTIONS");
-header("Allow: GET, POST, OPTIONS, PUT, DELETE");
+header("Allow: GET, POST, OPTIONS, PUT, DELETE,FILE");
 
 $method = $_SERVER['REQUEST_METHOD'];
 if ($method == "OPTIONS") {
@@ -205,22 +204,21 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         $userr = ", usuario_update='" . $userr . "'";
         $date = ", fecha_update='" . date('Y-m-d H:i:s') . "'";
 
-        /*if (isset($_FILES['fotor']) && $_FILES['fotor']['error'] === UPLOAD_ERR_OK) {
+        if (isset($_FILES['fotor']) && $_FILES['fotor']['error'] === UPLOAD_ERR_OK) {
             // Obtiene el contenido de la imagen en base64
             $fotor = ",foto='".base64_encode(file_get_contents($_FILES['fotor']['tmp_name'])). "'";
-            //echo($fotor);
-            echo 'La imagen se ha procesado correctamente.';
+            /*echo json_encode($fotor);
+            echo json_encode('La imagen se ha procesado correctamente.') ;*/
         } else {
             $fotor=',foto=foto';
-            echo 'Error al procesar la imagen.';
-        }*/
+           //echo json_encode('Error al procesar la imagen.');
+        }
 
 
         $sql = "UPDATE $bd.$tabla SET $usuarior $id_tipomascotar $id_munr $direccionr 
-        $estado_direcr $nombremascr $codigor $nacimr /*$fotor*/ $estador $userr $date 
+        $estado_direcr $nombremascr $codigor $nacimr $fotor $estador $userr $date 
          WHERE id_mascota = $id_mascotar ";
 
-        echo $sql;
         if ($conn->query($sql) === TRUE) {
             $json = array("status" => 1, "info" => "Registro actualizado exitosamente.");
         } else {
