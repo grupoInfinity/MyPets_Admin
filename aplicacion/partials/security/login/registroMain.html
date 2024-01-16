@@ -1,38 +1,6 @@
-<fieldset>
-	<!--<div class="login-box col-md-4 col-md-offset-4 ">
-
-		<div class="login-box-body text-center ">
-			<div>
-				<img src="img/kraken_morado.png" alt="Powered by Grupo Infinity" width="95px" height="95px">
-			</div>
-			<p class="login-box-msg"> <label style="color:#0CA5CD;font-size:24px;">Recuperacion de clave</label></p>
-			<p style="color:#888;">Ingrese su usuario </p>
-			<div class="col-sm-8 col-sm-offset-2">
-				<div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }"
-					ng-if="flash" ng-bind="flash.message"></div>
-			</div>
-			<form ng-submit="rm.findUsr()" role="form">
-				<div class="form-group has-feedback">
-					<input type="text" name="username" id="username" ng-model="rm.recupUsr.usr" required
-						class="form-control" placeholder="Usuario">
-					<span class="glyphicon glyphicon-user form-control-feedback"></span>
-					<span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Usuario
-						es requerido</span>
-				</div>
-
-				<div class="row ">
-					<div class="col-md-4 col-md-offset-4">
-						<button type="submit" 
-							class="btn btn-primary btn-block btn-sm pull-right">Confirmar <i
-								class="fa fa-sign-in"></i></button>
-						</div>
-				</div>
-			</form>
-		</div>
-	</div>-->
+<fieldset style="background-image: url('/aplicacion/img/kraken1.png');">
 	
-
-	<form name="regForm" class="form-horizontal col-md-8 col-md-offset-2 " ng-submit="registerUsuario(formType)">
+	<form name="regForm" class=" login-box form-horizontal col-md-8 col-md-offset-2 " ng-submit="registerUsuario(formType)">
 
 		<div class="form-group">
 			<input type="hidden" name="formType" id="formType" ng-model="formType" />
@@ -106,21 +74,7 @@
 					</div>
 					
 				</div>
-				<div class="form-group" ng-class="{ 'has-error': regForm.clave.$error.required }">
-					<label for="estado" class="col-sm-2 control-label">Estado:</label>
-					<div class="col-sm-2">
-						<label class="switch">
-							<input type="checkbox" name="estado" id="estado" ng-model="newUsuario.estado">
-							<div class="slider round">
-								<span class="on">Activo</span>
-								<span class="off">Inactivo</span>
-							</div>
-						</label>
-						<span class="error help-block" ng-show="regForm.estado.$error.required">Requerido</span>
-						<span class="error help-block" ng-show="errors.estado">{{errors.estado}}</span>
-					</div>
-				</div>
-
+				
 
 			</div>
 			<div class="box-footer">

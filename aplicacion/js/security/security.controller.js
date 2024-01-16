@@ -1312,7 +1312,7 @@ function RegistroMainCtrl($rootScope, $stateParams, $scope, URL_API, $filter, $h
 			tel: "",
 			pin: "",
 			email: "",
-			estado: "",
+			estado: "A",
 			usuario: ""
 		};
 
