@@ -286,10 +286,10 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 			var MascObj = { usuario: $rootScope.globals.currentUser.username };
 			$scope.newMasc.usuariom = MascObj.usuario;
 
-			console.log( $scope.newMasc.foto);
+			/*console.log( $scope.newMasc.foto);
 			var fileInput = document.getElementById('fileInput');
 			$scope.newMasc.foto = fileInput.files[0];
-			console.log($scope.newMasc.foto);
+			console.log($scope.newMasc.foto);*/
 
 			Masc.actualizar($scope.newMasc, function (data) {
 				//$scope.successMessages = [ 'Usuario Actualizado correctamente' ];
@@ -310,26 +310,6 @@ function MascotaEditCtrl($rootScope, $scope, $filter, $state, $stateParams,
 				}
 				$('#notificacionesModal').modal('show');
 			});
-
-			/*Masc.actualizarFoto($scope.newMasc,function (data) {
-	console.log($scope.newMasc.foto);
-	//$scope.successMessages = [ 'Usuario Actualizado correctamente' ];
-	Swal.fire({
-		toast: true,
-		position: 'top-end',
-		type: 'success',
-		title: 'Foto actualizado correctamente',
-		showConfirmButton: false,
-		timer: 1000
-	})
-}, function (result) {
-	if ((result.status == 409) || (result.status == 400)) {
-		$scope.errors = result.data;
-	} else {
-		$scope.errorMessages = ['Unknown error de servidor'];
-	}
-	$('#notificacionesModal').modal('show');
-});*/
 		}
 
 	};

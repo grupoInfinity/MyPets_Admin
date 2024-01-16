@@ -237,31 +237,11 @@ angular.module('mascService', []).
         };
         function actualizar(usuario, callback) {
             var url = URL_API + '/servicios/prc/prc_mascota.php';
-    
-            var data = {
-                accionr: 'U',
-                idr: usuario.idmasc,
-                tpmascotar: usuario.idtpmasc,
-                duenor: usuario.dueno,
-                munir: usuario.idmuni,
-                direccionr: usuario.direccion,
-                estadodirr: usuario.estadodir ? 'A' : 'I',
-                nmascr: usuario.nmasc,
-                codigor: usuario.codigo,
-                estador: usuario.estado ? 'A' : 'I',
-                userr: usuario.usuariom,
-                nacimr: formatoFecha(usuario.nacim),
-                fotor: usuario.foto ? usuario.foto : null  // Accede al base64 de la imagen
-            };
-    
-            $http.post(url, data).then(function(response) {
-                callback(response);
-            });
-        }
-        /*function actualizar(usuario, callback) {
-            var url = URL_API + '/servicios/prc/prc_mascota.php';
             //var basefoto = usuario.foto.replace(/^data:image\/jpeg;base64,/, '');
 
+            var fileInput = document.getElementById('fileInput');
+			var film= fileInput.files[0];
+            
             var formData = new FormData();
             formData.append('accionr', 'U');
             formData.append('idr', usuario.idmasc);
@@ -275,9 +255,9 @@ angular.module('mascService', []).
             formData.append('estador', usuario.estado ? 'A' : 'I');
             formData.append('userr', usuario.usuariom);//USUARIO QUE LO MODIFICO
             formData.append('nacimr', formatoFecha(usuario.nacim));
-            formData.append('fotor', usuario.foto);
+            formData.append('fotor', film);
         
-            console.log(formData);
+            //console.log(film);
         
             $http.post(url, formData, {
                 transformRequest: angular.identity,
@@ -285,7 +265,7 @@ angular.module('mascService', []).
             }).then(function(response) {
                 callback(response);
             });
-        };*/
+        };
         
 
         /*function actualizar(usuario, callback){

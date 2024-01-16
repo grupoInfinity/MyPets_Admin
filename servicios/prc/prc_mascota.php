@@ -46,19 +46,19 @@ $estado_direcr = isset($_POST['estadodirr']) ? $_POST['estadodirr'] : '';
 $nombremascr = isset($_POST['nmascr']) ? $_POST['nmascr'] : '';
 $codigor = isset($_POST['codigor']) ? $_POST['codigor'] : '';
 $nacimr = isset($_POST['nacimr']) ? $_POST['nacimr'] : '';
-$fotor = isset($_POST['fotor']) ? $_POST['fotor'] : '';
+//$fotor = isset($_POST['fotor']) ? $_POST['fotor'] : '';
+$fotor=isset($_FILES['fotor']);
 $estador = isset($_POST['estador']) ? $_POST['estador'] : '';
 $userr = isset($_POST['userr']) ? $_POST['userr'] : '';
 
 
 $json = "no has seteado nada.";
-
+/*
 function cBase64($imagen)
 {
-    log('php');
     $imagenBase64 = base64_encode(file_get_contents($imagen));
     return $imagenBase64;
-}
+}*/
 
 if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
     if (!empty($id_mascota)) $id_mascota = "m.id_mascota='$id_mascota'";
@@ -186,15 +186,6 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
     } else if (strtoupper($accionr) == 'U') {
         if (!empty($usuarior)) $usuarior ="usuario='" . $usuarior . "'";
         else $usuarior = "usuario=usuario";
-
-        /*if ($usuarior !== '') {
-            $usuarior ="usuario='" . $usuarior . "'";
-            echo 'El valor de duenor es: ' . $usuarior;
-        } else {
-            echo 'duenor no está presente en la solicitud POST o su valor es una cadena vacía.';
-        }*/
-
-
         if (!empty($id_tipomascotar)) $id_tipomascotar = ",id_tipomascota=" . $id_tipomascotar;
         else $id_tipomascotar = ",id_tipomascota=id_tipomascota";
         if (!empty($id_munr)) $id_munr= ",id_municipio=" . $id_munr;
@@ -214,18 +205,19 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         $userr = ", usuario_update='" . $userr . "'";
         $date = ", fecha_update='" . date('Y-m-d H:i:s') . "'";
 
-        if ($fotor !== '') {
-            $fotor = ",foto='" ./* cBase64(*/$fotor/*)*/. "'";
-            echo 'El valor de foto es: ' . $fotor;
+        /*if (isset($_FILES['fotor']) && $_FILES['fotor']['error'] === UPLOAD_ERR_OK) {
+            // Obtiene el contenido de la imagen en base64
+            $fotor = ",foto='".base64_encode(file_get_contents($_FILES['fotor']['tmp_name'])). "'";
+            //echo($fotor);
+            echo 'La imagen se ha procesado correctamente.';
         } else {
-            echo ' foto no está presente en la solicitud POST o su valor es una cadena vacía.';
-        }
+            $fotor=',foto=foto';
+            echo 'Error al procesar la imagen.';
+        }*/
 
-        if (!empty($fotor)) $fotor = ",foto='" . cBase64($fotor). "'";
-        else $fotor = ",foto=foto";
 
         $sql = "UPDATE $bd.$tabla SET $usuarior $id_tipomascotar $id_munr $direccionr 
-        $estado_direcr $nombremascr $codigor $nacimr $fotor $estador $userr $date 
+        $estado_direcr $nombremascr $codigor $nacimr /*$fotor*/ $estador $userr $date 
          WHERE id_mascota = $id_mascotar ";
 
         echo $sql;
