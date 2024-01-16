@@ -3,7 +3,7 @@
     <!-- Logo -->
     <a href="index.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><img src="img/kraken_blanco.png" class="user-image2" alt="My Pets" width="45px"
+      <span class="logo-mini"><img src="img/logo2.png" class="user-image2" alt="My Pets" width="45px"
           height="45px"></span>
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg" align='left'>
@@ -23,50 +23,7 @@
         <ul class="nav navbar-nav">
 
           <!-- @{{usuario.ctg_empresa[0].descripcion}} -->
-          <li class="dropdown notifications-menu ">
-            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-              <!--i class="fa fa-bell-o"></i -->
-              <i class="fa fa-list"></i>
-              <span class="label label-warning" data-toggle="tooltip"
-                title="Autorizaciones de Ordenes de Compra Pendiente">{{globals.currentUser.total_ordenes}}</span>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="header">Notificaciones</li>
-              <li>
-                <ul class="menu">
-                  <li>
-                    <a ui-sref="menuMaster.listPO({id_tipo_inventario: 1})">
-                      <!--i class="fa fa-users text-aqua"></i -->
-                      <i class="fa fa-list text-aqua"></i> <span data-toggle="tooltip"
-                        title="{{globals.currentUser.total_ordenes}} autorizaciones pendientes de ordenes de compra">{{globals.currentUser.total_ordenes}}
-                        autorizaciones pendientes de ordenes de compra</span>
-                    </a>
-                  </li>
-                  <!--li>
-							<a href="#">
-								<i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the page and may cause design problems
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<i class="fa fa-users text-red"></i> 5 new members joined
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<i class="fa fa-shopping-cart text-green"></i> 25 sales made
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<i class="fa fa-user text-red"></i> You changed your username
-							</a>
-						</li -->
-                </ul>
-              </li>
-              <!--li class="footer"><a href="#">View all</a></li -->
-            </ul>
-          </li>
+          
           <li class="dropdown user user-menu" data-toggle="tooltip" data-placement="left" data-html="true">
             <a style="cursor: pointer;" class="dropdown-toggle" data-toggle="dropdown">
               <!--img src="img/plan.png" class="user-image" alt="User Image" -->
@@ -161,7 +118,8 @@
                 </li>
               </ul>
             </li>
-            <li ng-show="opch.id_opc_principal == opcppal.id_menu && opch.id_opc_padre!=''" ng-repeat="opch in opciones_hijo">
+            <li ng-show="opch.id_opc_principal == opcppal.id_menu && opch.id_opc_padre!=''"
+              ng-repeat="opch in opciones_hijo">
               <a ui-sref="{{opch.url}}">
                 <i ng-class="opch.padre? 'fa fa-share' : 'fa fa-circle-o'"></i><label
                   style="font-size:14px">{{opch.descripcion}}</label>
