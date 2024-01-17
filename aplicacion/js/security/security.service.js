@@ -493,6 +493,7 @@ factory('Usr', function($http, URL_API){
     service.actualizarPin = actualizarPin;
     service.findByPin=findByPin;
     service.actualizarClave=actualizarClave;
+    service.enviarMail=enviarMail;
     /*    service.getUser = getUser;
 
    function getUser(usuario, callback) {
@@ -632,6 +633,18 @@ factory('Usr', function($http, URL_API){
             callback(response);
          });
     };
+    function enviarMail(usr, callback){
+		var url = URL_API + '/servicios/PHPMailer.php?user='+usr.usr+
+        '&pin='+usr.pin+
+        '&email='+usr.email;
+		
+		//console.log(url);
+        $http.post(url).
+        then(function(response) {
+           callback(response);
+        });
+    };
+    
 
     return service;
   
