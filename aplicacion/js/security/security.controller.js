@@ -1370,58 +1370,59 @@ function RegistroMainCtrl($rootScope, $stateParams, $scope, URL_API, $filter, $h
 };
 ///RECUPERACION DE CONTRASEÑA
 function RecupMainCtrl($scope, $rootScope, $cookies, $filter, $state, $stateParams, $compile, $window, popupService, Usr) {
-    var rm = this;
-    rm.findUsr = findUsr;
-    rm.recupUs = {
-        usr: "",
-        pin: "",
-        email: "",
-    };
+	var rm = this;
+	rm.findUsr = findUsr;
+	rm.recupUs = {
+		usr: "",
+		pin: "",
+		email: "",
+	};
 
-    function findUsr() {
-        Usr.findByUsr(rm.recupUs.usr, function (response) {
-            if (response.data.status == 1) {
-                rm.recupUs = response.data.info[0];
-                Swal.fire({
-                    title: 'Revise su bandeja de correos',
-                    text: "",
-                    type: 'info',
-                    confirmButtonColor: '#3085d6',
-                    confirmButtonText: 'OK'
-                }).then((result) => {
-                    if (result.value) {
-                        $rootScope.user = rm.recupUs.usr;
-                        var cookieExp = new Date();
-                        cookieExp.setDate(cookieExp.getDate() + 7);
-                        $cookies.putObject('user', $rootScope.user, { expires: cookieExp });
+	function findUsr() {
+		Usr.findByUsr(rm.recupUs.usr, function (response) {
+			if (response.data.status == 1) {
+				rm.recupUs = response.data.info[0];
 
-                        Usr.actualizarPin(rm.recupUs.usr, function (response2) {
-                            if (response2.data.status == 1) {
-                                Usr.findByUsr(rm.recupUs.usr, function (response3) {
-                                    if (response3.data.status == 1) {
-										rm.recupUs = response3.data.info[0];
-                                        Usr.enviarMail(rm.recupUs, function (response4) {
-                                            $state.go("insertCode", {
-                                                usr: rm.recupUs.usr,
-                                            });
-                                        });
-                                    }
-                                });
-                            }
-                        });
-                    }
-                });
-            } else {
-                Swal.fire({
+				Swal.fire({
                     position: 'center',
-                    type: 'error',
-                    title: response.data.info,
+                    type: 'info',
+                    title: 'Verifique su bandeja de correos',
                     showConfirmButton: false,
                     timer: 3500
                 });
-            }
-        });
-    }
+
+				$rootScope.user = rm.recupUs.usr;
+				var cookieExp = new Date();
+				cookieExp.setDate(cookieExp.getDate() + 7);
+				$cookies.putObject('user', $rootScope.user, { expires: cookieExp });
+
+				Usr.actualizarPin(rm.recupUs.usr, function (response2) {
+					if (response2.data.status == 1) {
+						Usr.findByUsr(rm.recupUs.usr, function (response3) {
+							if (response3.data.status == 1) {
+								rm.recupUs = response3.data.info[0];
+								Usr.enviarMail(rm.recupUs, function (response4) {
+									$state.go("insertCode", {
+										usr: rm.recupUs.usr,
+									});
+								});
+							}
+						});
+					}
+				});
+
+
+			} else {
+				Swal.fire({
+					position: 'center',
+					type: 'error',
+					title: response.data.info,
+					showConfirmButton: false,
+					timer: 3500
+				});
+			}
+		});
+	}
 }
 
 function insertCodeCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile, $window,
