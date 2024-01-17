@@ -42,11 +42,11 @@ try {
 	$mail->setFrom("leac.2xy@gmail.com"); //$email; //remitente
 	//$mail->setFrom($email, "MUSA"); //$email; //remitente
 	$mail->SMTPAuth = true;
-	$mail->SMTPSecure = 'ssl';// 'STARTTLS'; //seguridad
+	$mail->SMTPSecure = 'ssl'; // 'STARTTLS'; //seguridad
 	//Set the hostname of the mail server
 	$mail->Host = "smtp.gmail.com"; //"smtp.office365.com"; // servidor smtp, para este caso es el de office, se podria cambiar al de gmail o yahoo
 	//Set the SMTP port number - likely to be 25, 465 or 587
-	$mail->Port = 465;// 587; //puerto
+	$mail->Port = 465; // 587; //puerto
 	$mail->Username = "leac.2xy@gmail.com"; //nombre usuario
 	$mail->Password = "achzpgqiuozwabhd"; //contraseña
 
@@ -65,16 +65,20 @@ try {
 					</head>
 					<body>
 					<div style='font-family: Arial, Helvetica, sans-serif; font-size: 12px;'>
-						<center><h1>Seguimiento de Tarea</h1></center>
-						<br>
-						Hola ".$user." :<br><br>
-
-						Este es su PIN de verificacion " . $pin . "
-						Link para cambio de clave <a href='http://192.168.200.15/musa/aplicacion/#!/login'>ac&aacute;</a>.<br><br>
-						Muchas gracias.<br><br>
-						Saludos Centro de Atención MyPets.<br><br>" .
-				"</div>" .
-				"</body>
+						<center>
+							<h1>CAMBIO DE CLAVE</h1>
+							
+							<img width='220px' height='220px' src='https://cdn.templates.unlayer.com/assets/1676615059956-password.gif'>
+							<br>
+							<h2>! Hola " . $user . " </h2>
+							<h2>Este es su PIN de seguridad</h2>
+							<h1>" . $pin . "</h1>
+							<br><br>
+							<h3>Powered By</h3>
+							<img width='120px' height='120px' src='https://i.ibb.co/QXLvW87/logo2.png'>
+						</center>" .
+		"</div>" .
+		"</body>
 					</html>";
 	$mail->msgHTML($html);
 	//echo $html;
