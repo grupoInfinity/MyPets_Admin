@@ -52,7 +52,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
 
 	$sql = "SELECT DISTINCT A.usuario, A.clave, A.nombre, A.apellido,A.email,A.pin, A.estado,A.telefono 
 	FROM $bd.$tabla A
-	WHERE 1=1 $usr $nombre $apellido $email $estado $tel $pin AND A.usuario!='system'";
+	WHERE 1=1 $usr $nombre $apellido $email $estado $tel $pin "/*AND A.usuario!='system'"*/;
 	//echo $sql;
 	$result = $conn->query($sql);
 
