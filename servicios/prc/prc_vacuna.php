@@ -23,6 +23,7 @@ $nombrevac = utf8_decode(isset($_GET['nombrevac']) ? $_GET['nombrevac'] : '');
 $nombremasc = utf8_decode(isset($_GET['nombremasc']) ? $_GET['nombremasc'] : '');
 $fechacr = utf8_decode(isset($_GET['fechacr']) ? $_GET['fechacr'] : '');
 $estado = utf8_decode(isset($_GET['estado']) ? $_GET['estado'] : '');
+$codigo = utf8_decode(isset($_GET['codigo']) ? $_GET['codigo'] : '');
 $user = utf8_decode(isset($_GET['user']) ? $_GET['user'] : '');
 
 $json = "no has seteado nada.";
@@ -36,13 +37,15 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
 	else $id_tipovac="";
 	if(!empty($nombremasc)) $nombremasc="AND m.nombremascota LIKE '%'$nombremasc%'";
 	else $nombremasc="";
+	if(!empty($codigo)) $codigo="AND m.codigo= '$codigo'";
+	else $codigo="";
 	if(!empty($nombrevac)) $nombrevac="AND t.nombrevacuna LIKE '%'$nombrevac%'";
 	else $nombrevac="";
 		
 	$sql = "SELECT v.id_vacuna,v.id_mascota,v.id_tipovacuna,m.nombremascota,
 	t.nombrevacuna,DATE(v.fecha_creacion) AS fecha_creacion 
 	FROM $bd.prc_vacunas v, $bd.prc_mascotas m, $bd.ctg_tipovacunas t 
-	WHERE $id_vacuna $id_mascota $id_tipovac $nombrevac $nombremasc $estado AND
+	WHERE $id_vacuna $id_mascota $id_tipovac $nombrevac $nombremasc $codigo  $estado AND
 	v.id_mascota=m.id_mascota AND v.id_tipovacuna=t.id_tipovacuna ";
 	
 	$result = $conn->query($sql);
