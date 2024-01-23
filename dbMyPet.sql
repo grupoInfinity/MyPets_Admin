@@ -5,6 +5,11 @@ CREATE DATABASE IF NOT EXISTS `dbMyPet`;
 USE `dbMyPet`;
 SELECT * FROM sec_opc_rol
 
+SELECT v.id_vacuna, v.id_mascota, v.id_tipovacuna, t.nombrevacuna, DATE(v.fecha_creacion) AS fecha_creacion
+FROM dbmypet.prc_vacunas v
+JOIN dbmypet.prc_mascotas m ON v.id_mascota = m.id_mascota
+JOIN dbmypet.ctg_tipovacunas t ON v.id_tipovacuna = t.id_tipovacuna
+WHERE v.id_mascota = 3;
 
 DROP TABLE IF EXISTS `sec_menu`;
 

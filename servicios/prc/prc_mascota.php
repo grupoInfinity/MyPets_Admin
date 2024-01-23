@@ -46,7 +46,7 @@ $nombremascr = isset($_POST['nmascr']) ? $_POST['nmascr'] : '';
 $codigor = isset($_POST['codigor']) ? $_POST['codigor'] : '';
 $nacimr = isset($_POST['nacimr']) ? $_POST['nacimr'] : '';
 //$fotor = isset($_POST['fotor']) ? $_POST['fotor'] : '';
-$fotor=isset($_FILES['fotor']);
+$fotor = isset($_FILES['fotor']);
 $estador = isset($_POST['estador']) ? $_POST['estador'] : '';
 $userr = isset($_POST['userr']) ? $_POST['userr'] : '';
 
@@ -86,10 +86,40 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
     if (!empty($result))
         if ($result->num_rows > 0) {
             $i = 0;
+
+            // Inicializar los arrays $mascota y $vacuna fuera del bucle while
+            $mascota = array();
+            $vacuna = array();
+
             while ($row = $result->fetch_assoc()) {
                 $idm = $row["id_mascota"];
-                /*if (!empty($row["foto"])) $foto = ($row["foto"]);
-                else $foto = "";*/
+
+                // ... (resto del código permanece igual)
+
+                $sql2 = "SELECT v.id_vacuna,v.id_mascota,v.id_tipovacuna,
+            t.nombrevacuna,DATE(v.fecha_creacion) AS fecha_creacion
+            FROM $bd.prc_vacunas v, $bd.prc_mascotas m, $bd.ctg_tipovacunas t 
+            WHERE v.id_mascota=$idm AND 
+            v.id_mascota=m.id_mascota AND v.id_tipovacuna=t.id_tipovacuna";
+
+                $result2 = $conn->query($sql2);
+
+                if (!empty($result2))
+                    if ($result2->num_rows > 0) {
+                        $i2 = $result2->num_rows;
+                        while ($row2 = $result2->fetch_assoc()) {
+                            $vacuna[] = array(
+                                'idvacuna' => $row2["id_vacuna"],
+                                'idmascota' => $row2["id_mascota"],
+                                'idtipovacuna' => $row2["id_tipovacuna"],
+                                'nombrevacuna' => $row2["nombrevacuna"],
+                                'fecha_creacion' => $row2["fecha_creacion"]
+                            );
+                        }
+                    } else {
+                        $vacuna[] = null;
+                    }
+                else $vacuna[] = null;
 
                 $mascota[] = array(
                     'idmasc' => $row["id_mascota"],
@@ -111,33 +141,9 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
                     'estado' => $row["estado"]
                 );
 
-                $sql2 = "SELECT v.id_vacuna,v.id_mascota,v.id_tipovacuna,
-                t.nombrevacuna,DATE(v.fecha_creacion) AS fecha_creacion
-                FROM $bd.prc_vacunas v, $bd.prc_mascotas m, $bd.ctg_tipovacunas t 
-                WHERE v.id_mascota=$idm AND 
-                v.id_mascota=m.id_mascota AND v.id_tipovacuna=t.id_tipovacuna";
-
-                $result2 = $conn->query($sql2);
-
-                if (!empty($result2))
-                    if ($result2->num_rows > 0) {
-                        while ($row2 = $result2->fetch_assoc()) {
-                            $vacuna[] = array(
-                                'idvacuna' => $row2["id_vacuna"],
-                                'idmascota' => $row2["id_mascota"],
-                                'idtipovacuna' => $row2["id_tipovacuna"],
-                                'nombrevacuna' => $row2["nombrevacuna"],
-                                'fecha_creacion' => $row2["fecha_creacion"]
-                            );
-                        }
-                    } else {
-                        $vacuna[] = null;
-                    }
-                else $vacuna[] = null;
-
                 $results[] = array(
                     'mascota' => $mascota[$i],
-                    'vacuna' => $vacuna[$i]
+                    'vacuna' => $vacuna // Asignar el array completo $vacuna
                 );
                 $json = array("status" => 1, "info" => $results);
                 $i++;
@@ -173,7 +179,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
             $fotor = base64_encode(file_get_contents($_FILES['fotor']['tmp_name']));
             //echo json_encode($fotor);
         } else {
-            $fotor=null;
+            $fotor = null;
             echo json_encode('Error al procesar la imagen.');
         }
 
@@ -190,11 +196,11 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
             $json = array("status" => 0, "info" => $conn->error);
         }
     } else if (strtoupper($accionr) == 'U') {
-        if (!empty($usuarior)) $usuarior ="usuario='" . $usuarior . "'";
+        if (!empty($usuarior)) $usuarior = "usuario='" . $usuarior . "'";
         else $usuarior = "usuario=usuario";
         if (!empty($id_tipomascotar)) $id_tipomascotar = ",id_tipomascota=" . $id_tipomascotar;
         else $id_tipomascotar = ",id_tipomascota=id_tipomascota";
-        if (!empty($id_munr)) $id_munr= ",id_municipio=" . $id_munr;
+        if (!empty($id_munr)) $id_munr = ",id_municipio=" . $id_munr;
         else $id_munr = ",id_municipio=id_municipio";
         if (!empty($direccionr)) $direccionr = ",direccion='" . $direccionr . "'";
         else $direccionr = ",direccion=direccion";
@@ -212,9 +218,9 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         $date = ", fecha_update='" . date('Y-m-d H:i:s') . "'";
 
         if (isset($_FILES['fotor']) && $_FILES['fotor']['error'] === UPLOAD_ERR_OK) {
-            $fotor = ",foto='".base64_encode(file_get_contents($_FILES['fotor']['tmp_name'])). "'";
+            $fotor = ",foto='" . base64_encode(file_get_contents($_FILES['fotor']['tmp_name'])) . "'";
         } else {
-            $fotor=',foto=foto';
+            $fotor = ',foto=foto';
         }
 
 
@@ -227,7 +233,7 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
         } else {
             $json = array("status" => 0, "error" => $conn->error);
         }
-    }else if (strtoupper($accion) == 'D') { // VERIFICACION SI LA ACCION ES ELIMINACION
+    } else if (strtoupper($accion) == 'D') { // VERIFICACION SI LA ACCION ES ELIMINACION
         $user = ", usuario_update='" . $user . "'";
         $date = ", fecha_update='" . date('Y-m-d H:i:s') . "'";
 
