@@ -78,7 +78,7 @@ if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
                                    
                     
                     $results[] = array
-                    ("id" => $id[$i]
+                    (   "id" => $id[$i]
                         //"id" => $row["id"]
                         , 'descripcion' => utf8_encode($row["descripcion"])
                         , 'estado' => $row["estado"]
