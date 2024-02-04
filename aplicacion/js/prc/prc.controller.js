@@ -591,7 +591,7 @@ function VacunaCtrl($scope, $rootScope, $filter, $state, $stateParams, $compile,
 	$scope.resetVac();
 
 	$scope.loadTPVacunas = function () {
-		Vacuna.findAllTpvac(function (response) {
+		Vacuna.findAllTpvac($stateParams.idMasc,function (response) {
 			if (response.data.status == 1) {
 				console.log(response.data.info);
 				$scope.tpv = response.data.info;

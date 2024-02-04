@@ -12,8 +12,8 @@ angular.module('vacunaService', []).
         service.activar = activar;
         service.findAllTpvac = findAllTpvac;
 
-        function findAllTpvac(callback) {
-            var url = URL_API + '/servicios/ctg/ctg_tipovacuna.php?accion=C&estado=A';
+        function findAllTpvac(idmasc,callback) {
+            var url = URL_API + '/servicios/ctg/ctg_tipovacuna.php?accion=C&estado=A&idmasc='+idmasc;
             //console.log(url);
             $http.get(url).
                 then(function (response) {
@@ -222,7 +222,6 @@ angular.module('mascService', []).
             
             var formData = new FormData();
             formData.append('accionr', 'I');
-            //formData.append('idr', usuario.idmasc);
             formData.append('tpmascotar', usuario.idtpmasc);
             formData.append('duenor', usuario.dueno);//ENCARGADO DE LA MASCOTA
             formData.append('munir', usuario.idmuni);
@@ -236,9 +235,7 @@ angular.module('mascService', []).
             if(archivo!=null){
                 formData.append('fotor', archivo);
             }
-        
-            //console.log(usuario,archivo);
-        
+
             $http.post(url, formData, {
                 transformRequest: angular.identity,
                 headers: {'Content-Type': undefined}

@@ -18,6 +18,7 @@ $id = isset($_GET['id']) ? $_GET['id'] : '';
 $nombrevac= utf8_decode(isset($_GET['desc']) ? $_GET['desc'] : '');
 $estado = isset($_GET['estado']) ? $_GET['estado'] : '';
 $user = utf8_decode(isset($_GET['user']) ? $_GET['user'] : '');
+$idmasc = utf8_decode(isset($_GET['idmasc']) ? $_GET['idmasc'] : '');
 
 $json = "no has seteado nada.";
 
@@ -28,10 +29,20 @@ if (strtoupper($accion) == 'C') { //VERIFICACION SI LA ACCION ES CONSULTA
     else $nombrevac = "";
     if (!empty($estado)) $estado = "AND A.estado='$estado'";
     else $estado = "";
+    //HACER UNA CONSULTA DE LAS VACUNAS QUE NO TIENE UNA MASCOTA
+    if (!empty($idmasc)) $sql = "SELECT A.id_tipovacuna, A.nombrevacuna, A.estado
+    FROM $bd.ctg_tipovacunas A 
+    LEFT JOIN $bd.prc_vacunas V ON A.id_tipovacuna = V.id_tipovacuna AND V.id_mascota = $idmasc
+    WHERE $id $estado AND V.id_tipovacuna IS NULL;";
 
-    $sql = "SELECT A.id_tipovacuna,A.nombrevacuna,A.estado 
-    FROM $bd.$tabla A 
+    //CONSULTA NORMAL
+    else $sql = "SELECT A.id_tipovacuna,A.nombrevacuna,A.estado 
+    FROM $bd.ctg_tipovacunas A 
     WHERE $id $nombrevac $estado ";
+
+    /*$sql = "SELECT A.id_tipovacuna,A.nombrevacuna,A.estado 
+    FROM $bd.$tabla A 
+    WHERE $id $nombrevac $estado ";*/
 
     $result = $conn->query($sql);
 

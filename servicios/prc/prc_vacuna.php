@@ -31,9 +31,9 @@ $json = "no has seteado nada.";
 if(strtoupper($accion) =='C'){ //VERIFICACION SI LA ACCION ES CONSULTA
 	if(!empty($id_vacuna)) $id_vacuna="v.id_vacuna='$id_vacuna'";
 	else $id_vacuna="1=1";
-	if(!empty($id_mascota)) $id_mascota="AND v.id_mascota='$id_mascota'";
+	if(!empty($id_mascota)) $id_mascota="AND v.id_mascota=$id_mascota";
 	else $id_mascota="";
-	if(!empty($id_tipovac)) $id_tipovac="AND v.id_tipovacuna='$id_tipovac'";
+	if(!empty($id_tipovac)) $id_tipovac="AND v.id_tipovacuna=$id_tipovac";
 	else $id_tipovac="";
 	if(!empty($nombremasc)) $nombremasc="AND m.nombremascota LIKE '%'$nombremasc%'";
 	else $nombremasc="";
