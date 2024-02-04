@@ -3,12 +3,16 @@ DROP DATABASE IF EXISTS `dbMyPet`;
 CREATE DATABASE IF NOT EXISTS `dbMyPet`;
 
 USE `dbMyPet`;
-SELECT * FROM sec_opc_rol
 
 
-SELECT v.id_vacuna,v.id_mascota,v.id_tipovacuna,t.nombrevacuna,DATE(v.fecha_creacion) AS fecha_creacion
- FROM dbmypet.prc_vacunas v, dbmypet.prc_mascotas m, dbmypet.ctg_tipovacunas t 
-WHERE v.id_mascota=2 AND  v.id_mascota=m.id_mascota AND v.id_tipovacuna=t.id_tipovacuna
+SELECT A.id_tipovacuna,A.nombrevacuna,A.estado 
+    FROM ctg_tipovacunas A, prc_vacunas v
+    WHERE A.id_tipovacuna=v.id_tipovacuna AND A.estado='A' AND v.id_mascota=2
+    
+SELECT A.id_tipovacuna, A.nombrevacuna, A.estado
+FROM ctg_tipovacunas A
+LEFT JOIN prc_vacunas V ON A.id_tipovacuna = V.id_tipovacuna AND V.id_mascota = 2
+WHERE A.estado = 'A' AND V.id_tipovacuna IS NULL;
 
 DROP TABLE IF EXISTS `sec_menu`;
 
@@ -95,11 +99,6 @@ insert  into `sec_usuario`(`usuario`,`clave`,`telefono`,`nombre`,`apellido`,`ema
 
 UNLOCK TABLES;
 
-DROP TABLE IF EXISTS `sec_opc_rol`;
-DROP TABLE IF EXISTS `sec_opcion`;
-SELECT * FROM `sec_menu`;
-SELECT * FROM `sec_opc_rol`;
-SELECT * FROM `sec_opcion`;
 
 CREATE TABLE IF NOT EXISTS dbMyPet.sec_opcion (
   `id_opc` int NOT NULL COMMENT 'id de la opcion',
@@ -193,7 +192,6 @@ insert  into `sec_opc_rol`(`id_menu`,`id_opc`,`id_rol`,`usuario_creacion`,`fecha
 
 LOCK TABLES `sec_opc_rol` WRITE;
 
-USE dbmypet
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `sec_rol_usuario`;
@@ -227,9 +225,6 @@ insert  into `sec_rol_usuario`(`usuario`,`id_rol`,`usuario_creacion`,`fecha_crea
     ('nmunoz',2,'admin','2021-08-11 16:15:48',NULL,NULL),
     ('system',1,'system','2021-08-11 16:15:48',NULL,NULL);
     
-    
-SELECT A.id_rol, A.descripcion, A.estado
-FROM sec_rol A WHERE A.id_rol = 1
 
 UNLOCK TABLES;
 
@@ -306,12 +301,8 @@ VALUE(1,'San Salvador','A','admin','2021-08-11 16:15:48',NULL,NULL),
 (13,'Cabañas','A','admin','2021-08-11 16:15:48',NULL,NULL),
 (14,'Cuscatlan','A','admin','2021-08-11 16:15:48',NULL,NULL)
 
-SELECT * FROM ctg_departamentos
 
 LOCK TABLES `ctg_departamentos` WRITE;
-
-/*insert into ctg_departamentos (id_departamento,departamento,estado)
- VALUES (1,'San Salvador','A'),(2,'San Miguel','A');*/
 DROP TABLE IF EXISTS `ctg_municipios`;
 CREATE TABLE IF NOT EXISTS dbMyPet.ctg_municipios(
     `id_municipio` INT,
@@ -388,13 +379,6 @@ VALUE(1, 1, 'San Salvador Norte', 'A', 'admin','2021-08-11 16:15:48',NULL,NULL),
 
 LOCK TABLES `ctg_municipios` WRITE;
 
-/*insert into ctg_municipios(id_municipio,id_departamento,municipio,estado) 
- VALUES (1,1,'San Salvador Centro','A'),(2,2,'San Miguel Centro','A');
- select * from ctg_municipios where municipio like '%M%'
- select id_municipio,departamento,municipio,M.estado
- from ctg_municipios M,ctg_departamentos D 
- where M.id_departamento=D.id_departamento AND
- id_municipio=2*/
 /*--------------------TABLAS DINAMICAS-----------------------------*/
 DROP TABLE IF EXISTS `prc_mascotas`;
 CREATE TABLE IF NOT EXISTS dbMyPet.prc_mascotas(
@@ -429,20 +413,8 @@ VALUE(1,1,1,'dnery','Avenida','A','Charly','239022','2019-03-02','
 ','A','dnery','2021-08-11 16:15:48',NULL,NULL),
 (2,2,6,'dnery','Avenida Hulin','A','Mily','200022','2019-03-02',NULL,'A','dnery','2021-08-11 16:15:48',NULL,NULL),
 (3,2,1,'nmunoz','Colonia San Martin','A','Jilly','300221','2019-03-02',NULL,'A','dnery','2021-08-11 16:15:48',NULL,NULL);
- 
-USE dbmypet
-SELECT * FROM sec_usuario;
-SELECT * FROM ctg_municipios
-
 
 LOCK TABLES `prc_mascotas` WRITE;
-/*
- SELECT m.id_mascota, u.id_usuario, u.mail,u.telefono,m.nombremascota,
- d.departamento,mu.municipio,m.direccion,m.estado_direc,m.codigo,m.edad,m.foto 
- FROM prc_mascotas m,sec_usuarios u, ctg_tipomascotas t, ctg_municipios mu, ctg_departamentos d 
- WHERE m.id_tipomascota=t.id_tipomascota AND m.id_usuario=u.id_usuario AND mu.id_departamento=d.id_departamento 
- AND m.id_mascota=1;
- */
 
  DROP TABLE IF EXISTS `prc_vacunas`;
 CREATE TABLE IF NOT EXISTS dbMyPet.prc_vacunas(
@@ -466,15 +438,8 @@ VALUE(1,1,1,'dnery','2021-08-11 16:15:48',NULL,NULL);
 INSERT INTO prc_vacunas(id_vacuna,id_mascota,id_tipovacuna,usuario_creacion,fecha_creacion,usuario_update,fecha_update) 
 VALUE(2,2,2,'dnery','2021-08-11 16:15:48',NULL,NULL);
 
-
-SELECT * FROM sec_usuario
-UPDATE sec_usuario SET usuario='dbarrientosss' WHERE usuario=''
-
-
-SELECT * from prc_vacunas
-
 LOCK TABLES `prc_vacunas` WRITE;
-USE dbmypet
+
 
  
 /*--------------------TABLAS SEGURIDAD-----------------------------*/
